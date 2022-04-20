@@ -3,6 +3,7 @@ package com.ucstu.guangbt.djzhaopin.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 
@@ -28,5 +29,17 @@ public interface UserInformationService {
     public List<JobExpectation> getJobExpectations(UUID userinfoid);
 
     public JobExpectation getJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid);
+
+    public EducationExperience createEducationExperience(UUID userinfoid,
+            EducationExperience educationExperience);
+
+    public EducationExperience deleteEducationExperienceByEducationExperienceId(UUID userinfoid, UUID eduexperienceid);
+
+    public EducationExperience updateEducationExperienceByEducationExperienceId(UUID userinfoid, UUID eduexperienceid,
+            EducationExperience educationExperience);
+
+    public List<EducationExperience> getEducationExperiences(UUID userinfoid);
+
+    public EducationExperience getEducationExperienceByEducationExperienceId(UUID userinfoid, UUID eduexperienceid);
 
 }

@@ -3,6 +3,7 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 import java.util.List;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
@@ -63,6 +64,37 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public JobExpectation getJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public EducationExperience createEducationExperience(UUID userinfoid, EducationExperience educationExperience) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public EducationExperience deleteEducationExperienceByEducationExperienceId(UUID userinfoid, UUID eduexperienceid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public EducationExperience updateEducationExperienceByEducationExperienceId(UUID userinfoid, UUID eduexperienceid,
+            EducationExperience educationExperience) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<EducationExperience> getEducationExperiences(UUID userinfoid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public EducationExperience getEducationExperienceByEducationExperienceId(UUID userinfoid, UUID eduexperienceid) {
         // TODO Auto-generated method stub
         return null;
     }
