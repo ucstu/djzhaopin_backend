@@ -14,7 +14,7 @@ import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
-import com.ucstu.guangbt.djzhaopin.service.AccountService;
+import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountInformationServiceImpl implements AccountInformationService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;

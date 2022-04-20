@@ -8,12 +8,10 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -50,16 +48,14 @@ public class AccountInformation {
 
     @JsonProperty("userInfoId")
     @OneToOne(cascade = { CascadeType.ALL })
-    @NotFound(action = NotFoundAction.IGNORE)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
+    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "userId")
     private UserInformation userInformation;
 
     @JsonProperty("hrInfoId")
     @OneToOne(cascade = { CascadeType.ALL })
-    @NotFound(action = NotFoundAction.IGNORE)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "hrId")
+    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "hrId")
     private HrInformation hrInformation;
 
     // {1:用户,2:HR}
@@ -70,12 +66,10 @@ public class AccountInformation {
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @NotFound(action = NotFoundAction.IGNORE)
     private List<AccountAuthority> authorities;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @NotFound(action = NotFoundAction.IGNORE)
     private List<AccountGroup> groups;
 
     @JsonIgnore

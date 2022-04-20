@@ -9,7 +9,7 @@ import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
-import com.ucstu.guangbt.djzhaopin.service.AccountService;
+import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Validated
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
 
     @Autowired
-    private AccountService accountService;
+    private AccountInformationService accountService;
 
     @PostMapping("")
     public ResponseEntity<ResponseBody<Map<String, Object>>> registerAccount(

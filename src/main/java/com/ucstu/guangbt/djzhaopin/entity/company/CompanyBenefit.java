@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.entity.hr;
+package com.ucstu.guangbt.djzhaopin.entity.company;
 
 import java.util.Date;
 import java.util.UUID;
@@ -8,7 +8,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -22,17 +21,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class HrInformation {
+public class CompanyBenefit {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    private UUID hrId;
+    private UUID companyBenefitId;
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
     private Date createdAt;
 
     @LastModifiedDate
-    @Column(nullable = false)
     private Date updatedAt;
+
+    private String benefitName;
 }
