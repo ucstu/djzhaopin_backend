@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
-import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
@@ -45,7 +44,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public List<DeliveryRecord> queryDeliveryRecords(UUID companyinfoid, Integer state, Integer workingYears,
+    public CompanyInformation queryDeliveryRecords(UUID companyinfoid, Integer state, Integer workingYears,
             String sex, Integer age, UUID jobId, Date deliveryDate, String search, Pageable pageable) {
         return null;
     }

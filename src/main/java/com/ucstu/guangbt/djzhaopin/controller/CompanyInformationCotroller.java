@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
-import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
@@ -62,8 +61,22 @@ public class CompanyInformationCotroller {
                                 companyInformationService.queryCompanyInformationByCompanyInfoId(companyinfoid));
         }
 
+        /**
+         * 增加公司信息
+         * 
+         * @param companyinfoid
+         * @param state
+         * @param workingYears
+         * @param sex
+         * @param age
+         * @param jobId
+         * @param deliveryDate
+         * @param search
+         * @param pageable
+         * @return
+         */
         @GetMapping("{companyinfoid}/deliveryrecords")
-        public ResponseEntity<ResponseBody<List<DeliveryRecord>>> queryDeliveryRecords(
+        public ResponseEntity<ResponseBody<CompanyInformation>> queryDeliveryRecords(
                         @PathVariable UUID companyinfoid, @RequestParam Integer state,
                         @RequestParam Integer workingYears,
                         @RequestParam String sex, @RequestParam Integer age, @RequestParam UUID jobId,

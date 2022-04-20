@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
-import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 
 import org.springframework.data.domain.Pageable;
 
@@ -19,7 +18,7 @@ public interface CompanyInformationService {
 
         public CompanyInformation queryCompanyInformationByCompanyInfoId(UUID companyinfoid);
 
-        public List<DeliveryRecord> queryDeliveryRecords(UUID companyinfoid, Integer state, Integer workingYears,
+        public CompanyInformation queryDeliveryRecords(UUID companyinfoid, Integer state, Integer workingYears,
                         String sex, Integer age, UUID jobId, Date deliveryDate, String search, Pageable pageable);
 
 }
