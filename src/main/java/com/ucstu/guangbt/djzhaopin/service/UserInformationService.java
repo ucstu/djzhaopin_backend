@@ -3,6 +3,7 @@ package com.ucstu.guangbt.djzhaopin.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
@@ -12,8 +13,6 @@ import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 
 import org.springframework.data.domain.Pageable;
 
-import jakarta.validation.Valid;
-
 public interface UserInformationService {
 
         public UserInformation updateUserInformationByUserInfoId(UUID userinfoid, UserInformation userInformation);
@@ -22,7 +21,7 @@ public interface UserInformationService {
 
         public UserInformation getUserInformationByUserInfoId(UUID userinfoid);
 
-        public JobExpectation createJobExpectation(UUID userinfoid, @Valid JobExpectation jobExpectation);
+        public JobExpectation createJobExpectation(UUID userinfoid, JobExpectation jobExpectation);
 
         public JobExpectation deleteJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid);
 
@@ -80,5 +79,16 @@ public interface UserInformationService {
         public List<DeliveryRecord> getDeliveryRecords(UUID userinfoid);
 
         public DeliveryRecord getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
+
+        public AttentionRecord createAttentionRecord(UUID userinfoid, AttentionRecord attentionRecord);
+
+        public AttentionRecord deleteAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid);
+
+        public AttentionRecord updateAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid,
+                        AttentionRecord attentionRecord);
+
+        public List<AttentionRecord> getAttentionRecords(UUID userinfoid);
+
+        public AttentionRecord getAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid);
 
 }
