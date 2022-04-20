@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.controller;
+package com.ucstu.guangbt.djzhaopin.controller.company;
 
 import java.util.List;
 import java.util.UUID;

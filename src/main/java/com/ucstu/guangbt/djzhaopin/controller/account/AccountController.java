@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.controller;
+package com.ucstu.guangbt.djzhaopin.controller.account;
 
 import java.util.Map;
 import java.util.UUID;
