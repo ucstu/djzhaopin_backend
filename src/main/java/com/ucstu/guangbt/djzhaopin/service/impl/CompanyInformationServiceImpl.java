@@ -35,17 +35,17 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public List<CompanyInformation> queryCompanyInformations(Pageable pageable) {
+    public List<CompanyInformation> getCompanyInformations(Pageable pageable) {
         return companyInformationRepository.findAll(pageable).getContent();
     }
 
     @Override
-    public CompanyInformation queryCompanyInformationByCompanyInfoId(UUID companyinfoid) {
+    public CompanyInformation getCompanyInformationByCompanyInfoId(UUID companyinfoid) {
         return companyInformationRepository.findById(companyinfoid).get();
     }
 
     @Override
-    public List<DeliveryRecord> queryDeliveryRecords(UUID companyinfoid, Integer state, Integer workingYears,
+    public List<DeliveryRecord> getDeliveryRecords(UUID companyinfoid, Integer state, Integer workingYears,
             String sex, Integer age, UUID jobId, Date deliveryDate, String search, Pageable pageable) {
         return null;
     }

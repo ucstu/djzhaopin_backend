@@ -15,11 +15,11 @@ public interface CompanyInformationService {
         public CompanyInformation updateCompanyInformationByCompanyInfoId(UUID companyinfoid,
                         CompanyInformation companyInformation);
 
-        public List<CompanyInformation> queryCompanyInformations(Pageable pageable);
+        public List<CompanyInformation> getCompanyInformations(Pageable pageable);
 
-        public CompanyInformation queryCompanyInformationByCompanyInfoId(UUID companyinfoid);
+        public CompanyInformation getCompanyInformationByCompanyInfoId(UUID companyinfoid);
 
-        public List<DeliveryRecord> queryDeliveryRecords(UUID companyinfoid, Integer state, Integer workingYears,
+        public List<DeliveryRecord> getDeliveryRecords(UUID companyinfoid, Integer state, Integer workingYears,
                         String sex, Integer age, UUID jobId, Date deliveryDate, String search, Pageable pageable);
 
 }

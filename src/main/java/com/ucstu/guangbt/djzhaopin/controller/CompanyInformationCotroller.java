@@ -49,21 +49,21 @@ public class CompanyInformationCotroller {
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<CompanyInformation>>> queryCompanyInformations(
+        public ResponseEntity<ResponseBody<List<CompanyInformation>>> getCompanyInformations(
                         @PageableDefault(value = 5, sort = {
                                         "companyId" }, direction = Sort.Direction.DESC) Pageable pageable) {
-                return ResponseBody.success(companyInformationService.queryCompanyInformations(pageable));
+                return ResponseBody.success(companyInformationService.getCompanyInformations(pageable));
         }
 
         @GetMapping("{companyinfoid}")
-        public ResponseEntity<ResponseBody<CompanyInformation>> queryCompanyInformationByCompanyInfoId(
+        public ResponseEntity<ResponseBody<CompanyInformation>> getCompanyInformationByCompanyInfoId(
                         @PathVariable UUID companyinfoid) {
                 return ResponseBody.created(
-                                companyInformationService.queryCompanyInformationByCompanyInfoId(companyinfoid));
+                                companyInformationService.getCompanyInformationByCompanyInfoId(companyinfoid));
         }
 
         @GetMapping("{companyinfoid}/deliveryrecords")
-        public ResponseEntity<ResponseBody<List<DeliveryRecord>>> queryDeliveryRecords(
+        public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecords(
                         @PathVariable UUID companyinfoid, @RequestParam Integer state,
                         @RequestParam Integer workingYears,
                         @RequestParam String sex, @RequestParam Integer age, @RequestParam UUID jobId,
@@ -71,7 +71,7 @@ public class CompanyInformationCotroller {
                         @PageableDefault(value = 5, sort = {
                                         "deliveryRecordId" }, direction = Sort.Direction.DESC) Pageable pageable) {
                 return ResponseBody
-                                .success(companyInformationService.queryDeliveryRecords(companyinfoid, state,
+                                .success(companyInformationService.getDeliveryRecords(companyinfoid, state,
                                                 workingYears, sex, age,
                                                 jobId, deliveryDate, search, pageable));
         }
