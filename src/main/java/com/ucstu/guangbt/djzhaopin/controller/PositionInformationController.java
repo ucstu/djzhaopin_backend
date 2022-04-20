@@ -3,7 +3,9 @@ package com.ucstu.guangbt.djzhaopin.controller;
 import java.util.List;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
+import com.ucstu.guangbt.djzhaopin.service.PositionInformationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,11 +54,11 @@ public class PositionInformationController {
                                                 positionInformation));
         }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseBody<List<PositionInformation>> getPositionInformations() {
-        return ResponseBody
-                .success(positionInformationService.getPositionInformations());
-    }
+        @GetMapping("")
+        public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformations() {
+                return ResponseBody
+                                .success(positionInformationService.getPositionInformations());
+        }
 
         @GetMapping("/{positioninfoid}")
         public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInfoId(
