@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
+import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 
@@ -55,5 +56,17 @@ public interface UserInformationService {
         public List<WorkExperience> getWorkExperiences(UUID userinfoid);
 
         public WorkExperience getWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid);
+
+        public ProjectExperience createProjectExperience(UUID userinfoid, ProjectExperience projectExperience);
+
+        public ProjectExperience deleteProjectExperienceByProjectExperienceId(UUID userinfoid,
+                        UUID projectexperienceid);
+
+        public ProjectExperience updateProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid,
+                        ProjectExperience projectExperience);
+
+        public List<ProjectExperience> getProjectExperiences(UUID userinfoid);
+
+        public ProjectExperience getProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid);
 
 }

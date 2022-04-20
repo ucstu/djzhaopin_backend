@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
+import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
@@ -127,6 +128,37 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public WorkExperience getWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ProjectExperience createProjectExperience(UUID userinfoid, ProjectExperience projectExperience) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ProjectExperience deleteProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ProjectExperience updateProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid,
+            ProjectExperience projectExperience) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<ProjectExperience> getProjectExperiences(UUID userinfoid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ProjectExperience getProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid) {
         // TODO Auto-generated method stub
         return null;
     }
