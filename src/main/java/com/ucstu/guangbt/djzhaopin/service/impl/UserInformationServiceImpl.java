@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
+import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
@@ -223,6 +224,37 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public AttentionRecord getAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public InspectionRecord createInspectionRecord(UUID userinfoid, InspectionRecord inspectionRecord) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public InspectionRecord deleteInspectionRecordByInspectionRecordId(UUID userinfoid, UUID inspectionrecordid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public InspectionRecord updateInspectionRecordByInspectionRecordId(UUID userinfoid, UUID inspectionrecordid,
+            InspectionRecord inspectionRecord) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<InspectionRecord> getInspectionRecords(UUID userinfoid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public InspectionRecord getInspectionRecordByInspectionRecordId(UUID userinfoid, UUID inspectionrecordid) {
         // TODO Auto-generated method stub
         return null;
     }
