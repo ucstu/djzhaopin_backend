@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
+import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.PositionInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.PositionInformationService;
 
@@ -13,34 +14,50 @@ public class PositionInformationServiceImpl implements PositionInformationServic
 
     @Autowired
     private PositionInformationRepository positionInformationRepository;
+    @Autowired
+    private CompanyInformationRepository companyInformationRepository;
 
     @Override
     public PositionInformation createPositionInformation(UUID companyinfoid, PositionInformation positionInformation) {
-        // TODO Auto-generated method stub
-        return null;
+        if (companyInformationRepository.findById(companyinfoid) != null) {
+            return positionInformationRepository.save(positionInformation);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public PositionInformation deletePositionInformation(UUID positioninfoid) {
-        return null;
+        if (positionInformationRepository.existsById(positioninfoid)) {
+            PositionInformation positionInformation = positionInformationRepository.findById(positioninfoid).get();
+            positionInformationRepository.deleteById(positioninfoid);
+            return positionInformation;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public PositionInformation updatePositionInformation(UUID positioninfoid, PositionInformation positionInformation) {
-        // TODO Auto-generated method stub
-        return null;
+        if (positionInformationRepository.existsById(positioninfoid)) {
+            return positionInformationRepository.saveAndFlush(positionInformation);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public PositionInformation getPositionInformationByPositionInfoId(UUID positioninfoid) {
-        // TODO Auto-generated method stub
-        return null;
+        if (positionInformationRepository.existsById(positioninfoid)) {
+            return positionInformationRepository.findById(positioninfoid).get();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public List<PositionInformation> getPositionInformations() {
-        // TODO Auto-generated method stub
-        return null;
+        return positionInformationRepository.findAll();
     }
 
 }
