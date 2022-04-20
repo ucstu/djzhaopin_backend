@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("/userinfos/{userinfoid}")
+@RequestMapping("/userinfos")
 public class UserInformationController {
 
     @Autowired

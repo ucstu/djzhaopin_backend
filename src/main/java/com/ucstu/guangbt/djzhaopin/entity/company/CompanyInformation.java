@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
+import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
@@ -80,6 +81,11 @@ public class CompanyInformation {
 
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "benefitName")
-    private List<CompanyBenefit> benefits;
+    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "companyBenefitId")
+    private List<CompanyBenefit> companyBenefits;
+
+    @OneToMany(cascade = { CascadeType.ALL })
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "positionInformationId")
+    private List<PositionInformation> positionInformations;
 }
