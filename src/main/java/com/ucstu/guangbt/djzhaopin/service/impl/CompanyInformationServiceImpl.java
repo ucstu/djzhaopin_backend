@@ -18,7 +18,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     private CompanyInformationRepository companyInformationRepository;
 
     @Override
-    public CompanyInformation appendCompanyInformation(CompanyInformation companyInformation) {
+    public CompanyInformation createCompanyInformation(CompanyInformation companyInformation) {
         return companyInformationRepository.save(companyInformation);
     }
 

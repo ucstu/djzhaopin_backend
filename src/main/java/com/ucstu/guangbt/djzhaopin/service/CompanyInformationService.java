@@ -10,7 +10,7 @@ import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import org.springframework.data.domain.Pageable;
 
 public interface CompanyInformationService {
-        public CompanyInformation appendCompanyInformation(CompanyInformation companyInformation);
+        public CompanyInformation createCompanyInformation(CompanyInformation companyInformation);
 
         public CompanyInformation updateCompanyInformationByCompanyInfoId(UUID companyinfoid,
                         CompanyInformation companyInformation);

@@ -74,7 +74,7 @@ public class CompanyInformation {
 
     private String registeredCapital;
 
-    private String organizatioType;
+    private String organizationType;
 
     private String establishmentTime;
 

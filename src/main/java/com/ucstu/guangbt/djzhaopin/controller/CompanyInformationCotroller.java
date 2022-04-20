@@ -34,9 +34,9 @@ public class CompanyInformationCotroller {
         private CompanyInformationService companyInformationService;
 
         @PostMapping("")
-        public ResponseEntity<ResponseBody<CompanyInformation>> appendCompanyInformation(
+        public ResponseEntity<ResponseBody<CompanyInformation>> createCompanyInformation(
                         @Valid @RequestBody CompanyInformation companyInformation) {
-                return ResponseBody.created(companyInformationService.appendCompanyInformation(companyInformation));
+                return ResponseBody.created(companyInformationService.createCompanyInformation(companyInformation));
         }
 
         @PostMapping("{companyinfoid}")
