@@ -11,10 +11,13 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,28 +38,37 @@ public class PositionInformation {
 
     @LastModifiedDate
     private Date updatedAt;
-    String name;
-    Integer workingYears;
+    private String name;
+    private Integer workingYears;
+    private Integer education;
 
-    Integer education;
     @JsonProperty("directionTags")
-    List<PositionDirectionTag> positionDirectionTags;
-    Integer startingSalary;
-    Integer ceilingSalary;
-    String workArea;
-    Date releaseDate;
-    UUID companyId;
-    UUID hrId;
-    Integer positionType;
-    String department;
+    @OneToMany(cascade = { CascadeType.ALL })
+    private List<PositionDirectionTag> positionDirectionTags;
+
+    private Integer startingSalary;
+    private Integer ceilingSalary;
+    private String workArea;
+    private Date releaseDate;
+    private UUID companyId;
+    private UUID hrId;
+    private Integer positionType;
+    private String department;
+
     @JsonProperty("highlights")
-    List<PositionHighlight> positionHighlights;
-    String description;
-    Integer weekendReleaseTime;
-    Date workTime;
+    @OneToMany(cascade = { CascadeType.ALL })
+    private List<PositionHighlight> positionHighlights;
+
+    private String description;
+    private Integer weekendReleaseTime;
+    private Date workTime;
+
     @JsonProperty("interviewInfo")
-    PositionInterviewInfo positionInterviewInfo;
+    @OneToOne(cascade = { CascadeType.ALL })
+    private PositionInterviewInfo positionInterviewInfo;
+
     @JsonProperty("workingPlace")
-    PositionWorkingPlace positionWorkingPlace;
+    @OneToOne(cascade = { CascadeType.ALL })
+    private PositionWorkingPlace positionWorkingPlace;
 
 }
