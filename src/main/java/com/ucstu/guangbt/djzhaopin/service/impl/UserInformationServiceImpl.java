@@ -3,6 +3,7 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 import java.util.List;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
@@ -10,6 +11,8 @@ import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
+import jakarta.validation.Valid;
 
 @Component
 public class UserInformationServiceImpl implements UserInformationService {
@@ -31,6 +34,37 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Override
     public UserInformation getUserInformationByUserInfoId(UUID userinfoid) {
         return userInformationRepository.findById(userinfoid).get();
+    }
+
+    @Override
+    public JobExpectation createJobExpectation(UUID userinfoid, @Valid JobExpectation jobExpectation) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public JobExpectation deleteJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public JobExpectation updateJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid,
+            JobExpectation jobExpectation) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<JobExpectation> getJobExpectations(UUID userinfoid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public JobExpectation getJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
