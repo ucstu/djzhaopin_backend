@@ -45,7 +45,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         Jws<Claims> claim = Jwts.parser().setSigningKey("djzhaopin123456").parseClaimsJws(token);
         String accountId = claim.getBody().getSubject();
         AccountInformation accountInformation = accountInformationRepository.findById(UUID.fromString(accountId)).get();
-        List<AccountAuthority> accountAuthorities = accountInformation.getAuthorities();
+        Set<AccountAuthority> accountAuthorities = accountInformation.getAuthorities();
         Set<GrantedAuthority> authorities = new HashSet<>();
         for (AccountAuthority accountAuthority : accountAuthorities) {
             authorities.add(new GrantedAuthority() {
@@ -56,7 +56,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             });
         }
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                accountInformation, null, authorities);
+                accountInformation, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }

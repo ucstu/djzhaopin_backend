@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.account;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -21,6 +21,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -65,12 +66,12 @@ public class AccountInformation {
     private String userName;
 
     @JsonIgnore
-    @OneToMany(cascade = { CascadeType.ALL })
-    private List<AccountAuthority> authorities;
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    private Set<AccountAuthority> authorities;
 
     @JsonIgnore
-    @OneToMany(cascade = { CascadeType.ALL })
-    private List<AccountGroup> groups;
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    private Set<AccountGroup> groups;
 
     @JsonIgnore
     private String password;
