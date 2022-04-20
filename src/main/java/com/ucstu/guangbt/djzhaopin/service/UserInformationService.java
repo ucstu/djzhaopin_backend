@@ -3,6 +3,7 @@ package com.ucstu.guangbt.djzhaopin.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
@@ -68,5 +69,16 @@ public interface UserInformationService {
         public List<ProjectExperience> getProjectExperiences(UUID userinfoid);
 
         public ProjectExperience getProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid);
+
+        public DeliveryRecord createDeliveryRecord(UUID userinfoid, DeliveryRecord deliveryRecord);
+
+        public DeliveryRecord deleteDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
+
+        public DeliveryRecord updateDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid,
+                        DeliveryRecord deliveryRecord);
+
+        public List<DeliveryRecord> getDeliveryRecords(UUID userinfoid);
+
+        public DeliveryRecord getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
 
 }

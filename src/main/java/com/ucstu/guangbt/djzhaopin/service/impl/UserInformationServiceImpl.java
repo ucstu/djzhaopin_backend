@@ -3,6 +3,7 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 import java.util.List;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
@@ -159,6 +160,37 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public ProjectExperience getProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public DeliveryRecord createDeliveryRecord(UUID userinfoid, DeliveryRecord deliveryRecord) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public DeliveryRecord deleteDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public DeliveryRecord updateDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid,
+            DeliveryRecord deliveryRecord) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<DeliveryRecord> getDeliveryRecords(UUID userinfoid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public DeliveryRecord getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid) {
         // TODO Auto-generated method stub
         return null;
     }
