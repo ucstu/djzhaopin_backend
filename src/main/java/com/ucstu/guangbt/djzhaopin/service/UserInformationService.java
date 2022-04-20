@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
+import com.ucstu.guangbt.djzhaopin.entity.user.GarnerRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
@@ -102,5 +103,16 @@ public interface UserInformationService {
         public List<InspectionRecord> getInspectionRecords(UUID userinfoid);
 
         public InspectionRecord getInspectionRecordByInspectionRecordId(UUID userinfoid, UUID inspectionrecordid);
+
+        public GarnerRecord createGarnerRecord(UUID userinfoid, GarnerRecord garnerRecord);
+
+        public GarnerRecord deleteGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid);
+
+        public GarnerRecord updateGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid,
+                        GarnerRecord garnerRecord);
+
+        public List<GarnerRecord> getGarnerRecords(UUID userinfoid);
+
+        public GarnerRecord getGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid);
 
 }

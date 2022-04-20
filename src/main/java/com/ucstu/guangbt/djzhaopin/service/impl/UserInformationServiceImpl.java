@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
+import com.ucstu.guangbt.djzhaopin.entity.user.GarnerRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
@@ -255,6 +256,37 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public InspectionRecord getInspectionRecordByInspectionRecordId(UUID userinfoid, UUID inspectionrecordid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public GarnerRecord createGarnerRecord(UUID userinfoid, GarnerRecord garnerRecord) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public GarnerRecord deleteGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public GarnerRecord updateGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid,
+            GarnerRecord garnerRecord) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<GarnerRecord> getGarnerRecords(UUID userinfoid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public GarnerRecord getGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid) {
         // TODO Auto-generated method stub
         return null;
     }
