@@ -62,6 +62,20 @@ public class CompanyInformationCotroller {
                                 companyInformationService.getCompanyInformationByCompanyInfoId(companyinfoid));
         }
 
+        /**
+         * 获取投递记录信息
+         *
+         * @param companyinfoid
+         * @param state
+         * @param workingYears
+         * @param sex
+         * @param age
+         * @param jobId
+         * @param deliveryDate
+         * @param search
+         * @param pageable
+         * @return
+         */
         @GetMapping("{companyinfoid}/deliveryrecords")
         public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecords(
                         @PathVariable UUID companyinfoid, @RequestParam Integer state,
