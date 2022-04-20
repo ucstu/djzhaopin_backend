@@ -1,8 +1,9 @@
-package com.ucstu.guangbt.djzhaopin.controller;
+package com.ucstu.guangbt.djzhaopin.controller.company;
 
 import java.util.List;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 
 import org.springframework.beans.factory.annotation.Autowired;

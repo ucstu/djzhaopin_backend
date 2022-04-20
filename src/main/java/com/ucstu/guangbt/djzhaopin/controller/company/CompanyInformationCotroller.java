@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.controller;
+package com.ucstu.guangbt.djzhaopin.controller.company;
 
 import java.util.Date;
 import java.util.List;
