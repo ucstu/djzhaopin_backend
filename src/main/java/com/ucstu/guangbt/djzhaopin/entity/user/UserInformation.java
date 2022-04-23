@@ -33,7 +33,7 @@ public class UserInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    private UUID userId;
+    private UUID userInformationId;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

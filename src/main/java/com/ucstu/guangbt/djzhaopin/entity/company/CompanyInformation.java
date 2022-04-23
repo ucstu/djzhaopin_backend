@@ -16,6 +16,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class CompanyInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    private UUID companyId;
+    private UUID companyInformationId;
 
     @CreatedDate
     private Date createdAt;
@@ -79,10 +80,8 @@ public class CompanyInformation {
 
     private String establishmentTime;
 
-    @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "companyBenefitId")
-    private List<CompanyBenefit> companyBenefits;
+    @ElementCollection(targetClass = String.class)
+    private List<String> companyBenefits;
 
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)

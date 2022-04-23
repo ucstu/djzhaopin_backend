@@ -30,8 +30,8 @@ public class UserInformationServiceImpl implements UserInformationService {
     private UserInformationRepository userInformationRepository;
 
     @Override
-    public UserInformation updateUserInformationByUserInfoId(UUID userinfoid, UserInformation userInformation) {
-        userInformation.setUserId(userinfoid);
+    public UserInformation updateUserInformationByUserInfoId(UUID userInformationId, UserInformation userInformation) {
+        userInformation.setUserInformationId(userInformationId);
         return userInformationRepository.save(userInformation);
     }
 

@@ -24,12 +24,12 @@ public class HrInformationServiceImpl implements HrInformationService {
     }
 
     @Override
-    public HrInformation updateHrInformationByHrInfoId(UUID hrinfoid, HrInformation hrInformation) {
-        HrInformation hrInformation2 = hrInformationRepository.findById(hrinfoid).get();
+    public HrInformation updateHrInformationByHrInfoId(UUID hrInformationId, HrInformation hrInformation) {
+        HrInformation hrInformation2 = hrInformationRepository.findById(hrInformationId).get();
         if (hrInformation2 != null)
             return null;
         else {
-            hrInformation.setHrId(hrinfoid);
+            hrInformation.setHrInformationId(hrInformationId);
             return hrInformationRepository.saveAndFlush(hrInformation);
         }
     }

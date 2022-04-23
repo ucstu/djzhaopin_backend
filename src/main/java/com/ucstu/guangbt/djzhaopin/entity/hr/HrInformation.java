@@ -26,7 +26,7 @@ public class HrInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    private UUID hrId;
+    private UUID hrInformationId;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

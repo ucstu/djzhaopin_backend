@@ -28,13 +28,13 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public CompanyInformation updateCompanyInformationByCompanyInfoId(UUID companyinfoid,
+    public CompanyInformation updateCompanyInformationByCompanyInfoId(UUID companyInformationId,
             CompanyInformation companyInformation) {
-        CompanyInformation companyInformation2 = companyInformationRepository.findById(companyinfoid).get();
+        CompanyInformation companyInformation2 = companyInformationRepository.findById(companyInformationId).get();
         if (companyInformation2 != null)
             return null;
         else {
-            companyInformation.setCompanyId(companyinfoid);
+            companyInformation.setCompanyInformationId(companyInformationId);
             return companyInformationRepository.saveAndFlush(companyInformation);
         }
     }

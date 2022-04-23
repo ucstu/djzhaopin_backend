@@ -51,7 +51,7 @@ public class CompanyInformationCotroller {
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<CompanyInformation>>> getCompanyInformations(
                         @PageableDefault(value = 5, sort = {
-                                        "companyId" }, direction = Sort.Direction.DESC) Pageable pageable) {
+                                        "companyInformationId" }, direction = Sort.Direction.DESC) Pageable pageable) {
                 return ResponseBody.success(companyInformationService.getCompanyInformations(pageable));
         }
 

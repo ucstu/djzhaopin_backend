@@ -32,4 +32,6 @@ public class AccountGroup {
 
     @LastModifiedDate
     private Date updatedAt;
+
+    private String groupName;
 }

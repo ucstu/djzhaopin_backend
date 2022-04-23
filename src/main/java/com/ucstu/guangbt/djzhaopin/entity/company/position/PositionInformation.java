@@ -12,11 +12,11 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,21 +43,21 @@ public class PositionInformation {
     private Integer education;
 
     @JsonProperty("directionTags")
-    @OneToMany(cascade = { CascadeType.ALL })
-    private List<PositionDirectionTag> positionDirectionTags;
+    @ElementCollection(targetClass = String.class)
+    private List<String> positionDirectionTags;
 
     private Integer startingSalary;
     private Integer ceilingSalary;
     private String workArea;
     private Date releaseDate;
-    private UUID companyId;
+    private UUID companyInformationId;
     private UUID hrId;
     private Integer positionType;
     private String department;
 
     @JsonProperty("highlights")
-    @OneToMany(cascade = { CascadeType.ALL })
-    private List<PositionHighlight> positionHighlights;
+    @ElementCollection(targetClass = String.class)
+    private List<String> positionHighlights;
 
     private String description;
     private Integer weekendReleaseTime;

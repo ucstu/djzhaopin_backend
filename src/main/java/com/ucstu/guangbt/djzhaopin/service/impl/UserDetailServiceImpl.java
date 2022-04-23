@@ -2,7 +2,7 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountAuthority;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
@@ -37,7 +37,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 if (authorities == null) {
                     authorities = new HashSet<>();
-                    List<AccountAuthority> accountAuthorities = accountInformation.getAuthorities();
+                    Set<AccountAuthority> accountAuthorities = accountInformation.getAuthorities();
                     for (AccountAuthority accountAuthority : accountAuthorities) {
                         authorities.add(new GrantedAuthority() {
                             @Override
