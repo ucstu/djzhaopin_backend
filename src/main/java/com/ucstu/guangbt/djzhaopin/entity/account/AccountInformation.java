@@ -41,6 +41,7 @@ public class AccountInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
+    @JsonProperty(access = Access.READ_ONLY)
     private UUID accountInformationId;
 
     @CreatedDate

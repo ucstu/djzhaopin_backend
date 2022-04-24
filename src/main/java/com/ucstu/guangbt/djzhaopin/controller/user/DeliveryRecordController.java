@@ -7,7 +7,6 @@ import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 @Validated
@@ -26,7 +26,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/userinfos/{userinfoid}/deliveryrecords")
 public class DeliveryRecordController {
 
-    @Autowired
+    @Resource
     private UserInformationService userInformationService;
 
     @PostMapping("")

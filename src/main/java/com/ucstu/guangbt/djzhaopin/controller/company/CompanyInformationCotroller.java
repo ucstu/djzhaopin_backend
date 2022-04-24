@@ -9,7 +9,6 @@ import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 @Validated
@@ -30,7 +30,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/companyinfos")
 public class CompanyInformationCotroller {
 
-        @Autowired
+        @Resource
         private CompanyInformationService companyInformationService;
 
         @PostMapping("")

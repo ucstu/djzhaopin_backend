@@ -15,10 +15,10 @@ import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UserInformationServiceImpl implements UserInformationService {
 
-    @Autowired
+    @Resource
     private UserInformationRepository userInformationRepository;
 
     @Override

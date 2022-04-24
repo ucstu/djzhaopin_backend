@@ -6,16 +6,16 @@ import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.repository.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class HrInformationServiceImpl implements HrInformationService {
 
-    @Autowired
+    @Resource
     private HrInformationRepository hrInformationRepository;
 
     @Override

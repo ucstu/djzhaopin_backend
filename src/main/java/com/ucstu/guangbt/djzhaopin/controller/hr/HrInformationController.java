@@ -6,7 +6,6 @@ import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 @Validated
@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/hrinfos")
 public class HrInformationController {
 
-    @Autowired
+    @Resource
     private HrInformationService hrInformationService;
 
     @PostMapping("")

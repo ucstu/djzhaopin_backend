@@ -8,20 +8,20 @@ import com.ucstu.guangbt.djzhaopin.entity.account.AccountAuthority;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    @Autowired
+    @Resource
     private AccountInformationRepository accountInformationRepository;
 
     private Collection<GrantedAuthority> authorities;

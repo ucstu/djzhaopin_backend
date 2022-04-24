@@ -16,7 +16,6 @@ import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,13 +31,13 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AccountInformationServiceImpl implements AccountInformationService {
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Resource
     private AccountInformationRepository accountInformationRepository;
 
-    @Autowired
+    @Resource
     private AuthenticationManager authenticationManager;
 
     @Override

@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 
@@ -36,12 +39,17 @@ public class CompanyInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
+    @JsonProperty(access = Access.READ_ONLY)
     private UUID companyInformationId;
 
     @CreatedDate
+    @JsonProperty(access = Access.READ_ONLY)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 
     @LastModifiedDate
+    @JsonProperty(access = Access.READ_ONLY)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
     private String hrId;

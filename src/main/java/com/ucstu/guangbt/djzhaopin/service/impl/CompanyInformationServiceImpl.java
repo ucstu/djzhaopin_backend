@@ -9,17 +9,17 @@ import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class CompanyInformationServiceImpl implements CompanyInformationService {
 
-    @Autowired
+    @Resource
     private CompanyInformationRepository companyInformationRepository;
 
     @Override

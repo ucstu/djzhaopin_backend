@@ -7,7 +7,6 @@ import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.PositionInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 @Validated
@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/companyinfos/{companyinfoid}/positioninfos")
 public class PositionInformationController {
 
-        @Autowired
+        @Resource
         private PositionInformationService positionInformationService;
 
         @PostMapping("")

@@ -11,7 +11,6 @@ import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.annotation.Resource;
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 
 @Validated
@@ -30,7 +31,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/accounts")
 public class AccountController {
 
-    @Autowired
+    @Resource
     private AccountInformationService accountService;
 
     @PostMapping("")
@@ -51,6 +52,7 @@ public class AccountController {
         return ResponseBody.success(accountService.loginAccount(loginAccountRequest));
     }
 
+    @PermitAll
     @PutMapping("/{accountId}")
     public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
             @PathVariable UUID accountId,

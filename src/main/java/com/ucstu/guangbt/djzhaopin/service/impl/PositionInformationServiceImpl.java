@@ -8,18 +8,18 @@ import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.PositionInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.PositionInformationService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class PositionInformationServiceImpl implements PositionInformationService {
 
-    @Autowired
+    @Resource
     private PositionInformationRepository positionInformationRepository;
-    @Autowired
+    @Resource
     private CompanyInformationRepository companyInformationRepository;
 
     @Override
