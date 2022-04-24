@@ -53,7 +53,7 @@ public class AccountInformationServiceImpl implements AccountInformationService 
             accountInformation.setHrInformation(new HrInformation());
         }
         AccountInformation savedAccountInformation = accountInformationRepository.save(accountInformation);
-        responseBody.put("accountInfo", savedAccountInformation);
+        responseBody.put("accountId", savedAccountInformation.getAccountId());
         String token = Jwts.builder().setSubject(savedAccountInformation.getAccountId().toString())
                 .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(SignatureAlgorithm.HS512, "djzhaopin123456").compact();
