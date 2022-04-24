@@ -39,7 +39,7 @@ public class UserInformationController {
 
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
-            @PageableDefault(size = 10, page = 1, sort = "userId", direction = Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 10, page = 1, sort = "userInformationId", direction = Direction.DESC) Pageable pageable) {
         return ResponseBody.success(userInformationService.getUserInformations(pageable));
     }
 

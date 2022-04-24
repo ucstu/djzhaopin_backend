@@ -19,6 +19,12 @@ public class HrInformationServiceImpl implements HrInformationService {
     private HrInformationRepository hrInformationRepository;
 
     @Override
+    public HrInformation addHrInformation(String accountInformationId, HrInformation hrInformation) {
+
+        return hrInformationRepository.save(hrInformation);
+    }
+
+    @Override
     public HrInformation queryHrInformationByHrInfoId(UUID hrinfoid) {
         return hrInformationRepository.findById(hrinfoid).get();
     }

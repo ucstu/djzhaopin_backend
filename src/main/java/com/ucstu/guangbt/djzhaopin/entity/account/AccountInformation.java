@@ -39,7 +39,7 @@ public class AccountInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    private UUID accountId;
+    private UUID accountInformationId;
 
     @CreatedDate
     private Date createdAt;
@@ -47,16 +47,16 @@ public class AccountInformation {
     @LastModifiedDate
     private Date updatedAt;
 
-    @JsonProperty("userInfoId")
-    @OneToOne(cascade = { CascadeType.ALL })
+    @JsonProperty(value = "userInformationId", defaultValue = "")
+    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "userId")
+    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "userInformationId")
     private UserInformation userInformation;
 
-    @JsonProperty("hrInfoId")
-    @OneToOne(cascade = { CascadeType.ALL })
+    @JsonProperty(value = "hrInformationId", defaultValue = "")
+    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "hrId")
+    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "hrInformationId")
     private HrInformation hrInformation;
 
     // {1:用户,2:HR}

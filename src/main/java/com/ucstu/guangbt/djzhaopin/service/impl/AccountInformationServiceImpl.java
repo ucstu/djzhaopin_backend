@@ -41,32 +41,25 @@ public class AccountInformationServiceImpl implements AccountInformationService 
     private AuthenticationManager authenticationManager;
 
     @Override
-    public Map<String, Object> registerAccount(RegisterAccountRequest registerRequest) {
-        Map<String, Object> responseBody = new HashMap<>();
+    public AccountInformation registerAccount(RegisterAccountRequest registerRequest) {
         AccountInformation accountInformation = new AccountInformation();
         accountInformation.setUserName(registerRequest.getUserName());
         accountInformation.setAccountType(registerRequest.getAccountType());
         accountInformation.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        if (registerRequest.getAccountType() == 1) {
+        if (accountInformation.getAccountType() == 1) {
             accountInformation.setUserInformation(new UserInformation());
-        } else if (registerRequest.getAccountType() == 2) {
+        } else if (accountInformation.getAccountType() == 2) {
             accountInformation.setHrInformation(new HrInformation());
         }
         AccountInformation savedAccountInformation = accountInformationRepository.save(accountInformation);
-        responseBody.put("accountId", savedAccountInformation.getAccountId());
-        String token = Jwts.builder().setSubject(savedAccountInformation.getAccountId().toString())
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-                .signWith(SignatureAlgorithm.HS512, "djzhaopin123456").compact();
-        responseBody.put("token", token);
-        return responseBody;
+        return savedAccountInformation;
     }
 
     @Override
     public AccountInformation deleteAccount(UUID accountId, String verificationCode) {
-        log.info("delete account {}", accountId);
         Optional<AccountInformation> accountInformation = accountInformationRepository.findById(accountId);
         accountInformationRepository.deleteById(accountId);
-        return null;
+        return accountInformation.get();
     }
 
     @Override
@@ -78,7 +71,7 @@ public class AccountInformationServiceImpl implements AccountInformationService 
         authenticationManager.authenticate(token);
         AccountInformation accountInformation = accountInformationRepository
                 .findByUserName(loginAccountRequest.getUserName());
-        String tokenString = Jwts.builder().setSubject(accountInformation.getAccountId().toString())
+        String tokenString = Jwts.builder().setSubject(accountInformation.getAccountInformationId().toString())
                 .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(SignatureAlgorithm.HS512, "djzhaopin123456").compact();
         responseBody.put("token", tokenString);

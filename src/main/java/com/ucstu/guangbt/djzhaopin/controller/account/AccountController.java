@@ -34,7 +34,7 @@ public class AccountController {
     private AccountInformationService accountService;
 
     @PostMapping("")
-    public ResponseEntity<ResponseBody<Map<String, Object>>> registerAccount(
+    public ResponseEntity<ResponseBody<AccountInformation>> registerAccount(
             @Valid @RequestBody RegisterAccountRequest registerAccountRequest) {
         return ResponseBody.created(accountService.registerAccount(registerAccountRequest));
     }

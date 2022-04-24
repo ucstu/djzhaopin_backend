@@ -12,7 +12,7 @@ import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 import jakarta.validation.Valid;
 
 public interface AccountInformationService {
-    public Map<String, Object> registerAccount(RegisterAccountRequest registerAccountRequest);
+    public AccountInformation registerAccount(RegisterAccountRequest registerAccountRequest);
 
     public AccountInformation deleteAccount(UUID accountId, String verificationCode);
 

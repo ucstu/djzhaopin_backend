@@ -37,7 +37,7 @@ public class DeliveryRecord {
     private Date updatedAt;
 
     @NotBlank
-    private String userId;
+    private String userInformationId;
 
     @NotNull
     @Range(min = 1, max = 5)
