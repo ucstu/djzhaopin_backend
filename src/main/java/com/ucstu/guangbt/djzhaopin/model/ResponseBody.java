@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -33,7 +34,9 @@ public class ResponseBody<T> {
     private Date timestamp = new Date(System.currentTimeMillis());
     private int status;
     private String message;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Object> errors;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T body;
 
     @Data

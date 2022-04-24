@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
@@ -42,18 +44,22 @@ public class AccountInformation {
     private UUID accountInformationId;
 
     @CreatedDate
+    @JsonProperty(access = Access.READ_ONLY)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 
     @LastModifiedDate
+    @JsonProperty(access = Access.READ_ONLY)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    @JsonProperty(value = "userInformationId", defaultValue = "")
+    @JsonProperty(value = "userInformationId")
     @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "userInformationId")
     private UserInformation userInformation;
 
-    @JsonProperty(value = "hrInformationId", defaultValue = "")
+    @JsonProperty(value = "hrInformationId")
     @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "hrInformationId")
