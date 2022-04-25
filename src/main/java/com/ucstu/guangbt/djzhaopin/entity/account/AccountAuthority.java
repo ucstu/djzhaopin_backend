@@ -30,16 +30,16 @@ public class AccountAuthority {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    @JsonProperty()
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID authorityId;
 
     @CreatedDate
-    // @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 
     @LastModifiedDate
-    @JsonProperty()
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 

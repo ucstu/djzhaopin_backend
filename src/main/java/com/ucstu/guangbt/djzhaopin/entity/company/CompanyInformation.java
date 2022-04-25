@@ -38,16 +38,16 @@ public class CompanyInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID companyInformationId;
 
     @CreatedDate
-    @JsonProperty()
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 
     @LastModifiedDate
-    @JsonProperty()
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 

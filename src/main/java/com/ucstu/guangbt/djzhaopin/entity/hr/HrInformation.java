@@ -38,22 +38,22 @@ public class HrInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    @JsonProperty()
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID hrInformationId;
 
     @CreatedDate
-    @JsonProperty()
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false, updatable = false)
     private Date createdAt;
 
     @LastModifiedDate
-    @JsonProperty()
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private Date updatedAt;
 
-    @JsonProperty(value = "companyInformationId", )
+    @JsonProperty(value = "companyInformationId", access = JsonProperty.Access.READ_ONLY)
     @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "companyInformationId")
