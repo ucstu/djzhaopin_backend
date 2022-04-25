@@ -87,51 +87,35 @@ public class UserInformation {
     // {1:实名,2:匿名}
     private Integer privacySettings;
 
-    @JsonProperty(value = "jobExpectationId", access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "jobExpectationId")
     private List<JobExpectation> jobExpectations;
 
-    @JsonProperty(value = "educationExperienceId", access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "educationExperienceId")
     private List<EducationExperience> educationExperiences;
 
-    @JsonProperty(value = "workExperienceId", access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "workExperienceId")
     private List<WorkExperience> workExperiences;
 
-    @JsonProperty(value = "projectExperienceId", access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "projectExperienceId")
     private List<ProjectExperience> projectExperiences;
 
-    @JsonProperty(value = "deliveryRecordId", access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "deliveryRecordId")
     private List<DeliveryRecord> deliveryRecords;
 
-    @JsonProperty(value = "attentionRecordId", access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "attentionRecordId")
     private List<AttentionRecord> attentionRecords;
 
-    @JsonProperty(value = "inspectionRecordId", access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "inspectionRecordId")
     private List<InspectionRecord> inspectionRecords;
 
-    @JsonProperty(value = "garnerRecordId", access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "garnerRecordId")
     private List<GarnerRecord> garnerRecords;
 }

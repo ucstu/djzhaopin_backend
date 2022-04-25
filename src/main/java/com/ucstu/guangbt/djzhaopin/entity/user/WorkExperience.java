@@ -42,4 +42,20 @@ public class WorkExperience {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
+    private String corporateName;
+
+    private String companyIndustry;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private String positionType;
+
+    private String positionName;
+
+    private String department;
+
+    private String jobContent;
 }

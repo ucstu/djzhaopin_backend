@@ -1,6 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -42,4 +43,17 @@ public class JobExpectation {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
+    private Integer positionType;
+
+    @ElementCollection(targetClass = String.class)
+    private List<String> directionTags;
+
+    private String positionName;
+
+    private Integer startingSalary;
+
+    private Integer ceilingSalary;
+
+    private String city;
 }

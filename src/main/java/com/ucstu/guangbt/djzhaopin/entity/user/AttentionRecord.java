@@ -42,4 +42,8 @@ public class AttentionRecord {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
+    private UUID userInformationId;
+
+    private UUID companyInformationId;
 }

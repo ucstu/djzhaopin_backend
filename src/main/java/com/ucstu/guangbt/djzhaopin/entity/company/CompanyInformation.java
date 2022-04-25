@@ -90,12 +90,9 @@ public class CompanyInformation {
     private String establishmentTime;
 
     @ElementCollection(targetClass = String.class)
-    private List<String> companyBenefits;
+    private List<String> benefits;
 
-    // @JsonProperty(value = "positionInformationId", access =
-    // JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "positionInformationId")
     private List<PositionInformation> positionInformations;
 }

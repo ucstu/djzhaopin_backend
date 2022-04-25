@@ -42,4 +42,12 @@ public class PositionInterviewInfo {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
+    private Integer situation;
+
+    private Integer wheel;
+
+    private Integer time;
+
+    private Integer illustrate;
 }

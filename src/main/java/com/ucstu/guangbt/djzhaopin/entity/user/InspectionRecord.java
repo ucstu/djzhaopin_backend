@@ -42,4 +42,8 @@ public class InspectionRecord {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
+    private UUID from;
+
+    private UUID to;
 }

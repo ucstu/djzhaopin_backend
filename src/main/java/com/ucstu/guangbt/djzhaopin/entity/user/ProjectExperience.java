@@ -42,4 +42,18 @@ public class ProjectExperience {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
+    private String projectName;
+
+    private UUID workExperienceId;
+
+    private String projectDescription;
+
+    private String achievement;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private String projectLink;
 }

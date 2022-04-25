@@ -42,4 +42,14 @@ public class EducationExperience {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
+    private String schoolName;
+
+    private Integer education;
+
+    private String major;
+
+    private Date admissionTime;
+
+    private Date graduationTime;
 }

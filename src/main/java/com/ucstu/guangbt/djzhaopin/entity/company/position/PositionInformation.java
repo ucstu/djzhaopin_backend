@@ -46,26 +46,26 @@ public class PositionInformation {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
+
     private String name;
     private Integer workingYears;
     private Integer education;
 
-    @JsonProperty("directionTags")
     @ElementCollection(targetClass = String.class)
-    private List<String> positionDirectionTags;
+    private List<String> directionTags;
 
     private Integer startingSalary;
     private Integer ceilingSalary;
+
     private String workArea;
     private Date releaseDate;
     private UUID companyInformationId;
-    private UUID hrId;
+    private UUID hrInformationId;
     private Integer positionType;
     private String department;
 
-    @JsonProperty("highlights")
     @ElementCollection(targetClass = String.class)
-    private List<String> positionHighlights;
+    private List<String> highlights;
 
     private String description;
     private Integer weekendReleaseTime;
