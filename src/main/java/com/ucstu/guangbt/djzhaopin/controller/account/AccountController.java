@@ -51,6 +51,7 @@ public class AccountController {
         return ResponseBody.success(accountService.loginAccount(loginAccountRequest));
     }
 
+    // @Secured("ROLE_ADMIN")
     @PutMapping("/{accountId}")
     public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
             @PathVariable UUID accountId,

@@ -95,10 +95,10 @@ public class AccountInformationServiceImpl implements
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginAccountRequest.getUserName(), loginAccountRequest.getPassword()));
         } catch (DisabledException e) {
-            log.info("用户被禁用");
+            log.error("用户被禁用");
             // throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
-            log.info("密码错误");
+            log.error("密码错误");
             // throw new Exception("INVALID_CREDENTIALS", e);
         }
 
