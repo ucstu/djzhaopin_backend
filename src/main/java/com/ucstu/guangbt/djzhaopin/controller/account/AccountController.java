@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
-import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 
 @Validated
@@ -52,7 +51,6 @@ public class AccountController {
         return ResponseBody.success(accountService.loginAccount(loginAccountRequest));
     }
 
-    @PermitAll
     @PutMapping("/{accountId}")
     public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
             @PathVariable UUID accountId,

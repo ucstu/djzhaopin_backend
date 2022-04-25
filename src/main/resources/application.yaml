@@ -8,3 +8,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
+jwt:
+  secret: djzhaopin123456
+  expirationDateInMs: 0
+  refreshExpirationDateInMs: 9000000

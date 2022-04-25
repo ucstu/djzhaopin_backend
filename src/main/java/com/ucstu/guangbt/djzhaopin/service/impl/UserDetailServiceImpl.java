@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountAuthority;
+import com.ucstu.guangbt.djzhaopin.entity.account.AccountGroup;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,8 +24,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Resource
     private AccountInformationRepository accountInformationRepository;
 
-    private Collection<GrantedAuthority> authorities;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AccountInformation accountInformation = accountInformationRepository.findByUserName(username);
@@ -33,17 +33,14 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                if (authorities == null) {
-                    authorities = new HashSet<>();
-                    Set<AccountAuthority> accountAuthorities = accountInformation.getAuthorities();
-                    for (AccountAuthority accountAuthority : accountAuthorities) {
-                        authorities.add(new GrantedAuthority() {
-                            @Override
-                            public String getAuthority() {
-                                return accountAuthority.getAuthorityName();
-                            }
-                        });
-                    }
+                Collection<GrantedAuthority> authorities = new HashSet<>();
+                Set<AccountAuthority> accountAuthorities = accountInformation.getAuthorities();
+                Set<AccountGroup> accountGroups = accountInformation.getGroups();
+                for (AccountAuthority accountAuthority : accountAuthorities) {
+                    authorities.add(new SimpleGrantedAuthority(accountAuthority.getAuthorityName()));
+                }
+                for (AccountGroup accountGroup : accountGroups) {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + accountGroup.getGroupName()));
                 }
                 return authorities;
             }
