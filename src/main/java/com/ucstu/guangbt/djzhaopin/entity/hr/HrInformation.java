@@ -40,7 +40,6 @@ public class HrInformation {
     @GeneratedValue
     @Type(type = "uuid-char")
     @JsonProperty(access = Access.READ_ONLY)
-    @JsonProperty(access = Access.READ_ONLY)
     private UUID hrInformationId;
 
     @CreatedDate

@@ -91,6 +91,7 @@ public class CompanyInformation {
     @ElementCollection(targetClass = String.class)
     private List<String> companyBenefits;
 
+    @JsonProperty(value = "positionInformationId", access = Access.READ_ONLY)
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "positionInformationId")

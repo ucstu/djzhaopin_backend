@@ -15,9 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 

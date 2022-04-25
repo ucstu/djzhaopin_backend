@@ -13,9 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class CompanyInformationServiceImpl implements CompanyInformationService {
 

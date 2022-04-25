@@ -9,9 +9,7 @@ import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class HrInformationServiceImpl implements HrInformationService {
 

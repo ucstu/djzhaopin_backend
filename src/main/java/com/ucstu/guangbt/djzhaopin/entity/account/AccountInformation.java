@@ -54,15 +54,15 @@ public class AccountInformation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    @JsonProperty(value = "userInformationId")
-    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @JsonProperty(value = "userInformationId", access = Access.READ_ONLY)
     @JsonIdentityReference(alwaysAsId = true)
+    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "userInformationId")
     private UserInformation userInformation;
 
-    @JsonProperty(value = "hrInformationId")
-    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @JsonProperty(value = "hrInformationId", access = Access.READ_ONLY)
     @JsonIdentityReference(alwaysAsId = true)
+    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "hrInformationId")
     private HrInformation hrInformation;
 
