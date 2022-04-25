@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
@@ -32,16 +31,16 @@ public class DeliveryRecord {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     private UUID deliveryRecordId;
 
     @CreatedDate
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 
     @LastModifiedDate
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 

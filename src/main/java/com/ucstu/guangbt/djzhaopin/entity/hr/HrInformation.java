@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 
@@ -39,22 +38,22 @@ public class HrInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     private UUID hrInformationId;
 
     @CreatedDate
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false, updatable = false)
     private Date createdAt;
 
     @LastModifiedDate
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private Date updatedAt;
 
-    @JsonProperty(value = "companyInformationId", access = Access.READ_ONLY)
+    @JsonProperty(value = "companyInformationId", )
     @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "companyInformationId")

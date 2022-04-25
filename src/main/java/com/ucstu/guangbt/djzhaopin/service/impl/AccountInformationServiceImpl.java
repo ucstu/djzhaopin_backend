@@ -2,10 +2,13 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.account.AccountAuthority;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
@@ -41,9 +44,12 @@ public class AccountInformationServiceImpl implements AccountInformationService 
     @Override
     public AccountInformation registerAccount(RegisterAccountRequest registerRequest) {
         AccountInformation accountInformation = new AccountInformation();
+        Set<AccountAuthority> accountAuthorities = new HashSet<>();
+        accountAuthorities.add(new AccountAuthority().setAuthorityName("USER"));
         accountInformation.setUserName(registerRequest.getUserName());
         accountInformation.setAccountType(registerRequest.getAccountType());
         accountInformation.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        accountInformation.setAuthorities(accountAuthorities);
         if (accountInformation.getAccountType() == 1) {
             accountInformation.setUserInformation(new UserInformation());
         } else if (accountInformation.getAccountType() == 2) {

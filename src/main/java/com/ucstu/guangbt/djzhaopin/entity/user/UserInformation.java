@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 import org.hibernate.annotations.Type;
@@ -35,17 +35,17 @@ public class UserInformation {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     private UUID userInformationId;
 
     @CreatedDate
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false, updatable = false)
     private Date createdAt;
 
     @LastModifiedDate
-    @JsonProperty(access = Access.READ_ONLY)
+    @JsonProperty()
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private Date updatedAt;
@@ -85,49 +85,49 @@ public class UserInformation {
     // {1:实名,2:匿名}
     private Integer privacySettings;
 
-    @JsonProperty(value = "jobExpectationId", access = Access.READ_ONLY)
+    @JsonProperty(value = "jobExpectationId", )
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "jobExpectationId")
     private List<JobExpectation> jobExpectations;
 
-    @JsonProperty(value = "educationExperienceId", access = Access.READ_ONLY)
+    @JsonProperty(value = "educationExperienceId", )
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "educationExperienceId")
     private List<EducationExperience> educationExperiences;
 
-    @JsonProperty(value = "workExperienceId", access = Access.READ_ONLY)
+    @JsonProperty(value = "workExperienceId", )
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "workExperienceId")
     private List<WorkExperience> workExperiences;
 
-    @JsonProperty(value = "projectExperienceId", access = Access.READ_ONLY)
+    @JsonProperty(value = "projectExperienceId", )
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "projectExperienceId")
     private List<ProjectExperience> projectExperiences;
 
-    @JsonProperty(value = "deliveryRecordId", access = Access.READ_ONLY)
+    @JsonProperty(value = "deliveryRecordId", )
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "deliveryRecordId")
     private List<DeliveryRecord> deliveryRecords;
 
-    @JsonProperty(value = "attentionRecordId", access = Access.READ_ONLY)
+    @JsonProperty(value = "attentionRecordId", )
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "attentionRecordId")
     private List<AttentionRecord> attentionRecords;
 
-    @JsonProperty(value = "inspectionRecordId", access = Access.READ_ONLY)
+    @JsonProperty(value = "inspectionRecordId", )
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "inspectionRecordId")
     private List<InspectionRecord> inspectionRecords;
 
-    @JsonProperty(value = "garnerRecordId", access = Access.READ_ONLY)
+    @JsonProperty(value = "garnerRecordId", )
     @OneToMany(cascade = { CascadeType.ALL })
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = PropertyGenerator.class, property = "garnerRecordId")
