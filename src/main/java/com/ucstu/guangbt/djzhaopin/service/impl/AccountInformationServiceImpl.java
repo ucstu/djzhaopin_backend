@@ -16,8 +16,6 @@ import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
-import com.ucstu.guangbt.djzhaopin.repository.HrInformationRepository;
-import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.JwtUtil;
 
@@ -52,12 +50,6 @@ public class AccountInformationServiceImpl implements
     @Resource
     private AccountInformationRepository accountInformationRepository;
 
-    @Resource
-    private HrInformationRepository hrInformationRepository;
-
-    @Resource
-    private UserInformationRepository userInformationRepository;
-
     @Override
     public Optional<AccountInformation> registerAccount(RegisterAccountRequest registerRequest) {
         AccountInformation accountInformation = new AccountInformation();
@@ -69,11 +61,9 @@ public class AccountInformationServiceImpl implements
         accountInformation.setAccountType(registerRequest.getAccountType());
         if (registerRequest.getAccountType() == 1) {
             UserInformation userInformation = new UserInformation();
-            userInformation = userInformationRepository.save(userInformation);
             accountInformation.setUserInformation(userInformation);
         } else if (registerRequest.getAccountType() == 2) {
             HrInformation hrInformation = new HrInformation();
-            hrInformation = hrInformationRepository.save(hrInformation);
             accountInformation.setHrInformation(hrInformation);
         }
         return Optional.ofNullable(accountInformationRepository.save(accountInformation));

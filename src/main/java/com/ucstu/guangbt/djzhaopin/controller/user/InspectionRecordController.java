@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
@@ -71,10 +71,10 @@ public class InspectionRecordController {
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<Set<InspectionRecord>>> getInspectionRecordsByUserInformationId(
+        public ResponseEntity<ResponseBody<List<InspectionRecord>>> getInspectionRecordsByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 5, size = 10) Pageable pageable) {
-                Optional<Set<InspectionRecord>> inspectionRecordsOptional = userInformationService
+                Optional<List<InspectionRecord>> inspectionRecordsOptional = userInformationService
                                 .getInspectionRecordsByUserInformationId(userInformationId, pageable);
                 if (inspectionRecordsOptional.isPresent()) {
                         return ResponseBody.success(inspectionRecordsOptional.get());

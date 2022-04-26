@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
@@ -70,11 +70,11 @@ public class AttentionRecordController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseBody<Set<AttentionRecord>>> getAttentionRecordsByUserInformationId(
+    public ResponseEntity<ResponseBody<List<AttentionRecord>>> getAttentionRecordsByUserInformationId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
 
-        Optional<Set<AttentionRecord>> attentionRecords = userInformationService
+        Optional<List<AttentionRecord>> attentionRecords = userInformationService
                 .getAttentionRecordsByUserInformationId(userInformationId);
         if (attentionRecords.isPresent()) {
             return ResponseBody.success(attentionRecords.get());

@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.controller.company;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
@@ -72,10 +72,10 @@ public class PositionInformationController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseBody<Set<PositionInformation>>> getPositionInformationsByCompanyInformationId(
+    public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
             @PathVariable("companyinfoid") UUID companyInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Optional<Set<PositionInformation>> positionInformationsOptional = companyInformationService
+        Optional<List<PositionInformation>> positionInformationsOptional = companyInformationService
                 .getPositionInformationsByCompanyInformationId(companyInformationId, pageable);
         if (positionInformationsOptional.isPresent()) {
             return ResponseBody.success(positionInformationsOptional.get());

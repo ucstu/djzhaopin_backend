@@ -1,6 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -21,7 +22,6 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -91,33 +91,33 @@ public class UserInformation {
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<JobExpectation> jobExpectations;
+    private List<JobExpectation> jobExpectations;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<EducationExperience> educationExperiences;
+    private List<EducationExperience> educationExperiences;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<WorkExperience> workExperiences;
+    private List<WorkExperience> workExperiences;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<ProjectExperience> projectExperiences;
+    private List<ProjectExperience> projectExperiences;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<DeliveryRecord> deliveryRecords;
+    private List<DeliveryRecord> deliveryRecords;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<AttentionRecord> attentionRecords;
+    private List<AttentionRecord> attentionRecords;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<InspectionRecord> inspectionRecords;
+    private List<InspectionRecord> inspectionRecords;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<GarnerRecord> garnerRecords;
+    private List<GarnerRecord> garnerRecords;
 }

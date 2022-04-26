@@ -1,13 +1,14 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
-import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
@@ -18,12 +19,14 @@ public class HrInformationServiceImpl implements HrInformationService {
     @Resource
     private HrInformationRepository hrInformationRepository;
 
-    @Resource
-    private CompanyInformationRepository companyInformationRepository;
+    @Override
+    public Optional<HrInformation> getHrInformationByHrInformationId(UUID hrInformationId) {
+        return hrInformationRepository.findById(hrInformationId);
+    }
 
     @Override
-    public Optional<HrInformation> queryHrInformationByHrInformationId(UUID hrInformationId) {
-        return hrInformationRepository.findById(hrInformationId);
+    public Optional<List<HrInformation>> getHrInformations(Pageable pageable) {
+        return Optional.ofNullable(hrInformationRepository.findAll(pageable).getContent());
     }
 
     @Override

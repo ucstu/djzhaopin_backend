@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.company;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -87,10 +87,10 @@ public class CompanyInformation {
 
     private String establishmentTime;
 
-    @ElementCollection(targetClass = String.class)
-    private Set<String> benefits;
+    @ElementCollection
+    private List<String> benefits;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private Set<PositionInformation> positionInformations;
+    private List<PositionInformation> positionInformations;
 }

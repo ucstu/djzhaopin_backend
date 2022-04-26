@@ -2,7 +2,6 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
@@ -14,7 +13,6 @@ import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
-import com.ucstu.guangbt.djzhaopin.repository.JobExpectationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
@@ -22,17 +20,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class UserInformationServiceImpl implements UserInformationService {
 
     @Resource
     private UserInformationRepository userInformationRepository;
-
-    @Resource
-    private JobExpectationRepository jobExpectationRepository;
 
     @Override
     public Optional<UserInformation> updateUserInformationByUserInfoId(UUID userInformationId,
@@ -76,7 +69,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userinfoid);
         if (userInformationOptional.isPresent()) {
             userInformationOptional.get().getJobExpectations().add(jobExpectation);
-            userInformationRepository.save(userInformationOptional.get());
+            jobExpectation = (JobExpectation) userInformationRepository.save(userInformationOptional.get())
+                    .getJobExpectations().toArray()[userInformationOptional.get().getJobExpectations().size() - 1];
             return Optional.of(jobExpectation);
         } else {
             return Optional.empty();
@@ -92,6 +86,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (jobExpectation.isPresent()) {
                 userInformation.get().getJobExpectations().remove(jobExpectation.get());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(jobExpectation.get());
             } else {
                 return Optional.empty();
@@ -127,7 +122,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Optional<Set<JobExpectation>> getJobExpectationsByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<List<JobExpectation>> getJobExpectationsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return Optional.of(userInformation.get().getJobExpectations());
@@ -162,6 +157,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             EducationExperience educationExperience1 = (EducationExperience) userInformation.get()
                     .getEducationExperiences().toArray()[userInformation.get()
                             .getEducationExperiences().size() - 1];
+            userInformationRepository.save(userInformation.get());
             return Optional.of(educationExperience1);
         } else {
             return Optional.empty();
@@ -180,6 +176,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (educationExperience.isPresent()) {
                 userInformation.get().getEducationExperiences().remove(educationExperience.get());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(educationExperience.get());
             } else {
                 return Optional.empty();
@@ -217,7 +214,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Optional<Set<EducationExperience>> getEducationExperiencesByUserInformationId(UUID userinfoid,
+    public Optional<List<EducationExperience>> getEducationExperiencesByUserInformationId(UUID userinfoid,
             Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
@@ -255,6 +252,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             WorkExperience workExperience1 = (WorkExperience) userInformation.get()
                     .getWorkExperiences().toArray()[userInformation.get()
                             .getWorkExperiences().size() - 1];
+            userInformationRepository.save(userInformation.get());
             return Optional.of(workExperience1);
         } else {
             return Optional.empty();
@@ -272,6 +270,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (workExperience.isPresent()) {
                 userInformation.get().getWorkExperiences().remove(workExperience.get());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(workExperience.get());
             } else {
                 return Optional.empty();
@@ -311,7 +310,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Optional<Set<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<List<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return Optional.of(userInformation.get().getWorkExperiences());
@@ -347,6 +346,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             ProjectExperience projectExperience1 = (ProjectExperience) userInformation.get()
                     .getProjectExperiences().toArray()[userInformation.get()
                             .getProjectExperiences().size() - 1];
+            userInformationRepository.save(userInformation.get());
             return Optional.of(projectExperience1);
         } else {
             return Optional.empty();
@@ -365,6 +365,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (projectExperience.isPresent()) {
                 userInformation.get().getProjectExperiences().remove(projectExperience.get());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(projectExperience.get());
             } else {
                 return Optional.empty();
@@ -392,6 +393,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                 projectExperience1.get().setProjectLink(projectExperience.getProjectLink());
                 projectExperience1.get().setProjectName(projectExperience.getProjectName());
                 projectExperience1.get().setStartTime(projectExperience.getStartTime());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(projectExperience1.get());
             } else {
                 return Optional.empty();
@@ -402,7 +404,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Optional<Set<ProjectExperience>> getProjectExperiencesByUserInformationId(UUID userinfoid,
+    public Optional<List<ProjectExperience>> getProjectExperiencesByUserInformationId(UUID userinfoid,
             Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
@@ -440,6 +442,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             DeliveryRecord deliveryRecord1 = (DeliveryRecord) userInformation.get()
                     .getDeliveryRecords().toArray()[userInformation.get()
                             .getDeliveryRecords().size() - 1];
+            userInformationRepository.save(userInformation.get());
             return Optional.of(deliveryRecord1);
         } else {
             return Optional.empty();
@@ -457,6 +460,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (deliveryRecord.isPresent()) {
                 userInformation.get().getDeliveryRecords().remove(deliveryRecord.get());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(deliveryRecord.get());
             } else {
                 return Optional.empty();
@@ -492,7 +496,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Optional<Set<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<List<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return Optional.of(userInformation.get().getDeliveryRecords());
@@ -528,6 +532,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             AttentionRecord attentionRecord1 = (AttentionRecord) userInformation.get()
                     .getAttentionRecords().toArray()[userInformation.get()
                             .getAttentionRecords().size() - 1];
+            userInformationRepository.save(userInformation.get());
             return Optional.of(attentionRecord1);
         } else {
             return Optional.empty();
@@ -545,6 +550,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (attentionRecord.isPresent()) {
                 userInformation.get().getAttentionRecords().remove(attentionRecord.get());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(attentionRecord.get());
             } else {
                 return Optional.empty();
@@ -578,7 +584,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Optional<Set<AttentionRecord>> getAttentionRecordsByUserInformationId(UUID userinfoid) {
+    public Optional<List<AttentionRecord>> getAttentionRecordsByUserInformationId(UUID userinfoid) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return Optional.of(userInformation.get().getAttentionRecords());
@@ -614,6 +620,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             InspectionRecord inspectionRecord1 = (InspectionRecord) userInformation.get()
                     .getInspectionRecords().toArray()[userInformation.get()
                             .getInspectionRecords().size() - 1];
+            userInformationRepository.save(userInformation.get());
             return Optional.of(inspectionRecord1);
         } else {
             return Optional.empty();
@@ -632,6 +639,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (inspectionRecord.isPresent()) {
                 userInformation.get().getInspectionRecords().remove(inspectionRecord.get());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(inspectionRecord.get());
             } else {
                 return Optional.empty();
@@ -666,7 +674,8 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Optional<Set<InspectionRecord>> getInspectionRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<List<InspectionRecord>> getInspectionRecordsByUserInformationId(UUID userinfoid,
+            Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return Optional.of(userInformation.get().getInspectionRecords());
@@ -703,6 +712,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             GarnerRecord garnerRecord1 = (GarnerRecord) userInformation.get()
                     .getGarnerRecords().toArray()[userInformation.get()
                             .getGarnerRecords().size() - 1];
+            userInformationRepository.save(userInformation.get());
             return Optional.of(garnerRecord1);
         } else {
             return Optional.empty();
@@ -720,6 +730,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (garnerRecord.isPresent()) {
                 userInformation.get().getGarnerRecords().remove(garnerRecord.get());
+                userInformationRepository.save(userInformation.get());
                 return Optional.of(garnerRecord.get());
             } else {
                 return Optional.empty();
@@ -753,7 +764,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Optional<Set<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<List<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return Optional.of(userInformation.get().getGarnerRecords());

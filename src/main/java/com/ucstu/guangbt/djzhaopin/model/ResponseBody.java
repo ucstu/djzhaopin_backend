@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -68,7 +68,7 @@ public class ResponseBody<T> {
         }
 
         public BodyBuilder allow(HttpMethod... allowedMethods) {
-            this.headers.setAllow(new LinkedHashSet<>(Arrays.asList(allowedMethods)));
+            this.headers.setAllow(new HashSet<>(Arrays.asList(allowedMethods)));
             return this;
         }
 

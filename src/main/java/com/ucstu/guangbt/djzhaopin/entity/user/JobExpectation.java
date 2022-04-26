@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -49,7 +49,7 @@ public class JobExpectation {
     private Integer positionType;
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
-    private Set<String> directionTags;
+    private List<String> directionTags;
 
     private String positionName;
 

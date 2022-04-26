@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
@@ -70,10 +70,10 @@ public class DeliveryRecordController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseBody<Set<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
+    public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Optional<Set<DeliveryRecord>> deliveryRecordsOptional = userInformationService
+        Optional<List<DeliveryRecord>> deliveryRecordsOptional = userInformationService
                 .getDeliveryRecordsByUserInformationId(userInformationId, pageable);
         if (deliveryRecordsOptional.isPresent()) {
             return ResponseBody.success(deliveryRecordsOptional.get());

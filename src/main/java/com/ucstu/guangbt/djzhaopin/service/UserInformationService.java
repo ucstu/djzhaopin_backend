@@ -2,7 +2,6 @@ package com.ucstu.guangbt.djzhaopin.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
@@ -33,7 +32,7 @@ public interface UserInformationService {
         public Optional<JobExpectation> updateJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid,
                         JobExpectation jobExpectation);
 
-        public Optional<Set<JobExpectation>> getJobExpectationsByUserInformationId(UUID userinfoid, Pageable pageable);
+        public Optional<List<JobExpectation>> getJobExpectationsByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<JobExpectation> getJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid);
 
@@ -47,7 +46,7 @@ public interface UserInformationService {
                         UUID eduexperienceid,
                         EducationExperience educationExperience);
 
-        public Optional<Set<EducationExperience>> getEducationExperiencesByUserInformationId(UUID userinfoid,
+        public Optional<List<EducationExperience>> getEducationExperiencesByUserInformationId(UUID userinfoid,
                         Pageable pageable);
 
         public Optional<EducationExperience> getEducationExperienceByEducationExperienceId(UUID userinfoid,
@@ -60,7 +59,7 @@ public interface UserInformationService {
         public Optional<WorkExperience> updateWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid,
                         WorkExperience workExperience);
 
-        public Optional<Set<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable);
+        public Optional<List<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<WorkExperience> getWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid);
 
@@ -74,7 +73,7 @@ public interface UserInformationService {
                         UUID projectexperienceid,
                         ProjectExperience projectExperience);
 
-        public Optional<Set<ProjectExperience>> getProjectExperiencesByUserInformationId(UUID userinfoid,
+        public Optional<List<ProjectExperience>> getProjectExperiencesByUserInformationId(UUID userinfoid,
                         Pageable pageable);
 
         public Optional<ProjectExperience> getProjectExperienceByProjectExperienceId(UUID userinfoid,
@@ -87,7 +86,7 @@ public interface UserInformationService {
         public Optional<DeliveryRecord> updateDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid,
                         DeliveryRecord deliveryRecord);
 
-        public Optional<Set<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
+        public Optional<List<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
 
@@ -100,7 +99,7 @@ public interface UserInformationService {
                         UUID attentionrecordid,
                         AttentionRecord attentionRecord);
 
-        public Optional<Set<AttentionRecord>> getAttentionRecordsByUserInformationId(UUID userinfoid);
+        public Optional<List<AttentionRecord>> getAttentionRecordsByUserInformationId(UUID userinfoid);
 
         public Optional<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid);
 
@@ -113,7 +112,7 @@ public interface UserInformationService {
                         UUID inspectionrecordid,
                         InspectionRecord inspectionRecord);
 
-        public Optional<Set<InspectionRecord>> getInspectionRecordsByUserInformationId(UUID userinfoid,
+        public Optional<List<InspectionRecord>> getInspectionRecordsByUserInformationId(UUID userinfoid,
                         Pageable pageable);
 
         public Optional<InspectionRecord> getInspectionRecordByInspectionRecordId(UUID userinfoid,
@@ -126,7 +125,7 @@ public interface UserInformationService {
         public Optional<GarnerRecord> updateGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid,
                         GarnerRecord garnerRecord);
 
-        public Optional<Set<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
+        public Optional<List<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<GarnerRecord> getGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid);
 

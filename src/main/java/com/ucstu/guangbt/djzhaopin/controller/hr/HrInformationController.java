@@ -1,5 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.hr;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -7,6 +8,8 @@ import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +31,24 @@ public class HrInformationController {
     private HrInformationService hrInformationService;
 
     @GetMapping("/{hrinfoid}")
-    public ResponseEntity<ResponseBody<HrInformation>> queryHrInformationByHrInformationId(
+    public ResponseEntity<ResponseBody<HrInformation>> getHrInformationByHrInformationId(
             @PathVariable("hrinfoid") UUID hrInformationId) {
         Optional<HrInformation> hrInformationOptional = hrInformationService
-                .queryHrInformationByHrInformationId(hrInformationId);
+                .getHrInformationByHrInformationId(hrInformationId);
         if (hrInformationOptional.isPresent()) {
             return ResponseBody.success(hrInformationOptional.get());
         }
         return ResponseBody.notFound().build();
 
+    }
+
+    @GetMapping("")
+    public ResponseEntity<ResponseBody<List<HrInformation>>> getHrInformations(@PageableDefault Pageable pageable) {
+        Optional<List<HrInformation>> hrInformationsOptional = hrInformationService.getHrInformations(pageable);
+        if (hrInformationsOptional.isPresent()) {
+            return ResponseBody.success(hrInformationsOptional.get());
+        }
+        return ResponseBody.notFound().build();
     }
 
     @PutMapping("/{hrinfoid}")
