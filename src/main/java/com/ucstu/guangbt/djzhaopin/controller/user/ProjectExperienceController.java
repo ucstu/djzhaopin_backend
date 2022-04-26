@@ -1,12 +1,17 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,44 +36,64 @@ public class ProjectExperienceController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<ProjectExperience>> createProjectExperience(
-                        @PathVariable UUID userinfoid,
+                        @PathVariable("userinfoid") UUID userInformationId,
                         @Valid @RequestBody ProjectExperience projectExperience) {
-                return ResponseBody
-                                .success(userInformationService.createProjectExperience(userinfoid, projectExperience));
+                Optional<ProjectExperience> projectExperienceOptional = userInformationService
+                                .createProjectExperience(userInformationId, projectExperience);
+                if (projectExperienceOptional.isPresent()) {
+                        return ResponseBody.success(projectExperienceOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @DeleteMapping("/{projectexperienceid}")
         public ResponseEntity<ResponseBody<ProjectExperience>> deleteProjectExperienceByProjectExperienceId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID projectexperienceid) {
-                return ResponseBody
-                                .success(userInformationService.deleteProjectExperienceByProjectExperienceId(userinfoid,
-                                                projectexperienceid));
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("projectexperienceid") UUID projectExperienceId) {
+                Optional<ProjectExperience> projectExperienceOptional = userInformationService
+                                .deleteProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId);
+                if (projectExperienceOptional.isPresent()) {
+                        return ResponseBody.success(projectExperienceOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @PutMapping("/{projectexperienceid}")
         public ResponseEntity<ResponseBody<ProjectExperience>> updateProjectExperienceByProjectExperienceId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID projectexperienceid,
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("projectexperienceid") UUID projectExperienceId,
                         @Valid @RequestBody ProjectExperience projectExperience) {
-                return ResponseBody
-                                .success(userInformationService.updateProjectExperienceByProjectExperienceId(userinfoid,
-                                                projectexperienceid, projectExperience));
+                Optional<ProjectExperience> projectExperienceOptional = userInformationService
+                                .updateProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId,
+                                                projectExperience);
+                if (projectExperienceOptional.isPresent()) {
+                        return ResponseBody.success(projectExperienceOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<ProjectExperience>>> getProjectExperiences(
-                        @PathVariable UUID userinfoid) {
-                return ResponseBody.success(userInformationService.getProjectExperiences(userinfoid));
+        public ResponseEntity<ResponseBody<List<ProjectExperience>>> getProjectExperiencesByUserInformationId(
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                Stream<ProjectExperience> projectExperienceStream = userInformationService
+                                .getProjectExperiencesByUserInformationId(userInformationId, pageable);
+                if (projectExperienceStream.count() > 0) {
+                        return ResponseBody.success(projectExperienceStream.collect(Collectors.toList()));
+                }
+                return ResponseBody.notFound().build();
         }
 
         @GetMapping("/{projectexperienceid}")
         public ResponseEntity<ResponseBody<ProjectExperience>> getProjectExperienceByProjectExperienceId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID projectexperienceid) {
-                return ResponseBody
-                                .success(userInformationService.getProjectExperienceByProjectExperienceId(userinfoid,
-                                                projectexperienceid));
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("projectexperienceid") UUID projectExperienceId) {
+                Optional<ProjectExperience> projectExperienceOptional = userInformationService
+                                .getProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId);
+                if (projectExperienceOptional.isPresent()) {
+                        return ResponseBody.success(projectExperienceOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
 }

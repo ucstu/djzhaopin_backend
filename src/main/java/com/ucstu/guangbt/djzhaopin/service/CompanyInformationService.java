@@ -38,5 +38,6 @@ public interface CompanyInformationService {
         public Optional<PositionInformation> getPositionInformationByPositionInfoId(UUID companyInformationId,
                         UUID positionInformationId);
 
-        public Stream<PositionInformation> getPositionInformations(UUID companyInformationId, Pageable pageable);
+        public Stream<PositionInformation> getPositionInformationsByCompanyInformationId(UUID companyInformationId,
+                        Pageable pageable);
 }

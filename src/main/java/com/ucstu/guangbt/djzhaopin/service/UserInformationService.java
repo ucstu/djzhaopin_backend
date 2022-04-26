@@ -32,7 +32,7 @@ public interface UserInformationService {
         public Optional<JobExpectation> updateJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid,
                         JobExpectation jobExpectation);
 
-        public Stream<JobExpectation> getJobExpectations(UUID userinfoid);
+        public Stream<JobExpectation> getJobExpectationsByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<JobExpectation> getJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid);
 
@@ -46,7 +46,8 @@ public interface UserInformationService {
                         UUID eduexperienceid,
                         EducationExperience educationExperience);
 
-        public Stream<EducationExperience> getEducationExperiences(UUID userinfoid);
+        public Stream<EducationExperience> getEducationExperiencesByUserInformationId(UUID userinfoid,
+                        Pageable pageable);
 
         public Optional<EducationExperience> getEducationExperienceByEducationExperienceId(UUID userinfoid,
                         UUID eduexperienceid);
@@ -58,7 +59,7 @@ public interface UserInformationService {
         public Optional<WorkExperience> updateWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid,
                         WorkExperience workExperience);
 
-        public Stream<WorkExperience> getWorkExperiences(UUID userinfoid);
+        public Stream<WorkExperience> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<WorkExperience> getWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid);
 
@@ -72,7 +73,7 @@ public interface UserInformationService {
                         UUID projectexperienceid,
                         ProjectExperience projectExperience);
 
-        public Stream<ProjectExperience> getProjectExperiences(UUID userinfoid);
+        public Stream<ProjectExperience> getProjectExperiencesByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<ProjectExperience> getProjectExperienceByProjectExperienceId(UUID userinfoid,
                         UUID projectexperienceid);
@@ -84,7 +85,7 @@ public interface UserInformationService {
         public Optional<DeliveryRecord> updateDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid,
                         DeliveryRecord deliveryRecord);
 
-        public Stream<DeliveryRecord> getDeliveryRecords(UUID userinfoid);
+        public Stream<DeliveryRecord> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
 
@@ -97,7 +98,7 @@ public interface UserInformationService {
                         UUID attentionrecordid,
                         AttentionRecord attentionRecord);
 
-        public Stream<AttentionRecord> getAttentionRecords(UUID userinfoid);
+        public Stream<AttentionRecord> getAttentionRecordsByUserInformationId(UUID userinfoid);
 
         public Optional<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid);
 
@@ -110,7 +111,7 @@ public interface UserInformationService {
                         UUID inspectionrecordid,
                         InspectionRecord inspectionRecord);
 
-        public Stream<InspectionRecord> getInspectionRecords(UUID userinfoid);
+        public Stream<InspectionRecord> getInspectionRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<InspectionRecord> getInspectionRecordByInspectionRecordId(UUID userinfoid,
                         UUID inspectionrecordid);
@@ -122,7 +123,7 @@ public interface UserInformationService {
         public Optional<GarnerRecord> updateGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid,
                         GarnerRecord garnerRecord);
 
-        public Stream<GarnerRecord> getGarnerRecords(UUID userinfoid);
+        public Stream<GarnerRecord> getGarnerRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<GarnerRecord> getGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid);
 

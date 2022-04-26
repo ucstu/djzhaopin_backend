@@ -122,7 +122,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<JobExpectation> getJobExpectations(UUID userinfoid) {
+    public Stream<JobExpectation> getJobExpectationsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return userInformation.get().getJobExpectations().stream();
@@ -212,7 +212,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<EducationExperience> getEducationExperiences(UUID userinfoid) {
+    public Stream<EducationExperience> getEducationExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return userInformation.get().getEducationExperiences().stream();
@@ -305,7 +305,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<WorkExperience> getWorkExperiences(UUID userinfoid) {
+    public Stream<WorkExperience> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return userInformation.get().getWorkExperiences().stream();
@@ -396,7 +396,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<ProjectExperience> getProjectExperiences(UUID userinfoid) {
+    public Stream<ProjectExperience> getProjectExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return userInformation.get().getProjectExperiences().stream();
@@ -485,7 +485,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<DeliveryRecord> getDeliveryRecords(UUID userinfoid) {
+    public Stream<DeliveryRecord> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return userInformation.get().getDeliveryRecords().stream();
@@ -571,7 +571,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<AttentionRecord> getAttentionRecords(UUID userinfoid) {
+    public Stream<AttentionRecord> getAttentionRecordsByUserInformationId(UUID userinfoid) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return userInformation.get().getAttentionRecords().stream();
@@ -659,7 +659,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<InspectionRecord> getInspectionRecords(UUID userinfoid) {
+    public Stream<InspectionRecord> getInspectionRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return userInformation.get().getInspectionRecords().stream();
@@ -746,7 +746,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<GarnerRecord> getGarnerRecords(UUID userinfoid) {
+    public Stream<GarnerRecord> getGarnerRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             return userInformation.get().getGarnerRecords().stream();

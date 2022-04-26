@@ -141,7 +141,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public Stream<PositionInformation> getPositionInformations(UUID companyInformationId, Pageable pageable) {
+    public Stream<PositionInformation> getPositionInformationsByCompanyInformationId(UUID companyInformationId,
+            Pageable pageable) {
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {

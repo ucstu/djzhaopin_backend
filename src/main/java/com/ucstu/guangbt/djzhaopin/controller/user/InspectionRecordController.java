@@ -1,12 +1,16 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,45 +35,64 @@ public class InspectionRecordController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<InspectionRecord>> createInspectionRecord(
-                        @PathVariable UUID userinfoid,
+                        @PathVariable("userinfoid") UUID userInformationId,
                         @Valid @RequestBody InspectionRecord inspectionRecord) {
-                return ResponseBody
-                                .success(userInformationService.createInspectionRecord(userinfoid, inspectionRecord));
+                Optional<InspectionRecord> inspectionRecordOptional = userInformationService
+                                .createInspectionRecord(userInformationId, inspectionRecord);
+                if (inspectionRecordOptional.isPresent()) {
+                        return ResponseBody.success(inspectionRecordOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @DeleteMapping("/{inspectionrecordid}")
         public ResponseEntity<ResponseBody<InspectionRecord>> deleteInspectionRecordByInspectionRecordId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID inspectionrecordid) {
-                return ResponseBody
-                                .success(userInformationService.deleteInspectionRecordByInspectionRecordId(userinfoid,
-                                                inspectionrecordid));
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("inspectionrecordid") UUID inspectionRecordId) {
+                Optional<InspectionRecord> inspectionRecordOptional = userInformationService
+                                .deleteInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId);
+                if (inspectionRecordOptional.isPresent()) {
+                        return ResponseBody.success(inspectionRecordOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @PutMapping("/{inspectionrecordid}")
         public ResponseEntity<ResponseBody<InspectionRecord>> updateInspectionRecordByInspectionRecordId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID inspectionrecordid,
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("inspectionrecordid") UUID inspectionRecordId,
                         @Valid @RequestBody InspectionRecord inspectionRecord) {
-                return ResponseBody
-                                .success(userInformationService.updateInspectionRecordByInspectionRecordId(userinfoid,
-                                                inspectionrecordid,
-                                                inspectionRecord));
+                Optional<InspectionRecord> inspectionRecordOptional = userInformationService
+                                .updateInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId,
+                                                inspectionRecord);
+                if (inspectionRecordOptional.isPresent()) {
+                        return ResponseBody.success(inspectionRecordOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<InspectionRecord>>> getInspectionRecords(
-                        @PathVariable UUID userinfoid) {
-                return ResponseBody.success(userInformationService.getInspectionRecords(userinfoid));
+        public ResponseEntity<ResponseBody<List<InspectionRecord>>> getInspectionRecordsByUserInformationId(
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PageableDefault(page = 5, size = 10) Pageable pageable) {
+                Stream<InspectionRecord> inspectionRecordStream = userInformationService
+                                .getInspectionRecordsByUserInformationId(userInformationId, pageable);
+                if (inspectionRecordStream.count() > 0) {
+                        return ResponseBody
+                                        .success(inspectionRecordStream.collect(java.util.stream.Collectors.toList()));
+                }
+                return ResponseBody.notFound().build();
         }
 
         @GetMapping("/{inspectionrecordid}")
         public ResponseEntity<ResponseBody<InspectionRecord>> getInspectionRecordByInspectionRecordId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID inspectionrecordid) {
-                return ResponseBody
-                                .success(
-                                                userInformationService.getInspectionRecordByInspectionRecordId(
-                                                                userinfoid, inspectionrecordid));
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("inspectionrecordid") UUID inspectionRecordId) {
+                Optional<InspectionRecord> inspectionRecordOptional = userInformationService
+                                .getInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId);
+                if (inspectionRecordOptional.isPresent()) {
+                        return ResponseBody.success(inspectionRecordOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 }

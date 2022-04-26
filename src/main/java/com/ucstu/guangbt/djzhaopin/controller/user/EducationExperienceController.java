@@ -1,12 +1,16 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,47 +35,66 @@ public class EducationExperienceController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<EducationExperience>> createEducationExperience(
-                        @PathVariable UUID userinfoid,
+                        @PathVariable("userinfoid") UUID userInformationId,
                         @Valid @RequestBody EducationExperience educationExperience) {
-                return ResponseBody.success(
-                                userInformationService.createEducationExperience(userinfoid, educationExperience));
+                Optional<EducationExperience> educationExperienceOptional = userInformationService
+                                .createEducationExperience(userInformationId, educationExperience);
+                if (educationExperienceOptional.isPresent()) {
+                        return ResponseBody.success(educationExperienceOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @DeleteMapping("/{eduexperienceid}")
         public ResponseEntity<ResponseBody<EducationExperience>> deleteEducationExperienceByEducationExperienceId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID eduexperienceid) {
-                return ResponseBody
-                                .success(userInformationService.deleteEducationExperienceByEducationExperienceId(
-                                                userinfoid,
-                                                eduexperienceid));
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("eduexperienceid") UUID eduExperienceId) {
+                Optional<EducationExperience> educationExperienceOptional = userInformationService
+                                .deleteEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId);
+                if (educationExperienceOptional.isPresent()) {
+                        return ResponseBody.success(educationExperienceOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @PutMapping("/{eduexperienceid}")
         public ResponseEntity<ResponseBody<EducationExperience>> updateEducationExperienceByEducationExperienceId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID eduexperienceid,
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("eduexperienceid") UUID eduExperienceId,
                         @Valid @RequestBody EducationExperience educationExperience) {
-                return ResponseBody
-                                .success(userInformationService.updateEducationExperienceByEducationExperienceId(
-                                                userinfoid,
-                                                eduexperienceid, educationExperience));
+                Optional<EducationExperience> educationExperienceOptional = userInformationService
+                                .updateEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId,
+                                                educationExperience);
+                if (educationExperienceOptional.isPresent()) {
+                        return ResponseBody.success(educationExperienceOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<EducationExperience>>> getEducationExperiences(
-                        @PathVariable UUID userinfoid) {
-                return ResponseBody.success(userInformationService.getEducationExperiences(userinfoid));
+        public ResponseEntity<ResponseBody<List<EducationExperience>>> getEducationExperiencesByUserInformationId(
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                Stream<EducationExperience> educationExperienceStream = userInformationService
+                                .getEducationExperiencesByUserInformationId(userInformationId, pageable);
+                if (educationExperienceStream.count() > 0) {
+                        return ResponseBody.success(
+                                        educationExperienceStream.collect(java.util.stream.Collectors.toList()));
+                }
+                return ResponseBody.notFound().build();
+
         }
 
         @GetMapping("/{eduexperienceid}")
         public ResponseEntity<ResponseBody<EducationExperience>> getEducationExperienceByEducationExperienceId(
-                        @PathVariable UUID userinfoid,
-                        @PathVariable UUID eduexperienceid) {
-                return ResponseBody
-                                .success(userInformationService.getEducationExperienceByEducationExperienceId(
-                                                userinfoid,
-                                                eduexperienceid));
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("eduexperienceid") UUID eduExperienceId) {
+                Optional<EducationExperience> educationExperienceOptional = userInformationService
+                                .getEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId);
+                if (educationExperienceOptional.isPresent()) {
+                        return ResponseBody.success(educationExperienceOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
 }

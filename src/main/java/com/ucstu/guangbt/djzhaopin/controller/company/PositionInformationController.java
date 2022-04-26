@@ -73,11 +73,11 @@ public class PositionInformationController {
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformations(
+        public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
                         @PathVariable("companyinfoid") UUID companyInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
                 Stream<PositionInformation> positionInformationStream = companyInformationService
-                                .getPositionInformations(companyInformationId, pageable);
+                                .getPositionInformationsByCompanyInformationId(companyInformationId, pageable);
                 if (positionInformationStream.count() > 0) {
                         return ResponseBody.success(positionInformationStream.collect(Collectors.toList()));
                 }

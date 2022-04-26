@@ -1,6 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.controller.account;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
@@ -36,33 +37,53 @@ public class AccountController {
     @PostMapping("")
     public ResponseEntity<ResponseBody<AccountInformation>> registerAccount(
             @Valid @RequestBody RegisterAccountRequest registerAccountRequest) {
-        return ResponseBody.created(accountService.registerAccount(registerAccountRequest));
+        Optional<AccountInformation> accountInformationOptional = accountService
+                .registerAccount(registerAccountRequest);
+        if (accountInformationOptional.isPresent()) {
+            return ResponseBody.success(accountInformationOptional.get());
+        }
+        return ResponseBody.notFound().build();
     }
 
     @DeleteMapping("/{accountId}")
     public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
-            @PathVariable UUID accountId, @RequestParam String verificationCode) {
-        return ResponseBody.success(accountService.deleteAccount(accountId, verificationCode));
+            @PathVariable("accountId") UUID accountInformationId, @RequestParam String verificationCode) {
+        Optional<AccountInformation> accountInformationOptional = accountService
+                .deleteAccount(accountInformationId, verificationCode);
+        if (accountInformationOptional.isPresent()) {
+            return ResponseBody.success(accountInformationOptional.get());
+        }
+        return ResponseBody.notFound().build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<ResponseBody<Map<String, Object>>> loginAccount(
             @Valid @RequestBody LoginAccountRequest loginAccountRequest) {
-        return ResponseBody.success(accountService.loginAccount(loginAccountRequest));
+        Map<String, Object> map = accountService.loginAccount(loginAccountRequest);
+        return ResponseBody.success(map);
     }
 
-    // @Secured("ROLE_ADMIN")
     @PutMapping("/{accountId}")
     public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
-            @PathVariable UUID accountId,
+            @PathVariable("accountId") UUID accountInformationId,
             @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
-        return ResponseBody.success(accountService.changePassword(accountId, changePasswordRequest));
+        Optional<AccountInformation> accountInformationOptional = accountService
+                .changePassword(accountInformationId, changePasswordRequest);
+        if (accountInformationOptional.isPresent()) {
+            return ResponseBody.success(accountInformationOptional.get());
+        }
+        return ResponseBody.notFound().build();
     }
 
     @PutMapping("/forget")
     public ResponseEntity<ResponseBody<AccountInformation>> forgetPassword(
             @Valid @RequestBody ForgetPasswordRequest forgetPasswordRequest) {
-        return ResponseBody.success(accountService.forgetPassword(forgetPasswordRequest));
+        Optional<AccountInformation> accountInformationOptional = accountService
+                .forgetPassword(forgetPasswordRequest);
+        if (accountInformationOptional.isPresent()) {
+            return ResponseBody.success(accountInformationOptional.get());
+        }
+        return ResponseBody.notFound().build();
     }
 
 }

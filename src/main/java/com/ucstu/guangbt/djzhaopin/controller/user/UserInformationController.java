@@ -1,14 +1,16 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,21 +33,34 @@ public class UserInformationController {
 
     @PutMapping("/{userinfoid}")
     public ResponseEntity<ResponseBody<UserInformation>> updateUserInformationByUserInfoId(
-            @PathVariable UUID userinfoid,
+            @PathVariable("userinfoid") UUID userInformationId,
             @Valid UserInformation userInformation) {
-        return ResponseBody
-                .success(userInformationService.updateUserInformationByUserInfoId(userinfoid, userInformation));
+        Optional<UserInformation> userInformationOptional = userInformationService
+                .updateUserInformationByUserInfoId(userInformationId, userInformation);
+        if (userInformationOptional.isPresent()) {
+            return ResponseBody.success(userInformationOptional.get());
+        }
+        return ResponseBody.notFound().build();
     }
 
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
-            @PageableDefault(size = 10, page = 1, sort = "userInformationId", direction = Direction.DESC) Pageable pageable) {
-        return ResponseBody.success(userInformationService.getUserInformations(pageable));
+            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        Stream<UserInformation> userInformations = userInformationService.getUserInformations(pageable);
+        if (userInformations.count() > 0) {
+            return ResponseBody.success(userInformations.collect(Collectors.toList()));
+        }
+        return ResponseBody.notFound().build();
     }
 
     @GetMapping("/{userinfoid}")
     public ResponseEntity<ResponseBody<UserInformation>> getUserInformationByUserInfoId(
-            @PathVariable UUID userinfoid) {
-        return ResponseBody.success(userInformationService.getUserInformationByUserInfoId(userinfoid));
+            @PathVariable("userinfoid") UUID userInformationId) {
+        Optional<UserInformation> userInformationOptional = userInformationService
+                .getUserInformationByUserInfoId(userInformationId);
+        if (userInformationOptional.isPresent()) {
+            return ResponseBody.success(userInformationOptional.get());
+        }
+        return ResponseBody.notFound().build();
     }
 }
