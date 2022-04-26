@@ -16,7 +16,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -46,16 +45,16 @@ public class DeliveryRecord {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    @NotBlank
-    private String userInformationId;
-
     @NotNull
+    @Type(type = "uuid-char")
+    private UUID userInformationId;
+
     @Range(min = 1, max = 5)
     private Integer state;
 
-    @NotBlank
     private Date interviewTime;
 
+    @NotNull
     @Type(type = "uuid-char")
     private UUID jobInformationId;
 }
