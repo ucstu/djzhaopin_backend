@@ -55,8 +55,10 @@ public class EducationExperience {
     private String major;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy")
     private Date admissionTime;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy")
     private Date graduationTime;
 }

@@ -1,5 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
+import static org.mockito.ArgumentMatchers.nullable;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +25,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -70,6 +73,7 @@ public class UserInformation {
 
     private String phoneNumber;
 
+    @Email
     private String email;
 
     private Integer workingYears;
