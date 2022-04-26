@@ -56,6 +56,6 @@ public class DeliveryRecord {
     @NotBlank
     private Date interviewTime;
 
-    @NotNull
+    @Type(type = "uuid-char")
     private UUID jobInformationId;
 }

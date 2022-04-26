@@ -59,7 +59,11 @@ public class PositionInformation {
 
     private String workArea;
     private Date releaseDate;
+
+    @Type(type = "uuid-char")
     private UUID companyInformationId;
+
+    @Type(type = "uuid-char")
     private UUID hrInformationId;
     private Integer positionType;
     private String department;

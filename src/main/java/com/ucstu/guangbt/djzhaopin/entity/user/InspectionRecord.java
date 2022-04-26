@@ -43,7 +43,9 @@ public class InspectionRecord {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
+    @Type(type = "uuid-char")
     private UUID from;
 
+    @Type(type = "uuid-char")
     private UUID to;
 }

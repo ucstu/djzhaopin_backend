@@ -45,6 +45,7 @@ public class ProjectExperience {
 
     private String projectName;
 
+    @Type(type = "uuid-char")
     private UUID workExperienceId;
 
     private String projectDescription;
