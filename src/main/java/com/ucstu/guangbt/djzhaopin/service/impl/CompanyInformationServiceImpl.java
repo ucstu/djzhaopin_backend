@@ -82,8 +82,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
             companyInformationOptional.get().getPositionInformations().add(positionInformation);
-            companyInformationRepository.save(companyInformationOptional.get());
-            return Optional.ofNullable(positionInformation);
+            return Optional.ofNullable(companyInformationRepository.save(companyInformationOptional.get())
+                    .getPositionInformations()
+                    .get(companyInformationOptional.get().getPositionInformations().size() - 1));
         }
         return Optional.empty();
     }

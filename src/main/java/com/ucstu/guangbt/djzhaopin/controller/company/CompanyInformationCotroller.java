@@ -40,7 +40,7 @@ public class CompanyInformationCotroller {
         Optional<CompanyInformation> companyInformationOptional = companyInformationService
                 .createCompanyInformation(companyInformation);
         if (companyInformationOptional.isPresent()) {
-            return ResponseBody.success(companyInformationOptional.get());
+            return ResponseBody.created(companyInformationOptional.get());
         }
         return ResponseBody.notFound().build();
     }

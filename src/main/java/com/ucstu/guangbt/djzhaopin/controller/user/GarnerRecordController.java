@@ -38,7 +38,7 @@ public class GarnerRecordController {
         Optional<GarnerRecord> garnerRecordOptional = userInformationService.createGarnerRecord(userInformationId,
                 garnerRecord);
         if (garnerRecordOptional.isPresent()) {
-            return ResponseBody.success(garnerRecordOptional.get());
+            return ResponseBody.created(garnerRecordOptional.get());
         }
         return ResponseBody.notFound().build();
     }

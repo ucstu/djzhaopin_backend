@@ -39,7 +39,7 @@ public class DeliveryRecordController {
         Optional<DeliveryRecord> deliveryRecordOptional = userInformationService
                 .createDeliveryRecord(userInformationId, deliveryRecord);
         if (deliveryRecordOptional.isPresent()) {
-            return ResponseBody.success(deliveryRecordOptional.get());
+            return ResponseBody.created(deliveryRecordOptional.get());
         }
         return ResponseBody.notFound().build();
     }

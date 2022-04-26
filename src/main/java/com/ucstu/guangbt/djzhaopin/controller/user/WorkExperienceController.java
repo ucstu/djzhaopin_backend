@@ -39,7 +39,7 @@ public class WorkExperienceController {
                 Optional<WorkExperience> workExperienceOptional = userInformationService
                                 .createWorkExperience(userInformationId, workExperience);
                 if (workExperienceOptional.isPresent()) {
-                        return ResponseBody.success(workExperienceOptional.get());
+                        return ResponseBody.created(workExperienceOptional.get());
                 }
                 return ResponseBody.notFound().build();
         }

@@ -38,7 +38,7 @@ public class PositionInformationController {
         Optional<PositionInformation> positionInformationOptional = companyInformationService
                 .createPositionInformation(companyInformationId, positionInformation);
         if (positionInformationOptional.isPresent()) {
-            return ResponseBody.success(positionInformationOptional.get());
+            return ResponseBody.created(positionInformationOptional.get());
         }
         return ResponseBody.notFound().build();
     }

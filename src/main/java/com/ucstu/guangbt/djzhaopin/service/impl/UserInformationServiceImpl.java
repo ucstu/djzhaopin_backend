@@ -69,9 +69,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userinfoid);
         if (userInformationOptional.isPresent()) {
             userInformationOptional.get().getJobExpectations().add(jobExpectation);
-            jobExpectation = (JobExpectation) userInformationRepository.save(userInformationOptional.get())
-                    .getJobExpectations().toArray()[userInformationOptional.get().getJobExpectations().size() - 1];
-            return Optional.of(jobExpectation);
+            return Optional.of(userInformationRepository.save(userInformationOptional.get()).getJobExpectations()
+                    .get(userInformationOptional.get().getJobExpectations().size() - 1));
         } else {
             return Optional.empty();
         }
@@ -154,11 +153,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             userInformation.get().getEducationExperiences().add(educationExperience);
-            EducationExperience educationExperience1 = (EducationExperience) userInformation.get()
-                    .getEducationExperiences().toArray()[userInformation.get()
-                            .getEducationExperiences().size() - 1];
-            userInformationRepository.save(userInformation.get());
-            return Optional.of(educationExperience1);
+            return Optional.of((EducationExperience) userInformationRepository.save(userInformation.get())
+                    .getEducationExperiences().get(userInformation.get().getEducationExperiences().size() - 1));
         } else {
             return Optional.empty();
         }
@@ -249,11 +245,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             userInformation.get().getWorkExperiences().add(workExperience);
-            WorkExperience workExperience1 = (WorkExperience) userInformation.get()
-                    .getWorkExperiences().toArray()[userInformation.get()
-                            .getWorkExperiences().size() - 1];
-            userInformationRepository.save(userInformation.get());
-            return Optional.of(workExperience1);
+            return Optional.of((WorkExperience) userInformationRepository.save(userInformation.get())
+                    .getWorkExperiences().get(userInformation.get().getWorkExperiences().size() - 1));
         } else {
             return Optional.empty();
         }
@@ -343,11 +336,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             userInformation.get().getProjectExperiences().add(projectExperience);
-            ProjectExperience projectExperience1 = (ProjectExperience) userInformation.get()
-                    .getProjectExperiences().toArray()[userInformation.get()
-                            .getProjectExperiences().size() - 1];
-            userInformationRepository.save(userInformation.get());
-            return Optional.of(projectExperience1);
+            return Optional.of((ProjectExperience) userInformationRepository.save(userInformation.get())
+                    .getProjectExperiences().get(userInformation.get().getProjectExperiences().size() - 1));
         } else {
             return Optional.empty();
         }
@@ -439,11 +429,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             userInformation.get().getDeliveryRecords().add(deliveryRecord);
-            DeliveryRecord deliveryRecord1 = (DeliveryRecord) userInformation.get()
-                    .getDeliveryRecords().toArray()[userInformation.get()
-                            .getDeliveryRecords().size() - 1];
-            userInformationRepository.save(userInformation.get());
-            return Optional.of(deliveryRecord1);
+            return Optional.of((DeliveryRecord) userInformationRepository.save(userInformation.get())
+                    .getDeliveryRecords().get(userInformation.get().getDeliveryRecords().size() - 1));
         } else {
             return Optional.empty();
         }
@@ -529,11 +516,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             userInformation.get().getAttentionRecords().add(attentionRecord);
-            AttentionRecord attentionRecord1 = (AttentionRecord) userInformation.get()
-                    .getAttentionRecords().toArray()[userInformation.get()
-                            .getAttentionRecords().size() - 1];
-            userInformationRepository.save(userInformation.get());
-            return Optional.of(attentionRecord1);
+            return Optional.of((AttentionRecord) userInformationRepository.save(userInformation.get())
+                    .getAttentionRecords().get(userInformation.get().getAttentionRecords().size() - 1));
         } else {
             return Optional.empty();
         }
@@ -617,11 +601,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             userInformation.get().getInspectionRecords().add(inspectionRecord);
-            InspectionRecord inspectionRecord1 = (InspectionRecord) userInformation.get()
-                    .getInspectionRecords().toArray()[userInformation.get()
-                            .getInspectionRecords().size() - 1];
-            userInformationRepository.save(userInformation.get());
-            return Optional.of(inspectionRecord1);
+            return Optional.of((InspectionRecord) userInformationRepository.save(userInformation.get())
+                    .getInspectionRecords().get(userInformation.get().getInspectionRecords().size() - 1));
         } else {
             return Optional.empty();
         }
@@ -709,11 +690,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
             userInformation.get().getGarnerRecords().add(garnerRecord);
-            GarnerRecord garnerRecord1 = (GarnerRecord) userInformation.get()
-                    .getGarnerRecords().toArray()[userInformation.get()
-                            .getGarnerRecords().size() - 1];
-            userInformationRepository.save(userInformation.get());
-            return Optional.of(garnerRecord1);
+            return Optional.of((GarnerRecord) userInformationRepository.save(userInformation.get())
+                    .getGarnerRecords().get(userInformation.get().getGarnerRecords().size() - 1));
         } else {
             return Optional.empty();
         }

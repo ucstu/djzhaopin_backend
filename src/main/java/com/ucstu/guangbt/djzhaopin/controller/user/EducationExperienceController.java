@@ -39,7 +39,7 @@ public class EducationExperienceController {
                 Optional<EducationExperience> educationExperienceOptional = userInformationService
                                 .createEducationExperience(userInformationId, educationExperience);
                 if (educationExperienceOptional.isPresent()) {
-                        return ResponseBody.success(educationExperienceOptional.get());
+                        return ResponseBody.created(educationExperienceOptional.get());
                 }
                 return ResponseBody.notFound().build();
         }

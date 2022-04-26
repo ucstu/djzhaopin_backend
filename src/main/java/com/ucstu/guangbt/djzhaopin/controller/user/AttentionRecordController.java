@@ -38,7 +38,7 @@ public class AttentionRecordController {
         Optional<AttentionRecord> attentionRecordOptional = userInformationService
                 .createAttentionRecord(userInformationId, attentionRecord);
         if (attentionRecordOptional.isPresent()) {
-            return ResponseBody.success(attentionRecordOptional.get());
+            return ResponseBody.created(attentionRecordOptional.get());
         }
         return ResponseBody.notFound().build();
     }

@@ -39,7 +39,7 @@ public class ProjectExperienceController {
                 Optional<ProjectExperience> projectExperienceOptional = userInformationService
                                 .createProjectExperience(userInformationId, projectExperience);
                 if (projectExperienceOptional.isPresent()) {
-                        return ResponseBody.success(projectExperienceOptional.get());
+                        return ResponseBody.created(projectExperienceOptional.get());
                 }
                 return ResponseBody.notFound().build();
         }

@@ -39,7 +39,7 @@ public class InspectionRecordController {
                 Optional<InspectionRecord> inspectionRecordOptional = userInformationService
                                 .createInspectionRecord(userInformationId, inspectionRecord);
                 if (inspectionRecordOptional.isPresent()) {
-                        return ResponseBody.success(inspectionRecordOptional.get());
+                        return ResponseBody.created(inspectionRecordOptional.get());
                 }
                 return ResponseBody.notFound().build();
         }
