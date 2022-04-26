@@ -1,6 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -21,7 +23,7 @@ public interface UserInformationService {
         public Optional<UserInformation> updateUserInformationByUserInfoId(UUID userinfoid,
                         UserInformation userInformation);
 
-        public Stream<UserInformation> getUserInformations(Pageable pageable);
+        public Optional<List<UserInformation>> getUserInformations(Pageable pageable);
 
         public Optional<UserInformation> getUserInformationByUserInfoId(UUID userinfoid);
 
@@ -46,7 +48,7 @@ public interface UserInformationService {
                         UUID eduexperienceid,
                         EducationExperience educationExperience);
 
-        public Stream<EducationExperience> getEducationExperiencesByUserInformationId(UUID userinfoid,
+        public Optional<Set<EducationExperience>> getEducationExperiencesByUserInformationId(UUID userinfoid,
                         Pageable pageable);
 
         public Optional<EducationExperience> getEducationExperienceByEducationExperienceId(UUID userinfoid,
@@ -85,7 +87,7 @@ public interface UserInformationService {
         public Optional<DeliveryRecord> updateDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid,
                         DeliveryRecord deliveryRecord);
 
-        public Stream<DeliveryRecord> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
+        public Optional<Set<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
 
@@ -98,7 +100,7 @@ public interface UserInformationService {
                         UUID attentionrecordid,
                         AttentionRecord attentionRecord);
 
-        public Stream<AttentionRecord> getAttentionRecordsByUserInformationId(UUID userinfoid);
+        public Optional<Set<AttentionRecord>> getAttentionRecordsByUserInformationId(UUID userinfoid);
 
         public Optional<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid);
 
