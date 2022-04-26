@@ -88,9 +88,12 @@ public class CompanyInformationCotroller {
                         @RequestParam String sex, @RequestParam Integer age, @RequestParam UUID jobId,
                         @RequestParam Date deliveryDate, @RequestParam String search,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Stream<DeliveryRecord> deliveryRecords = companyInformationService
+                Stream<DeliveryRecord> deliveryRecordsStream = companyInformationService
                                 .getDeliveryRecordsByCompanyInformationId(companyInformationId, state, workingYears,
-                                sex,age,jo
-
+                                                sex, age, jobId, deliveryDate, search, pageable);
+                if (deliveryRecordsStream.count() > 0) {
+                        ResponseBody.success(deliveryRecordsStream.collect(Collectors.toList()));
+                }
+                return ResponseBody.notFound().build();
         }
 }

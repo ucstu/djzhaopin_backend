@@ -28,10 +28,30 @@ public class UserInformationServiceImpl implements UserInformationService {
     private UserInformationRepository userInformationRepository;
 
     @Override
-    public UserInformation updateUserInformationByUserInfoId(UUID userInformationId,
+    public Optional<UserInformation> updateUserInformationByUserInfoId(UUID userInformationId,
             UserInformation userInformation) {
-        userInformation.setUserInformationId(userInformationId);
-        return userInformationRepository.save(userInformation);
+        Optional<UserInformation> userInformation1 = userInformationRepository.findById(userInformationId);
+        if (userInformation1.isPresent()) {
+            UserInformation userInformation2 = userInformation1.get();
+            userInformation2.setAge(userInformation.getAge());
+            userInformation2.setAvatar(userInformation.getAvatar());
+            userInformation2.setCity(userInformation.getCity());
+            userInformation2.setDateOfBirth(userInformation.getDateOfBirth());
+            userInformation2.setEducation(userInformation.getEducation());
+            userInformation2.setEmail(userInformation.getEmail());
+            userInformation2.setFirstName(userInformation.getFirstName());
+            userInformation2.setJobStatus(userInformation.getJobStatus());
+            userInformation2.setLastName(userInformation.getLastName());
+            userInformation2.setPersonalAdvantage(userInformation.getPersonalAdvantage());
+            userInformation2.setPhoneNumber(userInformation.getPhoneNumber());
+            userInformation2.setPictureWorks(userInformation.getPictureWorks());
+            userInformation2.setPrivacySettings(userInformation.getPrivacySettings());
+            userInformation2.setSex(userInformation.getSex());
+            userInformation2.setSocialHomepage(userInformation.getSocialHomepage());
+            userInformation2.setWorkingYears(userInformation.getWorkingYears());
+            return Optional.of(userInformationRepository.save(userInformation2));
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -176,13 +196,11 @@ public class UserInformationServiceImpl implements UserInformationService {
                             .equals(educationExperience2.getEducationExperienceId()))
                     .findFirst();
             if (educationExperience1.isPresent()) {
-                educationExperience1.get().setCity(educationExperience.getCity());
-                educationExperience1.get().setDirectionTags(educationExperience.getDirectionTags());
-                educationExperience1.get().setEducationBackground(educationExperience.getEducationBackground());
-                educationExperience1.get().setEducationType(educationExperience.getEducationType());
-                educationExperience1.get().setEndDate(educationExperience.getEndDate());
+                educationExperience1.get().setAdmissionTime(educationExperience.getAdmissionTime());
+                educationExperience1.get().setEducation(educationExperience.getEducation());
+                educationExperience1.get().setGraduationTime(educationExperience.getGraduationTime());
+                educationExperience1.get().setMajor(educationExperience.getMajor());
                 educationExperience1.get().setSchoolName(educationExperience.getSchoolName());
-                educationExperience1.get().setStartDate(educationExperience.getStartDate());
                 userInformationRepository.save(userInformation.get());
                 return Optional.of(educationExperience1.get());
             } else {
@@ -195,274 +213,565 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public Stream<EducationExperience> getEducationExperiences(UUID userinfoid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getEducationExperiences();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            return userInformation.get().getEducationExperiences().stream();
+        } else {
+            return Stream.empty();
+        }
     }
 
     @Override
     public Optional<EducationExperience> getEducationExperienceByEducationExperienceId(UUID userinfoid,
             UUID eduexperienceid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getEducationExperiences().stream()
-                .filter(e -> e.getEducationExperienceId().equals(eduexperienceid)).findFirst().get();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<EducationExperience> educationExperience = userInformation.get().getEducationExperiences()
+                    .stream()
+                    .filter(educationExperience1 -> eduexperienceid
+                            .equals(educationExperience1.getEducationExperienceId()))
+                    .findFirst();
+            if (educationExperience.isPresent()) {
+                return Optional.of(educationExperience.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<WorkExperience> createWorkExperience(UUID userinfoid, WorkExperience workExperience) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        userInformation.getWorkExperiences().add(workExperience);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getWorkExperiences().get(userInformation.getWorkExperiences().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            userInformation.get().getWorkExperiences().add(workExperience);
+            WorkExperience workExperience1 = (WorkExperience) userInformation.get()
+                    .getWorkExperiences().toArray()[userInformation.get()
+                            .getWorkExperiences().size() - 1];
+            return Optional.of(workExperience1);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<WorkExperience> deleteWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        WorkExperience workExperience = userInformation.getWorkExperiences().stream()
-                .filter(w -> w.getWorkExperienceId().equals(workexperienceid)).findFirst().get();
-        userInformation.getWorkExperiences().remove(workExperience);
-        return workExperience;
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<WorkExperience> workExperience = userInformation.get().getWorkExperiences()
+                    .stream()
+                    .filter(workExperience1 -> workexperienceid
+                            .equals(workExperience1.getWorkExperienceId()))
+                    .findFirst();
+            if (workExperience.isPresent()) {
+                userInformation.get().getWorkExperiences().remove(workExperience.get());
+                return Optional.of(workExperience.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<WorkExperience> updateWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid,
             WorkExperience workExperience) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        WorkExperience workExperience1 = userInformation.getWorkExperiences().stream()
-                .filter(w -> w.getWorkExperienceId().equals(workexperienceid)).findFirst().get();
-        userInformation.getWorkExperiences().remove(workExperience1);
-        userInformation.getWorkExperiences().add(workExperience);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getWorkExperiences().get(userInformation.getWorkExperiences().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<WorkExperience> workExperience1 = userInformation.get().getWorkExperiences()
+                    .stream()
+                    .filter(workExperience2 -> workexperienceid
+                            .equals(workExperience2.getWorkExperienceId()))
+                    .findFirst();
+            if (workExperience1.isPresent()) {
+                workExperience1.get().setCompanyIndustry(workExperience.getCompanyIndustry());
+                workExperience1.get().setCorporateName(workExperience.getCorporateName());
+                workExperience1.get().setDepartment(workExperience.getDepartment());
+                workExperience1.get().setEndTime(workExperience.getEndTime());
+                workExperience1.get().setJobContent(workExperience.getJobContent());
+                workExperience1.get().setPositionName(workExperience.getPositionName());
+                workExperience1.get().setPositionType(workExperience.getPositionType());
+                workExperience1.get().setStartTime(workExperience.getStartTime());
+                userInformationRepository.save(userInformation.get());
+                return Optional.of(workExperience1.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Stream<WorkExperience> getWorkExperiences(UUID userinfoid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getWorkExperiences();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            return userInformation.get().getWorkExperiences().stream();
+        } else {
+            return Stream.empty();
+        }
     }
 
     @Override
     public Optional<WorkExperience> getWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getWorkExperiences().stream()
-                .filter(w -> w.getWorkExperienceId().equals(workexperienceid)).findFirst().get();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<WorkExperience> workExperience = userInformation.get().getWorkExperiences()
+                    .stream()
+                    .filter(workExperience1 -> workexperienceid
+                            .equals(workExperience1.getWorkExperienceId()))
+                    .findFirst();
+            if (workExperience.isPresent()) {
+                return Optional.of(workExperience.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<ProjectExperience> createProjectExperience(UUID userinfoid, ProjectExperience projectExperience) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        userInformation.getProjectExperiences().add(projectExperience);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getProjectExperiences().get(userInformation.getProjectExperiences().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            userInformation.get().getProjectExperiences().add(projectExperience);
+            ProjectExperience projectExperience1 = (ProjectExperience) userInformation.get()
+                    .getProjectExperiences().toArray()[userInformation.get()
+                            .getProjectExperiences().size() - 1];
+            return Optional.of(projectExperience1);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<ProjectExperience> deleteProjectExperienceByProjectExperienceId(UUID userinfoid,
             UUID projectexperienceid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        ProjectExperience projectExperience = userInformation.getProjectExperiences().stream()
-                .filter(p -> p.getProjectExperienceId().equals(projectexperienceid)).findFirst().get();
-        userInformation.getProjectExperiences().remove(projectExperience);
-        return projectExperience;
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<ProjectExperience> projectExperience = userInformation.get().getProjectExperiences()
+                    .stream()
+                    .filter(projectExperience1 -> projectexperienceid
+                            .equals(projectExperience1.getProjectExperienceId()))
+                    .findFirst();
+            if (projectExperience.isPresent()) {
+                userInformation.get().getProjectExperiences().remove(projectExperience.get());
+                return Optional.of(projectExperience.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<ProjectExperience> updateProjectExperienceByProjectExperienceId(UUID userinfoid,
             UUID projectexperienceid,
             ProjectExperience projectExperience) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        ProjectExperience projectExperience1 = userInformation.getProjectExperiences().stream()
-                .filter(p -> p.getProjectExperienceId().equals(projectexperienceid)).findFirst().get();
-        userInformation.getProjectExperiences().remove(projectExperience1);
-        userInformation.getProjectExperiences().add(projectExperience);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getProjectExperiences().get(userInformation.getProjectExperiences().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<ProjectExperience> projectExperience1 = userInformation.get().getProjectExperiences()
+                    .stream()
+                    .filter(projectExperience2 -> projectexperienceid
+                            .equals(projectExperience2.getProjectExperienceId()))
+                    .findFirst();
+            if (projectExperience1.isPresent()) {
+                projectExperience1.get().setAchievement(projectExperience.getAchievement());
+                projectExperience1.get().setEndTime(projectExperience.getEndTime());
+                projectExperience1.get().setProjectDescription(projectExperience.getProjectDescription());
+                projectExperience1.get().setProjectLink(projectExperience.getProjectLink());
+                projectExperience1.get().setProjectName(projectExperience.getProjectName());
+                projectExperience1.get().setStartTime(projectExperience.getStartTime());
+                return Optional.of(projectExperience1.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Stream<ProjectExperience> getProjectExperiences(UUID userinfoid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getProjectExperiences();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            return userInformation.get().getProjectExperiences().stream();
+        } else {
+            return Stream.empty();
+        }
     }
 
     @Override
     public Optional<ProjectExperience> getProjectExperienceByProjectExperienceId(UUID userinfoid,
             UUID projectexperienceid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getProjectExperiences().stream()
-                .filter(p -> p.getProjectExperienceId().equals(projectexperienceid)).findFirst().get();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<ProjectExperience> projectExperience = userInformation.get().getProjectExperiences()
+                    .stream()
+                    .filter(projectExperience1 -> projectexperienceid
+                            .equals(projectExperience1.getProjectExperienceId()))
+                    .findFirst();
+            if (projectExperience.isPresent()) {
+                return Optional.of(projectExperience.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<DeliveryRecord> createDeliveryRecord(UUID userinfoid, DeliveryRecord deliveryRecord) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        userInformation.getDeliveryRecords().add(deliveryRecord);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getDeliveryRecords().get(userInformation.getDeliveryRecords().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            userInformation.get().getDeliveryRecords().add(deliveryRecord);
+            DeliveryRecord deliveryRecord1 = (DeliveryRecord) userInformation.get()
+                    .getDeliveryRecords().toArray()[userInformation.get()
+                            .getDeliveryRecords().size() - 1];
+            return Optional.of(deliveryRecord1);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<DeliveryRecord> deleteDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        DeliveryRecord deliveryRecord = userInformation.getDeliveryRecords().stream()
-                .filter(d -> d.getDeliveryRecordId().equals(deliveryrecordid)).findFirst().get();
-        userInformation.getDeliveryRecords().remove(deliveryRecord);
-        return deliveryRecord;
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<DeliveryRecord> deliveryRecord = userInformation.get().getDeliveryRecords()
+                    .stream()
+                    .filter(deliveryRecord1 -> deliveryrecordid
+                            .equals(deliveryRecord1.getDeliveryRecordId()))
+                    .findFirst();
+            if (deliveryRecord.isPresent()) {
+                userInformation.get().getDeliveryRecords().remove(deliveryRecord.get());
+                return Optional.of(deliveryRecord.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<DeliveryRecord> updateDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid,
             DeliveryRecord deliveryRecord) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        DeliveryRecord deliveryRecord1 = userInformation.getDeliveryRecords().stream()
-                .filter(d -> d.getDeliveryRecordId().equals(deliveryrecordid)).findFirst().get();
-        userInformation.getDeliveryRecords().remove(deliveryRecord1);
-        userInformation.getDeliveryRecords().add(deliveryRecord);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getDeliveryRecords().get(userInformation.getDeliveryRecords().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<DeliveryRecord> deliveryRecord1 = userInformation.get().getDeliveryRecords()
+                    .stream()
+                    .filter(deliveryRecord2 -> deliveryrecordid
+                            .equals(deliveryRecord2.getDeliveryRecordId()))
+                    .findFirst();
+            if (deliveryRecord1.isPresent()) {
+                deliveryRecord1.get().setInterviewTime(deliveryRecord.getInterviewTime());
+                deliveryRecord1.get().setJobInformationId(deliveryRecord.getJobInformationId());
+                deliveryRecord1.get().setState(deliveryRecord.getState());
+                deliveryRecord1.get().setUserInformationId(deliveryRecord.getUserInformationId());
+                userInformationRepository.save(userInformation.get());
+                return Optional.of(deliveryRecord1.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Stream<DeliveryRecord> getDeliveryRecords(UUID userinfoid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getDeliveryRecords();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            return userInformation.get().getDeliveryRecords().stream();
+        } else {
+            return Stream.empty();
+        }
     }
 
     @Override
     public Optional<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getDeliveryRecords().stream()
-                .filter(d -> d.getDeliveryRecordId().equals(deliveryrecordid)).findFirst().get();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<DeliveryRecord> deliveryRecord = userInformation.get().getDeliveryRecords()
+                    .stream()
+                    .filter(deliveryRecord1 -> deliveryrecordid
+                            .equals(deliveryRecord1.getDeliveryRecordId()))
+                    .findFirst();
+            if (deliveryRecord.isPresent()) {
+                return Optional.of(deliveryRecord.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<AttentionRecord> createAttentionRecord(UUID userinfoid, AttentionRecord attentionRecord) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        userInformation.getAttentionRecords().add(attentionRecord);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getAttentionRecords().get(userInformation.getAttentionRecords().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            userInformation.get().getAttentionRecords().add(attentionRecord);
+            AttentionRecord attentionRecord1 = (AttentionRecord) userInformation.get()
+                    .getAttentionRecords().toArray()[userInformation.get()
+                            .getAttentionRecords().size() - 1];
+            return Optional.of(attentionRecord1);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<AttentionRecord> deleteAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        AttentionRecord attentionRecord = userInformation.getAttentionRecords().stream()
-                .filter(a -> a.getAttentionRecordId().equals(attentionrecordid)).findFirst().get();
-        userInformation.getAttentionRecords().remove(attentionRecord);
-        return attentionRecord;
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<AttentionRecord> attentionRecord = userInformation.get().getAttentionRecords()
+                    .stream()
+                    .filter(attentionRecord1 -> attentionrecordid
+                            .equals(attentionRecord1.getAttentionRecordId()))
+                    .findFirst();
+            if (attentionRecord.isPresent()) {
+                userInformation.get().getAttentionRecords().remove(attentionRecord.get());
+                return Optional.of(attentionRecord.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<AttentionRecord> updateAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid,
             AttentionRecord attentionRecord) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        AttentionRecord attentionRecord1 = userInformation.getAttentionRecords().stream()
-                .filter(a -> a.getAttentionRecordId().equals(attentionrecordid)).findFirst().get();
-        userInformation.getAttentionRecords().remove(attentionRecord1);
-        userInformation.getAttentionRecords().add(attentionRecord);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getAttentionRecords().get(userInformation.getAttentionRecords().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<AttentionRecord> attentionRecord1 = userInformation.get().getAttentionRecords()
+                    .stream()
+                    .filter(attentionRecord2 -> attentionrecordid
+                            .equals(attentionRecord2.getAttentionRecordId()))
+                    .findFirst();
+            if (attentionRecord1.isPresent()) {
+                attentionRecord1.get().setCompanyInformationId(attentionRecord.getCompanyInformationId());
+                attentionRecord1.get().setUserInformationId(attentionRecord.getUserInformationId());
+                userInformationRepository.save(userInformation.get());
+                return Optional.of(attentionRecord1.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Stream<AttentionRecord> getAttentionRecords(UUID userinfoid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getAttentionRecords();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            return userInformation.get().getAttentionRecords().stream();
+        } else {
+            return Stream.empty();
+        }
     }
 
     @Override
     public Optional<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getAttentionRecords().stream()
-                .filter(a -> a.getAttentionRecordId().equals(attentionrecordid)).findFirst().get();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<AttentionRecord> attentionRecord = userInformation.get().getAttentionRecords()
+                    .stream()
+                    .filter(attentionRecord1 -> attentionrecordid
+                            .equals(attentionRecord1.getAttentionRecordId()))
+                    .findFirst();
+            if (attentionRecord.isPresent()) {
+                return Optional.of(attentionRecord.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<InspectionRecord> createInspectionRecord(UUID userinfoid, InspectionRecord inspectionRecord) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        userInformation.getInspectionRecords().add(inspectionRecord);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getInspectionRecords().get(userInformation.getInspectionRecords().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            userInformation.get().getInspectionRecords().add(inspectionRecord);
+            InspectionRecord inspectionRecord1 = (InspectionRecord) userInformation.get()
+                    .getInspectionRecords().toArray()[userInformation.get()
+                            .getInspectionRecords().size() - 1];
+            return Optional.of(inspectionRecord1);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<InspectionRecord> deleteInspectionRecordByInspectionRecordId(UUID userinfoid,
             UUID inspectionrecordid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        InspectionRecord inspectionRecord = userInformation.getInspectionRecords().stream()
-                .filter(i -> i.getInspectionRecordId().equals(inspectionrecordid)).findFirst().get();
-        userInformation.getInspectionRecords().remove(inspectionRecord);
-        return inspectionRecord;
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<InspectionRecord> inspectionRecord = userInformation.get().getInspectionRecords()
+                    .stream()
+                    .filter(inspectionRecord1 -> inspectionrecordid
+                            .equals(inspectionRecord1.getInspectionRecordId()))
+                    .findFirst();
+            if (inspectionRecord.isPresent()) {
+                userInformation.get().getInspectionRecords().remove(inspectionRecord.get());
+                return Optional.of(inspectionRecord.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<InspectionRecord> updateInspectionRecordByInspectionRecordId(UUID userinfoid,
             UUID inspectionrecordid,
             InspectionRecord inspectionRecord) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        InspectionRecord inspectionRecord1 = userInformation.getInspectionRecords().stream()
-                .filter(i -> i.getInspectionRecordId().equals(inspectionrecordid)).findFirst().get();
-        userInformation.getInspectionRecords().remove(inspectionRecord1);
-        userInformation.getInspectionRecords().add(inspectionRecord);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getInspectionRecords().get(userInformation.getInspectionRecords().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<InspectionRecord> inspectionRecord1 = userInformation.get().getInspectionRecords()
+                    .stream()
+                    .filter(inspectionRecord2 -> inspectionrecordid
+                            .equals(inspectionRecord2.getInspectionRecordId()))
+                    .findFirst();
+            if (inspectionRecord1.isPresent()) {
+                inspectionRecord1.get().setFrom(inspectionRecord.getFrom());
+                inspectionRecord1.get().setTo(inspectionRecord.getTo());
+                userInformationRepository.save(userInformation.get());
+                return Optional.of(inspectionRecord1.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Stream<InspectionRecord> getInspectionRecords(UUID userinfoid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getInspectionRecords();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            return userInformation.get().getInspectionRecords().stream();
+        } else {
+            return Stream.empty();
+        }
     }
 
     @Override
     public Optional<InspectionRecord> getInspectionRecordByInspectionRecordId(UUID userinfoid,
             UUID inspectionrecordid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getInspectionRecords().stream()
-                .filter(i -> i.getInspectionRecordId().equals(inspectionrecordid)).findFirst().get();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<InspectionRecord> inspectionRecord = userInformation.get().getInspectionRecords()
+                    .stream()
+                    .filter(inspectionRecord1 -> inspectionrecordid
+                            .equals(inspectionRecord1.getInspectionRecordId()))
+                    .findFirst();
+            if (inspectionRecord.isPresent()) {
+                return Optional.of(inspectionRecord.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<GarnerRecord> createGarnerRecord(UUID userinfoid, GarnerRecord garnerRecord) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        userInformation.getGarnerRecords().add(garnerRecord);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getGarnerRecords().get(userInformation.getGarnerRecords().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            userInformation.get().getGarnerRecords().add(garnerRecord);
+            GarnerRecord garnerRecord1 = (GarnerRecord) userInformation.get()
+                    .getGarnerRecords().toArray()[userInformation.get()
+                            .getGarnerRecords().size() - 1];
+            return Optional.of(garnerRecord1);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<GarnerRecord> deleteGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        GarnerRecord garnerRecord = userInformation.getGarnerRecords().stream()
-                .filter(g -> g.getGarnerRecordId().equals(garnerrecordid)).findFirst().get();
-        userInformation.getGarnerRecords().remove(garnerRecord);
-        return garnerRecord;
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<GarnerRecord> garnerRecord = userInformation.get().getGarnerRecords()
+                    .stream()
+                    .filter(garnerRecord1 -> garnerrecordid
+                            .equals(garnerRecord1.getGarnerRecordId()))
+                    .findFirst();
+            if (garnerRecord.isPresent()) {
+                userInformation.get().getGarnerRecords().remove(garnerRecord.get());
+                return Optional.of(garnerRecord.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<GarnerRecord> updateGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid,
             GarnerRecord garnerRecord) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        GarnerRecord garnerRecord1 = userInformation.getGarnerRecords().stream()
-                .filter(g -> g.getGarnerRecordId().equals(garnerrecordid)).findFirst().get();
-        userInformation.getGarnerRecords().remove(garnerRecord1);
-        userInformation.getGarnerRecords().add(garnerRecord);
-        userInformation = userInformationRepository.save(userInformation);
-        return userInformation.getGarnerRecords().get(userInformation.getGarnerRecords().size() - 1);
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<GarnerRecord> garnerRecord1 = userInformation.get().getGarnerRecords()
+                    .stream()
+                    .filter(garnerRecord2 -> garnerrecordid
+                            .equals(garnerRecord2.getGarnerRecordId()))
+                    .findFirst();
+            if (garnerRecord1.isPresent()) {
+                garnerRecord1.get().setJobInformationId(garnerRecord.getJobInformationId());
+                garnerRecord1.get().setUserInformationId(garnerRecord.getUserInformationId());
+                userInformationRepository.save(userInformation.get());
+                return Optional.of(garnerRecord1.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Stream<GarnerRecord> getGarnerRecords(UUID userinfoid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getGarnerRecords();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            return userInformation.get().getGarnerRecords().stream();
+        } else {
+            return Stream.empty();
+        }
     }
 
     @Override
     public Optional<GarnerRecord> getGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid) {
-        UserInformation userInformation = userInformationRepository.findById(userinfoid).get();
-        return userInformation.getGarnerRecords().stream()
-                .filter(g -> g.getGarnerRecordId().equals(garnerrecordid)).findFirst().get();
+        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
+        if (userInformation.isPresent()) {
+            Optional<GarnerRecord> garnerRecord = userInformation.get().getGarnerRecords()
+                    .stream()
+                    .filter(garnerRecord1 -> garnerrecordid
+                            .equals(garnerRecord1.getGarnerRecordId()))
+                    .findFirst();
+            if (garnerRecord.isPresent()) {
+                return Optional.of(garnerRecord.get());
+            } else {
+                return Optional.empty();
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
 }

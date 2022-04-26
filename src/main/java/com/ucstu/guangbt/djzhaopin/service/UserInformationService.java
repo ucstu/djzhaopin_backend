@@ -18,7 +18,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserInformationService {
 
-        public UserInformation updateUserInformationByUserInfoId(UUID userinfoid, UserInformation userInformation);
+        public Optional<UserInformation> updateUserInformationByUserInfoId(UUID userinfoid,
+                        UserInformation userInformation);
 
         public Stream<UserInformation> getUserInformations(Pageable pageable);
 

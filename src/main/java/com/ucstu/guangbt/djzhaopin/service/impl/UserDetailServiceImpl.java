@@ -2,6 +2,7 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountAuthority;
@@ -26,16 +27,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AccountInformation accountInformation = accountInformationRepository.findByUserName(username);
-        if (accountInformation == null) {
+        Optional<AccountInformation> accountInformationOptional = accountInformationRepository.findByUserName(username);
+        if (!accountInformationOptional.isPresent()) {
             throw new UsernameNotFoundException("用户不存在");
         }
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 Collection<GrantedAuthority> authorities = new HashSet<>();
-                Set<AccountAuthority> accountAuthorities = accountInformation.getAuthorities();
-                Set<AccountGroup> accountGroups = accountInformation.getGroups();
+                Set<AccountAuthority> accountAuthorities = accountInformationOptional.get().getAuthorities();
+                Set<AccountGroup> accountGroups = accountInformationOptional.get().getGroups();
                 for (AccountAuthority accountAuthority : accountAuthorities) {
                     authorities.add(new SimpleGrantedAuthority(accountAuthority.getAuthorityName()));
                 }
@@ -47,22 +48,22 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
             @Override
             public String getPassword() {
-                return accountInformation.getPassword();
+                return accountInformationOptional.get().getPassword();
             }
 
             @Override
             public String getUsername() {
-                return accountInformation.getUserName();
+                return accountInformationOptional.get().getUserName();
             }
 
             @Override
             public boolean isAccountNonExpired() {
-                return !accountInformation.getExpired();
+                return !accountInformationOptional.get().getExpired();
             }
 
             @Override
             public boolean isAccountNonLocked() {
-                return !accountInformation.getLocked();
+                return !accountInformationOptional.get().getLocked();
             }
 
             @Override
@@ -73,7 +74,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
             @Override
             public boolean isEnabled() {
-                return accountInformation.getEnabled();
+                return accountInformationOptional.get().getEnabled();
             }
         };
     }

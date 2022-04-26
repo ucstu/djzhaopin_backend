@@ -1,13 +1,13 @@
 package com.ucstu.guangbt.djzhaopin.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 
 public interface HrInformationService {
-    public HrInformation queryHrInformationByHrInfoId(UUID hrinfoid);
+    public Optional<HrInformation> queryHrInformationByHrInformationId(UUID hrInformationId);
 
-    public HrInformation updateHrInformationByHrInfoId(UUID hrinfoid, HrInformation hrInformation);
-
-    public HrInformation addHrInformation(String accountInformationId, HrInformation hrInformation);
+    public Optional<HrInformation> updateHrInformationByHrInformationId(UUID hrInformationId,
+            HrInformation hrInformation);
 }

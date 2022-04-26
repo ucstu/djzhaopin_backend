@@ -35,95 +35,89 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AccountInformationServiceImpl implements
         AccountInformationService {
+    @Resource
+    private JwtUtil jwtUtil;
 
     @Resource
     private PasswordEncoder passwordEncoder;
 
     @Resource
-    private JwtUtil jwtUtil;
-
-    @Resource
     private UserDetailServiceImpl userDetailsService;
-
-    @Resource
-    private AccountInformationRepository accountInformationRepository;
 
     @Resource
     private AuthenticationManager authenticationManager;
 
+    @Resource
+    private AccountInformationRepository accountInformationRepository;
+
     @Override
-    public AccountInformation registerAccount(RegisterAccountRequest registerRequest) {
+    public Optional<AccountInformation> registerAccount(RegisterAccountRequest registerRequest) {
         AccountInformation accountInformation = new AccountInformation();
         Set<AccountGroup> accountGroups = new HashSet<>();
-        accountGroups.add(new AccountGroup().setGroupName("USER"));
+        accountGroups.add(new AccountGroup(AccountGroup.GroupType.USER));
         accountInformation.setUserName(registerRequest.getUserName());
-        accountInformation.setAccountType(registerRequest.getAccountType());
         accountInformation.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         accountInformation.setGroups(accountGroups);
-        if (accountInformation.getAccountType() == 1) {
+        if (registerRequest.getAccountType() == 1) {
             accountInformation.setUserInformation(new UserInformation());
-        } else if (accountInformation.getAccountType() == 2) {
+        } else if (registerRequest.getAccountType() == 2) {
             accountInformation.setHrInformation(new HrInformation());
         }
-        AccountInformation savedAccountInformation = accountInformationRepository.save(accountInformation);
-        return savedAccountInformation;
+        return Optional.ofNullable(accountInformationRepository.save(accountInformation));
     }
 
     @Override
-    public AccountInformation deleteAccount(UUID accountId, String verificationCode) {
-        Optional<AccountInformation> accountInformation = accountInformationRepository.findById(accountId);
-        accountInformationRepository.deleteById(accountId);
-        return accountInformation.get();
+    public Optional<AccountInformation> deleteAccount(UUID accountId, String verificationCode) {
+        Optional<AccountInformation> accountInformationOptional = accountInformationRepository.findById(accountId);
+        if (accountInformationOptional.isPresent()) {
+            AccountInformation accountInformation = accountInformationOptional.get();
+            accountInformationRepository.delete(accountInformation);
+            return accountInformationOptional;
+        }
+        return Optional.empty();
     }
 
     @Override
     public Map<String, Object> loginAccount(LoginAccountRequest loginAccountRequest) {
         Map<String, Object> responseBody = new HashMap<>();
-        // UsernamePasswordAuthenticationToken token = new
-        // UsernamePasswordAuthenticationToken(
-        // loginAccountRequest.getUserName(),
-        // loginAccountRequest.getPassword());
-        // authenticationManager.authenticate(token);
-        // AccountInformation accountInformation = accountInformationRepository
-        // .findByUserName(loginAccountRequest.getUserName());
-        // String tokenString =
-        // Jwts.builder().setSubject(accountInformation.getAccountInformationId().toString())
-        // .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-        // .signWith(SignatureAlgorithm.HS512, "djzhaopin123456").compact();
-
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginAccountRequest.getUserName(), loginAccountRequest.getPassword()));
         } catch (DisabledException e) {
             log.error("用户被禁用");
-            // throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
             log.error("密码错误");
-            // throw new Exception("INVALID_CREDENTIALS", e);
         }
-
         UserDetails userdetails = userDetailsService.loadUserByUsername(loginAccountRequest.getUserName());
         String tokenString = jwtUtil.generateToken(userdetails);
         responseBody.put("token", tokenString);
         responseBody.put("accountInfo", accountInformationRepository
                 .findByUserName(loginAccountRequest.getUserName()));
         return responseBody;
-
     }
 
     @Override
-    public AccountInformation changePassword(UUID accountId, @Valid ChangePasswordRequest changePasswordRequest) {
-        AccountInformation accountInformation = accountInformationRepository.findById(accountId).get();
-        accountInformation.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
-        return accountInformationRepository.save(accountInformation);
+    public Optional<AccountInformation> changePassword(UUID accountId,
+            @Valid ChangePasswordRequest changePasswordRequest) {
+        Optional<AccountInformation> accountInformation = accountInformationRepository.findById(accountId);
+        if (accountInformation.isPresent()) {
+            AccountInformation account = accountInformation.get();
+            account.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+            return Optional.of(accountInformationRepository.save(account));
+        }
+        return Optional.empty();
     }
 
     @Override
-    public AccountInformation forgetPassword(@Valid ForgetPasswordRequest forgetPasswordRequest) {
-        AccountInformation accountInformation = accountInformationRepository
+    public Optional<AccountInformation> forgetPassword(@Valid ForgetPasswordRequest forgetPasswordRequest) {
+        Optional<AccountInformation> accountInformation = accountInformationRepository
                 .findByUserName(forgetPasswordRequest.getUserName());
-        accountInformation.setPassword(passwordEncoder.encode(forgetPasswordRequest.getPassword()));
-        return accountInformation;
+        if (accountInformation.isPresent()) {
+            AccountInformation account = accountInformation.get();
+            account.setPassword(passwordEncoder.encode(forgetPasswordRequest.getPassword()));
+            return Optional.of(accountInformationRepository.save(account));
+        }
+        return Optional.empty();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
@@ -8,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AccountInformationRepository extends JpaRepository<AccountInformation, UUID> {
 
-    public AccountInformation findByUserName(String userName);
+    public Optional<AccountInformation> findByUserName(String userName);
 
 }

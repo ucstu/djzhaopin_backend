@@ -57,11 +57,7 @@ public class HrInformation {
     @Column(nullable = false)
     private Date updatedAt;
 
-    @JsonProperty(value = "companyInformationId", access = JsonProperty.Access.READ_ONLY)
-    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "companyInformationId")
-    private CompanyInformation companyInformation;
+    private String companyInformationId;
 
     private String avatar;
 

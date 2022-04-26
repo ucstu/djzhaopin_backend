@@ -15,6 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,33 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class AccountGroup {
+
+    public AccountGroup(GroupType groupType) {
+        this.groupName = groupType.getGroupName();
+    }
+
+    @Transient
+    public enum GroupType {
+        ADMIN {
+            @Override
+            public String getGroupName() {
+                return "ADMIN";
+            }
+        },
+        HR {
+            @Override
+            public String getGroupName() {
+                return "HR";
+            }
+        },
+        USER {
+            @Override
+            public String getGroupName() {
+                return "USER";
+            }
+        };
+    }
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
