@@ -44,8 +44,8 @@ public class InspectionRecord {
     private Date updatedAt;
 
     @Type(type = "uuid-char")
-    private UUID from;
+    private UUID fromId;
 
     @Type(type = "uuid-char")
-    private UUID to;
+    private UUID toId;
 }

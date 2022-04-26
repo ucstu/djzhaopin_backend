@@ -646,8 +646,8 @@ public class UserInformationServiceImpl implements UserInformationService {
                             .equals(inspectionRecord2.getInspectionRecordId()))
                     .findFirst();
             if (inspectionRecord1.isPresent()) {
-                inspectionRecord1.get().setFrom(inspectionRecord.getFrom());
-                inspectionRecord1.get().setTo(inspectionRecord.getTo());
+                inspectionRecord1.get().setFromId(inspectionRecord.getFromId());
+                inspectionRecord1.get().setToId(inspectionRecord.getToId());
                 userInformationRepository.save(userInformation.get());
                 return Optional.of(inspectionRecord1.get());
             } else {
