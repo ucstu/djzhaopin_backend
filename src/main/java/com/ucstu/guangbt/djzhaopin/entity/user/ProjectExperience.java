@@ -15,6 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,17 +44,22 @@ public class ProjectExperience {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
+    @NotNull
     private String projectName;
 
+    @NotNull
     @Type(type = "uuid-char")
     private UUID workExperienceId;
 
+    @NotNull
     private String projectDescription;
 
     private String achievement;
 
+    @NotNull
     private Date startTime;
 
+    @NotNull
     private Date endTime;
 
     private String projectLink;
