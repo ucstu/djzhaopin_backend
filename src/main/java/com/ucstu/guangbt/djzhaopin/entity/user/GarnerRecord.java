@@ -43,9 +43,10 @@ public class GarnerRecord {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
+    @NotNull
     @Type(type = "uuid-char")
     private UUID userInformationId;
-
+    @NotNull
     @Type(type = "uuid-char")
     private UUID jobInformationId;
 }

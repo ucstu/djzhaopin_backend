@@ -47,30 +47,40 @@ public class PositionInformation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
+    @NotBlank
     private String name;
+    @Range(min = 0, max = 5)
     private Integer workingYears;
+    @Range(min = 0, max = 4)
     private Integer education;
 
     @ElementCollection(targetClass = String.class)
     private List<String> directionTags;
 
+    @NotNull
     private Integer startingSalary;
+    @NotNull
     private Integer ceilingSalary;
 
     private String workArea;
     private Date releaseDate;
 
+    @NotNull
     @Type(type = "uuid-char")
     private UUID companyInformationId;
 
+    @NotNull
     @Type(type = "uuid-char")
     private UUID hrInformationId;
+
+    @Range(min = 1, max = 3)
     private Integer positionType;
     private String department;
 
     @ElementCollection(targetClass = String.class)
     private List<String> highlights;
 
+    @NotBlank
     private String description;
     private Integer weekendReleaseTime;
     private Date workTime;

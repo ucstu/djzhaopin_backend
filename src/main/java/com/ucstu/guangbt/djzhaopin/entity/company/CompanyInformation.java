@@ -53,8 +53,8 @@ public class CompanyInformation {
 
     private String hrId;
 
-    @NotNull
     private String logo;
+
     @NotNull
     private String name;
 
@@ -63,11 +63,9 @@ public class CompanyInformation {
 
     private String city;
 
-    @NotNull
     @Range(min = 1, max = 7)
     private Integer financingStage;
 
-    @NotNull
     @Range(min = 1, max = 5)
     private Integer scale;
 
