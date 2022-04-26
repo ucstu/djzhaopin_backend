@@ -1,9 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
@@ -72,17 +71,15 @@ public class EducationExperienceController {
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<EducationExperience>>> getEducationExperiencesByUserInformationId(
+        public ResponseEntity<ResponseBody<Set<EducationExperience>>> getEducationExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Stream<EducationExperience> educationExperienceStream = userInformationService
+                Optional<Set<EducationExperience>> educationExperienceStream = userInformationService
                                 .getEducationExperiencesByUserInformationId(userInformationId, pageable);
-                if (educationExperienceStream.count() > 0) {
-                        return ResponseBody.success(
-                                        educationExperienceStream.collect(java.util.stream.Collectors.toList()));
+                if (educationExperienceStream.isPresent()) {
+                        return ResponseBody.success(educationExperienceStream.get());
                 }
                 return ResponseBody.notFound().build();
-
         }
 
         @GetMapping("/{eduexperienceid}")

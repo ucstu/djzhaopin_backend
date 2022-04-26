@@ -40,7 +40,7 @@ public class AccountController {
         Optional<AccountInformation> accountInformationOptional = accountService
                 .registerAccount(registerAccountRequest);
         if (accountInformationOptional.isPresent()) {
-            return ResponseBody.success(accountInformationOptional.get());
+            return ResponseBody.created(accountInformationOptional.get());
         }
         return ResponseBody.notFound().build();
     }
@@ -60,6 +60,10 @@ public class AccountController {
     public ResponseEntity<ResponseBody<Map<String, Object>>> loginAccount(
             @Valid @RequestBody LoginAccountRequest loginAccountRequest) {
         Map<String, Object> map = accountService.loginAccount(loginAccountRequest);
+        if (map.get("status") != null) {
+            return ResponseBody.notFound().build();
+        }
+        map.remove("status");
         return ResponseBody.success(map);
     }
 

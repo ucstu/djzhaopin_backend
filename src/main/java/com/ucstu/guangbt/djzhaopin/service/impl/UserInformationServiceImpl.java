@@ -1,6 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -20,7 +22,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class UserInformationServiceImpl implements UserInformationService {
 
@@ -30,9 +34,9 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Override
     public Optional<UserInformation> updateUserInformationByUserInfoId(UUID userInformationId,
             UserInformation userInformation) {
-        Optional<UserInformation> userInformation1 = userInformationRepository.findById(userInformationId);
-        if (userInformation1.isPresent()) {
-            UserInformation userInformation2 = userInformation1.get();
+        Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userInformationId);
+        if (userInformationOptional.isPresent()) {
+            UserInformation userInformation2 = userInformationOptional.get();
             userInformation2.setAge(userInformation.getAge());
             userInformation2.setAvatar(userInformation.getAvatar());
             userInformation2.setCity(userInformation.getCity());
@@ -55,8 +59,8 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<UserInformation> getUserInformations(Pageable pageable) {
-        return userInformationRepository.findAll(pageable).get();
+    public Optional<List<UserInformation>> getUserInformations(Pageable pageable) {
+        return Optional.of(userInformationRepository.findAll(pageable).getContent());
     }
 
     @Override
@@ -485,12 +489,12 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<DeliveryRecord> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<Set<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
-            return userInformation.get().getDeliveryRecords().stream();
+            return Optional.of(userInformation.get().getDeliveryRecords());
         } else {
-            return Stream.empty();
+            return Optional.empty();
         }
     }
 
@@ -571,12 +575,12 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<AttentionRecord> getAttentionRecordsByUserInformationId(UUID userinfoid) {
+    public Optional<Set<AttentionRecord>> getAttentionRecordsByUserInformationId(UUID userinfoid) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
-            return userInformation.get().getAttentionRecords().stream();
+            return Optional.of(userInformation.get().getAttentionRecords());
         } else {
-            return Stream.empty();
+            return Optional.empty();
         }
     }
 

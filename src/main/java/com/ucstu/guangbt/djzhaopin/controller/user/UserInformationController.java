@@ -3,8 +3,6 @@ package com.ucstu.guangbt.djzhaopin.controller.user;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
@@ -17,12 +15,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Validated
 @RestController
 @RequestMapping("/userinfos")
@@ -34,7 +35,7 @@ public class UserInformationController {
     @PutMapping("/{userinfoid}")
     public ResponseEntity<ResponseBody<UserInformation>> updateUserInformationByUserInfoId(
             @PathVariable("userinfoid") UUID userInformationId,
-            @Valid UserInformation userInformation) {
+            @Valid @RequestBody UserInformation userInformation) {
         Optional<UserInformation> userInformationOptional = userInformationService
                 .updateUserInformationByUserInfoId(userInformationId, userInformation);
         if (userInformationOptional.isPresent()) {
@@ -46,9 +47,10 @@ public class UserInformationController {
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Stream<UserInformation> userInformations = userInformationService.getUserInformations(pageable);
-        if (userInformations.count() > 0) {
-            return ResponseBody.success(userInformations.collect(Collectors.toList()));
+        Optional<List<UserInformation>> userInformationsOptional = userInformationService
+                .getUserInformations(pageable);
+        if (userInformationsOptional.isPresent()) {
+            return ResponseBody.success(userInformationsOptional.get());
         }
         return ResponseBody.notFound().build();
     }

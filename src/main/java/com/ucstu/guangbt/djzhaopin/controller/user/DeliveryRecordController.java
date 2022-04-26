@@ -1,10 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
@@ -72,13 +70,13 @@ public class DeliveryRecordController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
+    public ResponseEntity<ResponseBody<Set<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Stream<DeliveryRecord> deliveryRecordStream = userInformationService
+        Optional<Set<DeliveryRecord>> deliveryRecordsOptional = userInformationService
                 .getDeliveryRecordsByUserInformationId(userInformationId, pageable);
-        if (deliveryRecordStream.count() > 0) {
-            return ResponseBody.success(deliveryRecordStream.collect(Collectors.toList()));
+        if (deliveryRecordsOptional.isPresent()) {
+            return ResponseBody.success(deliveryRecordsOptional.get());
         }
         return ResponseBody.notFound().build();
     }

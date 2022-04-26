@@ -1,5 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -58,10 +59,13 @@ public class AccountInformationServiceImpl implements
         accountInformation.setUserName(registerRequest.getUserName());
         accountInformation.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         accountInformation.setGroups(accountGroups);
+        accountInformation.setAccountType(registerRequest.getAccountType());
         if (registerRequest.getAccountType() == 1) {
-            accountInformation.setUserInformation(new UserInformation());
+            accountInformation.setUserInformation(new UserInformation().setCreatedAt(new Date(
+                    System.currentTimeMillis())));
         } else if (registerRequest.getAccountType() == 2) {
-            accountInformation.setHrInformation(new HrInformation());
+            accountInformation.setHrInformation(new HrInformation().setCreatedAt(new Date(
+                    System.currentTimeMillis())));
         }
         return Optional.ofNullable(accountInformationRepository.save(accountInformation));
     }
@@ -85,8 +89,10 @@ public class AccountInformationServiceImpl implements
                     loginAccountRequest.getUserName(), loginAccountRequest.getPassword()));
         } catch (DisabledException e) {
             log.error("用户被禁用");
+            responseBody.put("status", "error user disabled");
         } catch (BadCredentialsException e) {
             log.error("密码错误");
+            responseBody.put("status", "error password");
         }
         UserDetails userdetails = userDetailsService.loadUserByUsername(loginAccountRequest.getUserName());
         String tokenString = jwtUtil.generateToken(userdetails);

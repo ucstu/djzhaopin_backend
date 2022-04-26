@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import jakarta.annotation.Resource;
 
@@ -42,8 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**").anonymous()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .anyRequest().authenticated();
+        // .and()
+        // .addFilterBefore(jwtAuthenticationFilter,
+        // UsernamePasswordAuthenticationFilter.class);
     }
 }

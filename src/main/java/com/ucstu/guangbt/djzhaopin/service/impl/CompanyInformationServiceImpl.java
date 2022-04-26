@@ -1,9 +1,10 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
@@ -44,8 +45,10 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public Stream<CompanyInformation> getCompanyInformations(Pageable pageable) {
-        return companyInformationRepository.findAll(pageable).getContent().stream();
+    public Optional<Set<CompanyInformation>> getCompanyInformations(Pageable pageable) {
+        Set<CompanyInformation> companyInformations = new HashSet<>();
+        companyInformations.addAll(companyInformationRepository.findAll(pageable).getContent());
+        return Optional.ofNullable(companyInformations);
     }
 
     @Override
@@ -54,7 +57,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public Stream<DeliveryRecord> getDeliveryRecordsByCompanyInformationId(UUID companyInformationId, Integer state,
+    public Optional<Set<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(UUID companyInformationId,
+            Integer state,
             Integer workingYears, String sex, Integer age, UUID jobId, Date deliveryDate, String search,
             Pageable pageable) {
         // return deliveryRecordRepository
@@ -62,7 +66,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         // jobId, deliveryDate, search,
         // pageable)
         // .stream();
-        return Stream.empty();
+        return Optional.empty();
     }
 
     @Override
@@ -143,15 +147,14 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public Stream<PositionInformation> getPositionInformationsByCompanyInformationId(UUID companyInformationId,
+    public Optional<Set<PositionInformation>> getPositionInformationsByCompanyInformationId(UUID companyInformationId,
             Pageable pageable) {
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
-            CompanyInformation companyInformation = companyInformationOptional.get();
-            return companyInformation.getPositionInformations().stream();
+            return Optional.of(companyInformationOptional.get().getPositionInformations());
         }
-        return Stream.empty();
+        return Optional.empty();
     }
 
 }

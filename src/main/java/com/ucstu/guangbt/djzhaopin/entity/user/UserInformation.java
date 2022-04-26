@@ -15,11 +15,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,6 +53,7 @@ public class UserInformation {
     @Column(nullable = false)
     private Date updatedAt;
 
+    @NotBlank
     private String avatar;
 
     private String firstName;
@@ -74,13 +78,14 @@ public class UserInformation {
     private Integer education;
 
     // {1:随时入职,2:2周内入职,3:1月内入职}
-    private String jobStatus;
+    private Integer jobStatus;
 
     private String personalAdvantage;
 
     private String socialHomepage;
 
-    private String pictureWorks;
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    private Set<String> pictureWorks;
 
     // {1:实名,2:匿名}
     private Integer privacySettings;
