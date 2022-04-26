@@ -2,7 +2,10 @@ package com.ucstu.guangbt.djzhaopin.controller.company;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
@@ -10,7 +13,6 @@ import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -36,57 +38,59 @@ public class CompanyInformationCotroller {
         @PostMapping("")
         public ResponseEntity<ResponseBody<CompanyInformation>> createCompanyInformation(
                         @Valid @RequestBody CompanyInformation companyInformation) {
-                return ResponseBody.created(companyInformationService.createCompanyInformation(companyInformation));
+                Optional<CompanyInformation> companyInformationOptional = companyInformationService
+                                .createCompanyInformation(companyInformation);
+                if (companyInformationOptional.isPresent()) {
+                        return ResponseBody.success(companyInformationOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @PostMapping("{companyinfoid}")
-        public ResponseEntity<ResponseBody<CompanyInformation>> updateCompanyInformationByCompanyInfoId(
-                        @PathVariable UUID companyinfoid,
+        public ResponseEntity<ResponseBody<CompanyInformation>> updateCompanyInformationByCompanyInformationId(
+                        @PathVariable("companyinfoid") UUID companyInformationId,
                         @Valid @RequestBody CompanyInformation companyInformation) {
-                return ResponseBody.created(
-                                companyInformationService.updateCompanyInformationByCompanyInfoId(companyinfoid,
-                                                companyInformation));
+                Optional<CompanyInformation> companyInformationOptional = companyInformationService
+                                .updateCompanyInformationByCompanyInformationId(companyInformationId,
+                                                companyInformation);
+                if (companyInformationOptional.isPresent()) {
+                        return ResponseBody.success(companyInformationOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<CompanyInformation>>> getCompanyInformations(
-                        @PageableDefault(value = 5, sort = {
-                                        "companyInformationId" }, direction = Sort.Direction.DESC) Pageable pageable) {
-                return ResponseBody.success(companyInformationService.getCompanyInformations(pageable));
+                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                Stream<CompanyInformation> companyInformations = companyInformationService
+                                .getCompanyInformations(pageable);
+                if (companyInformations.count() > 0) {
+                        return ResponseBody.success(companyInformations.collect(Collectors.toList()));
+                }
+                return ResponseBody.notFound().build();
         }
 
         @GetMapping("{companyinfoid}")
-        public ResponseEntity<ResponseBody<CompanyInformation>> getCompanyInformationByCompanyInfoId(
-                        @PathVariable UUID companyinfoid) {
-                return ResponseBody.created(
-                                companyInformationService.getCompanyInformationByCompanyInfoId(companyinfoid));
+        public ResponseEntity<ResponseBody<CompanyInformation>> getCompanyInformationByCompanyInformationId(
+                        @PathVariable("companyinfoid") UUID companyInformationId) {
+                Optional<CompanyInformation> companyInformationOptional = companyInformationService
+                                .getCompanyInformationByCompanyInformationId(companyInformationId);
+                if (companyInformationOptional.isPresent()) {
+                        return ResponseBody.success(companyInformationOptional.get());
+                }
+                return ResponseBody.notFound().build();
         }
 
-        /**
-         * 获取投递记录信息
-         *
-         * @param companyinfoid
-         * @param state
-         * @param workingYears
-         * @param sex
-         * @param age
-         * @param jobId
-         * @param deliveryDate
-         * @param search
-         * @param pageable
-         * @return
-         */
         @GetMapping("{companyinfoid}/deliveryrecords")
-        public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecords(
-                        @PathVariable UUID companyinfoid, @RequestParam Integer state,
+        public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByCompanyInformationId(
+                        @PathVariable("companyinfoid") UUID companyInformationId, @RequestParam Integer state,
                         @RequestParam Integer workingYears,
                         @RequestParam String sex, @RequestParam Integer age, @RequestParam UUID jobId,
                         @RequestParam Date deliveryDate, @RequestParam String search,
-                        @PageableDefault(value = 5, sort = {
-                                        "deliveryRecordId" }, direction = Sort.Direction.DESC) Pageable pageable) {
-                return ResponseBody
-                                .success(companyInformationService.getDeliveryRecords(companyinfoid, state,
-                                                workingYears, sex, age,
-                                                jobId, deliveryDate, search, pageable));
+                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                Stream<DeliveryRecord> deliveryRecords = companyInformationService
+                                .getDeliveryRecordsByCompanyInformationId(companyInformationId, state, workingYears,
+                                sex,age,jo
+
         }
 }
