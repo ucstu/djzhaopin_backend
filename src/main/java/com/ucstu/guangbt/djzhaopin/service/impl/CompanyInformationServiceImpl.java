@@ -127,6 +127,27 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     .findFirst();
             if (positionInformationOptional.isPresent()) {
                 PositionInformation positionInformation1 = positionInformationOptional.get();
+                positionInformation1.setCeilingSalary(positionInformation.getCeilingSalary());
+                positionInformation1.setCompanyInformationId(positionInformation.getCompanyInformationId());
+                positionInformation1.setDepartment(positionInformation.getDepartment());
+                positionInformation1.setDescription(positionInformation.getDescription());
+                positionInformation1.setDirectionTags(positionInformation.getDirectionTags());
+                positionInformation1.setEducation(positionInformation.getEducation());
+                positionInformation1.setHighlights(positionInformation.getHighlights());
+                positionInformation1.setHrInformationId(positionInformation.getHrInformationId());
+                positionInformation1.setName(positionInformation.getName());
+                positionInformation1.setPositionInterviewInfo(positionInformation.getPositionInterviewInfo());
+                positionInformation1.setPositionType(positionInformation.getPositionType());
+                positionInformation1.setPositionWorkingPlace(positionInformation.getPositionWorkingPlace());
+                positionInformation1.setReleaseDate(positionInformation.getReleaseDate());
+                positionInformation1.setStartingSalary(positionInformation.getStartingSalary());
+                positionInformation1.setWeekendReleaseTime(positionInformation.getWeekendReleaseTime());
+                positionInformation1.setWorkArea(positionInformation.getWorkArea());
+                positionInformation1.setWorkTime(positionInformation.getWorkTime());
+                positionInformation1.setWorkingYears(positionInformation.getWorkingYears());
+                return Optional.ofNullable(companyInformationRepository.save(companyInformation)
+                        .getPositionInformations()
+                        .get(companyInformation.getPositionInformations().indexOf(positionInformation1)));
             }
             return Optional.empty();
         }
