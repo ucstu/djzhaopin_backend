@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +19,8 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,16 +49,21 @@ public class JobExpectation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
+    @Range(min = 1, max = 3)
     private Integer positionType;
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private List<String> directionTags;
 
+    @NotBlank
     private String positionName;
 
+    @NotNull
     private Integer startingSalary;
 
+    @NotNull
     private Integer ceilingSalary;
 
+    @NotNull
     private String city;
 }

@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.entity.account;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
