@@ -14,6 +14,7 @@ import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 
 @Validated
+@CrossOrigin
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
