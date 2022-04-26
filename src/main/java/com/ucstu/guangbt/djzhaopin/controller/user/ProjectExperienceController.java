@@ -1,10 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
@@ -73,15 +71,16 @@ public class ProjectExperienceController {
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<ProjectExperience>>> getProjectExperiencesByUserInformationId(
+        public ResponseEntity<ResponseBody<Set<ProjectExperience>>> getProjectExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Stream<ProjectExperience> projectExperienceStream = userInformationService
+                Optional<Set<ProjectExperience>> projectExperienceStream = userInformationService
                                 .getProjectExperiencesByUserInformationId(userInformationId, pageable);
-                if (projectExperienceStream.count() > 0) {
-                        return ResponseBody.success(projectExperienceStream.collect(Collectors.toList()));
+                if (projectExperienceStream.isPresent()) {
+                        return ResponseBody.success(projectExperienceStream.get());
+                } else {
+                        return ResponseBody.notFound().build();
                 }
-                return ResponseBody.notFound().build();
         }
 
         @GetMapping("/{projectexperienceid}")

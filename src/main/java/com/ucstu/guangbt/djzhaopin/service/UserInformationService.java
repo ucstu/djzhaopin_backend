@@ -61,7 +61,7 @@ public interface UserInformationService {
         public Optional<WorkExperience> updateWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid,
                         WorkExperience workExperience);
 
-        public Stream<WorkExperience> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable);
+        public Optional<Set<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable);
 
         public Optional<WorkExperience> getWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid);
 
@@ -75,7 +75,8 @@ public interface UserInformationService {
                         UUID projectexperienceid,
                         ProjectExperience projectExperience);
 
-        public Stream<ProjectExperience> getProjectExperiencesByUserInformationId(UUID userinfoid, Pageable pageable);
+        public Optional<Set<ProjectExperience>> getProjectExperiencesByUserInformationId(UUID userinfoid,
+                        Pageable pageable);
 
         public Optional<ProjectExperience> getProjectExperienceByProjectExperienceId(UUID userinfoid,
                         UUID projectexperienceid);
