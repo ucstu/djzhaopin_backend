@@ -1,10 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
@@ -73,13 +71,13 @@ public class WorkExperienceController {
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<WorkExperience>>> getWorkExperiencesByUserInformationId(
+        public ResponseEntity<ResponseBody<Set<WorkExperience>>> getWorkExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Stream<WorkExperience> workExperiences = userInformationService
+                Optional<Set<WorkExperience>> workExperiences = userInformationService
                                 .getWorkExperiencesByUserInformationId(userInformationId, pageable);
-                if (workExperiences.count() > 0) {
-                        return ResponseBody.success(workExperiences.collect(Collectors.toList()));
+                if (workExperiences.isPresent()) {
+                        return ResponseBody.success(workExperiences.get());
                 }
                 return ResponseBody.notFound().build();
         }

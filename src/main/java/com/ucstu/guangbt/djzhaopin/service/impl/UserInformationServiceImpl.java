@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
@@ -126,12 +125,12 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<JobExpectation> getJobExpectationsByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<Set<JobExpectation>> getJobExpectationsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
-            return userInformation.get().getJobExpectations().stream();
+            return Optional.of(userInformation.get().getJobExpectations());
         } else {
-            return Stream.empty();
+            return Optional.empty();
         }
     }
 
@@ -216,12 +215,13 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<EducationExperience> getEducationExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<Set<EducationExperience>> getEducationExperiencesByUserInformationId(UUID userinfoid,
+            Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
-            return userInformation.get().getEducationExperiences().stream();
+            return Optional.of(userInformation.get().getEducationExperiences());
         } else {
-            return Stream.empty();
+            return Optional.empty();
         }
     }
 
@@ -309,12 +309,12 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<WorkExperience> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<Set<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
-            return userInformation.get().getWorkExperiences().stream();
+            return Optional.of(userInformation.get().getWorkExperiences());
         } else {
-            return Stream.empty();
+            return Optional.empty();
         }
     }
 
@@ -400,12 +400,13 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<ProjectExperience> getProjectExperiencesByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<Set<ProjectExperience>> getProjectExperiencesByUserInformationId(UUID userinfoid,
+            Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
-            return userInformation.get().getProjectExperiences().stream();
+            return Optional.of(userInformation.get().getProjectExperiences());
         } else {
-            return Stream.empty();
+            return Optional.empty();
         }
     }
 
@@ -663,12 +664,12 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<InspectionRecord> getInspectionRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<Set<InspectionRecord>> getInspectionRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
-            return userInformation.get().getInspectionRecords().stream();
+            return Optional.of(userInformation.get().getInspectionRecords());
         } else {
-            return Stream.empty();
+            return Optional.empty();
         }
     }
 
@@ -750,12 +751,12 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public Stream<GarnerRecord> getGarnerRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
+    public Optional<Set<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userinfoid, Pageable pageable) {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
         if (userInformation.isPresent()) {
-            return userInformation.get().getGarnerRecords().stream();
+            return Optional.of(userInformation.get().getGarnerRecords());
         } else {
-            return Stream.empty();
+            return Optional.empty();
         }
     }
 

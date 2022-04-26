@@ -1,9 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
@@ -72,14 +71,13 @@ public class InspectionRecordController {
         }
 
         @GetMapping("")
-        public ResponseEntity<ResponseBody<List<InspectionRecord>>> getInspectionRecordsByUserInformationId(
+        public ResponseEntity<ResponseBody<Set<InspectionRecord>>> getInspectionRecordsByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 5, size = 10) Pageable pageable) {
-                Stream<InspectionRecord> inspectionRecordStream = userInformationService
+                Optional<Set<InspectionRecord>> inspectionRecordsOptional = userInformationService
                                 .getInspectionRecordsByUserInformationId(userInformationId, pageable);
-                if (inspectionRecordStream.count() > 0) {
-                        return ResponseBody
-                                        .success(inspectionRecordStream.collect(java.util.stream.Collectors.toList()));
+                if (inspectionRecordsOptional.isPresent()) {
+                        return ResponseBody.success(inspectionRecordsOptional.get());
                 }
                 return ResponseBody.notFound().build();
         }

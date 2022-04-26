@@ -1,9 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
@@ -71,13 +70,13 @@ public class JobExpectationController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseBody<List<JobExpectation>>> getJobExpectationsByUserInformationId(
+    public ResponseEntity<ResponseBody<Set<JobExpectation>>> getJobExpectationsByUserInformationId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Stream<JobExpectation> jobExpectationStream = userInformationService
+        Optional<Set<JobExpectation>> jobExpectationsOptional = userInformationService
                 .getJobExpectationsByUserInformationId(userInformationId, pageable);
-        if (jobExpectationStream.count() > 0) {
-            return ResponseBody.success(jobExpectationStream.collect(java.util.stream.Collectors.toList()));
+        if (jobExpectationsOptional.isPresent()) {
+            return ResponseBody.success(jobExpectationsOptional.get());
         }
         return ResponseBody.notFound().build();
     }

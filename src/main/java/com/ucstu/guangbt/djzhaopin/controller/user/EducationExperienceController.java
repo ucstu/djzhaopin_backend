@@ -74,10 +74,10 @@ public class EducationExperienceController {
         public ResponseEntity<ResponseBody<Set<EducationExperience>>> getEducationExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Optional<Set<EducationExperience>> educationExperienceStream = userInformationService
+                Optional<Set<EducationExperience>> educationExperiencesOptional = userInformationService
                                 .getEducationExperiencesByUserInformationId(userInformationId, pageable);
-                if (educationExperienceStream.isPresent()) {
-                        return ResponseBody.success(educationExperienceStream.get());
+                if (educationExperiencesOptional.isPresent()) {
+                        return ResponseBody.success(educationExperiencesOptional.get());
                 }
                 return ResponseBody.notFound().build();
         }
