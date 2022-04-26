@@ -54,7 +54,7 @@ public class AccountInformationServiceImpl implements
     public Optional<AccountInformation> registerAccount(RegisterAccountRequest registerRequest) {
         AccountInformation accountInformation = new AccountInformation();
         Set<AccountGroup> accountGroups = new HashSet<>();
-        accountGroups.add(new AccountGroup(AccountGroup.GroupType.USER));
+        accountGroups.add(new AccountGroup().setGroupName("USER"));
         accountInformation.setUserName(registerRequest.getUserName());
         accountInformation.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         accountInformation.setGroups(accountGroups);
