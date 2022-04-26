@@ -1,7 +1,5 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
-import static org.mockito.ArgumentMatchers.nullable;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
