@@ -59,6 +59,7 @@ public class UserInformation {
 
     private String lastName;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
     private String sex;
