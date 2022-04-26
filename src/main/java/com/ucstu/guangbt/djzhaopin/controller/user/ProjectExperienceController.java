@@ -74,12 +74,13 @@ public class ProjectExperienceController {
         public ResponseEntity<ResponseBody<Set<ProjectExperience>>> getProjectExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Optional<Set<ProjectExperience>> projectExperiencesOptional = userInformationService
+                Optional<Set<ProjectExperience>> projectExperienceStream = userInformationService
                                 .getProjectExperiencesByUserInformationId(userInformationId, pageable);
-                if (projectExperiencesOptional.isPresent()) {
-                        return ResponseBody.success(projectExperiencesOptional.get());
+                if (projectExperienceStream.isPresent()) {
+                        return ResponseBody.success(projectExperienceStream.get());
+                } else {
+                        return ResponseBody.notFound().build();
                 }
-                return ResponseBody.notFound().build();
         }
 
         @GetMapping("/{projectexperienceid}")

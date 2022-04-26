@@ -78,8 +78,9 @@ public class WorkExperienceController {
                                 .getWorkExperiencesByUserInformationId(userInformationId, pageable);
                 if (workExperiences.isPresent()) {
                         return ResponseBody.success(workExperiences.get());
+                } else {
+                        return ResponseBody.notFound().build();
                 }
-                return ResponseBody.notFound().build();
         }
 
         @GetMapping("/{workexperienceid}")
