@@ -1,14 +1,12 @@
 package com.ucstu.guangbt.djzhaopin.entity.company;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 
 import org.hibernate.annotations.Type;
@@ -90,9 +88,9 @@ public class CompanyInformation {
     private String establishmentTime;
 
     @ElementCollection(targetClass = String.class)
-    private List<String> benefits;
+    private Set<String> benefits;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<PositionInformation> positionInformations;
+    private Set<PositionInformation> positionInformations;
 }

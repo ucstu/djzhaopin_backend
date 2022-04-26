@@ -1,5 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.hr;
 
+import static org.mockito.ArgumentMatchers.nullable;
+
 import java.util.Date;
 import java.util.UUID;
 

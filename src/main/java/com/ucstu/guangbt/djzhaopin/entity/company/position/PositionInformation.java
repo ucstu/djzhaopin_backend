@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.company.position;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -52,7 +52,7 @@ public class PositionInformation {
     private Integer education;
 
     @ElementCollection(targetClass = String.class)
-    private List<String> directionTags;
+    private Set<String> directionTags;
 
     private Integer startingSalary;
     private Integer ceilingSalary;
@@ -65,7 +65,7 @@ public class PositionInformation {
     private String department;
 
     @ElementCollection(targetClass = String.class)
-    private List<String> highlights;
+    private Set<String> highlights;
 
     private String description;
     private Integer weekendReleaseTime;

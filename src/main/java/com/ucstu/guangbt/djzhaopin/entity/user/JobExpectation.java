@@ -1,7 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -12,8 +12,10 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -46,8 +48,8 @@ public class JobExpectation {
 
     private Integer positionType;
 
-    @ElementCollection(targetClass = String.class)
-    private List<String> directionTags;
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    private Set<String> directionTags;
 
     private String positionName;
 

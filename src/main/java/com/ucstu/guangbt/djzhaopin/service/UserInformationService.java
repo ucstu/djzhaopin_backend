@@ -1,7 +1,8 @@
 package com.ucstu.guangbt.djzhaopin.service;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
@@ -19,100 +20,109 @@ public interface UserInformationService {
 
         public UserInformation updateUserInformationByUserInfoId(UUID userinfoid, UserInformation userInformation);
 
-        public List<UserInformation> getUserInformations(Pageable pageable);
+        public Stream<UserInformation> getUserInformations(Pageable pageable);
 
-        public UserInformation getUserInformationByUserInfoId(UUID userinfoid);
+        public Optional<UserInformation> getUserInformationByUserInfoId(UUID userinfoid);
 
-        public JobExpectation createJobExpectation(UUID userinfoid, JobExpectation jobExpectation);
+        public Optional<JobExpectation> createJobExpectation(UUID userinfoid, JobExpectation jobExpectation);
 
-        public JobExpectation deleteJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid);
+        public Optional<JobExpectation> deleteJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid);
 
-        public JobExpectation updateJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid,
+        public Optional<JobExpectation> updateJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid,
                         JobExpectation jobExpectation);
 
-        public List<JobExpectation> getJobExpectations(UUID userinfoid);
+        public Stream<JobExpectation> getJobExpectations(UUID userinfoid);
 
-        public JobExpectation getJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid);
+        public Optional<JobExpectation> getJobExpectationByJobExpectationId(UUID userinfoid, UUID jobexpectationid);
 
-        public EducationExperience createEducationExperience(UUID userinfoid,
+        public Optional<EducationExperience> createEducationExperience(UUID userinfoid,
                         EducationExperience educationExperience);
 
-        public EducationExperience deleteEducationExperienceByEducationExperienceId(UUID userinfoid,
+        public Optional<EducationExperience> deleteEducationExperienceByEducationExperienceId(UUID userinfoid,
                         UUID eduexperienceid);
 
-        public EducationExperience updateEducationExperienceByEducationExperienceId(UUID userinfoid,
+        public Optional<EducationExperience> updateEducationExperienceByEducationExperienceId(UUID userinfoid,
                         UUID eduexperienceid,
                         EducationExperience educationExperience);
 
-        public List<EducationExperience> getEducationExperiences(UUID userinfoid);
+        public Stream<EducationExperience> getEducationExperiences(UUID userinfoid);
 
-        public EducationExperience getEducationExperienceByEducationExperienceId(UUID userinfoid, UUID eduexperienceid);
+        public Optional<EducationExperience> getEducationExperienceByEducationExperienceId(UUID userinfoid,
+                        UUID eduexperienceid);
 
-        public WorkExperience createWorkExperience(UUID userinfoid, WorkExperience workExperience);
+        public Optional<WorkExperience> createWorkExperience(UUID userinfoid, WorkExperience workExperience);
 
-        public WorkExperience deleteWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid);
+        public Optional<WorkExperience> deleteWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid);
 
-        public WorkExperience updateWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid,
+        public Optional<WorkExperience> updateWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid,
                         WorkExperience workExperience);
 
-        public List<WorkExperience> getWorkExperiences(UUID userinfoid);
+        public Stream<WorkExperience> getWorkExperiences(UUID userinfoid);
 
-        public WorkExperience getWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid);
+        public Optional<WorkExperience> getWorkExperienceByWorkExperienceId(UUID userinfoid, UUID workexperienceid);
 
-        public ProjectExperience createProjectExperience(UUID userinfoid, ProjectExperience projectExperience);
-
-        public ProjectExperience deleteProjectExperienceByProjectExperienceId(UUID userinfoid,
-                        UUID projectexperienceid);
-
-        public ProjectExperience updateProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid,
+        public Optional<ProjectExperience> createProjectExperience(UUID userinfoid,
                         ProjectExperience projectExperience);
 
-        public List<ProjectExperience> getProjectExperiences(UUID userinfoid);
+        public Optional<ProjectExperience> deleteProjectExperienceByProjectExperienceId(UUID userinfoid,
+                        UUID projectexperienceid);
 
-        public ProjectExperience getProjectExperienceByProjectExperienceId(UUID userinfoid, UUID projectexperienceid);
+        public Optional<ProjectExperience> updateProjectExperienceByProjectExperienceId(UUID userinfoid,
+                        UUID projectexperienceid,
+                        ProjectExperience projectExperience);
 
-        public DeliveryRecord createDeliveryRecord(UUID userinfoid, DeliveryRecord deliveryRecord);
+        public Stream<ProjectExperience> getProjectExperiences(UUID userinfoid);
 
-        public DeliveryRecord deleteDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
+        public Optional<ProjectExperience> getProjectExperienceByProjectExperienceId(UUID userinfoid,
+                        UUID projectexperienceid);
 
-        public DeliveryRecord updateDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid,
+        public Optional<DeliveryRecord> createDeliveryRecord(UUID userinfoid, DeliveryRecord deliveryRecord);
+
+        public Optional<DeliveryRecord> deleteDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
+
+        public Optional<DeliveryRecord> updateDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid,
                         DeliveryRecord deliveryRecord);
 
-        public List<DeliveryRecord> getDeliveryRecords(UUID userinfoid);
+        public Stream<DeliveryRecord> getDeliveryRecords(UUID userinfoid);
 
-        public DeliveryRecord getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
+        public Optional<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userinfoid, UUID deliveryrecordid);
 
-        public AttentionRecord createAttentionRecord(UUID userinfoid, AttentionRecord attentionRecord);
+        public Optional<AttentionRecord> createAttentionRecord(UUID userinfoid, AttentionRecord attentionRecord);
 
-        public AttentionRecord deleteAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid);
+        public Optional<AttentionRecord> deleteAttentionRecordByAttentionRecordId(UUID userinfoid,
+                        UUID attentionrecordid);
 
-        public AttentionRecord updateAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid,
+        public Optional<AttentionRecord> updateAttentionRecordByAttentionRecordId(UUID userinfoid,
+                        UUID attentionrecordid,
                         AttentionRecord attentionRecord);
 
-        public List<AttentionRecord> getAttentionRecords(UUID userinfoid);
+        public Stream<AttentionRecord> getAttentionRecords(UUID userinfoid);
 
-        public AttentionRecord getAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid);
+        public Optional<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userinfoid, UUID attentionrecordid);
 
-        public InspectionRecord createInspectionRecord(UUID userinfoid, InspectionRecord inspectionRecord);
+        public Optional<InspectionRecord> createInspectionRecord(UUID userinfoid, InspectionRecord inspectionRecord);
 
-        public InspectionRecord deleteInspectionRecordByInspectionRecordId(UUID userinfoid, UUID inspectionrecordid);
+        public Optional<InspectionRecord> deleteInspectionRecordByInspectionRecordId(UUID userinfoid,
+                        UUID inspectionrecordid);
 
-        public InspectionRecord updateInspectionRecordByInspectionRecordId(UUID userinfoid, UUID inspectionrecordid,
+        public Optional<InspectionRecord> updateInspectionRecordByInspectionRecordId(UUID userinfoid,
+                        UUID inspectionrecordid,
                         InspectionRecord inspectionRecord);
 
-        public List<InspectionRecord> getInspectionRecords(UUID userinfoid);
+        public Stream<InspectionRecord> getInspectionRecords(UUID userinfoid);
 
-        public InspectionRecord getInspectionRecordByInspectionRecordId(UUID userinfoid, UUID inspectionrecordid);
+        public Optional<InspectionRecord> getInspectionRecordByInspectionRecordId(UUID userinfoid,
+                        UUID inspectionrecordid);
 
-        public GarnerRecord createGarnerRecord(UUID userinfoid, GarnerRecord garnerRecord);
+        public Optional<GarnerRecord> createGarnerRecord(UUID userinfoid, GarnerRecord garnerRecord);
 
-        public GarnerRecord deleteGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid);
+        public Optional<GarnerRecord> deleteGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid);
 
-        public GarnerRecord updateGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid,
+        public Optional<GarnerRecord> updateGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid,
                         GarnerRecord garnerRecord);
 
-        public List<GarnerRecord> getGarnerRecords(UUID userinfoid);
+        public Stream<GarnerRecord> getGarnerRecords(UUID userinfoid);
 
-        public GarnerRecord getGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid);
+        public Optional<GarnerRecord> getGarnerRecordByGarnerRecordId(UUID userinfoid, UUID garnerrecordid);
 
 }

@@ -1,14 +1,14 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
+import static org.mockito.ArgumentMatchers.nullable;
+
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
@@ -89,33 +89,33 @@ public class UserInformation {
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<JobExpectation> jobExpectations;
+    private Set<JobExpectation> jobExpectations;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<EducationExperience> educationExperiences;
+    private Set<EducationExperience> educationExperiences;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<WorkExperience> workExperiences;
+    private Set<WorkExperience> workExperiences;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<ProjectExperience> projectExperiences;
+    private Set<ProjectExperience> projectExperiences;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<DeliveryRecord> deliveryRecords;
+    private Set<DeliveryRecord> deliveryRecords;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<AttentionRecord> attentionRecords;
+    private Set<AttentionRecord> attentionRecords;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<InspectionRecord> inspectionRecords;
+    private Set<InspectionRecord> inspectionRecords;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<GarnerRecord> garnerRecords;
+    private Set<GarnerRecord> garnerRecords;
 }
