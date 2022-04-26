@@ -97,7 +97,7 @@ public class CompanyInformationCotroller {
         return ResponseBody.notFound().build();
     }
 
-    @GetMapping("{companyinfoid}/positioninfos")
+    @GetMapping("/positioninfos")
     public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInfos(
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
         Optional<List<PositionInformation>> companyInformationsOptional = companyInformationService
