@@ -14,6 +14,7 @@ import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
+import com.ucstu.guangbt.djzhaopin.repository.JobExpectationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
@@ -29,6 +30,9 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Resource
     private UserInformationRepository userInformationRepository;
+
+    @Resource
+    private JobExpectationRepository jobExpectationRepository;
 
     @Override
     public Optional<UserInformation> updateUserInformationByUserInfoId(UUID userInformationId,
@@ -69,13 +73,11 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public Optional<JobExpectation> createJobExpectation(UUID userinfoid, JobExpectation jobExpectation) {
-        Optional<UserInformation> userInformation = userInformationRepository.findById(userinfoid);
-        if (userInformation.isPresent()) {
-            userInformation.get().getJobExpectations().add(jobExpectation);
-            JobExpectation jobExpectation1 = (JobExpectation) userInformation.get().getJobExpectations()
-                    .toArray()[userInformation.get()
-                            .getJobExpectations().size() - 1];
-            return Optional.of(jobExpectation1);
+        Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userinfoid);
+        if (userInformationOptional.isPresent()) {
+            userInformationOptional.get().getJobExpectations().add(jobExpectation);
+            userInformationRepository.save(userInformationOptional.get());
+            return Optional.of(jobExpectation);
         } else {
             return Optional.empty();
         }

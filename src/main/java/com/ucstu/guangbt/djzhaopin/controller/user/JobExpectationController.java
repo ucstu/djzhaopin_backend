@@ -39,7 +39,7 @@ public class JobExpectationController {
         Optional<JobExpectation> jobExpectationOptional = userInformationService
                 .createJobExpectation(userInformationId, jobExpectation);
         if (jobExpectationOptional.isPresent()) {
-            return ResponseBody.success(jobExpectationOptional.get());
+            return ResponseBody.created(jobExpectationOptional.get());
         }
         return ResponseBody.notFound().build();
     }
