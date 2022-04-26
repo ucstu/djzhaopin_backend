@@ -574,11 +574,10 @@ public class UtilServiceImpl implements UtilService {
 
     @Override
     public Optional<String> uploadFile(MultipartFile file) {
-        String classPath = this.getClass().getResource("/").getPath();
-        File newFile = new File(classPath + "/static/file/" + file.getOriginalFilename());
+        File newFile = new File("/var/www/html/file/" + file.getOriginalFilename());
         try {
             file.transferTo(newFile);
-            return Optional.of("/static/file/" + file.getOriginalFilename());
+            return Optional.of("/file/" + file.getOriginalFilename());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -587,11 +586,10 @@ public class UtilServiceImpl implements UtilService {
 
     @Override
     public Optional<String> uploadAvatar(MultipartFile avatar) {
-        String classPath = this.getClass().getResource("/").getPath();
-        File newAvatar = new File(classPath + "/static/avatar/" + avatar.getOriginalFilename());
+        File newAvatar = new File("/var/www/html/avatar/" + avatar.getOriginalFilename());
         try {
             avatar.transferTo(newAvatar);
-            return Optional.of("/static/avatar/" + avatar.getOriginalFilename());
+            return Optional.of("/avatar/" + avatar.getOriginalFilename());
         } catch (IOException e) {
             e.printStackTrace();
         }
