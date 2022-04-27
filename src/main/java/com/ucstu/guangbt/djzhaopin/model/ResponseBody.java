@@ -231,9 +231,14 @@ public class ResponseBody<T> {
     }
 
     public static <T> ResponseEntity<ResponseBody<T>> handle(ServiceToControllerBody<T> serviceToControllerBody) {
-        if (!serviceToControllerBody.isSuccess()) {
+        if (serviceToControllerBody.isSuccess()) {
+            if (serviceToControllerBody.isCreate()) {
+                return created(serviceToControllerBody.getContent());
+            } else {
+                return success(serviceToControllerBody.getContent());
+            }
+        } else {
             return badRequest(serviceToControllerBody.getErrors());
         }
-        return success(serviceToControllerBody.getContent());
     }
 }

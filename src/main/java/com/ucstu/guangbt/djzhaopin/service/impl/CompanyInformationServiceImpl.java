@@ -36,13 +36,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Override
     public ServiceToControllerBody<CompanyInformation> createCompanyInformation(CompanyInformation companyInformation) {
         ServiceToControllerBody<CompanyInformation> serviceToControllerBody = new ServiceToControllerBody<>();
-        Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
-                .findById(companyInformation.getCompanyInformationId());
-        if (companyInformationOptional.isPresent()) {
-            return serviceToControllerBody.error("companyInformationId", "公司信息已存在",
-                    companyInformation.getCompanyInformationId());
-        }
-        return serviceToControllerBody.success(companyInformationRepository.save(companyInformation));
+        return serviceToControllerBody.created(companyInformationRepository.save(companyInformation));
     }
 
     @Override
@@ -114,7 +108,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
             companyInformationOptional.get().getPositionInformations().add(positionInformation);
-            return serviceToControllerBody.success(positionInformationRepository.save(positionInformation));
+            return serviceToControllerBody.created(positionInformationRepository.save(positionInformation));
         }
         return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }

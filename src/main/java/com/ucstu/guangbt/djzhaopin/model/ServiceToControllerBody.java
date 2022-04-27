@@ -13,14 +13,26 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ServiceToControllerBody<T> {
     private List<ErrorContent> errors;
+    private boolean create;
     private T content;
 
     public boolean isSuccess() {
         return errors == null || errors.isEmpty();
     }
 
+    public boolean isCreate() {
+        return create;
+    }
+
     public ServiceToControllerBody<T> success(T content) {
         this.content = content;
+        this.create = false;
+        return this;
+    }
+
+    public ServiceToControllerBody<T> created(T content) {
+        this.content = content;
+        this.create = true;
         return this;
     }
 

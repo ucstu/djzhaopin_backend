@@ -86,7 +86,7 @@ public class UtilServiceImpl implements UtilService {
         cityList.add("肖家河");
         cityList.add("神仙树");
         areaInformations.add(new AreaInformation(cityList, "武侯区"));
-        return serviceToControllerBody.setContent(areaInformations);
+        return serviceToControllerBody.success(areaInformations);
     }
 
     @Override
@@ -159,7 +159,7 @@ public class UtilServiceImpl implements UtilService {
         industryField.add("旅游");
         industryField.add("生活服务");
         filterInformation.setIndustryField(industryField);
-        return serviceToControllerBody.setContent(filterInformation);
+        return serviceToControllerBody.success(filterInformation);
     }
 
     @Override
@@ -201,7 +201,7 @@ public class UtilServiceImpl implements UtilService {
         positions.add("系统管理员");
         directions.add(new Direction("计算机网络", positions));
         positionTypes.add(new PositionType("其它", directions));
-        return serviceToControllerBody.setContent(positionTypes);
+        return serviceToControllerBody.success(positionTypes);
     }
 
     @Override
@@ -222,7 +222,7 @@ public class UtilServiceImpl implements UtilService {
         tags.add("网卡");
         tags.add("硬件");
         directionTags.add(new DirectionTag("计算机网络", tags));
-        return serviceToControllerBody.setContent(directionTags);
+        return serviceToControllerBody.success(directionTags);
     }
 
     @Override
@@ -547,7 +547,7 @@ public class UtilServiceImpl implements UtilService {
                 add("台湾");
             }
         }));
-        return serviceToControllerBody.setContent(cityInformations);
+        return serviceToControllerBody.success(cityInformations);
     }
 
     @Override
@@ -558,7 +558,7 @@ public class UtilServiceImpl implements UtilService {
         uuids.add(UUID.fromString("a9f8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8"));
         uuids.add(UUID.fromString("a9f8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8"));
         uuids.add(UUID.fromString("a9f8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8"));
-        return serviceToControllerBody.setContent(uuids);
+        return serviceToControllerBody.success(uuids);
     }
 
     @Override
@@ -566,23 +566,23 @@ public class UtilServiceImpl implements UtilService {
         ServiceToControllerBody<List<MessageRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<MessageRecord> messageRecords = messageRecordRepository.findAll(pageable);
         if (messageRecords.hasContent()) {
-            return serviceToControllerBody.setContent(messageRecords.getContent());
+            return serviceToControllerBody.success(messageRecords.getContent());
         }
-        return serviceToControllerBody.setContent(new ArrayList<>());
+        return serviceToControllerBody.success(new ArrayList<>());
     }
 
     @Override
     public ServiceToControllerBody<String> getVerificationCode(String phoneNumber) {
         ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
         String verificationCode = "2345";
-        return serviceToControllerBody.setContent(verificationCode);
+        return serviceToControllerBody.success(verificationCode);
     }
 
     @Override
     public ServiceToControllerBody<String> getNewVersion() {
         ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
         String version = "1.0.0";
-        return serviceToControllerBody.setContent(version);
+        return serviceToControllerBody.success(version);
     }
 
     @Override
@@ -594,7 +594,7 @@ public class UtilServiceImpl implements UtilService {
         } catch (IOException e) {
             return serviceToControllerBody.error("file", "文件上传失败", file.getOriginalFilename());
         }
-        return serviceToControllerBody.setContent("/file/" + file.getOriginalFilename());
+        return serviceToControllerBody.success("/file/" + file.getOriginalFilename());
     }
 
     @Override
@@ -606,7 +606,7 @@ public class UtilServiceImpl implements UtilService {
         } catch (IOException e) {
             return serviceToControllerBody.error("avatar", "头像上传失败", avatar.getOriginalFilename());
         }
-        return serviceToControllerBody.setContent("/avatar/" + avatar.getOriginalFilename());
+        return serviceToControllerBody.success("/avatar/" + avatar.getOriginalFilename());
     }
 
 }
