@@ -1,5 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.account;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,12 +40,12 @@ public class AccountController {
     @PostMapping("")
     public ResponseEntity<ResponseBody<AccountInformation>> registerAccount(
             @Valid @RequestBody RegisterAccountRequest registerAccountRequest) {
-        Optional<AccountInformation> accountInformationOptional = accountService
+        Map<String, Object> responseMap = accountService
                 .registerAccount(registerAccountRequest);
-        if (accountInformationOptional.isPresent()) {
-            return ResponseBody.created(accountInformationOptional.get());
+        if (responseMap.get("errors") != null) {
+            return ResponseBody.badRequest().errors((List<Object>) responseMap.get("errors"));
         }
-        return ResponseBody.notFound().build();
+        return ResponseBody.success((AccountInformation) responseMap.get("accountInformation"));
     }
 
     @DeleteMapping("/{accountId}")
@@ -62,10 +63,9 @@ public class AccountController {
     public ResponseEntity<ResponseBody<Map<String, Object>>> loginAccount(
             @Valid @RequestBody LoginAccountRequest loginAccountRequest) {
         Map<String, Object> map = accountService.loginAccount(loginAccountRequest);
-        if (map.get("status") != null) {
-            return ResponseBody.notFound().build();
+        if (map.get("errors") != null) {
+            return ResponseBody.badRequest().errors((List<Object>) map.get("errors"));
         }
-        map.remove("status");
         return ResponseBody.success(map);
     }
 

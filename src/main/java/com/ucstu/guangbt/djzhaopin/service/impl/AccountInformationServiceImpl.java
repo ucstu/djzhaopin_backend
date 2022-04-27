@@ -1,7 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -51,7 +53,17 @@ public class AccountInformationServiceImpl implements
     private AccountInformationRepository accountInformationRepository;
 
     @Override
-    public Optional<AccountInformation> registerAccount(RegisterAccountRequest registerRequest) {
+    public Map<String, Object> registerAccount(RegisterAccountRequest registerRequest) {
+        Map<String, Object> responseBody = new HashMap<>();
+        if (accountInformationRepository.findByUserName(registerRequest.getUserName()).isPresent()) {
+            List<Map<String, Object>> errors = new ArrayList<>();
+            Map<String, Object> error = new HashMap<>();
+            error.put("field", "userName");
+            error.put("message", "用户名已存在");
+            errors.add(error);
+            responseBody.put("errors", errors);
+            return responseBody;
+        }
         AccountInformation accountInformation = new AccountInformation();
         Set<AccountGroup> accountGroups = new HashSet<>();
         accountGroups.add(new AccountGroup().setGroupName("USER"));
@@ -66,7 +78,8 @@ public class AccountInformationServiceImpl implements
             HrInformation hrInformation = new HrInformation();
             accountInformation.setHrInformation(hrInformation);
         }
-        return Optional.ofNullable(accountInformationRepository.save(accountInformation));
+        responseBody.put("accountInformation", accountInformationRepository.save(accountInformation));
+        return responseBody;
     }
 
     @Override
@@ -87,11 +100,23 @@ public class AccountInformationServiceImpl implements
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginAccountRequest.getUserName(), loginAccountRequest.getPassword()));
         } catch (DisabledException e) {
-            log.error("用户被禁用");
-            responseBody.put("status", "error user disabled");
+            List<Map<String, Object>> errors = new ArrayList<>();
+            Map<String, Object> error = new HashMap<>();
+            error.put("field", "userName");
+            error.put("rejectedValue", loginAccountRequest.getUserName());
+            error.put("defaultMessage", "用户名已被禁用");
+            errors.add(error);
+            responseBody.put("errors", errors);
+            return responseBody;
         } catch (BadCredentialsException e) {
-            log.error("密码错误");
-            responseBody.put("status", "error password");
+            List<Map<String, Object>> errors = new ArrayList<>();
+            Map<String, Object> error = new HashMap<>();
+            error.put("field", "password");
+            error.put("rejectedValue", loginAccountRequest.getPassword());
+            error.put("defaultMessage", "用户名或密码错误");
+            errors.add(error);
+            responseBody.put("errors", errors);
+            return responseBody;
         }
         UserDetails userdetails = userDetailsService.loadUserByUsername(loginAccountRequest.getUserName());
         String tokenString = jwtUtil.generateToken(userdetails);
