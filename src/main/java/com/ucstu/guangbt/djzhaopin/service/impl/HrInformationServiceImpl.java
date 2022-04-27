@@ -1,13 +1,16 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
+import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.repository.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,24 +23,34 @@ public class HrInformationServiceImpl implements HrInformationService {
     private HrInformationRepository hrInformationRepository;
 
     @Override
-    public Optional<HrInformation> getHrInformationByHrInformationId(UUID hrInformationId) {
-        return hrInformationRepository.findById(hrInformationId);
+    public ServiceToControllerBody<HrInformation> getHrInformationByHrInformationId(UUID hrInformationId) {
+        ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
+        if (hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.success(hrInformationOptional.get());
+        }
+        return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
     }
 
     @Override
-    public Optional<List<HrInformation>> getHrInformations(Pageable pageable) {
-        return Optional.ofNullable(hrInformationRepository.findAll(pageable).getContent());
+    public ServiceToControllerBody<List<HrInformation>> getHrInformations(Pageable pageable) {
+        ServiceToControllerBody<List<HrInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
+        Page<HrInformation> hrInformations = hrInformationRepository.findAll(pageable);
+        if (hrInformations.hasContent()) {
+            return serviceToControllerBody.success(hrInformations.getContent());
+        }
+        return serviceToControllerBody.success(new ArrayList<>());
     }
 
     @Override
-    public Optional<HrInformation> updateHrInformationByHrInformationId(UUID hrInformationId,
+    public ServiceToControllerBody<HrInformation> updateHrInformationByHrInformationId(UUID hrInformationId,
             HrInformation hrInformation) {
+        ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
         if (hrInformationOptional.isPresent()) {
             hrInformation.setHrInformationId(hrInformationId);
-            return Optional.ofNullable(hrInformationRepository.save(hrInformation));
+            return serviceToControllerBody.success(hrInformationRepository.save(hrInformation));
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
     }
-
 }

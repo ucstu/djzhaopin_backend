@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.hr;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
@@ -35,33 +34,19 @@ public class HrInformationController {
     @GetMapping("/{hrinfoid}")
     public ResponseEntity<ResponseBody<HrInformation>> getHrInformationByHrInformationId(
             @PathVariable("hrinfoid") UUID hrInformationId) {
-        Optional<HrInformation> hrInformationOptional = hrInformationService
-                .getHrInformationByHrInformationId(hrInformationId);
-        if (hrInformationOptional.isPresent()) {
-            return ResponseBody.success(hrInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
-
+        return ResponseBody.handle(hrInformationService.getHrInformationByHrInformationId(hrInformationId));
     }
 
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<HrInformation>>> getHrInformations(@PageableDefault Pageable pageable) {
-        Optional<List<HrInformation>> hrInformationsOptional = hrInformationService.getHrInformations(pageable);
-        if (hrInformationsOptional.isPresent()) {
-            return ResponseBody.success(hrInformationsOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(hrInformationService.getHrInformations(pageable));
     }
 
     @PutMapping("/{hrinfoid}")
     public ResponseEntity<ResponseBody<HrInformation>> updateHrInformationByHrInformationId(
             @PathVariable("hrinfoid") UUID hrInformationId,
             @Valid @RequestBody HrInformation hrInformation) {
-        Optional<HrInformation> hrInformationOptional = hrInformationService
-                .updateHrInformationByHrInformationId(hrInformationId, hrInformation);
-        if (hrInformationOptional.isPresent()) {
-            return ResponseBody.success(hrInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(hrInformationService
+                .updateHrInformationByHrInformationId(hrInformationId, hrInformation));
     }
 }

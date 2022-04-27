@@ -1,18 +1,11 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
-import com.ucstu.guangbt.djzhaopin.entity.account.AccountGroup;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
-import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
-import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
@@ -54,33 +47,14 @@ public class AccountInformationServiceImpl implements
     private AccountInformationRepository accountInformationRepository;
 
     @Override
-    public Map<String, Object> registerAccount(RegisterAccountRequest registerRequest) {
-        Map<String, Object> responseBody = new HashMap<>();
+    public ServiceToControllerBody<AccountInformation> registerAccount(RegisterAccountRequest registerRequest) {
+        ServiceToControllerBody<AccountInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         if (accountInformationRepository.findByUserName(registerRequest.getUserName()).isPresent()) {
-            List<Map<String, Object>> errors = new ArrayList<>();
-            Map<String, Object> error = new HashMap<>();
-            error.put("field", "userName");
-            error.put("message", "用户名已存在");
-            errors.add(error);
-            responseBody.put("errors", errors);
-            return responseBody;
+            return serviceToControllerBody.error("userName", "用户名已存在", "用户名已存在");
         }
-        AccountInformation accountInformation = new AccountInformation();
-        Set<AccountGroup> accountGroups = new HashSet<>();
-        accountGroups.add(new AccountGroup().setGroupName("USER"));
-        accountInformation.setUserName(registerRequest.getUserName());
-        accountInformation.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        accountInformation.setGroups(accountGroups);
-        accountInformation.setAccountType(registerRequest.getAccountType());
-        if (registerRequest.getAccountType() == 1) {
-            UserInformation userInformation = new UserInformation();
-            accountInformation.setUserInformation(userInformation);
-        } else if (registerRequest.getAccountType() == 2) {
-            HrInformation hrInformation = new HrInformation();
-            accountInformation.setHrInformation(hrInformation);
-        }
-        responseBody.put("accountInformation", accountInformationRepository.save(accountInformation));
-        return responseBody;
+        return serviceToControllerBody.success(accountInformationRepository.save(new AccountInformation()
+                .setUserName(registerRequest.getUserName())
+                .setPassword(passwordEncoder.encode(registerRequest.getPassword()))));
     }
 
     @Override
@@ -88,67 +62,57 @@ public class AccountInformationServiceImpl implements
         ServiceToControllerBody<AccountInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<AccountInformation> accountInformationOptional = accountInformationRepository.findById(accountId);
         if (!accountInformationOptional.isPresent()) {
-            serviceToControllerBody.setSuccess(false);
-            serviceToControllerBody.setErrors(;
-            return serviceToControllerBody;
+            return serviceToControllerBody.error("accountId", "用户不存在", accountId);
         }
+        accountInformationRepository.delete(accountInformationOptional.get());
+        return serviceToControllerBody.success(accountInformationOptional.get());
     }
 
     @Override
-    public Map<String, Object> loginAccount(LoginAccountRequest loginAccountRequest) {
+    public ServiceToControllerBody<Map<String, Object>> loginAccount(LoginAccountRequest loginAccountRequest) {
+        ServiceToControllerBody<Map<String, Object>> serviceToControllerBody = new ServiceToControllerBody<>();
         Map<String, Object> responseBody = new HashMap<>();
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     loginAccountRequest.getUserName(), loginAccountRequest.getPassword()));
         } catch (DisabledException e) {
-            List<Map<String, Object>> errors = new ArrayList<>();
-            Map<String, Object> error = new HashMap<>();
-            error.put("field", "userName");
-            error.put("rejectedValue", loginAccountRequest.getUserName());
-            error.put("defaultMessage", "用户名已被禁用");
-            errors.add(error);
-            responseBody.put("errors", errors);
-            return responseBody;
+            return serviceToControllerBody.error("userName", "用户名已被禁用", loginAccountRequest.getUserName());
         } catch (BadCredentialsException e) {
-            List<Map<String, Object>> errors = new ArrayList<>();
-            Map<String, Object> error = new HashMap<>();
-            error.put("field", "password");
-            error.put("rejectedValue", loginAccountRequest.getPassword());
-            error.put("defaultMessage", "用户名或密码错误");
-            errors.add(error);
-            responseBody.put("errors", errors);
-            return responseBody;
+            return serviceToControllerBody.error("password", "密码错误", loginAccountRequest.getPassword());
         }
         UserDetails userdetails = userDetailsService.loadUserByUsername(loginAccountRequest.getUserName());
         String tokenString = jwtUtil.generateToken(userdetails);
         responseBody.put("token", tokenString);
         responseBody.put("accountInfo", accountInformationRepository
                 .findByUserName(loginAccountRequest.getUserName()));
-        return responseBody;
+        return serviceToControllerBody.success(responseBody);
     }
 
     @Override
-    public Optional<AccountInformation> changePassword(UUID accountId,
+    public ServiceToControllerBody<AccountInformation> changePassword(UUID accountId,
             @Valid ChangePasswordRequest changePasswordRequest) {
+        ServiceToControllerBody<AccountInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<AccountInformation> accountInformation = accountInformationRepository.findById(accountId);
         if (accountInformation.isPresent()) {
             AccountInformation account = accountInformation.get();
             account.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
-            return Optional.of(accountInformationRepository.save(account));
+            return serviceToControllerBody.success(accountInformationRepository.save(account));
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("accountId", "用户不存在", accountId);
     }
 
     @Override
-    public Optional<AccountInformation> forgetPassword(@Valid ForgetPasswordRequest forgetPasswordRequest) {
+    public ServiceToControllerBody<AccountInformation> forgetPassword(
+            @Valid ForgetPasswordRequest forgetPasswordRequest) {
+        ServiceToControllerBody<AccountInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<AccountInformation> accountInformation = accountInformationRepository
                 .findByUserName(forgetPasswordRequest.getUserName());
         if (accountInformation.isPresent()) {
             AccountInformation account = accountInformation.get();
             account.setPassword(passwordEncoder.encode(forgetPasswordRequest.getPassword()));
-            return Optional.of(accountInformationRepository.save(account));
+            return serviceToControllerBody.success(accountInformationRepository.save(account));
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("userName", "用户不存在", forgetPasswordRequest.getUserName());
     }
 
 }

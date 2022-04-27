@@ -35,7 +35,7 @@ public class ResponseBody<T> {
     private int status;
     private String message;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<Object> errors;
+    private List<ContentError> errors;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T body;
 
@@ -134,7 +134,7 @@ public class ResponseBody<T> {
                     this.headers, this.status);
         }
 
-        public <T> ResponseEntity<ResponseBody<T>> errors(@Nullable List<Object> errors) {
+        public <T> ResponseEntity<ResponseBody<T>> errors(@Nullable List<ContentError> errors) {
             return new ResponseEntity<>(
                     new ResponseBody<T>(this.timestamp, this.status, HttpStatus.valueOf(this.status)
                             .getReasonPhrase(), errors, null),
@@ -186,7 +186,7 @@ public class ResponseBody<T> {
         return status(HttpStatus.BAD_REQUEST);
     }
 
-    public static <T> ResponseEntity<ResponseBody<T>> badRequest(@Nullable List<Object> errors) {
+    public static <T> ResponseEntity<ResponseBody<T>> badRequest(@Nullable List<ContentError> errors) {
         return status(HttpStatus.BAD_REQUEST).errors(errors);
     }
 
@@ -194,7 +194,7 @@ public class ResponseBody<T> {
         return status(HttpStatus.UNAUTHORIZED);
     }
 
-    public static <T> ResponseEntity<ResponseBody<T>> unauthorized(@Nullable List<Object> errors) {
+    public static <T> ResponseEntity<ResponseBody<T>> unauthorized(@Nullable List<ContentError> errors) {
         return status(HttpStatus.UNAUTHORIZED).errors(errors);
     }
 
@@ -202,7 +202,7 @@ public class ResponseBody<T> {
         return status(HttpStatus.FORBIDDEN);
     }
 
-    public static <T> ResponseEntity<ResponseBody<T>> forbidden(@Nullable List<Object> errors) {
+    public static <T> ResponseEntity<ResponseBody<T>> forbidden(@Nullable List<ContentError> errors) {
         return status(HttpStatus.FORBIDDEN).errors(errors);
     }
 
@@ -210,7 +210,7 @@ public class ResponseBody<T> {
         return status(HttpStatus.NOT_FOUND);
     }
 
-    public static <T> ResponseEntity<ResponseBody<T>> notFound(@Nullable List<Object> errors) {
+    public static <T> ResponseEntity<ResponseBody<T>> notFound(@Nullable List<ContentError> errors) {
         return status(HttpStatus.NOT_FOUND).errors(errors);
     }
 
@@ -218,7 +218,7 @@ public class ResponseBody<T> {
         return status(HttpStatus.CONFLICT);
     }
 
-    public static <T> ResponseEntity<ResponseBody<T>> conflict(@Nullable List<Object> errors) {
+    public static <T> ResponseEntity<ResponseBody<T>> conflict(@Nullable List<ContentError> errors) {
         return status(HttpStatus.CONFLICT).errors(errors);
     }
 
@@ -226,7 +226,14 @@ public class ResponseBody<T> {
         return status(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public static <T> ResponseEntity<ResponseBody<T>> internalServerError(@Nullable List<Object> errors) {
+    public static <T> ResponseEntity<ResponseBody<T>> internalServerError(@Nullable List<ContentError> errors) {
         return status(HttpStatus.INTERNAL_SERVER_ERROR).errors(errors);
+    }
+
+    public static <T> ResponseEntity<ResponseBody<T>> handle(ServiceToControllerBody<T> serviceToControllerBody) {
+        if (!serviceToControllerBody.isSuccess()) {
+            return badRequest(serviceToControllerBody.getErrors());
+        }
+        return success(serviceToControllerBody.getContent());
     }
 }

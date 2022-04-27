@@ -1,13 +1,10 @@
 package com.ucstu.guangbt.djzhaopin.controller.account;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
-import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
@@ -41,54 +38,37 @@ public class AccountController {
     @PostMapping("")
     public ResponseEntity<ResponseBody<AccountInformation>> registerAccount(
             @Valid @RequestBody RegisterAccountRequest registerAccountRequest) {
-        Map<String, Object> responseMap = accountService
-                .registerAccount(registerAccountRequest);
-        if (responseMap.get("errors") != null) {
-            return ResponseBody.badRequest().errors((List<Object>) responseMap.get("errors"));
-        }
-        return ResponseBody.success((AccountInformation) responseMap.get("accountInformation"));
+        return ResponseBody.handle(accountService
+                .registerAccount(registerAccountRequest));
     }
 
     @DeleteMapping("/{accountId}")
     public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
             @PathVariable("accountId") UUID accountInformationId, @RequestParam String verificationCode) {
-        ServiceToControllerBody<AccountInformation> accountInformationOptional = accountService
-                .deleteAccount(accountInformationId, verificationCode);
-        acc
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(accountService
+                .deleteAccount(accountInformationId, verificationCode));
     }
 
     @PostMapping("/login")
     public ResponseEntity<ResponseBody<Map<String, Object>>> loginAccount(
             @Valid @RequestBody LoginAccountRequest loginAccountRequest) {
-        Map<String, Object> map = accountService.loginAccount(loginAccountRequest);
-        if (map.get("errors") != null) {
-            return ResponseBody.badRequest().errors((List<Object>) map.get("errors"));
-        }
-        return ResponseBody.success(map);
+        return ResponseBody.handle(accountService
+                .loginAccount(loginAccountRequest));
     }
 
     @PutMapping("/{accountId}")
     public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
             @PathVariable("accountId") UUID accountInformationId,
             @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
-        Optional<AccountInformation> accountInformationOptional = accountService
-                .changePassword(accountInformationId, changePasswordRequest);
-        if (accountInformationOptional.isPresent()) {
-            return ResponseBody.success(accountInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(accountService
+                .changePassword(accountInformationId, changePasswordRequest));
     }
 
     @PutMapping("/forget")
     public ResponseEntity<ResponseBody<AccountInformation>> forgetPassword(
             @Valid @RequestBody ForgetPasswordRequest forgetPasswordRequest) {
-        Optional<AccountInformation> accountInformationOptional = accountService
-                .forgetPassword(forgetPasswordRequest);
-        if (accountInformationOptional.isPresent()) {
-            return ResponseBody.success(accountInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(accountService
+                .forgetPassword(forgetPasswordRequest));
     }
 
 }
