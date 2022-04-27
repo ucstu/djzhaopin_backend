@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class ServiceToControllerBody<T> {
-    private List<ContentError> errors;
+    private List<ErrorContent> errors;
     private T content;
 
     public boolean isSuccess() {
@@ -25,7 +25,7 @@ public class ServiceToControllerBody<T> {
     }
 
     public ServiceToControllerBody<T> error(String field, String defaultMessage, Object rejectedValue) {
-        errors.add(new ContentError(field, defaultMessage, rejectedValue));
+        errors.add(new ErrorContent(field, defaultMessage, rejectedValue));
         return this;
     }
 }

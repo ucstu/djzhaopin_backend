@@ -24,12 +24,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class AccountInformationServiceImpl implements
         AccountInformationService {
+
     @Resource
     private JwtUtil jwtUtil;
 
@@ -79,8 +78,8 @@ public class AccountInformationServiceImpl implements
         } catch (BadCredentialsException e) {
             return serviceToControllerBody.error("password", "密码错误", loginAccountRequest.getPassword());
         }
-        UserDetails userdetails = userDetailsService.loadUserByUsername(loginAccountRequest.getUserName());
-        String tokenString = jwtUtil.generateToken(userdetails);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginAccountRequest.getUserName());
+        String tokenString = jwtUtil.generateToken(userDetails);
         responseBody.put("token", tokenString);
         responseBody.put("accountInfo", accountInformationRepository
                 .findByUserName(loginAccountRequest.getUserName()));

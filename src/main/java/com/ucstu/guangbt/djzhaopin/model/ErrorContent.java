@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class ContentError {
+public class ErrorContent {
     private String field;
     private String defaultMessage;
     private Object rejectedValue;

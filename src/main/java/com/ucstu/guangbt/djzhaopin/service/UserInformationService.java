@@ -18,142 +18,153 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserInformationService {
 
-        public ServiceToControllerBody<UserInformation> updateUserInformationByUserInfoId(UUID userinfoid,
+        public ServiceToControllerBody<UserInformation> updateUserInformationByUserInformationId(UUID userInformationId,
                         UserInformation userInformation);
 
         public ServiceToControllerBody<List<UserInformation>> getUserInformations(Pageable pageable);
 
-        public ServiceToControllerBody<UserInformation> getUserInformationByUserInfoId(UUID userinfoid);
+        public ServiceToControllerBody<UserInformation> getUserInformationByUserInformationId(UUID userInformationId);
 
-        public ServiceToControllerBody<JobExpectation> createJobExpectation(UUID userinfoid,
+        public ServiceToControllerBody<JobExpectation> createJobExpectation(UUID userInformationId,
                         JobExpectation jobExpectation);
 
-        public ServiceToControllerBody<JobExpectation> deleteJobExpectationByJobExpectationId(UUID userinfoid,
-                        UUID jobexpectationid);
+        public ServiceToControllerBody<JobExpectation> deleteJobExpectationByJobExpectationId(UUID userInformationId,
+                        UUID jobExpectationId);
 
-        public ServiceToControllerBody<JobExpectation> updateJobExpectationByJobExpectationId(UUID userinfoid,
-                        UUID jobexpectationid,
+        public ServiceToControllerBody<JobExpectation> updateJobExpectationByJobExpectationId(UUID userInformationId,
+                        UUID jobExpectationId,
                         JobExpectation jobExpectation);
 
-        public ServiceToControllerBody<List<JobExpectation>> getJobExpectationsByUserInformationId(UUID userinfoid,
+        public ServiceToControllerBody<List<JobExpectation>> getJobExpectationsByUserInformationId(
+                        UUID userInformationId,
                         Pageable pageable);
 
-        public ServiceToControllerBody<JobExpectation> getJobExpectationByJobExpectationId(UUID userinfoid,
-                        UUID jobexpectationid);
+        public ServiceToControllerBody<JobExpectation> getJobExpectationByJobExpectationId(UUID userInformationId,
+                        UUID jobExpectationId);
 
-        public ServiceToControllerBody<EducationExperience> createEducationExperience(UUID userinfoid,
+        public ServiceToControllerBody<EducationExperience> createEducationExperience(UUID userInformationId,
                         EducationExperience educationExperience);
 
         public ServiceToControllerBody<EducationExperience> deleteEducationExperienceByEducationExperienceId(
-                        UUID userinfoid,
-                        UUID eduexperienceid);
+                        UUID userInformationId,
+                        UUID eduExperienceId);
 
         public ServiceToControllerBody<EducationExperience> updateEducationExperienceByEducationExperienceId(
-                        UUID userinfoid,
-                        UUID eduexperienceid,
+                        UUID userInformationId,
+                        UUID eduExperienceId,
                         EducationExperience educationExperience);
 
         public ServiceToControllerBody<List<EducationExperience>> getEducationExperiencesByUserInformationId(
-                        UUID userinfoid,
+                        UUID userInformationId,
                         Pageable pageable);
 
         public ServiceToControllerBody<EducationExperience> getEducationExperienceByEducationExperienceId(
-                        UUID userinfoid,
-                        UUID eduexperienceid);
+                        UUID userInformationId,
+                        UUID eduExperienceId);
 
-        public ServiceToControllerBody<WorkExperience> createWorkExperience(UUID userinfoid,
+        public ServiceToControllerBody<WorkExperience> createWorkExperience(UUID userInformationId,
                         WorkExperience workExperience);
 
-        public ServiceToControllerBody<WorkExperience> deleteWorkExperienceByWorkExperienceId(UUID userinfoid,
-                        UUID workexperienceid);
+        public ServiceToControllerBody<WorkExperience> deleteWorkExperienceByWorkExperienceId(UUID userInformationId,
+                        UUID workExperienceId);
 
-        public ServiceToControllerBody<WorkExperience> updateWorkExperienceByWorkExperienceId(UUID userinfoid,
-                        UUID workexperienceid,
+        public ServiceToControllerBody<WorkExperience> updateWorkExperienceByWorkExperienceId(UUID userInformationId,
+                        UUID workExperienceId,
                         WorkExperience workExperience);
 
-        public ServiceToControllerBody<List<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userinfoid,
+        public ServiceToControllerBody<List<WorkExperience>> getWorkExperiencesByUserInformationId(
+                        UUID userInformationId,
                         Pageable pageable);
 
-        public ServiceToControllerBody<WorkExperience> getWorkExperienceByWorkExperienceId(UUID userinfoid,
-                        UUID workexperienceid);
+        public ServiceToControllerBody<WorkExperience> getWorkExperienceByWorkExperienceId(UUID userInformationId,
+                        UUID workExperienceId);
 
-        public ServiceToControllerBody<ProjectExperience> createProjectExperience(UUID userinfoid,
+        public ServiceToControllerBody<ProjectExperience> createProjectExperience(UUID userInformationId,
                         ProjectExperience projectExperience);
 
-        public ServiceToControllerBody<ProjectExperience> deleteProjectExperienceByProjectExperienceId(UUID userinfoid,
-                        UUID projectexperienceid);
+        public ServiceToControllerBody<ProjectExperience> deleteProjectExperienceByProjectExperienceId(
+                        UUID userInformationId,
+                        UUID projectExperienceId);
 
-        public ServiceToControllerBody<ProjectExperience> updateProjectExperienceByProjectExperienceId(UUID userinfoid,
-                        UUID projectexperienceid,
+        public ServiceToControllerBody<ProjectExperience> updateProjectExperienceByProjectExperienceId(
+                        UUID userInformationId,
+                        UUID projectExperienceId,
                         ProjectExperience projectExperience);
 
         public ServiceToControllerBody<List<ProjectExperience>> getProjectExperiencesByUserInformationId(
-                        UUID userinfoid,
+                        UUID userInformationId,
                         Pageable pageable);
 
-        public ServiceToControllerBody<ProjectExperience> getProjectExperienceByProjectExperienceId(UUID userinfoid,
-                        UUID projectexperienceid);
+        public ServiceToControllerBody<ProjectExperience> getProjectExperienceByProjectExperienceId(
+                        UUID userInformationId,
+                        UUID projectExperienceId);
 
-        public ServiceToControllerBody<DeliveryRecord> createDeliveryRecord(UUID userinfoid,
+        public ServiceToControllerBody<DeliveryRecord> createDeliveryRecord(UUID userInformationId,
                         DeliveryRecord deliveryRecord);
 
-        public ServiceToControllerBody<DeliveryRecord> deleteDeliveryRecordByDeliveryRecordId(UUID userinfoid,
-                        UUID deliveryrecordid);
+        public ServiceToControllerBody<DeliveryRecord> deleteDeliveryRecordByDeliveryRecordId(UUID userInformationId,
+                        UUID deliveryRecordId);
 
-        public ServiceToControllerBody<DeliveryRecord> updateDeliveryRecordByDeliveryRecordId(UUID userinfoid,
-                        UUID deliveryrecordid,
+        public ServiceToControllerBody<DeliveryRecord> updateDeliveryRecordByDeliveryRecordId(UUID userInformationId,
+                        UUID deliveryRecordId,
                         DeliveryRecord deliveryRecord);
 
-        public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userinfoid,
+        public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByUserInformationId(
+                        UUID userInformationId,
                         Pageable pageable);
 
-        public ServiceToControllerBody<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userinfoid,
-                        UUID deliveryrecordid);
+        public ServiceToControllerBody<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userInformationId,
+                        UUID deliveryRecordId);
 
-        public ServiceToControllerBody<AttentionRecord> createAttentionRecord(UUID userinfoid,
+        public ServiceToControllerBody<AttentionRecord> createAttentionRecord(UUID userInformationId,
                         AttentionRecord attentionRecord);
 
-        public ServiceToControllerBody<AttentionRecord> deleteAttentionRecordByAttentionRecordId(UUID userinfoid,
-                        UUID attentionrecordid);
+        public ServiceToControllerBody<AttentionRecord> deleteAttentionRecordByAttentionRecordId(UUID userInformationId,
+                        UUID attentionRecordId);
 
-        public ServiceToControllerBody<AttentionRecord> updateAttentionRecordByAttentionRecordId(UUID userinfoid,
-                        UUID attentionrecordid,
+        public ServiceToControllerBody<AttentionRecord> updateAttentionRecordByAttentionRecordId(UUID userInformationId,
+                        UUID attentionRecordId,
                         AttentionRecord attentionRecord);
 
-        public ServiceToControllerBody<List<AttentionRecord>> getAttentionRecordsByUserInformationId(UUID userinfoid);
+        public ServiceToControllerBody<List<AttentionRecord>> getAttentionRecordsByUserInformationId(
+                        UUID userInformationId);
 
-        public ServiceToControllerBody<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userinfoid,
-                        UUID attentionrecordid);
+        public ServiceToControllerBody<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userInformationId,
+                        UUID attentionRecordId);
 
-        public ServiceToControllerBody<InspectionRecord> createInspectionRecord(UUID userinfoid,
+        public ServiceToControllerBody<InspectionRecord> createInspectionRecord(UUID userInformationId,
                         InspectionRecord inspectionRecord);
 
-        public ServiceToControllerBody<InspectionRecord> deleteInspectionRecordByInspectionRecordId(UUID userinfoid,
-                        UUID inspectionrecordid);
+        public ServiceToControllerBody<InspectionRecord> deleteInspectionRecordByInspectionRecordId(
+                        UUID userInformationId,
+                        UUID inspectionRecordId);
 
-        public ServiceToControllerBody<InspectionRecord> updateInspectionRecordByInspectionRecordId(UUID userinfoid,
-                        UUID inspectionrecordid,
+        public ServiceToControllerBody<InspectionRecord> updateInspectionRecordByInspectionRecordId(
+                        UUID userInformationId,
+                        UUID inspectionRecordId,
                         InspectionRecord inspectionRecord);
 
-        public ServiceToControllerBody<List<InspectionRecord>> getInspectionRecordsByUserInformationId(UUID userinfoid,
+        public ServiceToControllerBody<List<InspectionRecord>> getInspectionRecordsByUserInformationId(
+                        UUID userInformationId,
                         Pageable pageable);
 
-        public ServiceToControllerBody<InspectionRecord> getInspectionRecordByInspectionRecordId(UUID userinfoid,
-                        UUID inspectionrecordid);
+        public ServiceToControllerBody<InspectionRecord> getInspectionRecordByInspectionRecordId(UUID userInformationId,
+                        UUID inspectionRecordId);
 
-        public ServiceToControllerBody<GarnerRecord> createGarnerRecord(UUID userinfoid, GarnerRecord garnerRecord);
-
-        public ServiceToControllerBody<GarnerRecord> deleteGarnerRecordByGarnerRecordId(UUID userinfoid,
-                        UUID garnerrecordid);
-
-        public ServiceToControllerBody<GarnerRecord> updateGarnerRecordByGarnerRecordId(UUID userinfoid,
-                        UUID garnerrecordid,
+        public ServiceToControllerBody<GarnerRecord> createGarnerRecord(UUID userInformationId,
                         GarnerRecord garnerRecord);
 
-        public ServiceToControllerBody<List<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userinfoid,
+        public ServiceToControllerBody<GarnerRecord> deleteGarnerRecordByGarnerRecordId(UUID userInformationId,
+                        UUID garnerRecordId);
+
+        public ServiceToControllerBody<GarnerRecord> updateGarnerRecordByGarnerRecordId(UUID userInformationId,
+                        UUID garnerRecordId,
+                        GarnerRecord garnerRecord);
+
+        public ServiceToControllerBody<List<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userInformationId,
                         Pageable pageable);
 
-        public ServiceToControllerBody<GarnerRecord> getGarnerRecordByGarnerRecordId(UUID userinfoid,
-                        UUID garnerrecordid);
+        public ServiceToControllerBody<GarnerRecord> getGarnerRecordByGarnerRecordId(UUID userInformationId,
+                        UUID garnerRecordId);
 
 }

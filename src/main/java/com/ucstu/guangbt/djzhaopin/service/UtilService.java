@@ -16,26 +16,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UtilService {
 
-    ServiceToControllerBody<List<AreaInformation>> getAreaInformations(String city);
+    public ServiceToControllerBody<List<AreaInformation>> getAreaInformations(String city);
 
-    ServiceToControllerBody<FilterInformation> getFilterInformation();
+    public ServiceToControllerBody<FilterInformation> getFilterInformation();
 
-    ServiceToControllerBody<List<PositionType>> getPositionTypes();
+    public ServiceToControllerBody<List<PositionType>> getPositionTypes();
 
-    ServiceToControllerBody<List<DirectionTag>> getDirectionTags(String positionName);
+    public ServiceToControllerBody<List<DirectionTag>> getDirectionTags(String positionName);
 
-    ServiceToControllerBody<List<CityInformation>> getCityInformations();
+    public ServiceToControllerBody<List<CityInformation>> getCityInformations();
 
-    ServiceToControllerBody<List<UUID>> getRecommendations(Pageable pageable);
+    public ServiceToControllerBody<List<UUID>> getRecommendations(Pageable pageable);
 
-    ServiceToControllerBody<List<MessageRecord>> getMessageRecords(Pageable pageable);
+    public ServiceToControllerBody<List<MessageRecord>> getMessageRecords(Pageable pageable);
 
-    ServiceToControllerBody<String> getVerificationCode(String phoneNumber);
+    public ServiceToControllerBody<String> getVerificationCode(String phoneNumber);
 
-    ServiceToControllerBody<String> getNewVersion();
+    public ServiceToControllerBody<String> getNewVersion();
 
-    ServiceToControllerBody<String> uploadFile(MultipartFile file);
+    public ServiceToControllerBody<String> uploadFile(MultipartFile file);
 
-    ServiceToControllerBody<String> uploadAvatar(MultipartFile avatar);
+    public ServiceToControllerBody<String> uploadAvatar(MultipartFile avatar);
 
 }

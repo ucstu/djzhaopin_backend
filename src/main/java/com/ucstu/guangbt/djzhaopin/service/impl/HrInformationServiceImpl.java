@@ -53,4 +53,5 @@ public class HrInformationServiceImpl implements HrInformationService {
         }
         return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
     }
+
 }

@@ -52,9 +52,9 @@ public class PositionInformation {
 
     @NotBlank
     private String name;
-    @Range(min = 0, max = 5)
+    @Range(min = 1, max = 6)
     private Integer workingYears;
-    @Range(min = 0, max = 4)
+    @Range(min = 1, max = 5)
     private Integer education;
 
     @ElementCollection(targetClass = String.class)
@@ -87,6 +87,7 @@ public class PositionInformation {
     private String description;
     private Integer weekendReleaseTime;
     private Date workTime;
+    private Date overtTime;
 
     @JsonProperty("interviewInfo")
     @OneToOne(cascade = { CascadeType.ALL })

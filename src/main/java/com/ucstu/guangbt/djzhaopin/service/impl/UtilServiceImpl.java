@@ -608,4 +608,5 @@ public class UtilServiceImpl implements UtilService {
         }
         return serviceToControllerBody.setContent("/avatar/" + avatar.getOriginalFilename());
     }
+
 }

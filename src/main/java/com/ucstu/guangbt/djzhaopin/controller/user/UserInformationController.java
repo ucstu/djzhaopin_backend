@@ -28,28 +28,28 @@ import jakarta.validation.Valid;
 @RequestMapping("/userinfos")
 public class UserInformationController {
 
-    @Resource
-    private UserInformationService userInformationService;
+        @Resource
+        private UserInformationService userInformationService;
 
-    @PutMapping("/{userinfoid}")
-    public ResponseEntity<ResponseBody<UserInformation>> updateUserInformationByUserInfoId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @Valid @RequestBody UserInformation userInformation) {
-        return ResponseBody.handle(userInformationService
-                .updateUserInformationByUserInfoId(userInformationId, userInformation));
-    }
+        @PutMapping("/{userinfoid}")
+        public ResponseEntity<ResponseBody<UserInformation>> updateUserInformationByUserInformationId(
+                        @PathVariable("userinfoid") UUID userInformationId,
+                        @Valid @RequestBody UserInformation userInformation) {
+                return ResponseBody.handle(userInformationService
+                                .updateUserInformationByUserInformationId(userInformationId, userInformation));
+        }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
-            @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        return ResponseBody.handle(userInformationService
-                .getUserInformations(pageable));
-    }
+        @GetMapping("")
+        public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
+                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                return ResponseBody.handle(userInformationService
+                                .getUserInformations(pageable));
+        }
 
-    @GetMapping("/{userinfoid}")
-    public ResponseEntity<ResponseBody<UserInformation>> getUserInformationByUserInfoId(
-            @PathVariable("userinfoid") UUID userInformationId) {
-        return ResponseBody.handle(userInformationService
-                .getUserInformationByUserInfoId(userInformationId));
-    }
+        @GetMapping("/{userinfoid}")
+        public ResponseEntity<ResponseBody<UserInformation>> getUserInformationByUserInformationId(
+                        @PathVariable("userinfoid") UUID userInformationId) {
+                return ResponseBody.handle(userInformationService
+                                .getUserInformationByUserInformationId(userInformationId));
+        }
 }

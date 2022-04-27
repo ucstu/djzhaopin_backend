@@ -29,51 +29,52 @@ import jakarta.validation.Valid;
 @RequestMapping("/companyinfos/{companyinfoid}/positioninfos")
 public class PositionInformationController {
 
-    @Resource
-    private CompanyInformationService companyInformationService;
+        @Resource
+        private CompanyInformationService companyInformationService;
 
-    @PostMapping("")
-    public ResponseEntity<ResponseBody<PositionInformation>> createPositionInformation(
-            @PathVariable("companyinfoid") UUID companyInformationId,
-            @Valid @RequestBody PositionInformation positionInformation) {
-        return ResponseBody.handle(companyInformationService
-                .createPositionInformation(companyInformationId, positionInformation));
-    }
+        @PostMapping("")
+        public ResponseEntity<ResponseBody<PositionInformation>> createPositionInformation(
+                        @PathVariable("companyinfoid") UUID companyInformationId,
+                        @Valid @RequestBody PositionInformation positionInformation) {
+                return ResponseBody.handle(companyInformationService
+                                .createPositionInformation(companyInformationId, positionInformation));
+        }
 
-    @DeleteMapping("/{positioninfoid}")
-    public ResponseEntity<ResponseBody<PositionInformation>> deletePositionInformationByPositionInformationId(
-            @PathVariable("companyinfoid") UUID companyInformationId,
-            @PathVariable("positioninfoid") UUID positionInformationId) {
-        return ResponseBody.handle(companyInformationService
-                .deletePositionInformationByPositionInformationId(companyInformationId,
-                        positionInformationId));
-    }
+        @DeleteMapping("/{positioninfoid}")
+        public ResponseEntity<ResponseBody<PositionInformation>> deletePositionInformationByPositionInformationId(
+                        @PathVariable("companyinfoid") UUID companyInformationId,
+                        @PathVariable("positioninfoid") UUID positionInformationId) {
+                return ResponseBody.handle(companyInformationService
+                                .deletePositionInformationByPositionInformationId(companyInformationId,
+                                                positionInformationId));
+        }
 
-    @PostMapping("/{positioninfoid}")
-    public ResponseEntity<ResponseBody<PositionInformation>> updatePositionInformationByPositionInformationId(
-            @PathVariable("companyinfoid") UUID companyInformationId,
-            @PathVariable("positioninfoid") UUID positionInformationId,
-            @Valid @RequestBody PositionInformation positionInformation) {
-        return ResponseBody.handle(companyInformationService
-                .updatePositionInformationByPositionInformationId(companyInformationId,
-                        positionInformationId,
-                        positionInformation));
-    }
+        @PostMapping("/{positioninfoid}")
+        public ResponseEntity<ResponseBody<PositionInformation>> updatePositionInformationByPositionInformationId(
+                        @PathVariable("companyinfoid") UUID companyInformationId,
+                        @PathVariable("positioninfoid") UUID positionInformationId,
+                        @Valid @RequestBody PositionInformation positionInformation) {
+                return ResponseBody.handle(companyInformationService
+                                .updatePositionInformationByPositionInformationId(companyInformationId,
+                                                positionInformationId,
+                                                positionInformation));
+        }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
-            @PathVariable("companyinfoid") UUID companyInformationId,
-            @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        return ResponseBody.handle(companyInformationService
-                .getPositionInformationsByCompanyInformationId(companyInformationId, pageable));
-    }
+        @GetMapping("")
+        public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
+                        @PathVariable("companyinfoid") UUID companyInformationId,
+                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                return ResponseBody.handle(companyInformationService
+                                .getPositionInformationsByCompanyInformationId(companyInformationId, pageable));
+        }
 
-    @GetMapping("/{positioninfoid}")
-    public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInfoId(
-            @PathVariable("companyinfoid") UUID companyInformationId,
-            @PathVariable("positioninfoid") UUID positionInformationId) {
-        return ResponseBody.handle(companyInformationService
-                .getPositionInformationByPositionInfoId(companyInformationId, positionInformationId));
-    }
+        @GetMapping("/{positioninfoid}")
+        public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInformationId(
+                        @PathVariable("companyinfoid") UUID companyInformationId,
+                        @PathVariable("positioninfoid") UUID positionInformationId) {
+                return ResponseBody.handle(companyInformationService
+                                .getPositionInformationByPositionInformationId(companyInformationId,
+                                                positionInformationId));
+        }
 
 }

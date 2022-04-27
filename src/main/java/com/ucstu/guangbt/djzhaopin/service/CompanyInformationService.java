@@ -12,6 +12,7 @@ import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import org.springframework.data.domain.Pageable;
 
 public interface CompanyInformationService {
+
         public ServiceToControllerBody<CompanyInformation> createCompanyInformation(
                         CompanyInformation companyInformation);
 
@@ -48,7 +49,7 @@ public interface CompanyInformationService {
                         UUID companyInformationId,
                         Pageable pageable);
 
-        public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInfoId(
+        public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInformationId(
                         UUID companyInformationId,
                         UUID positionInformationId);
 

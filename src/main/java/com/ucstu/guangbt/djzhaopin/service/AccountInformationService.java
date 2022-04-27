@@ -11,6 +11,7 @@ import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 
 public interface AccountInformationService {
+
     public ServiceToControllerBody<AccountInformation> registerAccount(RegisterAccountRequest registerAccountRequest);
 
     public ServiceToControllerBody<AccountInformation> deleteAccount(UUID accountId, String verificationCode);

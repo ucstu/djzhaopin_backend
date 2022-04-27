@@ -200,9 +200,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInfoId(
+    public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInformationId(
             UUID companyInformationId,
-            UUID positioninfoid) {
+            UUID positionInformationId) {
         ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
@@ -211,13 +211,14 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             Optional<PositionInformation> positionInformationOptional = companyInformation.getPositionInformations()
                     .stream()
                     .filter(positionInformation -> positionInformation.getPositionInformationId()
-                            .equals(positioninfoid))
+                            .equals(positionInformationId))
                     .findFirst();
             if (positionInformationOptional.isPresent()) {
                 return serviceToControllerBody.success(positionInformationOptional.get());
             }
-            return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positioninfoid);
+            return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
         }
         return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }
+
 }
