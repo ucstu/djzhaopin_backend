@@ -13,6 +13,7 @@ import com.ucstu.guangbt.djzhaopin.entity.account.AccountGroup;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
+import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
@@ -83,14 +84,14 @@ public class AccountInformationServiceImpl implements
     }
 
     @Override
-    public Optional<AccountInformation> deleteAccount(UUID accountId, String verificationCode) {
+    public ServiceToControllerBody<AccountInformation> deleteAccount(UUID accountId, String verificationCode) {
+        ServiceToControllerBody<AccountInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<AccountInformation> accountInformationOptional = accountInformationRepository.findById(accountId);
-        if (accountInformationOptional.isPresent()) {
-            AccountInformation accountInformation = accountInformationOptional.get();
-            accountInformationRepository.delete(accountInformation);
-            return accountInformationOptional;
+        if (!accountInformationOptional.isPresent()) {
+            serviceToControllerBody.setSuccess(false);
+            serviceToControllerBody.setErrors(;
+            return serviceToControllerBody;
         }
-        return Optional.empty();
     }
 
     @Override

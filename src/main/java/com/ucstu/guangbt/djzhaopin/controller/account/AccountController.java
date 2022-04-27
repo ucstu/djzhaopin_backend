@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
+import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
@@ -51,11 +52,9 @@ public class AccountController {
     @DeleteMapping("/{accountId}")
     public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
             @PathVariable("accountId") UUID accountInformationId, @RequestParam String verificationCode) {
-        Optional<AccountInformation> accountInformationOptional = accountService
+        ServiceToControllerBody<AccountInformation> accountInformationOptional = accountService
                 .deleteAccount(accountInformationId, verificationCode);
-        if (accountInformationOptional.isPresent()) {
-            return ResponseBody.success(accountInformationOptional.get());
-        }
+        acc
         return ResponseBody.notFound().build();
     }
 
