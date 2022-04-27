@@ -62,12 +62,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             Integer state,
             Integer workingYears, String sex, Integer age, UUID jobId, Date deliveryDate, String search,
             Pageable pageable) {
-        // return deliveryRecordRepository
-        // .searchDeliveryRecord(companyInformationId, state, workingYears, sex, age,
-        // jobId, deliveryDate, search,
-        // pageable)
-        // .stream();
-        return Optional.empty();
+        return Optional.ofNullable(deliveryRecordRepository.findAll(pageable).getContent());
     }
 
     @Override
