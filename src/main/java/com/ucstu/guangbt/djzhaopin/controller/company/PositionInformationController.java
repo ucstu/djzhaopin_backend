@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.company;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
@@ -37,25 +36,17 @@ public class PositionInformationController {
     public ResponseEntity<ResponseBody<PositionInformation>> createPositionInformation(
             @PathVariable("companyinfoid") UUID companyInformationId,
             @Valid @RequestBody PositionInformation positionInformation) {
-        Optional<PositionInformation> positionInformationOptional = companyInformationService
-                .createPositionInformation(companyInformationId, positionInformation);
-        if (positionInformationOptional.isPresent()) {
-            return ResponseBody.created(positionInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(companyInformationService
+                .createPositionInformation(companyInformationId, positionInformation));
     }
 
     @DeleteMapping("/{positioninfoid}")
     public ResponseEntity<ResponseBody<PositionInformation>> deletePositionInformationByPositionInformationId(
             @PathVariable("companyinfoid") UUID companyInformationId,
             @PathVariable("positioninfoid") UUID positionInformationId) {
-        Optional<PositionInformation> positionInformationOptional = companyInformationService
+        return ResponseBody.handle(companyInformationService
                 .deletePositionInformationByPositionInformationId(companyInformationId,
-                        positionInformationId);
-        if (positionInformationOptional.isPresent()) {
-            return ResponseBody.success(positionInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+                        positionInformationId));
     }
 
     @PostMapping("/{positioninfoid}")
@@ -63,38 +54,26 @@ public class PositionInformationController {
             @PathVariable("companyinfoid") UUID companyInformationId,
             @PathVariable("positioninfoid") UUID positionInformationId,
             @Valid @RequestBody PositionInformation positionInformation) {
-        Optional<PositionInformation> positionInformationOptional = companyInformationService
+        return ResponseBody.handle(companyInformationService
                 .updatePositionInformationByPositionInformationId(companyInformationId,
                         positionInformationId,
-                        positionInformation);
-        if (positionInformationOptional.isPresent()) {
-            return ResponseBody.success(positionInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+                        positionInformation));
     }
 
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
             @PathVariable("companyinfoid") UUID companyInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Optional<List<PositionInformation>> positionInformationsOptional = companyInformationService
-                .getPositionInformationsByCompanyInformationId(companyInformationId, pageable);
-        if (positionInformationsOptional.isPresent()) {
-            return ResponseBody.success(positionInformationsOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(companyInformationService
+                .getPositionInformationsByCompanyInformationId(companyInformationId, pageable));
     }
 
     @GetMapping("/{positioninfoid}")
     public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInfoId(
             @PathVariable("companyinfoid") UUID companyInformationId,
             @PathVariable("positioninfoid") UUID positionInformationId) {
-        Optional<PositionInformation> positionInformationOptional = companyInformationService
-                .getPositionInformationByPositionInfoId(companyInformationId, positionInformationId);
-        if (positionInformationOptional.isPresent()) {
-            return ResponseBody.success(positionInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(companyInformationService
+                .getPositionInformationByPositionInfoId(companyInformationId, positionInformationId));
     }
 
 }

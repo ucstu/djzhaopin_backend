@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
+import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.util.CityInformation;
 import com.ucstu.guangbt.djzhaopin.model.util.DirectionTag;
 import com.ucstu.guangbt.djzhaopin.model.util.FilterInformation;
@@ -17,6 +17,7 @@ import com.ucstu.guangbt.djzhaopin.model.util.positiontype.PositionType;
 import com.ucstu.guangbt.djzhaopin.repository.MessageRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.UtilService;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -34,7 +35,8 @@ public class UtilServiceImpl implements UtilService {
     private MessageRecordRepository messageRecordRepository;
 
     @Override
-    public Optional<List<AreaInformation>> getAreaInformations(String city) {
+    public ServiceToControllerBody<List<AreaInformation>> getAreaInformations(String city) {
+        ServiceToControllerBody<List<AreaInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         List<AreaInformation> areaInformations = new ArrayList<>();
         List<String> cityList = new ArrayList<>();
         cityList.add("紫荆");
@@ -84,11 +86,12 @@ public class UtilServiceImpl implements UtilService {
         cityList.add("肖家河");
         cityList.add("神仙树");
         areaInformations.add(new AreaInformation(cityList, "武侯区"));
-        return Optional.of(areaInformations);
+        return serviceToControllerBody.setContent(areaInformations);
     }
 
     @Override
-    public Optional<FilterInformation> getFilterInformation() {
+    public ServiceToControllerBody<FilterInformation> getFilterInformation() {
+        ServiceToControllerBody<FilterInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         FilterInformation filterInformation = new FilterInformation();
         List<String> occupationalBreakdown = new ArrayList<>();
         occupationalBreakdown.add("计算机软件");
@@ -156,11 +159,12 @@ public class UtilServiceImpl implements UtilService {
         industryField.add("旅游");
         industryField.add("生活服务");
         filterInformation.setIndustryField(industryField);
-        return Optional.of(filterInformation);
+        return serviceToControllerBody.setContent(filterInformation);
     }
 
     @Override
-    public Optional<List<PositionType>> getPositionTypes() {
+    public ServiceToControllerBody<List<PositionType>> getPositionTypes() {
+        ServiceToControllerBody<List<PositionType>> serviceToControllerBody = new ServiceToControllerBody<>();
         List<PositionType> positionTypes = new ArrayList<>();
         List<Direction> directions = new ArrayList<>();
         List<String> positions = new ArrayList<>();
@@ -197,11 +201,12 @@ public class UtilServiceImpl implements UtilService {
         positions.add("系统管理员");
         directions.add(new Direction("计算机网络", positions));
         positionTypes.add(new PositionType("其它", directions));
-        return Optional.of(positionTypes);
+        return serviceToControllerBody.setContent(positionTypes);
     }
 
     @Override
-    public Optional<List<DirectionTag>> getDirectionTags(String positionName) {
+    public ServiceToControllerBody<List<DirectionTag>> getDirectionTags(String positionName) {
+        ServiceToControllerBody<List<DirectionTag>> serviceToControllerBody = new ServiceToControllerBody<>();
         List<DirectionTag> directionTags = new ArrayList<>();
         List<String> tags = new ArrayList<>();
         tags.add("Java");
@@ -217,11 +222,12 @@ public class UtilServiceImpl implements UtilService {
         tags.add("网卡");
         tags.add("硬件");
         directionTags.add(new DirectionTag("计算机网络", tags));
-        return Optional.of(directionTags);
+        return serviceToControllerBody.setContent(directionTags);
     }
 
     @Override
-    public Optional<List<CityInformation>> getCityInformations() {
+    public ServiceToControllerBody<List<CityInformation>> getCityInformations() {
+        ServiceToControllerBody<List<CityInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         List<CityInformation> cityInformations = new ArrayList<>();
         cityInformations.add(new CityInformation("北京", new ArrayList<>() {
             {
@@ -541,59 +547,65 @@ public class UtilServiceImpl implements UtilService {
                 add("台湾");
             }
         }));
-        return Optional.of(cityInformations);
+        return serviceToControllerBody.setContent(cityInformations);
     }
 
     @Override
-    public Optional<List<UUID>> getRecommendations(Pageable pageable) {
-        return Optional.of(new ArrayList<>() {
-            {
-                add(UUID.randomUUID());
-                add(UUID.randomUUID());
-                add(UUID.randomUUID());
-                add(UUID.randomUUID());
-                add(UUID.randomUUID());
-            }
-        });
+    public ServiceToControllerBody<List<UUID>> getRecommendations(Pageable pageable) {
+        ServiceToControllerBody<List<UUID>> serviceToControllerBody = new ServiceToControllerBody<>();
+        List<UUID> uuids = new ArrayList<>();
+        uuids.add(UUID.fromString("a9f8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8"));
+        uuids.add(UUID.fromString("a9f8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8"));
+        uuids.add(UUID.fromString("a9f8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8"));
+        uuids.add(UUID.fromString("a9f8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8"));
+        return serviceToControllerBody.setContent(uuids);
     }
 
     @Override
-    public Optional<List<MessageRecord>> getMessageRecords(Pageable pageable) {
-        return Optional.of(messageRecordRepository.findAll(pageable).getContent());
+    public ServiceToControllerBody<List<MessageRecord>> getMessageRecords(Pageable pageable) {
+        ServiceToControllerBody<List<MessageRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        Page<MessageRecord> messageRecords = messageRecordRepository.findAll(pageable);
+        if (messageRecords.hasContent()) {
+            return serviceToControllerBody.setContent(messageRecords.getContent());
+        }
+        return serviceToControllerBody.setContent(new ArrayList<>());
     }
 
     @Override
-    public Optional<String> getVerificationCode(String phoneNumber) {
-        return Optional.of("123456");
+    public ServiceToControllerBody<String> getVerificationCode(String phoneNumber) {
+        ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
+        String verificationCode = "2345";
+        return serviceToControllerBody.setContent(verificationCode);
     }
 
     @Override
-    public Optional<String> getNewVersion() {
-        return Optional.of("1.0.0");
+    public ServiceToControllerBody<String> getNewVersion() {
+        ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
+        String version = "1.0.0";
+        return serviceToControllerBody.setContent(version);
     }
 
     @Override
-    public Optional<String> uploadFile(MultipartFile file) {
+    public ServiceToControllerBody<String> uploadFile(MultipartFile file) {
+        ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
         File newFile = new File("/var/www/html/file/" + file.getOriginalFilename());
         try {
             file.transferTo(newFile);
-            return Optional.of("/file/" + file.getOriginalFilename());
         } catch (IOException e) {
-            e.printStackTrace();
+            return serviceToControllerBody.error("file", "文件上传失败", file.getOriginalFilename());
         }
-        return Optional.empty();
+        return serviceToControllerBody.setContent("/file/" + file.getOriginalFilename());
     }
 
     @Override
-    public Optional<String> uploadAvatar(MultipartFile avatar) {
+    public ServiceToControllerBody<String> uploadAvatar(MultipartFile avatar) {
+        ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
         File newAvatar = new File("/var/www/html/avatar/" + avatar.getOriginalFilename());
         try {
             avatar.transferTo(newAvatar);
-            return Optional.of("/avatar/" + avatar.getOriginalFilename());
         } catch (IOException e) {
-            e.printStackTrace();
+            return serviceToControllerBody.error("avatar", "头像上传失败", avatar.getOriginalFilename());
         }
-        return Optional.empty();
+        return serviceToControllerBody.setContent("/avatar/" + avatar.getOriginalFilename());
     }
-
 }

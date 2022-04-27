@@ -1,5 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +9,13 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.DeliveryRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.PositionInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -31,62 +34,96 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     private PositionInformationRepository positionInformationRepository;
 
     @Override
-    public Optional<CompanyInformation> createCompanyInformation(CompanyInformation companyInformation) {
-        return Optional.ofNullable(companyInformationRepository.save(companyInformation));
+    public ServiceToControllerBody<CompanyInformation> createCompanyInformation(CompanyInformation companyInformation) {
+        ServiceToControllerBody<CompanyInformation> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
+                .findById(companyInformation.getCompanyInformationId());
+        if (companyInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("companyInformationId", "公司信息已存在",
+                    companyInformation.getCompanyInformationId());
+        }
+        return serviceToControllerBody.success(companyInformationRepository.save(companyInformation));
     }
 
     @Override
-    public Optional<CompanyInformation> updateCompanyInformationByCompanyInformationId(UUID companyInformationId,
+    public ServiceToControllerBody<CompanyInformation> updateCompanyInformationByCompanyInformationId(
+            UUID companyInformationId,
             CompanyInformation companyInformation) {
+        ServiceToControllerBody<CompanyInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
             companyInformation.setCompanyInformationId(companyInformationId);
-            return Optional.ofNullable(companyInformationRepository.save(companyInformation));
+            return serviceToControllerBody.success(companyInformationRepository.save(companyInformation));
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }
 
     @Override
-    public Optional<List<CompanyInformation>> getCompanyInformations(Pageable pageable) {
-        return Optional.ofNullable(companyInformationRepository.findAll(pageable).getContent());
+    public ServiceToControllerBody<List<CompanyInformation>> getCompanyInformations(Pageable pageable) {
+        ServiceToControllerBody<List<CompanyInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
+        Page<CompanyInformation> companyInformations = companyInformationRepository.findAll(pageable);
+        if (companyInformations.hasContent()) {
+            return serviceToControllerBody.success(companyInformations.getContent());
+        }
+        return serviceToControllerBody.success(new ArrayList<>());
     }
 
     @Override
-    public Optional<CompanyInformation> getCompanyInformationByCompanyInformationId(UUID companyInformationId) {
-        return companyInformationRepository.findById(companyInformationId);
+    public ServiceToControllerBody<CompanyInformation> getCompanyInformationByCompanyInformationId(
+            UUID companyInformationId) {
+        ServiceToControllerBody<CompanyInformation> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
+                .findById(companyInformationId);
+        if (companyInformationOptional.isPresent()) {
+            return serviceToControllerBody.success(companyInformationOptional.get());
+        }
+        return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }
 
     @Override
-    public Optional<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(UUID companyInformationId,
+    public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
+            UUID companyInformationId,
             Integer state,
             Integer workingYears, String sex, Integer age, UUID jobId, Date deliveryDate, String search,
             Pageable pageable) {
-        return Optional.ofNullable(deliveryRecordRepository.findAll(pageable).getContent());
+        // TODO 完善搜索功能
+        ServiceToControllerBody<List<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll(pageable);
+        if (deliveryRecords.hasContent()) {
+            return serviceToControllerBody.success(deliveryRecords.getContent());
+        }
+        return serviceToControllerBody.success(new ArrayList<>());
     }
 
     @Override
-    public Optional<List<PositionInformation>> getPositionInfos(Pageable pageable) {
-        return Optional.ofNullable(positionInformationRepository.findAll(pageable).getContent());
+    public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(Pageable pageable) {
+        ServiceToControllerBody<List<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody();
+        Page<PositionInformation> positionInformations = positionInformationRepository.findAll(pageable);
+        if (positionInformations.hasContent()) {
+            return serviceToControllerBody.success(positionInformations.getContent());
+        }
+        return serviceToControllerBody.success(new ArrayList<>());
     }
 
     @Override
-    public Optional<PositionInformation> createPositionInformation(UUID companyInformationId,
+    public ServiceToControllerBody<PositionInformation> createPositionInformation(UUID companyInformationId,
             PositionInformation positionInformation) {
+        ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
             companyInformationOptional.get().getPositionInformations().add(positionInformation);
-            return Optional.ofNullable(companyInformationRepository.save(companyInformationOptional.get())
-                    .getPositionInformations()
-                    .get(companyInformationOptional.get().getPositionInformations().size() - 1));
+            return serviceToControllerBody.success(positionInformationRepository.save(positionInformation));
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }
 
     @Override
-    public Optional<PositionInformation> deletePositionInformationByPositionInformationId(UUID companyInformationId,
+    public ServiceToControllerBody<PositionInformation> deletePositionInformationByPositionInformationId(
+            UUID companyInformationId,
             UUID positionInformationId) {
+        ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
@@ -98,19 +135,20 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     .findFirst();
             if (positionInformationOptional.isPresent()) {
                 companyInformation.getPositionInformations().remove(positionInformationOptional.get());
-                return Optional.of((PositionInformation) companyInformationRepository.save(companyInformation)
-                        .getPositionInformations()
-                        .toArray()[companyInformation.getPositionInformations().size() - 1]);
+                return serviceToControllerBody
+                        .success(positionInformationRepository.save(positionInformationOptional.get()));
             }
-            return Optional.empty();
+            return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }
 
     @Override
-    public Optional<PositionInformation> updatePositionInformationByPositionInformationId(UUID companyInformationId,
+    public ServiceToControllerBody<PositionInformation> updatePositionInformationByPositionInformationId(
+            UUID companyInformationId,
             UUID positionInformationId,
             PositionInformation positionInformation) {
+        ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
@@ -140,29 +178,32 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 positionInformation1.setWorkArea(positionInformation.getWorkArea());
                 positionInformation1.setWorkTime(positionInformation.getWorkTime());
                 positionInformation1.setWorkingYears(positionInformation.getWorkingYears());
-                return Optional.ofNullable(companyInformationRepository.save(companyInformation)
-                        .getPositionInformations()
-                        .get(companyInformation.getPositionInformations().indexOf(positionInformation1)));
+                return serviceToControllerBody
+                        .success(positionInformationRepository.save(positionInformation1));
             }
-            return Optional.empty();
+            return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }
 
     @Override
-    public Optional<List<PositionInformation>> getPositionInformationsByCompanyInformationId(UUID companyInformationId,
+    public ServiceToControllerBody<List<PositionInformation>> getPositionInformationsByCompanyInformationId(
+            UUID companyInformationId,
             Pageable pageable) {
+        ServiceToControllerBody<List<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
-            return Optional.of(companyInformationOptional.get().getPositionInformations());
+            return serviceToControllerBody.success(companyInformationOptional.get().getPositionInformations());
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }
 
     @Override
-    public Optional<PositionInformation> getPositionInformationByPositionInfoId(UUID companyInformationId,
+    public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInfoId(
+            UUID companyInformationId,
             UUID positioninfoid) {
+        ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (companyInformationOptional.isPresent()) {
@@ -173,10 +214,10 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                             .equals(positioninfoid))
                     .findFirst();
             if (positionInformationOptional.isPresent()) {
-                return Optional.of(positionInformationOptional.get());
+                return serviceToControllerBody.success(positionInformationOptional.get());
             }
-            return Optional.empty();
+            return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positioninfoid);
         }
-        return Optional.empty();
+        return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }
 }

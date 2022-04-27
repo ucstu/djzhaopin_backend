@@ -2,7 +2,6 @@ package com.ucstu.guangbt.djzhaopin.controller.company;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
@@ -39,47 +38,31 @@ public class CompanyInformationCotroller {
     @PostMapping("")
     public ResponseEntity<ResponseBody<CompanyInformation>> createCompanyInformation(
             @Valid @RequestBody CompanyInformation companyInformation) {
-        Optional<CompanyInformation> companyInformationOptional = companyInformationService
-                .createCompanyInformation(companyInformation);
-        if (companyInformationOptional.isPresent()) {
-            return ResponseBody.created(companyInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(companyInformationService
+                .createCompanyInformation(companyInformation));
     }
 
     @PostMapping("{companyinfoid}")
     public ResponseEntity<ResponseBody<CompanyInformation>> updateCompanyInformationByCompanyInformationId(
             @PathVariable("companyinfoid") UUID companyInformationId,
             @Valid @RequestBody CompanyInformation companyInformation) {
-        Optional<CompanyInformation> companyInformationOptional = companyInformationService
+        return ResponseBody.handle(companyInformationService
                 .updateCompanyInformationByCompanyInformationId(companyInformationId,
-                        companyInformation);
-        if (companyInformationOptional.isPresent()) {
-            return ResponseBody.success(companyInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+                        companyInformation));
     }
 
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<CompanyInformation>>> getCompanyInformations(
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Optional<List<CompanyInformation>> companyInformationsOptional = companyInformationService
-                .getCompanyInformations(pageable);
-        if (companyInformationsOptional.isPresent()) {
-            return ResponseBody.success(companyInformationsOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(companyInformationService
+                .getCompanyInformations(pageable));
     }
 
     @GetMapping("{companyinfoid}")
     public ResponseEntity<ResponseBody<CompanyInformation>> getCompanyInformationByCompanyInformationId(
             @PathVariable("companyinfoid") UUID companyInformationId) {
-        Optional<CompanyInformation> companyInformationOptional = companyInformationService
-                .getCompanyInformationByCompanyInformationId(companyInformationId);
-        if (companyInformationOptional.isPresent()) {
-            return ResponseBody.success(companyInformationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(companyInformationService
+                .getCompanyInformationByCompanyInformationId(companyInformationId));
     }
 
     @GetMapping("{companyinfoid}/deliveryrecords")
@@ -90,23 +73,15 @@ public class CompanyInformationCotroller {
             @RequestParam String sex, @RequestParam Integer age, @RequestParam UUID jobId,
             @RequestParam Date deliveryDate, @RequestParam String search,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Optional<List<DeliveryRecord>> deliveryRecordsOptional = companyInformationService
+        return ResponseBody.handle(companyInformationService
                 .getDeliveryRecordsByCompanyInformationId(companyInformationId, state, workingYears,
-                        sex, age, jobId, deliveryDate, search, pageable);
-        if (deliveryRecordsOptional.isPresent()) {
-            return ResponseBody.success(deliveryRecordsOptional.get());
-        }
-        return ResponseBody.notFound().build();
+                        sex, age, jobId, deliveryDate, search, pageable));
     }
 
     @GetMapping("/positioninfos")
     public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInfos(
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Optional<List<PositionInformation>> companyInformationsOptional = companyInformationService
-                .getPositionInfos(pageable);
-        if (companyInformationsOptional.isPresent()) {
-            return ResponseBody.success(companyInformationsOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(companyInformationService
+                .getPositionInfos(pageable));
     }
 }

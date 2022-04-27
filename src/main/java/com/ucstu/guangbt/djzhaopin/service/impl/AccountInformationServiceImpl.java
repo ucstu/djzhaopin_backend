@@ -24,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -90,7 +89,7 @@ public class AccountInformationServiceImpl implements
 
     @Override
     public ServiceToControllerBody<AccountInformation> changePassword(UUID accountId,
-            @Valid ChangePasswordRequest changePasswordRequest) {
+            ChangePasswordRequest changePasswordRequest) {
         ServiceToControllerBody<AccountInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<AccountInformation> accountInformation = accountInformationRepository.findById(accountId);
         if (accountInformation.isPresent()) {
@@ -103,7 +102,7 @@ public class AccountInformationServiceImpl implements
 
     @Override
     public ServiceToControllerBody<AccountInformation> forgetPassword(
-            @Valid ForgetPasswordRequest forgetPasswordRequest) {
+            ForgetPasswordRequest forgetPasswordRequest) {
         ServiceToControllerBody<AccountInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<AccountInformation> accountInformation = accountInformationRepository
                 .findByUserName(forgetPasswordRequest.getUserName());
