@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
@@ -38,24 +37,16 @@ public class InspectionRecordController {
         public ResponseEntity<ResponseBody<InspectionRecord>> createInspectionRecord(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @Valid @RequestBody InspectionRecord inspectionRecord) {
-                Optional<InspectionRecord> inspectionRecordOptional = userInformationService
-                                .createInspectionRecord(userInformationId, inspectionRecord);
-                if (inspectionRecordOptional.isPresent()) {
-                        return ResponseBody.created(inspectionRecordOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .createInspectionRecord(userInformationId, inspectionRecord));
         }
 
         @DeleteMapping("/{inspectionrecordid}")
         public ResponseEntity<ResponseBody<InspectionRecord>> deleteInspectionRecordByInspectionRecordId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("inspectionrecordid") UUID inspectionRecordId) {
-                Optional<InspectionRecord> inspectionRecordOptional = userInformationService
-                                .deleteInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId);
-                if (inspectionRecordOptional.isPresent()) {
-                        return ResponseBody.success(inspectionRecordOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .deleteInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId));
         }
 
         @PutMapping("/{inspectionrecordid}")
@@ -63,36 +54,24 @@ public class InspectionRecordController {
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("inspectionrecordid") UUID inspectionRecordId,
                         @Valid @RequestBody InspectionRecord inspectionRecord) {
-                Optional<InspectionRecord> inspectionRecordOptional = userInformationService
+                return ResponseBody.handle(userInformationService
                                 .updateInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId,
-                                                inspectionRecord);
-                if (inspectionRecordOptional.isPresent()) {
-                        return ResponseBody.success(inspectionRecordOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                                                inspectionRecord));
         }
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<InspectionRecord>>> getInspectionRecordsByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 5, size = 10) Pageable pageable) {
-                Optional<List<InspectionRecord>> inspectionRecordsOptional = userInformationService
-                                .getInspectionRecordsByUserInformationId(userInformationId, pageable);
-                if (inspectionRecordsOptional.isPresent()) {
-                        return ResponseBody.success(inspectionRecordsOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .getInspectionRecordsByUserInformationId(userInformationId, pageable));
         }
 
         @GetMapping("/{inspectionrecordid}")
         public ResponseEntity<ResponseBody<InspectionRecord>> getInspectionRecordByInspectionRecordId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("inspectionrecordid") UUID inspectionRecordId) {
-                Optional<InspectionRecord> inspectionRecordOptional = userInformationService
-                                .getInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId);
-                if (inspectionRecordOptional.isPresent()) {
-                        return ResponseBody.success(inspectionRecordOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .getInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId));
         }
 }

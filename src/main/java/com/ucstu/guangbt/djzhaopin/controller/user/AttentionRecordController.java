@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
@@ -37,24 +36,16 @@ public class AttentionRecordController {
     public ResponseEntity<ResponseBody<AttentionRecord>> createAttentionRecord(
             @PathVariable("userinfoid") UUID userInformationId,
             @Valid @RequestBody AttentionRecord attentionRecord) {
-        Optional<AttentionRecord> attentionRecordOptional = userInformationService
-                .createAttentionRecord(userInformationId, attentionRecord);
-        if (attentionRecordOptional.isPresent()) {
-            return ResponseBody.created(attentionRecordOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .createAttentionRecord(userInformationId, attentionRecord));
     }
 
     @DeleteMapping("/{attentionrecordid}")
     public ResponseEntity<ResponseBody<AttentionRecord>> deleteAttentionRecordByAttentionRecordId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("attentionrecordid") UUID attentionRecordId) {
-        Optional<AttentionRecord> attentionRecordOptional = userInformationService
-                .deleteAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId);
-        if (attentionRecordOptional.isPresent()) {
-            return ResponseBody.success(attentionRecordOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .deleteAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId));
     }
 
     @PutMapping("/{attentionrecordid}")
@@ -62,13 +53,9 @@ public class AttentionRecordController {
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("attentionrecordid") UUID attentionRecordId,
             @Valid @RequestBody AttentionRecord attentionRecord) {
-        Optional<AttentionRecord> attentionRecordOptional = userInformationService
+        return ResponseBody.handle(userInformationService
                 .updateAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId,
-                        attentionRecord);
-        if (attentionRecordOptional.isPresent()) {
-            return ResponseBody.success(attentionRecordOptional.get());
-        }
-        return ResponseBody.notFound().build();
+                        attentionRecord));
     }
 
     @GetMapping("")
@@ -76,23 +63,15 @@ public class AttentionRecordController {
             @PathVariable("userinfoid") UUID userInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
 
-        Optional<List<AttentionRecord>> attentionRecords = userInformationService
-                .getAttentionRecordsByUserInformationId(userInformationId);
-        if (attentionRecords.isPresent()) {
-            return ResponseBody.success(attentionRecords.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .getAttentionRecordsByUserInformationId(userInformationId));
     }
 
     @GetMapping("/{attentionrecordid}")
     public ResponseEntity<ResponseBody<AttentionRecord>> getAttentionRecordByAttentionRecordId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("attentionrecordid") UUID attentionRecordId) {
-        Optional<AttentionRecord> attentionRecordOptional = userInformationService
-                .getAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId);
-        if (attentionRecordOptional.isPresent()) {
-            return ResponseBody.success(attentionRecordOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .getAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId));
     }
 }

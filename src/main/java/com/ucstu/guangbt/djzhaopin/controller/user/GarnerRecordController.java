@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.GarnerRecord;
@@ -37,24 +36,16 @@ public class GarnerRecordController {
     public ResponseEntity<ResponseBody<GarnerRecord>> createGarnerRecord(
             @PathVariable("userinfoid") UUID userInformationId,
             @Valid @RequestBody GarnerRecord garnerRecord) {
-        Optional<GarnerRecord> garnerRecordOptional = userInformationService.createGarnerRecord(userInformationId,
-                garnerRecord);
-        if (garnerRecordOptional.isPresent()) {
-            return ResponseBody.created(garnerRecordOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService.createGarnerRecord(userInformationId,
+                garnerRecord));
     }
 
     @DeleteMapping("/{garnerrecordid}")
     public ResponseEntity<ResponseBody<GarnerRecord>> deleteGarnerRecordByGarnerRecordId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("garnerrecordid") UUID garnerRecordId) {
-        Optional<GarnerRecord> garnerRecordOptional = userInformationService.deleteGarnerRecordByGarnerRecordId(
-                userInformationId, garnerRecordId);
-        if (garnerRecordOptional.isPresent()) {
-            return ResponseBody.success(garnerRecordOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService.deleteGarnerRecordByGarnerRecordId(
+                userInformationId, garnerRecordId));
     }
 
     @PutMapping("/{garnerrecordid}")
@@ -62,35 +53,23 @@ public class GarnerRecordController {
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("garnerrecordid") UUID garnerRecordId,
             @Valid @RequestBody GarnerRecord garnerRecord) {
-        Optional<GarnerRecord> garnerRecordOptional = userInformationService.updateGarnerRecordByGarnerRecordId(
-                userInformationId, garnerRecordId, garnerRecord);
-        if (garnerRecordOptional.isPresent()) {
-            return ResponseBody.success(garnerRecordOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService.updateGarnerRecordByGarnerRecordId(
+                userInformationId, garnerRecordId, garnerRecord));
     }
 
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<GarnerRecord>>> getGarnerRecordsByUserInformationId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Optional<List<GarnerRecord>> garnerRecords = userInformationService
-                .getGarnerRecordsByUserInformationId(userInformationId, pageable);
-        if (garnerRecords.isPresent()) {
-            return ResponseBody.success(garnerRecords.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .getGarnerRecordsByUserInformationId(userInformationId, pageable));
     }
 
     @GetMapping("/{garnerrecordid}")
     public ResponseEntity<ResponseBody<GarnerRecord>> getGarnerRecordByGarnerRecordId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("garnerrecordid") UUID garnerRecordId) {
-        Optional<GarnerRecord> garnerRecordOptional = userInformationService.getGarnerRecordByGarnerRecordId(
-                userInformationId, garnerRecordId);
-        if (garnerRecordOptional.isPresent()) {
-            return ResponseBody.success(garnerRecordOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService.getGarnerRecordByGarnerRecordId(
+                userInformationId, garnerRecordId));
     }
 }

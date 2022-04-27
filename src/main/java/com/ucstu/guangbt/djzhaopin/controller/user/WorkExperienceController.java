@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
@@ -38,24 +37,16 @@ public class WorkExperienceController {
         public ResponseEntity<ResponseBody<WorkExperience>> createWorkExperience(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @Valid @RequestBody WorkExperience workExperience) {
-                Optional<WorkExperience> workExperienceOptional = userInformationService
-                                .createWorkExperience(userInformationId, workExperience);
-                if (workExperienceOptional.isPresent()) {
-                        return ResponseBody.created(workExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .createWorkExperience(userInformationId, workExperience));
         }
 
         @DeleteMapping("/{workexperienceid}")
         public ResponseEntity<ResponseBody<WorkExperience>> deleteWorkExperienceByWorkExperienceId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("workexperienceid") UUID workExperienceId) {
-                Optional<WorkExperience> workExperienceOptional = userInformationService
-                                .deleteWorkExperienceByWorkExperienceId(userInformationId, workExperienceId);
-                if (workExperienceOptional.isPresent()) {
-                        return ResponseBody.success(workExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .deleteWorkExperienceByWorkExperienceId(userInformationId, workExperienceId));
         }
 
         @PutMapping("/{workexperienceid}")
@@ -63,37 +54,24 @@ public class WorkExperienceController {
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("workexperienceid") UUID workExperienceId,
                         @Valid @RequestBody WorkExperience workExperience) {
-                Optional<WorkExperience> workExperienceOptional = userInformationService
+                return ResponseBody.handle(userInformationService
                                 .updateWorkExperienceByWorkExperienceId(userInformationId, workExperienceId,
-                                                workExperience);
-                if (workExperienceOptional.isPresent()) {
-                        return ResponseBody.success(workExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                                                workExperience));
         }
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<WorkExperience>>> getWorkExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Optional<List<WorkExperience>> workExperiences = userInformationService
-                                .getWorkExperiencesByUserInformationId(userInformationId, pageable);
-                if (workExperiences.isPresent()) {
-                        return ResponseBody.success(workExperiences.get());
-                } else {
-                        return ResponseBody.notFound().build();
-                }
+                return ResponseBody.handle(userInformationService
+                                .getWorkExperiencesByUserInformationId(userInformationId, pageable));
         }
 
         @GetMapping("/{workexperienceid}")
         public ResponseEntity<ResponseBody<WorkExperience>> getWorkExperienceByWorkExperienceId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("workexperienceid") UUID workExperienceId) {
-                Optional<WorkExperience> workExperienceOptional = userInformationService
-                                .getWorkExperienceByWorkExperienceId(userInformationId, workExperienceId);
-                if (workExperienceOptional.isPresent()) {
-                        return ResponseBody.success(workExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .getWorkExperienceByWorkExperienceId(userInformationId, workExperienceId));
         }
 }

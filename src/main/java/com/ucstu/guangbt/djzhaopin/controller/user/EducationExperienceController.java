@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
@@ -38,24 +37,16 @@ public class EducationExperienceController {
         public ResponseEntity<ResponseBody<EducationExperience>> createEducationExperience(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @Valid @RequestBody EducationExperience educationExperience) {
-                Optional<EducationExperience> educationExperienceOptional = userInformationService
-                                .createEducationExperience(userInformationId, educationExperience);
-                if (educationExperienceOptional.isPresent()) {
-                        return ResponseBody.created(educationExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .createEducationExperience(userInformationId, educationExperience));
         }
 
         @DeleteMapping("/{eduexperienceid}")
         public ResponseEntity<ResponseBody<EducationExperience>> deleteEducationExperienceByEducationExperienceId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("eduexperienceid") UUID eduExperienceId) {
-                Optional<EducationExperience> educationExperienceOptional = userInformationService
-                                .deleteEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId);
-                if (educationExperienceOptional.isPresent()) {
-                        return ResponseBody.success(educationExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .deleteEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId));
         }
 
         @PutMapping("/{eduexperienceid}")
@@ -63,37 +54,25 @@ public class EducationExperienceController {
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("eduexperienceid") UUID eduExperienceId,
                         @Valid @RequestBody EducationExperience educationExperience) {
-                Optional<EducationExperience> educationExperienceOptional = userInformationService
+                return ResponseBody.handle(userInformationService
                                 .updateEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId,
-                                                educationExperience);
-                if (educationExperienceOptional.isPresent()) {
-                        return ResponseBody.success(educationExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                                                educationExperience));
         }
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<EducationExperience>>> getEducationExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Optional<List<EducationExperience>> educationExperiencesOptional = userInformationService
-                                .getEducationExperiencesByUserInformationId(userInformationId, pageable);
-                if (educationExperiencesOptional.isPresent()) {
-                        return ResponseBody.success(educationExperiencesOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .getEducationExperiencesByUserInformationId(userInformationId, pageable));
         }
 
         @GetMapping("/{eduexperienceid}")
         public ResponseEntity<ResponseBody<EducationExperience>> getEducationExperienceByEducationExperienceId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("eduexperienceid") UUID eduExperienceId) {
-                Optional<EducationExperience> educationExperienceOptional = userInformationService
-                                .getEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId);
-                if (educationExperienceOptional.isPresent()) {
-                        return ResponseBody.success(educationExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .getEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId));
         }
 
 }

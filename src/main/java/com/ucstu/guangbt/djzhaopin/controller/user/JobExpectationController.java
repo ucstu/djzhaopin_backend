@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
@@ -38,24 +37,16 @@ public class JobExpectationController {
     public ResponseEntity<ResponseBody<JobExpectation>> createJobExpectation(
             @PathVariable("userinfoid") UUID userInformationId,
             @Valid @RequestBody JobExpectation jobExpectation) {
-        Optional<JobExpectation> jobExpectationOptional = userInformationService
-                .createJobExpectation(userInformationId, jobExpectation);
-        if (jobExpectationOptional.isPresent()) {
-            return ResponseBody.created(jobExpectationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .createJobExpectation(userInformationId, jobExpectation));
     }
 
     @DeleteMapping("/{jobexpectationid}")
     public ResponseEntity<ResponseBody<JobExpectation>> deleteJobExpectationByJobExpectationId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("jobexpectationid") UUID jobExpectationId) {
-        Optional<JobExpectation> jobExpectationOptional = userInformationService
-                .deleteJobExpectationByJobExpectationId(userInformationId, jobExpectationId);
-        if (jobExpectationOptional.isPresent()) {
-            return ResponseBody.success(jobExpectationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .deleteJobExpectationByJobExpectationId(userInformationId, jobExpectationId));
     }
 
     @PutMapping("/{jobexpectationid}")
@@ -63,35 +54,23 @@ public class JobExpectationController {
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("jobexpectationid") UUID jobExpectationId,
             @Valid @RequestBody JobExpectation jobExpectation) {
-        Optional<JobExpectation> jobExpectationOptional = userInformationService
-                .updateJobExpectationByJobExpectationId(userInformationId, jobExpectationId, jobExpectation);
-        if (jobExpectationOptional.isPresent()) {
-            return ResponseBody.success(jobExpectationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .updateJobExpectationByJobExpectationId(userInformationId, jobExpectationId, jobExpectation));
     }
 
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<JobExpectation>>> getJobExpectationsByUserInformationId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Optional<List<JobExpectation>> jobExpectationsOptional = userInformationService
-                .getJobExpectationsByUserInformationId(userInformationId, pageable);
-        if (jobExpectationsOptional.isPresent()) {
-            return ResponseBody.success(jobExpectationsOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .getJobExpectationsByUserInformationId(userInformationId, pageable));
     }
 
     @GetMapping("/{jobexpectationid}")
     public ResponseEntity<ResponseBody<JobExpectation>> getJobExpectationByJobExpectationId(
             @PathVariable("userinfoid") UUID userInformationId,
             @PathVariable("jobexpectationid") UUID jobExpectationId) {
-        Optional<JobExpectation> jobExpectationOptional = userInformationService
-                .getJobExpectationByJobExpectationId(userInformationId, jobExpectationId);
-        if (jobExpectationOptional.isPresent()) {
-            return ResponseBody.success(jobExpectationOptional.get());
-        }
-        return ResponseBody.notFound().build();
+        return ResponseBody.handle(userInformationService
+                .getJobExpectationByJobExpectationId(userInformationId, jobExpectationId));
     }
 }

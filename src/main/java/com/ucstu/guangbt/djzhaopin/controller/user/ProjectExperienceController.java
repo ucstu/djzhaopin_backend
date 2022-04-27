@@ -1,7 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
@@ -38,24 +37,16 @@ public class ProjectExperienceController {
         public ResponseEntity<ResponseBody<ProjectExperience>> createProjectExperience(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @Valid @RequestBody ProjectExperience projectExperience) {
-                Optional<ProjectExperience> projectExperienceOptional = userInformationService
-                                .createProjectExperience(userInformationId, projectExperience);
-                if (projectExperienceOptional.isPresent()) {
-                        return ResponseBody.created(projectExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .createProjectExperience(userInformationId, projectExperience));
         }
 
         @DeleteMapping("/{projectexperienceid}")
         public ResponseEntity<ResponseBody<ProjectExperience>> deleteProjectExperienceByProjectExperienceId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("projectexperienceid") UUID projectExperienceId) {
-                Optional<ProjectExperience> projectExperienceOptional = userInformationService
-                                .deleteProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId);
-                if (projectExperienceOptional.isPresent()) {
-                        return ResponseBody.success(projectExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .deleteProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId));
         }
 
         @PutMapping("/{projectexperienceid}")
@@ -63,38 +54,25 @@ public class ProjectExperienceController {
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("projectexperienceid") UUID projectExperienceId,
                         @Valid @RequestBody ProjectExperience projectExperience) {
-                Optional<ProjectExperience> projectExperienceOptional = userInformationService
+                return ResponseBody.handle(userInformationService
                                 .updateProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId,
-                                                projectExperience);
-                if (projectExperienceOptional.isPresent()) {
-                        return ResponseBody.success(projectExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                                                projectExperience));
         }
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<ProjectExperience>>> getProjectExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
-                Optional<List<ProjectExperience>> projectExperienceStream = userInformationService
-                                .getProjectExperiencesByUserInformationId(userInformationId, pageable);
-                if (projectExperienceStream.isPresent()) {
-                        return ResponseBody.success(projectExperienceStream.get());
-                } else {
-                        return ResponseBody.notFound().build();
-                }
+                return ResponseBody.handle(userInformationService
+                                .getProjectExperiencesByUserInformationId(userInformationId, pageable));
         }
 
         @GetMapping("/{projectexperienceid}")
         public ResponseEntity<ResponseBody<ProjectExperience>> getProjectExperienceByProjectExperienceId(
                         @PathVariable("userinfoid") UUID userInformationId,
                         @PathVariable("projectexperienceid") UUID projectExperienceId) {
-                Optional<ProjectExperience> projectExperienceOptional = userInformationService
-                                .getProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId);
-                if (projectExperienceOptional.isPresent()) {
-                        return ResponseBody.success(projectExperienceOptional.get());
-                }
-                return ResponseBody.notFound().build();
+                return ResponseBody.handle(userInformationService
+                                .getProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId));
         }
 
 }
