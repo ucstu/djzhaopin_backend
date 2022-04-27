@@ -66,7 +66,6 @@ public class PositionInformation {
     private Integer ceilingSalary;
 
     private String workArea;
-    private Date releaseDate;
 
     @NotNull
     @Type(type = "uuid-char")
@@ -86,8 +85,12 @@ public class PositionInformation {
     @NotBlank
     private String description;
     private Integer weekendReleaseTime;
+
+    @JsonFormat(pattern = "HH:mm:ss")
     private Date workTime;
-    private Date overtTime;
+
+    @JsonFormat(pattern = "HH:mm:ss")
+    private Date overTime;
 
     @JsonProperty("interviewInfo")
     @OneToOne(cascade = { CascadeType.ALL })

@@ -166,7 +166,6 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 positionInformation1.setPositionInterviewInfo(positionInformation.getPositionInterviewInfo());
                 positionInformation1.setPositionType(positionInformation.getPositionType());
                 positionInformation1.setPositionWorkingPlace(positionInformation.getPositionWorkingPlace());
-                positionInformation1.setReleaseDate(positionInformation.getReleaseDate());
                 positionInformation1.setStartingSalary(positionInformation.getStartingSalary());
                 positionInformation1.setWeekendReleaseTime(positionInformation.getWeekendReleaseTime());
                 positionInformation1.setWorkArea(positionInformation.getWorkArea());

@@ -51,7 +51,7 @@ public class CompanyInformation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    private String hrId;
+    private String hrInformationId;
 
     private String logo;
 
