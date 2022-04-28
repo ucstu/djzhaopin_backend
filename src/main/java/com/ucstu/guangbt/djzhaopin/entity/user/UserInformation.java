@@ -66,7 +66,6 @@ public class UserInformation {
 
     private String sex;
 
-    @Range(min = 16, max = 100)
     private Integer age;
 
     private String city;
@@ -76,7 +75,6 @@ public class UserInformation {
     @Email
     private String email;
 
-    @Range(min = 1, max = 5)
     private Integer workingYears;
 
     // {1:大专,2:本科,3:硕士,4:博士}

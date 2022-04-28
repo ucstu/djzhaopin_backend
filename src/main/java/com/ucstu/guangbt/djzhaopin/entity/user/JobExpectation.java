@@ -49,6 +49,7 @@ public class JobExpectation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
+    // {1:全职,2:兼职,3:实习}
     @Range(min = 1, max = 3)
     private Integer positionType;
 

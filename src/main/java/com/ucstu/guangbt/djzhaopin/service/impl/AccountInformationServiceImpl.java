@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
+import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
@@ -50,9 +52,19 @@ public class AccountInformationServiceImpl implements
         if (accountInformationRepository.findByUserName(registerRequest.getUserName()).isPresent()) {
             return serviceToControllerBody.error("userName", "用户名已存在", "用户名已存在");
         }
-        return serviceToControllerBody.success(accountInformationRepository.save(new AccountInformation()
-                .setUserName(registerRequest.getUserName())
-                .setPassword(passwordEncoder.encode(registerRequest.getPassword()))));
+        if (registerRequest.getAccountType() == 1) {
+            return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()
+                    .setUserName(registerRequest.getUserName())
+                    .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
+                    .setAccountType(registerRequest.getAccountType())
+                    .setUserInformation(new UserInformation().setPhoneNumber(registerRequest.getUserName()))));
+        } else {
+            return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()
+                    .setUserName(registerRequest.getUserName())
+                    .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
+                    .setAccountType(registerRequest.getAccountType())
+                    .setHrInformation(new HrInformation().setPhoneNumber(registerRequest.getUserName()))));
+        }
     }
 
     @Override

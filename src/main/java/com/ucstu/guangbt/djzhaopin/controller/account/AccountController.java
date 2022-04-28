@@ -29,46 +29,47 @@ import jakarta.validation.Valid;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/accountinfos")
 public class AccountController {
 
-    @Resource
-    private AccountInformationService accountService;
+        @Resource
+        private AccountInformationService accountService;
 
-    @PostMapping("")
-    public ResponseEntity<ResponseBody<AccountInformation>> registerAccount(
-            @Valid @RequestBody RegisterAccountRequest registerAccountRequest) {
-        return ResponseBody.handle(accountService
-                .registerAccount(registerAccountRequest));
-    }
+        @PostMapping("")
+        public ResponseEntity<ResponseBody<AccountInformation>> registerAccount(
+                        @Valid @RequestBody RegisterAccountRequest registerAccountRequest) {
+                return ResponseBody.handle(accountService
+                                .registerAccount(registerAccountRequest));
+        }
 
-    @DeleteMapping("/{accountId}")
-    public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
-            @PathVariable("accountId") UUID accountInformationId, @RequestParam String verificationCode) {
-        return ResponseBody.handle(accountService
-                .deleteAccount(accountInformationId, verificationCode));
-    }
+        @DeleteMapping("/{accountinfoId}")
+        public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
+                        @PathVariable("accountinfoId") UUID accountInformationId,
+                        @RequestParam String verificationCode) {
+                return ResponseBody.handle(accountService
+                                .deleteAccount(accountInformationId, verificationCode));
+        }
 
-    @PostMapping("/login")
-    public ResponseEntity<ResponseBody<Map<String, Object>>> loginAccount(
-            @Valid @RequestBody LoginAccountRequest loginAccountRequest) {
-        return ResponseBody.handle(accountService
-                .loginAccount(loginAccountRequest));
-    }
+        @PostMapping("/login")
+        public ResponseEntity<ResponseBody<Map<String, Object>>> loginAccount(
+                        @Valid @RequestBody LoginAccountRequest loginAccountRequest) {
+                return ResponseBody.handle(accountService
+                                .loginAccount(loginAccountRequest));
+        }
 
-    @PutMapping("/{accountId}")
-    public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
-            @PathVariable("accountId") UUID accountInformationId,
-            @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
-        return ResponseBody.handle(accountService
-                .changePassword(accountInformationId, changePasswordRequest));
-    }
+        @PutMapping("/{accountinfoId}")
+        public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
+                        @PathVariable("accountinfoId") UUID accountInformationId,
+                        @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+                return ResponseBody.handle(accountService
+                                .changePassword(accountInformationId, changePasswordRequest));
+        }
 
-    @PutMapping("/forget")
-    public ResponseEntity<ResponseBody<AccountInformation>> forgetPassword(
-            @Valid @RequestBody ForgetPasswordRequest forgetPasswordRequest) {
-        return ResponseBody.handle(accountService
-                .forgetPassword(forgetPasswordRequest));
-    }
+        @PutMapping("/forget")
+        public ResponseEntity<ResponseBody<AccountInformation>> forgetPassword(
+                        @Valid @RequestBody ForgetPasswordRequest forgetPasswordRequest) {
+                return ResponseBody.handle(accountService
+                                .forgetPassword(forgetPasswordRequest));
+        }
 
 }

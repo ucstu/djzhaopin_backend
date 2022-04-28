@@ -59,6 +59,7 @@ public class WorkExperience {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
+    // {1:全职,2:兼职,3:实习}
     @Range(min = 1, max = 3)
     private Integer positionType;
 

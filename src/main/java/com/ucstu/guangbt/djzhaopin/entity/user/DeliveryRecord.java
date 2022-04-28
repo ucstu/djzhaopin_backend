@@ -49,6 +49,7 @@ public class DeliveryRecord {
     @Type(type = "uuid-char")
     private UUID userInformationId;
 
+    // {1:待查看,2:已查看,3:通过筛选,4:约面试,5:不合适}
     @Range(min = 1, max = 5)
     private Integer state;
 

@@ -72,7 +72,7 @@ public class UtilController {
         return ResponseBody.handle(utilService.getMessageRecords(pageable));
     }
 
-    @GetMapping("/verificationCode")
+    @GetMapping("/verificationcode")
     public ResponseEntity<ResponseBody<String>> getVerificationCode(
             @RequestParam String phoneNumber) {
         return ResponseBody.handle(utilService.getVerificationCode(phoneNumber));

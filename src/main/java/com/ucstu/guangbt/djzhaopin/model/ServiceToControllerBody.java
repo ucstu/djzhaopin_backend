@@ -1,5 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -37,7 +38,12 @@ public class ServiceToControllerBody<T> {
     }
 
     public ServiceToControllerBody<T> error(String field, String defaultMessage, Object rejectedValue) {
-        errors.add(new ErrorContent(field, defaultMessage, rejectedValue));
+        if (errors == null) {
+            errors = new ArrayList<>();
+            errors.add(new ErrorContent(field, defaultMessage, rejectedValue));
+        } else {
+            errors.add(new ErrorContent(field, defaultMessage, rejectedValue));
+        }
         return this;
     }
 }
