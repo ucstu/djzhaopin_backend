@@ -62,7 +62,7 @@ public class EducationExperienceController {
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<EducationExperience>>> getEducationExperiencesByUserInformationId(
                         @PathVariable("userinfoid") UUID userInformationId,
-                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                        @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(userInformationService
                                 .getEducationExperiencesByUserInformationId(userInformationId, pageable));
         }

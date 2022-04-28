@@ -61,7 +61,7 @@ public class DeliveryRecordController {
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
             @PathVariable("userinfoid") UUID userInformationId,
-            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+            @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(userInformationService
                 .getDeliveryRecordsByUserInformationId(userInformationId, pageable));
     }

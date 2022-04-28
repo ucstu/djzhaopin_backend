@@ -63,7 +63,7 @@ public class PositionInformationController {
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
                         @PathVariable("companyinfoid") UUID companyInformationId,
-                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                        @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getPositionInformationsByCompanyInformationId(companyInformationId, pageable));
         }

@@ -61,7 +61,7 @@ public class JobExpectationController {
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<JobExpectation>>> getJobExpectationsByUserInformationId(
             @PathVariable("userinfoid") UUID userInformationId,
-            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+            @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(userInformationService
                 .getJobExpectationsByUserInformationId(userInformationId, pageable));
     }

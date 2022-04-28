@@ -41,7 +41,7 @@ public class UserInformationController {
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
-                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                        @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(userInformationService
                                 .getUserInformations(pageable));
         }

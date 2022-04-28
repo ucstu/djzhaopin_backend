@@ -62,13 +62,13 @@ public class UtilController {
 
     @GetMapping("/recommendations")
     public ResponseEntity<ResponseBody<List<UUID>>> getRecommendations(
-            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+            @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(utilService.getRecommendations(pageable));
     }
 
     @GetMapping("/messagerecords")
     public ResponseEntity<ResponseBody<List<MessageRecord>>> getMessageRecords(
-            @PageableDefault(page = 0, size = 10) Pageable pageable) {
+            @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(utilService.getMessageRecords(pageable));
     }
 

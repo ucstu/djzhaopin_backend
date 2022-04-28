@@ -53,7 +53,7 @@ public class CompanyInformationController {
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<CompanyInformation>>> getCompanyInformations(
-                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                        @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getCompanyInformations(pageable));
         }
@@ -72,7 +72,7 @@ public class CompanyInformationController {
                         @RequestParam Integer workingYears,
                         @RequestParam String sex, @RequestParam Integer age, @RequestParam UUID jobId,
                         @RequestParam Date deliveryDate, @RequestParam String search,
-                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                        @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getDeliveryRecordsByCompanyInformationId(companyInformationId, state, workingYears,
                                                 sex, age, jobId, deliveryDate, search, pageable));
@@ -80,7 +80,7 @@ public class CompanyInformationController {
 
         @GetMapping("/positioninfos")
         public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInfos(
-                        @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                        @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getPositionInfos(pageable));
         }
