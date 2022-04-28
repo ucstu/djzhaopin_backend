@@ -51,7 +51,7 @@ public class PositionInformation {
     private Date updatedAt;
 
     @NotBlank
-    private String name;
+    private String positionName;
     @Range(min = 1, max = 6)
     private Integer workingYears;
     @Range(min = 1, max = 5)
@@ -65,7 +65,9 @@ public class PositionInformation {
     @NotNull
     private Integer ceilingSalary;
 
-    private String workArea;
+    private String workCityName;
+
+    private String workAreaName;
 
     @NotNull
     @Type(type = "uuid-char")
@@ -77,13 +79,14 @@ public class PositionInformation {
 
     @Range(min = 1, max = 3)
     private Integer positionType;
-    private String department;
+    private String departmentName;
 
     @ElementCollection(targetClass = String.class)
     private List<String> highlights;
 
     @NotBlank
     private String description;
+    @Range(min = 1, max = 3)
     private Integer weekendReleaseTime;
 
     @JsonFormat(pattern = "HH:mm:ss")

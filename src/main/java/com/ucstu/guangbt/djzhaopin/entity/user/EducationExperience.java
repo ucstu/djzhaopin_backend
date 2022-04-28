@@ -52,13 +52,13 @@ public class EducationExperience {
     private Integer education;
 
     @NotNull
-    private String major;
+    private String majorName;
 
     @NotNull
-    @JsonFormat(pattern = "yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date admissionTime;
 
     @NotNull
-    @JsonFormat(pattern = "yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date graduationTime;
 }

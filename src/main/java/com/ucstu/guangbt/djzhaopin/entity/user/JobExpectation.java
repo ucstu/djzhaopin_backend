@@ -65,5 +65,5 @@ public class JobExpectation {
     private Integer ceilingSalary;
 
     @NotNull
-    private String city;
+    private String cityName;
 }

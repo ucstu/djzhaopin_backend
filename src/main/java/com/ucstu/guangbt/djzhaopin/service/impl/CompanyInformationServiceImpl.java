@@ -156,19 +156,20 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 PositionInformation positionInformation1 = positionInformationOptional.get();
                 positionInformation1.setCeilingSalary(positionInformation.getCeilingSalary());
                 positionInformation1.setCompanyInformationId(positionInformation.getCompanyInformationId());
-                positionInformation1.setDepartment(positionInformation.getDepartment());
+                positionInformation1.setDepartmentName(positionInformation.getDepartmentName());
                 positionInformation1.setDescription(positionInformation.getDescription());
                 positionInformation1.setDirectionTags(positionInformation.getDirectionTags());
                 positionInformation1.setEducation(positionInformation.getEducation());
                 positionInformation1.setHighlights(positionInformation.getHighlights());
                 positionInformation1.setHrInformationId(positionInformation.getHrInformationId());
-                positionInformation1.setName(positionInformation.getName());
+                positionInformation1.setPositionName(positionInformation.getPositionName());
                 positionInformation1.setPositionInterviewInfo(positionInformation.getPositionInterviewInfo());
                 positionInformation1.setPositionType(positionInformation.getPositionType());
                 positionInformation1.setPositionWorkingPlace(positionInformation.getPositionWorkingPlace());
                 positionInformation1.setStartingSalary(positionInformation.getStartingSalary());
                 positionInformation1.setWeekendReleaseTime(positionInformation.getWeekendReleaseTime());
-                positionInformation1.setWorkArea(positionInformation.getWorkArea());
+                positionInformation1.setWorkCityName(positionInformation.getWorkCityName());
+                positionInformation1.setWorkAreaName(positionInformation.getWorkAreaName());
                 positionInformation1.setWorkTime(positionInformation.getWorkTime());
                 positionInformation1.setWorkingYears(positionInformation.getWorkingYears());
                 return serviceToControllerBody

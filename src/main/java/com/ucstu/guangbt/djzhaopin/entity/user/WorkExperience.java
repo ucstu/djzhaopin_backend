@@ -52,9 +52,11 @@ public class WorkExperience {
     private String companyIndustry;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     @Range(min = 1, max = 3)
@@ -64,7 +66,7 @@ public class WorkExperience {
     private String positionName;
 
     @NotNull
-    private String department;
+    private String departmentName;
 
     @NotNull
     private String jobContent;

@@ -52,6 +52,7 @@ public class DeliveryRecord {
     @Range(min = 1, max = 5)
     private Integer state;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date interviewTime;
 
     @NotNull

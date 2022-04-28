@@ -50,11 +50,11 @@ public class HrInformation {
 
     private String companyInformationId;
 
-    private String avatar;
+    private String avatarUrl;
 
-    private String name;
+    private String hrName;
 
-    private String post;
+    private String postName;
 
     @Email
     private String acceptEmail;

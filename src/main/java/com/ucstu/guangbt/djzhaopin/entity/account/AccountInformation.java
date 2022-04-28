@@ -14,6 +14,7 @@ import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -68,6 +69,7 @@ public class AccountInformation {
     private HrInformation hrInformation;
 
     // {1:用户,2:HR}
+    @Range(min = 1, max = 2)
     private Integer accountType;
 
     @Column(unique = true)

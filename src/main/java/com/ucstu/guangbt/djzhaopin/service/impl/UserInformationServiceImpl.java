@@ -37,7 +37,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformationOptional.isPresent()) {
             UserInformation userInformation2 = userInformationOptional.get();
             userInformation2.setAge(userInformation.getAge());
-            userInformation2.setAvatar(userInformation.getAvatar());
+            userInformation2.setAvatarUrl(userInformation.getAvatarUrl());
             userInformation2.setCity(userInformation.getCity());
             userInformation2.setDateOfBirth(userInformation.getDateOfBirth());
             userInformation2.setEducation(userInformation.getEducation());
@@ -120,7 +120,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (jobExpectation1.isPresent()) {
                 jobExpectation1.get().setCeilingSalary(jobExpectation.getCeilingSalary());
-                jobExpectation1.get().setCity(jobExpectation.getCity());
+                jobExpectation1.get().setCityName(jobExpectation.getCityName());
                 jobExpectation1.get().setDirectionTags(jobExpectation.getDirectionTags());
                 jobExpectation1.get().setPositionName(jobExpectation.getPositionName());
                 jobExpectation1.get().setPositionType(jobExpectation.getPositionType());
@@ -220,7 +220,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                 educationExperience1.get().setAdmissionTime(educationExperience.getAdmissionTime());
                 educationExperience1.get().setEducation(educationExperience.getEducation());
                 educationExperience1.get().setGraduationTime(educationExperience.getGraduationTime());
-                educationExperience1.get().setMajor(educationExperience.getMajor());
+                educationExperience1.get().setMajorName(educationExperience.getMajorName());
                 educationExperience1.get().setSchoolName(educationExperience.getSchoolName());
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(educationExperience1.get());
@@ -318,7 +318,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (workExperience1.isPresent()) {
                 workExperience1.get().setCompanyIndustry(workExperience.getCompanyIndustry());
                 workExperience1.get().setCorporateName(workExperience.getCorporateName());
-                workExperience1.get().setDepartment(workExperience.getDepartment());
+                workExperience1.get().setDepartmentName(workExperience.getDepartmentName());
                 workExperience1.get().setEndTime(workExperience.getEndTime());
                 workExperience1.get().setJobContent(workExperience.getJobContent());
                 workExperience1.get().setPositionName(workExperience.getPositionName());

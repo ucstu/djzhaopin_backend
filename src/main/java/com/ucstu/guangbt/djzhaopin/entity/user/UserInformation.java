@@ -1,5 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
+import static org.mockito.ArgumentMatchers.nullable;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -54,7 +57,7 @@ public class UserInformation {
     @Column(nullable = false)
     private Date updatedAt;
 
-    private String avatar;
+    private String avatarUrl;
 
     private String firstName;
 
@@ -65,6 +68,7 @@ public class UserInformation {
 
     private String sex;
 
+    @Range(min = 16, max = 100)
     private Integer age;
 
     private String city;
@@ -74,22 +78,26 @@ public class UserInformation {
     @Email
     private String email;
 
+    @Range(min = 1, max = 5)
     private Integer workingYears;
 
     // {1:大专,2:本科,3:硕士,4:博士}
+    @Range(min = 1, max = 4)
     private Integer education;
-
-    // {1:随时入职,2:2周内入职,3:1月内入职}
-    private Integer jobStatus;
 
     private String personalAdvantage;
 
     private String socialHomepage;
 
+    // {1:随时入职,2:2周内入职,3:1月内入职}
+    @Range(min = 1, max = 3)
+    private Integer jobStatus;
+
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private Set<String> pictureWorks;
 
     // {1:实名,2:匿名}
+    @Range(min = 1, max = 2)
     private Integer privacySettings;
 
     @JsonIgnore

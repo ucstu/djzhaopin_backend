@@ -49,10 +49,10 @@ public class MessageRecord {
     @Column(nullable = false)
 
     @NotNull
-    private UUID fromId;
+    private UUID initiateId;
 
     @NotNull
-    private UUID toId;
+    private UUID serviceId;
 
     @Range(min = 1, max = 4)
     private Integer type;

@@ -57,9 +57,11 @@ public class ProjectExperience {
     private String achievement;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
 
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     private String projectLink;

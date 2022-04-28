@@ -53,23 +53,22 @@ public class CompanyInformation {
 
     private String hrInformationId;
 
-    private String logo;
+    private String logoUrl;
 
     @NotNull
-    private String name;
+    private String companyName;
 
-    @Range(min = 1, max = 15000)
     private Integer recruitmentPosition;
 
-    private String city;
+    private String cityName;
 
-    @Range(min = 1, max = 7)
+    @Range(min = 1, max = 8)
     private Integer financingStage;
 
-    @Range(min = 1, max = 5)
+    @Range(min = 1, max = 6)
     private Integer scale;
 
-    private String comprehension;
+    private String comprehensionName;
 
     private String address;
 
