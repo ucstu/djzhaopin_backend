@@ -68,7 +68,7 @@ public class UserInformation {
 
     private Integer age;
 
-    private String city;
+    private String cityName;
 
     private String phoneNumber;
 

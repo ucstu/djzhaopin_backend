@@ -57,13 +57,16 @@ public class AccountInformationServiceImpl implements
                     .setUserName(registerRequest.getUserName())
                     .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
                     .setAccountType(registerRequest.getAccountType())
-                    .setUserInformation(new UserInformation().setPhoneNumber(registerRequest.getUserName()))));
+                    .setUserInformation(
+                            new UserInformation().setPhoneNumber(registerRequest.getUserName()).setAvatarUrl(
+                                    "/image/heard2.jpg"))));
         } else {
             return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()
                     .setUserName(registerRequest.getUserName())
                     .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
                     .setAccountType(registerRequest.getAccountType())
-                    .setHrInformation(new HrInformation().setPhoneNumber(registerRequest.getUserName()))));
+                    .setHrInformation(new HrInformation().setPhoneNumber(registerRequest.getUserName()).setAvatarUrl(
+                            "/image/heard1.jpg"))));
         }
     }
 
