@@ -50,7 +50,7 @@ public class AccountInformationServiceImpl implements
     public ServiceToControllerBody<AccountInformation> registerAccount(RegisterAccountRequest registerRequest) {
         ServiceToControllerBody<AccountInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         if (accountInformationRepository.findByUserName(registerRequest.getUserName()).isPresent()) {
-            return serviceToControllerBody.error("userName", "用户名已存在", "用户名已存在");
+            return serviceToControllerBody.error("userName", "用户名已存在", registerRequest.getUserName());
         }
         if (registerRequest.getAccountType() == 1) {
             return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()

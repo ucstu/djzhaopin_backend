@@ -54,7 +54,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation2.setWorkingYears(userInformation.getWorkingYears());
             return serviceToControllerBody.success(userInformationRepository.save(userInformation2));
         }
-        return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+        return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformationOptional.isPresent()) {
             return serviceToControllerBody.success(userInformationOptional.get());
         }
-        return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+        return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformationOptional.get().getJobExpectations().add(jobExpectation);
             return serviceToControllerBody.created(jobExpectation);
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -101,10 +101,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(jobExpectation.get());
             } else {
-                return serviceToControllerBody.error("jobExpectationId", "没有找到该职位期望", jobExpectationId);
+                return serviceToControllerBody.error("jobExpectationId", "职位期望不存在", jobExpectationId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -128,10 +128,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(jobExpectation1.get());
             } else {
-                return serviceToControllerBody.error("jobExpectationId", "没有找到该职位期望", jobExpectationId);
+                return serviceToControllerBody.error("jobExpectationId", "职位期望不存在", jobExpectationId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -143,7 +143,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformation.isPresent()) {
             return serviceToControllerBody.success(userInformation.get().getJobExpectations());
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -159,10 +159,10 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (jobExpectation.isPresent()) {
                 return serviceToControllerBody.success(jobExpectation.get());
             } else {
-                return serviceToControllerBody.error("jobExpectationId", "没有找到该职位期望", jobExpectationId);
+                return serviceToControllerBody.error("jobExpectationId", "职位期望不存在", jobExpectationId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -175,7 +175,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation.get().getEducationExperiences().add(educationExperience);
             return serviceToControllerBody.created(educationExperience);
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -196,10 +196,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(educationExperience.get());
             } else {
-                return serviceToControllerBody.error("eduExperienceId", "没有找到该教育经历", eduExperienceId);
+                return serviceToControllerBody.error("eduExperienceId", "教育经历不存在", eduExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -225,10 +225,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(educationExperience1.get());
             } else {
-                return serviceToControllerBody.error("eduExperienceId", "没有找到该教育经历", eduExperienceId);
+                return serviceToControllerBody.error("eduExperienceId", "教育经历不存在", eduExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -241,7 +241,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformation.isPresent()) {
             return serviceToControllerBody.success(userInformation.get().getEducationExperiences());
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -260,10 +260,10 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (educationExperience.isPresent()) {
                 return serviceToControllerBody.success(educationExperience.get());
             } else {
-                return serviceToControllerBody.error("eduExperienceId", "没有找到该教育经历", eduExperienceId);
+                return serviceToControllerBody.error("eduExperienceId", "教育经历不存在", eduExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -276,7 +276,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation.get().getWorkExperiences().add(workExperience);
             return serviceToControllerBody.created(workExperience);
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -296,10 +296,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(workExperience.get());
             } else {
-                return serviceToControllerBody.error("workExperienceId", "没有找到该工作经历", workExperienceId);
+                return serviceToControllerBody.error("workExperienceId", "工作经历不存在", workExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -327,10 +327,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(workExperience1.get());
             } else {
-                return serviceToControllerBody.error("workExperienceId", "没有找到该工作经历", workExperienceId);
+                return serviceToControllerBody.error("workExperienceId", "工作经历不存在", workExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -342,7 +342,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformation.isPresent()) {
             return serviceToControllerBody.success(userInformation.get().getWorkExperiences());
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -360,10 +360,10 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (workExperience.isPresent()) {
                 return serviceToControllerBody.success(workExperience.get());
             } else {
-                return serviceToControllerBody.error("workExperienceId", "没有找到该工作经历", workExperienceId);
+                return serviceToControllerBody.error("workExperienceId", "工作经历不存在", workExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -376,7 +376,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation.get().getProjectExperiences().add(projectExperience);
             return serviceToControllerBody.created(projectExperience);
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -397,10 +397,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(projectExperience.get());
             } else {
-                return serviceToControllerBody.error("projectExperienceId", "没有找到该项目经历", projectExperienceId);
+                return serviceToControllerBody.error("projectExperienceId", "项目经历不存在", projectExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -427,10 +427,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(projectExperience1.get());
             } else {
-                return serviceToControllerBody.error("projectExperienceId", "没有找到该项目经历", projectExperienceId);
+                return serviceToControllerBody.error("projectExperienceId", "项目经历不存在", projectExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -443,7 +443,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformation.isPresent()) {
             return serviceToControllerBody.success(userInformation.get().getProjectExperiences());
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -461,10 +461,10 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (projectExperience.isPresent()) {
                 return serviceToControllerBody.success(projectExperience.get());
             } else {
-                return serviceToControllerBody.error("projectExperienceId", "没有找到该项目经历", projectExperienceId);
+                return serviceToControllerBody.error("projectExperienceId", "项目经历不存在", projectExperienceId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -477,7 +477,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation.get().getDeliveryRecords().add(deliveryRecord);
             return serviceToControllerBody.created(deliveryRecord);
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -497,10 +497,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(deliveryRecord.get());
             } else {
-                return serviceToControllerBody.error("deliveryRecordId", "没有找到该项目经历", deliveryRecordId);
+                return serviceToControllerBody.error("deliveryRecordId", "项目经历不存在", deliveryRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -524,10 +524,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(deliveryRecord1.get());
             } else {
-                return serviceToControllerBody.error("deliveryRecordId", "没有找到该项目经历", deliveryRecordId);
+                return serviceToControllerBody.error("deliveryRecordId", "项目经历不存在", deliveryRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -539,7 +539,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformation.isPresent()) {
             return serviceToControllerBody.success(userInformation.get().getDeliveryRecords());
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -557,10 +557,10 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (deliveryRecord.isPresent()) {
                 return serviceToControllerBody.success(deliveryRecord.get());
             } else {
-                return serviceToControllerBody.error("deliveryRecordId", "没有找到该项目经历", deliveryRecordId);
+                return serviceToControllerBody.error("deliveryRecordId", "项目经历不存在", deliveryRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -573,7 +573,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation.get().getAttentionRecords().add(attentionRecord);
             return serviceToControllerBody.created(attentionRecord);
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -593,10 +593,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(attentionRecord.get());
             } else {
-                return serviceToControllerBody.error("attentionRecordId", "没有找到该关注记录", attentionRecordId);
+                return serviceToControllerBody.error("attentionRecordId", "关注记录不存在", attentionRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -618,10 +618,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(attentionRecord1.get());
             } else {
-                return serviceToControllerBody.error("attentionRecordId", "没有找到该关注记录", attentionRecordId);
+                return serviceToControllerBody.error("attentionRecordId", "关注记录不存在", attentionRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -633,7 +633,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformation.isPresent()) {
             return serviceToControllerBody.success(userInformation.get().getAttentionRecords());
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -651,10 +651,10 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (attentionRecord.isPresent()) {
                 return serviceToControllerBody.success(attentionRecord.get());
             } else {
-                return serviceToControllerBody.error("attentionRecordId", "没有找到该关注记录", attentionRecordId);
+                return serviceToControllerBody.error("attentionRecordId", "关注记录不存在", attentionRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -667,7 +667,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation.get().getInspectionRecords().add(inspectionRecord);
             return serviceToControllerBody.created(inspectionRecord);
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -687,10 +687,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(inspectionRecord.get());
             } else {
-                return serviceToControllerBody.error("inspectionRecordId", "没有找到该检验记录", inspectionRecordId);
+                return serviceToControllerBody.error("inspectionRecordId", "查看记录不存在", inspectionRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -712,10 +712,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(inspectionRecord1.get());
             } else {
-                return serviceToControllerBody.error("inspectionRecordId", "没有找到该检验记录", inspectionRecordId);
+                return serviceToControllerBody.error("inspectionRecordId", "查看记录不存在", inspectionRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -729,7 +729,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             // TODO 只返回了InspectionRecord，未返回pageable
             return serviceToControllerBody.success(userInformation.get().getInspectionRecords());
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -747,10 +747,10 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (inspectionRecord.isPresent()) {
                 return serviceToControllerBody.success(inspectionRecord.get());
             } else {
-                return serviceToControllerBody.error("inspectionRecordId", "没有找到该检验记录", inspectionRecordId);
+                return serviceToControllerBody.error("inspectionRecordId", "查看记录不存在", inspectionRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -762,7 +762,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation.get().getGarnerRecords().add(garnerRecord);
             return serviceToControllerBody.created(garnerRecord);
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -782,10 +782,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(garnerRecord.get());
             } else {
-                return serviceToControllerBody.error("garnerRecordId", "没有找到该收货记录", garnerRecordId);
+                return serviceToControllerBody.error("garnerRecordId", "收藏记录不存在", garnerRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -807,10 +807,10 @@ public class UserInformationServiceImpl implements UserInformationService {
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(garnerRecord1.get());
             } else {
-                return serviceToControllerBody.error("garnerRecordId", "没有找到该收货记录", garnerRecordId);
+                return serviceToControllerBody.error("garnerRecordId", "收藏记录不存在", garnerRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -822,7 +822,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (userInformation.isPresent()) {
             return serviceToControllerBody.success(userInformation.get().getGarnerRecords());
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
@@ -840,10 +840,10 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (garnerRecord.isPresent()) {
                 return serviceToControllerBody.success(garnerRecord.get());
             } else {
-                return serviceToControllerBody.error("garnerRecordId", "没有找到该收货记录", garnerRecordId);
+                return serviceToControllerBody.error("garnerRecordId", "收藏记录不存在", garnerRecordId);
             }
         } else {
-            return serviceToControllerBody.error("userInformationId", "没有找到该用户", userInformationId);
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
