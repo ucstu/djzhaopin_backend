@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin
@@ -44,8 +46,8 @@ public class AccountController {
 
         @DeleteMapping("/{accountinfoId}")
         public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
-                        @PathVariable("accountinfoId") UUID accountInformationId,
-                        @RequestParam String verificationCode) {
+                        @PathVariable("accountinfoId") @NotNull UUID accountInformationId,
+                        @RequestParam @NotBlank String verificationCode) {
                 return ResponseBody.handle(accountService
                                 .deleteAccount(accountInformationId, verificationCode));
         }
@@ -59,7 +61,7 @@ public class AccountController {
 
         @PutMapping("/{accountinfoId}")
         public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
-                        @PathVariable("accountinfoId") UUID accountInformationId,
+                        @PathVariable("accountinfoId") @NotNull UUID accountInformationId,
                         @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
                 return ResponseBody.handle(accountService
                                 .changePassword(accountInformationId, changePasswordRequest));

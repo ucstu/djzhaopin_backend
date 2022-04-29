@@ -519,7 +519,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             if (deliveryRecord1.isPresent()) {
                 deliveryRecord1.get().setInterviewTime(deliveryRecord.getInterviewTime());
                 deliveryRecord1.get().setJobInformationId(deliveryRecord.getJobInformationId());
-                deliveryRecord1.get().setState(deliveryRecord.getState());
+                deliveryRecord1.get().setStatus(deliveryRecord.getStatus());
                 deliveryRecord1.get().setUserInformationId(deliveryRecord.getUserInformationId());
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(deliveryRecord1.get());

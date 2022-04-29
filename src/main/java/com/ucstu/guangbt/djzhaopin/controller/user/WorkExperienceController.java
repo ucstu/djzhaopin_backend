@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin
@@ -35,7 +36,7 @@ public class WorkExperienceController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<WorkExperience>> createWorkExperience(
-                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
                         @Valid @RequestBody WorkExperience workExperience) {
                 return ResponseBody.handle(userInformationService
                                 .createWorkExperience(userInformationId, workExperience));
@@ -43,16 +44,16 @@ public class WorkExperienceController {
 
         @DeleteMapping("/{workexperienceid}")
         public ResponseEntity<ResponseBody<WorkExperience>> deleteWorkExperienceByWorkExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("workexperienceid") UUID workExperienceId) {
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("workexperienceid") @NotNull UUID workExperienceId) {
                 return ResponseBody.handle(userInformationService
                                 .deleteWorkExperienceByWorkExperienceId(userInformationId, workExperienceId));
         }
 
         @PutMapping("/{workexperienceid}")
         public ResponseEntity<ResponseBody<WorkExperience>> updateWorkExperienceByWorkExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("workexperienceid") UUID workExperienceId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("workexperienceid") @NotNull UUID workExperienceId,
                         @Valid @RequestBody WorkExperience workExperience) {
                 return ResponseBody.handle(userInformationService
                                 .updateWorkExperienceByWorkExperienceId(userInformationId, workExperienceId,
@@ -61,7 +62,7 @@ public class WorkExperienceController {
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<WorkExperience>>> getWorkExperiencesByUserInformationId(
-                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(userInformationService
                                 .getWorkExperiencesByUserInformationId(userInformationId, pageable));
@@ -69,8 +70,8 @@ public class WorkExperienceController {
 
         @GetMapping("/{workexperienceid}")
         public ResponseEntity<ResponseBody<WorkExperience>> getWorkExperienceByWorkExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("workexperienceid") UUID workExperienceId) {
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("workexperienceid") @NotNull UUID workExperienceId) {
                 return ResponseBody.handle(userInformationService
                                 .getWorkExperienceByWorkExperienceId(userInformationId, workExperienceId));
         }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin
@@ -34,7 +35,7 @@ public class PositionInformationController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<PositionInformation>> createPositionInformation(
-                        @PathVariable("companyinfoid") UUID companyInformationId,
+                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
                         @Valid @RequestBody PositionInformation positionInformation) {
                 return ResponseBody.handle(companyInformationService
                                 .createPositionInformation(companyInformationId, positionInformation));
@@ -42,8 +43,8 @@ public class PositionInformationController {
 
         @DeleteMapping("/{positioninfoid}")
         public ResponseEntity<ResponseBody<PositionInformation>> deletePositionInformationByPositionInformationId(
-                        @PathVariable("companyinfoid") UUID companyInformationId,
-                        @PathVariable("positioninfoid") UUID positionInformationId) {
+                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
+                        @PathVariable("positioninfoid") @NotNull UUID positionInformationId) {
                 return ResponseBody.handle(companyInformationService
                                 .deletePositionInformationByPositionInformationId(companyInformationId,
                                                 positionInformationId));
@@ -51,8 +52,8 @@ public class PositionInformationController {
 
         @PostMapping("/{positioninfoid}")
         public ResponseEntity<ResponseBody<PositionInformation>> updatePositionInformationByPositionInformationId(
-                        @PathVariable("companyinfoid") UUID companyInformationId,
-                        @PathVariable("positioninfoid") UUID positionInformationId,
+                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
+                        @PathVariable("positioninfoid") @NotNull UUID positionInformationId,
                         @Valid @RequestBody PositionInformation positionInformation) {
                 return ResponseBody.handle(companyInformationService
                                 .updatePositionInformationByPositionInformationId(companyInformationId,
@@ -62,7 +63,7 @@ public class PositionInformationController {
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
-                        @PathVariable("companyinfoid") UUID companyInformationId,
+                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getPositionInformationsByCompanyInformationId(companyInformationId, pageable));
@@ -70,8 +71,8 @@ public class PositionInformationController {
 
         @GetMapping("/{positioninfoid}")
         public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInformationId(
-                        @PathVariable("companyinfoid") UUID companyInformationId,
-                        @PathVariable("positioninfoid") UUID positionInformationId) {
+                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
+                        @PathVariable("positioninfoid") @NotNull UUID positionInformationId) {
                 return ResponseBody.handle(companyInformationService
                                 .getPositionInformationByPositionInformationId(companyInformationId,
                                                 positionInformationId));

@@ -27,7 +27,7 @@ public interface CompanyInformationService {
 
         public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
                         UUID companyInformationId,
-                        Integer state,
+                        Integer status,
                         Integer workingYears,
                         String sex, Integer age, UUID jobId, Date deliveryDate, String search, Pageable pageable);
 

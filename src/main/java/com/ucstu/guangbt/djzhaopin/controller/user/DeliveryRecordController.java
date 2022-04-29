@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin
@@ -30,47 +31,48 @@ import jakarta.validation.Valid;
 @RequestMapping("/userinfos/{userinfoid}/deliveryrecords")
 public class DeliveryRecordController {
 
-    @Resource
-    private UserInformationService userInformationService;
+        @Resource
+        private UserInformationService userInformationService;
 
-    @PostMapping("")
-    public ResponseEntity<ResponseBody<DeliveryRecord>> createDeliveryRecord(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @Valid @RequestBody DeliveryRecord deliveryRecord) {
-        return ResponseBody.handle(userInformationService
-                .createDeliveryRecord(userInformationId, deliveryRecord));
-    }
+        @PostMapping("")
+        public ResponseEntity<ResponseBody<DeliveryRecord>> createDeliveryRecord(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @Valid @RequestBody DeliveryRecord deliveryRecord) {
+                return ResponseBody.handle(userInformationService
+                                .createDeliveryRecord(userInformationId, deliveryRecord));
+        }
 
-    @DeleteMapping("/{deliveryrecordid}")
-    public ResponseEntity<ResponseBody<DeliveryRecord>> deleteDeliveryRecordByDeliveryRecordId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @PathVariable("deliveryrecordid") UUID deliveryRecordId) {
-        return ResponseBody.handle(userInformationService
-                .deleteDeliveryRecordByDeliveryRecordId(userInformationId, deliveryRecordId));
-    }
+        @DeleteMapping("/{deliveryrecordid}")
+        public ResponseEntity<ResponseBody<DeliveryRecord>> deleteDeliveryRecordByDeliveryRecordId(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("deliveryrecordid") @NotNull UUID deliveryRecordId) {
+                return ResponseBody.handle(userInformationService
+                                .deleteDeliveryRecordByDeliveryRecordId(userInformationId, deliveryRecordId));
+        }
 
-    @PutMapping("/{deliveryrecordid}")
-    public ResponseEntity<ResponseBody<DeliveryRecord>> updateDeliveryRecordByDeliveryRecordId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @PathVariable("deliveryrecordid") UUID deliveryRecordId,
-            @Valid @RequestBody DeliveryRecord deliveryRecord) {
-        return ResponseBody.handle(userInformationService
-                .updateDeliveryRecordByDeliveryRecordId(userInformationId, deliveryRecordId, deliveryRecord));
-    }
+        @PutMapping("/{deliveryrecordid}")
+        public ResponseEntity<ResponseBody<DeliveryRecord>> updateDeliveryRecordByDeliveryRecordId(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("deliveryrecordid") @NotNull UUID deliveryRecordId,
+                        @Valid @RequestBody DeliveryRecord deliveryRecord) {
+                return ResponseBody.handle(userInformationService
+                                .updateDeliveryRecordByDeliveryRecordId(userInformationId, deliveryRecordId,
+                                                deliveryRecord));
+        }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @PageableDefault(size = 10) Pageable pageable) {
-        return ResponseBody.handle(userInformationService
-                .getDeliveryRecordsByUserInformationId(userInformationId, pageable));
-    }
+        @GetMapping("")
+        public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PageableDefault(size = 10) Pageable pageable) {
+                return ResponseBody.handle(userInformationService
+                                .getDeliveryRecordsByUserInformationId(userInformationId, pageable));
+        }
 
-    @GetMapping("/{deliveryrecordid}")
-    public ResponseEntity<ResponseBody<DeliveryRecord>> getDeliveryRecordByDeliveryRecordId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @PathVariable("deliveryrecordid") UUID deliveryRecordId) {
-        return ResponseBody.handle(userInformationService
-                .getDeliveryRecordByDeliveryRecordId(userInformationId, deliveryRecordId));
-    }
+        @GetMapping("/{deliveryrecordid}")
+        public ResponseEntity<ResponseBody<DeliveryRecord>> getDeliveryRecordByDeliveryRecordId(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("deliveryrecordid") @NotNull UUID deliveryRecordId) {
+                return ResponseBody.handle(userInformationService
+                                .getDeliveryRecordByDeliveryRecordId(userInformationId, deliveryRecordId));
+        }
 }

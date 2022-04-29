@@ -78,7 +78,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Override
     public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
             UUID companyInformationId,
-            Integer state,
+            Integer status,
             Integer workingYears, String sex, Integer age, UUID jobId, Date deliveryDate, String search,
             Pageable pageable) {
         // TODO 完善搜索功能

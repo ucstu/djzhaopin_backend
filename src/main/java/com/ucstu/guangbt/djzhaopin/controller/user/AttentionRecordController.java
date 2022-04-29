@@ -23,55 +23,56 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin
 @RestController
 @RequestMapping("/userinfos/{userinfoid}/attentionrecords")
 public class AttentionRecordController {
-    @Resource
-    private UserInformationService userInformationService;
+        @Resource
+        private UserInformationService userInformationService;
 
-    @PostMapping("")
-    public ResponseEntity<ResponseBody<AttentionRecord>> createAttentionRecord(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @Valid @RequestBody AttentionRecord attentionRecord) {
-        return ResponseBody.handle(userInformationService
-                .createAttentionRecord(userInformationId, attentionRecord));
-    }
+        @PostMapping("")
+        public ResponseEntity<ResponseBody<AttentionRecord>> createAttentionRecord(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @Valid @RequestBody AttentionRecord attentionRecord) {
+                return ResponseBody.handle(userInformationService
+                                .createAttentionRecord(userInformationId, attentionRecord));
+        }
 
-    @DeleteMapping("/{attentionrecordid}")
-    public ResponseEntity<ResponseBody<AttentionRecord>> deleteAttentionRecordByAttentionRecordId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @PathVariable("attentionrecordid") UUID attentionRecordId) {
-        return ResponseBody.handle(userInformationService
-                .deleteAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId));
-    }
+        @DeleteMapping("/{attentionrecordid}")
+        public ResponseEntity<ResponseBody<AttentionRecord>> deleteAttentionRecordByAttentionRecordId(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("attentionrecordid") @NotNull UUID attentionRecordId) {
+                return ResponseBody.handle(userInformationService
+                                .deleteAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId));
+        }
 
-    @PutMapping("/{attentionrecordid}")
-    public ResponseEntity<ResponseBody<AttentionRecord>> updateAttentionRecordByAttentionRecordId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @PathVariable("attentionrecordid") UUID attentionRecordId,
-            @Valid @RequestBody AttentionRecord attentionRecord) {
-        return ResponseBody.handle(userInformationService
-                .updateAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId,
-                        attentionRecord));
-    }
+        @PutMapping("/{attentionrecordid}")
+        public ResponseEntity<ResponseBody<AttentionRecord>> updateAttentionRecordByAttentionRecordId(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("attentionrecordid") @NotNull UUID attentionRecordId,
+                        @Valid @RequestBody AttentionRecord attentionRecord) {
+                return ResponseBody.handle(userInformationService
+                                .updateAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId,
+                                                attentionRecord));
+        }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseBody<List<AttentionRecord>>> getAttentionRecordsByUserInformationId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @PageableDefault(size = 10) Pageable pageable) {
+        @GetMapping("")
+        public ResponseEntity<ResponseBody<List<AttentionRecord>>> getAttentionRecordsByUserInformationId(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PageableDefault(size = 10) Pageable pageable) {
 
-        return ResponseBody.handle(userInformationService
-                .getAttentionRecordsByUserInformationId(userInformationId));
-    }
+                return ResponseBody.handle(userInformationService
+                                .getAttentionRecordsByUserInformationId(userInformationId));
+        }
 
-    @GetMapping("/{attentionrecordid}")
-    public ResponseEntity<ResponseBody<AttentionRecord>> getAttentionRecordByAttentionRecordId(
-            @PathVariable("userinfoid") UUID userInformationId,
-            @PathVariable("attentionrecordid") UUID attentionRecordId) {
-        return ResponseBody.handle(userInformationService
-                .getAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId));
-    }
+        @GetMapping("/{attentionrecordid}")
+        public ResponseEntity<ResponseBody<AttentionRecord>> getAttentionRecordByAttentionRecordId(
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("attentionrecordid") @NotNull UUID attentionRecordId) {
+                return ResponseBody.handle(userInformationService
+                                .getAttentionRecordByAttentionRecordId(userInformationId, attentionRecordId));
+        }
 }

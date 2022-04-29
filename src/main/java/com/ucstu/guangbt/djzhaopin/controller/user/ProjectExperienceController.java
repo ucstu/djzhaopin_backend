@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin
@@ -35,7 +36,7 @@ public class ProjectExperienceController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<ProjectExperience>> createProjectExperience(
-                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
                         @Valid @RequestBody ProjectExperience projectExperience) {
                 return ResponseBody.handle(userInformationService
                                 .createProjectExperience(userInformationId, projectExperience));
@@ -43,16 +44,16 @@ public class ProjectExperienceController {
 
         @DeleteMapping("/{projectexperienceid}")
         public ResponseEntity<ResponseBody<ProjectExperience>> deleteProjectExperienceByProjectExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("projectexperienceid") UUID projectExperienceId) {
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("projectexperienceid") @NotNull UUID projectExperienceId) {
                 return ResponseBody.handle(userInformationService
                                 .deleteProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId));
         }
 
         @PutMapping("/{projectexperienceid}")
         public ResponseEntity<ResponseBody<ProjectExperience>> updateProjectExperienceByProjectExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("projectexperienceid") UUID projectExperienceId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("projectexperienceid") @NotNull UUID projectExperienceId,
                         @Valid @RequestBody ProjectExperience projectExperience) {
                 return ResponseBody.handle(userInformationService
                                 .updateProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId,
@@ -61,7 +62,7 @@ public class ProjectExperienceController {
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<ProjectExperience>>> getProjectExperiencesByUserInformationId(
-                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(userInformationService
                                 .getProjectExperiencesByUserInformationId(userInformationId, pageable));
@@ -69,8 +70,8 @@ public class ProjectExperienceController {
 
         @GetMapping("/{projectexperienceid}")
         public ResponseEntity<ResponseBody<ProjectExperience>> getProjectExperienceByProjectExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("projectexperienceid") UUID projectExperienceId) {
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("projectexperienceid") @NotNull UUID projectExperienceId) {
                 return ResponseBody.handle(userInformationService
                                 .getProjectExperienceByProjectExperienceId(userInformationId, projectExperienceId));
         }

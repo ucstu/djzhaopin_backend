@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin
@@ -33,7 +34,7 @@ public class UserInformationController {
 
         @PutMapping("/{userinfoid}")
         public ResponseEntity<ResponseBody<UserInformation>> updateUserInformationByUserInformationId(
-                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
                         @Valid @RequestBody UserInformation userInformation) {
                 return ResponseBody.handle(userInformationService
                                 .updateUserInformationByUserInformationId(userInformationId, userInformation));
@@ -48,7 +49,7 @@ public class UserInformationController {
 
         @GetMapping("/{userinfoid}")
         public ResponseEntity<ResponseBody<UserInformation>> getUserInformationByUserInformationId(
-                        @PathVariable("userinfoid") UUID userInformationId) {
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId) {
                 return ResponseBody.handle(userInformationService
                                 .getUserInformationByUserInformationId(userInformationId));
         }

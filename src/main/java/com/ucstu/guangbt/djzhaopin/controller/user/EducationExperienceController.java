@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin
@@ -35,7 +36,7 @@ public class EducationExperienceController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<EducationExperience>> createEducationExperience(
-                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
                         @Valid @RequestBody EducationExperience educationExperience) {
                 return ResponseBody.handle(userInformationService
                                 .createEducationExperience(userInformationId, educationExperience));
@@ -43,16 +44,16 @@ public class EducationExperienceController {
 
         @DeleteMapping("/{eduexperienceid}")
         public ResponseEntity<ResponseBody<EducationExperience>> deleteEducationExperienceByEducationExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("eduexperienceid") UUID eduExperienceId) {
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("eduexperienceid") @NotNull UUID eduExperienceId) {
                 return ResponseBody.handle(userInformationService
                                 .deleteEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId));
         }
 
         @PutMapping("/{eduexperienceid}")
         public ResponseEntity<ResponseBody<EducationExperience>> updateEducationExperienceByEducationExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("eduexperienceid") UUID eduExperienceId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("eduexperienceid") @NotNull UUID eduExperienceId,
                         @Valid @RequestBody EducationExperience educationExperience) {
                 return ResponseBody.handle(userInformationService
                                 .updateEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId,
@@ -61,7 +62,7 @@ public class EducationExperienceController {
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<EducationExperience>>> getEducationExperiencesByUserInformationId(
-                        @PathVariable("userinfoid") UUID userInformationId,
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(userInformationService
                                 .getEducationExperiencesByUserInformationId(userInformationId, pageable));
@@ -69,8 +70,8 @@ public class EducationExperienceController {
 
         @GetMapping("/{eduexperienceid}")
         public ResponseEntity<ResponseBody<EducationExperience>> getEducationExperienceByEducationExperienceId(
-                        @PathVariable("userinfoid") UUID userInformationId,
-                        @PathVariable("eduexperienceid") UUID eduExperienceId) {
+                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("eduexperienceid") @NotNull UUID eduExperienceId) {
                 return ResponseBody.handle(userInformationService
                                 .getEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId));
         }

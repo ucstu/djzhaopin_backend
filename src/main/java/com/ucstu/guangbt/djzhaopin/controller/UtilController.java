@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotBlank;
 
 @Validated
 @CrossOrigin
@@ -35,7 +36,7 @@ public class UtilController {
 
     @GetMapping("/areaInformations")
     public ResponseEntity<ResponseBody<List<AreaInformation>>> getAreaInformations(
-            @RequestParam String city) {
+            @RequestParam @NotBlank String city) {
         return ResponseBody.handle(utilService.getAreaInformations(city));
     }
 
@@ -51,7 +52,7 @@ public class UtilController {
 
     @GetMapping("/directiontags")
     public ResponseEntity<ResponseBody<List<DirectionTag>>> getDirectionTags(
-            @RequestParam String positionName) {
+            @RequestParam @NotBlank String positionName) {
         return ResponseBody.handle(utilService.getDirectionTags(positionName));
     }
 
@@ -74,7 +75,7 @@ public class UtilController {
 
     @GetMapping("/verificationcode")
     public ResponseEntity<ResponseBody<String>> getVerificationCode(
-            @RequestParam String phoneNumber) {
+            @RequestParam @NotBlank String phoneNumber) {
         return ResponseBody.handle(utilService.getVerificationCode(phoneNumber));
     }
 
