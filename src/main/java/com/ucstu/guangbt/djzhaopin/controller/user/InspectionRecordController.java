@@ -28,7 +28,7 @@ import jakarta.validation.constraints.NotNull;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/userinfos/{userinfoid}/inspectionrecords")
+@RequestMapping("/userInfos/{userInfoId}/inspectionRecords")
 public class InspectionRecordController {
 
         @Resource
@@ -36,24 +36,24 @@ public class InspectionRecordController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<InspectionRecord>> createInspectionRecord(
-                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
                         @Valid @RequestBody InspectionRecord inspectionRecord) {
                 return ResponseBody.handle(userInformationService
                                 .createInspectionRecord(userInformationId, inspectionRecord));
         }
 
-        @DeleteMapping("/{inspectionrecordid}")
+        @DeleteMapping("/{inspectionRecordId}")
         public ResponseEntity<ResponseBody<InspectionRecord>> deleteInspectionRecordByInspectionRecordId(
-                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
-                        @PathVariable("inspectionrecordid") @NotNull UUID inspectionRecordId) {
+                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
+                        @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId) {
                 return ResponseBody.handle(userInformationService
                                 .deleteInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId));
         }
 
-        @PutMapping("/{inspectionrecordid}")
+        @PutMapping("/{inspectionRecordId}")
         public ResponseEntity<ResponseBody<InspectionRecord>> updateInspectionRecordByInspectionRecordId(
-                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
-                        @PathVariable("inspectionrecordid") @NotNull UUID inspectionRecordId,
+                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
+                        @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId,
                         @Valid @RequestBody InspectionRecord inspectionRecord) {
                 return ResponseBody.handle(userInformationService
                                 .updateInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId,
@@ -62,16 +62,16 @@ public class InspectionRecordController {
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<InspectionRecord>>> getInspectionRecordsByUserInformationId(
-                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
                         @PageableDefault(page = 5, size = 10) Pageable pageable) {
                 return ResponseBody.handle(userInformationService
                                 .getInspectionRecordsByUserInformationId(userInformationId, pageable));
         }
 
-        @GetMapping("/{inspectionrecordid}")
+        @GetMapping("/{inspectionRecordId}")
         public ResponseEntity<ResponseBody<InspectionRecord>> getInspectionRecordByInspectionRecordId(
-                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
-                        @PathVariable("inspectionrecordid") @NotNull UUID inspectionRecordId) {
+                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
+                        @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId) {
                 return ResponseBody.handle(userInformationService
                                 .getInspectionRecordByInspectionRecordId(userInformationId, inspectionRecordId));
         }

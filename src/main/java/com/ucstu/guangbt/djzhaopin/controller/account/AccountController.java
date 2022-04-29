@@ -31,7 +31,7 @@ import jakarta.validation.constraints.NotNull;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/accountinfos")
+@RequestMapping("/accountInfos")
 public class AccountController {
 
         @Resource
@@ -44,9 +44,9 @@ public class AccountController {
                                 .registerAccount(registerAccountRequest));
         }
 
-        @DeleteMapping("/{accountinfoId}")
+        @DeleteMapping("/{accountInfoId}")
         public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
-                        @PathVariable("accountinfoId") @NotNull UUID accountInformationId,
+                        @PathVariable("accountInfoId") @NotNull UUID accountInformationId,
                         @RequestParam @NotBlank String verificationCode) {
                 return ResponseBody.handle(accountService
                                 .deleteAccount(accountInformationId, verificationCode));
@@ -59,9 +59,9 @@ public class AccountController {
                                 .loginAccount(loginAccountRequest));
         }
 
-        @PutMapping("/{accountinfoId}")
+        @PutMapping("/{accountInfoId}")
         public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
-                        @PathVariable("accountinfoId") @NotNull UUID accountInformationId,
+                        @PathVariable("accountInfoId") @NotNull UUID accountInformationId,
                         @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
                 return ResponseBody.handle(accountService
                                 .changePassword(accountInformationId, changePasswordRequest));

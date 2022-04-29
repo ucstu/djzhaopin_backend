@@ -58,5 +58,5 @@ public class DeliveryRecord {
 
     @NotNull
     @Type(type = "uuid-char")
-    private UUID jobInformationId;
+    private UUID positionInformationId;
 }

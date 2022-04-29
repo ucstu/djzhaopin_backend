@@ -77,9 +77,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Override
     public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
-            UUID companyInformationId,
-            Integer status,
-            Integer workingYears, String sex, Integer age, UUID jobId, Date deliveryDate, String search,
+            UUID companyInformationId, List<Integer> status, List<Integer> workingYears, List<String> sexs,
+            List<Integer> ages, List<UUID> positionInformationIds, List<Date> deliveryDates, String search,
             Pageable pageable) {
         // TODO 完善搜索功能
         ServiceToControllerBody<List<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -91,7 +90,12 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(Pageable pageable) {
+    public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(String name, String salary,
+            List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
+            List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
+            List<Integer> financingStages, List<String> comprehensions, String workingPlace,
+            Pageable pageable) {
+        // TODO 完善搜索功能
         ServiceToControllerBody<List<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody();
         Page<PositionInformation> positionInformations = positionInformationRepository.findAll(pageable);
         if (positionInformations.hasContent()) {
@@ -183,7 +187,12 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Override
     public ServiceToControllerBody<List<PositionInformation>> getPositionInformationsByCompanyInformationId(
             UUID companyInformationId,
+            String name, String salary,
+            List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
+            List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
+            List<Integer> financingStages, List<String> comprehensions, String workingPlace,
             Pageable pageable) {
+        // TODO 完善搜索功能
         ServiceToControllerBody<List<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);

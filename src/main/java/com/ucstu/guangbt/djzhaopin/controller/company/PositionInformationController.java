@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
@@ -27,7 +28,7 @@ import jakarta.validation.constraints.NotNull;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/companyinfos/{companyinfoid}/positioninfos")
+@RequestMapping("/companyInfos/{companyInfoId}/positionInfos")
 public class PositionInformationController {
 
         @Resource
@@ -35,25 +36,25 @@ public class PositionInformationController {
 
         @PostMapping("")
         public ResponseEntity<ResponseBody<PositionInformation>> createPositionInformation(
-                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
+                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
                         @Valid @RequestBody PositionInformation positionInformation) {
                 return ResponseBody.handle(companyInformationService
                                 .createPositionInformation(companyInformationId, positionInformation));
         }
 
-        @DeleteMapping("/{positioninfoid}")
+        @DeleteMapping("/{positionInfoId}")
         public ResponseEntity<ResponseBody<PositionInformation>> deletePositionInformationByPositionInformationId(
-                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
-                        @PathVariable("positioninfoid") @NotNull UUID positionInformationId) {
+                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+                        @PathVariable("positionInfoId") @NotNull UUID positionInformationId) {
                 return ResponseBody.handle(companyInformationService
                                 .deletePositionInformationByPositionInformationId(companyInformationId,
                                                 positionInformationId));
         }
 
-        @PostMapping("/{positioninfoid}")
+        @PostMapping("/{positionInfoId}")
         public ResponseEntity<ResponseBody<PositionInformation>> updatePositionInformationByPositionInformationId(
-                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
-                        @PathVariable("positioninfoid") @NotNull UUID positionInformationId,
+                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+                        @PathVariable("positionInfoId") @NotNull UUID positionInformationId,
                         @Valid @RequestBody PositionInformation positionInformation) {
                 return ResponseBody.handle(companyInformationService
                                 .updatePositionInformationByPositionInformationId(companyInformationId,
@@ -63,16 +64,29 @@ public class PositionInformationController {
 
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
-                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
+                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+                        @RequestParam("name") String name,
+                        @RequestParam("salary") String salary,
+                        @RequestParam("workingYears") List<Integer> workingYears,
+                        @RequestParam("educations") List<Integer> educations,
+                        @RequestParam("directionTags") List<String> directionTags,
+                        @RequestParam("workAreas") List<String> workAreas,
+                        @RequestParam("positionTypes") List<Integer> positionTypes,
+                        @RequestParam("scales") List<Integer> scales,
+                        @RequestParam("financingStages") List<Integer> financingStages,
+                        @RequestParam("comprehensions") List<String> comprehensions,
+                        @RequestParam("workingPlace") String workingPlace,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
-                                .getPositionInformationsByCompanyInformationId(companyInformationId, pageable));
+                                .getPositionInformationsByCompanyInformationId(companyInformationId, name, salary,
+                                                workingYears, educations, directionTags, workAreas, positionTypes,
+                                                scales, financingStages, comprehensions, workingPlace, pageable));
         }
 
-        @GetMapping("/{positioninfoid}")
+        @GetMapping("/{positionInfoId}")
         public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInformationId(
-                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
-                        @PathVariable("positioninfoid") @NotNull UUID positionInformationId) {
+                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+                        @PathVariable("positionInfoId") @NotNull UUID positionInformationId) {
                 return ResponseBody.handle(companyInformationService
                                 .getPositionInformationByPositionInformationId(companyInformationId,
                                                 positionInformationId));

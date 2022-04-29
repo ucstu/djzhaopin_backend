@@ -14,6 +14,7 @@ import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.domain.Pageable;
 
 public interface UserInformationService {
@@ -111,7 +112,7 @@ public interface UserInformationService {
 
         public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByUserInformationId(
                         UUID userInformationId,
-                        Pageable pageable);
+                        @Range(min = 1, max = 5) Integer status, Pageable pageable);
 
         public ServiceToControllerBody<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userInformationId,
                         UUID deliveryRecordId);

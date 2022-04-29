@@ -12,6 +12,7 @@ import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,7 +31,7 @@ import jakarta.validation.constraints.NotNull;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/companyinfos")
+@RequestMapping("/companyInfos")
 public class CompanyInformationController {
 
         @Resource
@@ -43,9 +44,9 @@ public class CompanyInformationController {
                                 .createCompanyInformation(companyInformation));
         }
 
-        @PostMapping("{companyinfoid}")
+        @PostMapping("{companyInfoId}")
         public ResponseEntity<ResponseBody<CompanyInformation>> updateCompanyInformationByCompanyInformationId(
-                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
+                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
                         @Valid @RequestBody CompanyInformation companyInformation) {
                 return ResponseBody.handle(companyInformationService
                                 .updateCompanyInformationByCompanyInformationId(companyInformationId,
@@ -59,31 +60,46 @@ public class CompanyInformationController {
                                 .getCompanyInformations(pageable));
         }
 
-        @GetMapping("{companyinfoid}")
+        @GetMapping("{companyInfoId}")
         public ResponseEntity<ResponseBody<CompanyInformation>> getCompanyInformationByCompanyInformationId(
-                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId) {
+                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId) {
                 return ResponseBody.handle(companyInformationService
                                 .getCompanyInformationByCompanyInformationId(companyInformationId));
         }
 
-        @GetMapping("{companyinfoid}/deliveryrecords")
+        @GetMapping("{companyInfoId}/deliveryRecords")
         public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByCompanyInformationId(
-                        @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
-                        @RequestParam @NotNull Integer status,
-                        @RequestParam Integer workingYears,
-                        @RequestParam String sex, @RequestParam Integer age,
-                        @RequestParam UUID jobId,
-                        @RequestParam Date deliveryDate, @RequestParam String search,
+                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+                        @RequestParam("status") @NotNull List<Integer> status,
+                        @RequestParam("workingYears") List<Integer> workingYears,
+                        @RequestParam("sexs") List<String> sexs,
+                        @RequestParam("ages") List<Integer> ages,
+                        @RequestParam("positionInfoIds") List<UUID> positionInformationIds,
+                        @RequestParam("deliveryDates") @DateTimeFormat(pattern = "yyyy-MM-dd") List<Date> deliveryDates,
+                        @RequestParam("search") String search,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getDeliveryRecordsByCompanyInformationId(companyInformationId, status, workingYears,
-                                                sex, age, jobId, deliveryDate, search, pageable));
+                                                sexs, ages, positionInformationIds, deliveryDates, search, pageable));
         }
 
-        @GetMapping("/positioninfos")
+        @GetMapping("/positionInfos")
         public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInfos(
+                        @RequestParam("name") String name,
+                        @RequestParam("salary") String salary,
+                        @RequestParam("workingYears") List<Integer> workingYears,
+                        @RequestParam("educations") List<Integer> educations,
+                        @RequestParam("directionTags") List<String> directionTags,
+                        @RequestParam("workAreas") List<String> workAreas,
+                        @RequestParam("positionTypes") List<Integer> positionTypes,
+                        @RequestParam("scales") List<Integer> scales,
+                        @RequestParam("financingStages") List<Integer> financingStages,
+                        @RequestParam("comprehensions") List<String> comprehensions,
+                        @RequestParam("workingPlace") String workingPlace,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
-                                .getPositionInfos(pageable));
+                                .getPositionInfos(name, salary, workingYears, educations, directionTags, workAreas,
+                                                positionTypes, scales, financingStages, comprehensions, workingPlace,
+                                                pageable));
         }
 }

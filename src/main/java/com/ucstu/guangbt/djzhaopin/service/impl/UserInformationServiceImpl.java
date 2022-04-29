@@ -3,6 +3,7 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
@@ -518,7 +519,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                     .findFirst();
             if (deliveryRecord1.isPresent()) {
                 deliveryRecord1.get().setInterviewTime(deliveryRecord.getInterviewTime());
-                deliveryRecord1.get().setJobInformationId(deliveryRecord.getJobInformationId());
+                deliveryRecord1.get().setPositionInformationId(deliveryRecord.getPositionInformationId());
                 deliveryRecord1.get().setStatus(deliveryRecord.getStatus());
                 deliveryRecord1.get().setUserInformationId(deliveryRecord.getUserInformationId());
                 userInformationRepository.save(userInformation.get());
@@ -533,11 +534,15 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userInformationId,
-            Pageable pageable) {
+            Integer status, Pageable pageable) {
         ServiceToControllerBody<List<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
-            return serviceToControllerBody.success(userInformation.get().getDeliveryRecords());
+            List<DeliveryRecord> deliveryRecords = userInformation.get().getDeliveryRecords()
+                    .stream()
+                    .filter(deliveryRecord -> status == null || deliveryRecord.getStatus().equals(status))
+                    .collect(Collectors.toList());
+            return serviceToControllerBody.success(deliveryRecords);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -760,7 +765,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
             userInformation.get().getGarnerRecords().add(garnerRecord);
-            return serviceToControllerBody.created(garnerRecord);
+            return serviceToControllerBody
+                    .created(userInformationRepository.save(userInformation.get()).getGarnerRecords()
+                            .get(userInformation.get().getGarnerRecords().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -802,7 +809,7 @@ public class UserInformationServiceImpl implements UserInformationService {
                             .equals(garnerRecord2.getGarnerRecordId()))
                     .findFirst();
             if (garnerRecord1.isPresent()) {
-                garnerRecord1.get().setJobInformationId(garnerRecord.getJobInformationId());
+                garnerRecord1.get().setPositionInformationId(garnerRecord.getPositionInformationId());
                 garnerRecord1.get().setUserInformationId(garnerRecord.getUserInformationId());
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(garnerRecord1.get());

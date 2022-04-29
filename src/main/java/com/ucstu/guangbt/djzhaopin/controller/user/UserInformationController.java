@@ -26,15 +26,15 @@ import jakarta.validation.constraints.NotNull;
 @Validated
 @CrossOrigin
 @RestController
-@RequestMapping("/userinfos")
+@RequestMapping("/userInfos")
 public class UserInformationController {
 
         @Resource
         private UserInformationService userInformationService;
 
-        @PutMapping("/{userinfoid}")
+        @PutMapping("/{userInfoId}")
         public ResponseEntity<ResponseBody<UserInformation>> updateUserInformationByUserInformationId(
-                        @PathVariable("userinfoid") @NotNull UUID userInformationId,
+                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
                         @Valid @RequestBody UserInformation userInformation) {
                 return ResponseBody.handle(userInformationService
                                 .updateUserInformationByUserInformationId(userInformationId, userInformation));
@@ -47,9 +47,9 @@ public class UserInformationController {
                                 .getUserInformations(pageable));
         }
 
-        @GetMapping("/{userinfoid}")
+        @GetMapping("/{userInfoId}")
         public ResponseEntity<ResponseBody<UserInformation>> getUserInformationByUserInformationId(
-                        @PathVariable("userinfoid") @NotNull UUID userInformationId) {
+                        @PathVariable("userInfoId") @NotNull UUID userInformationId) {
                 return ResponseBody.handle(userInformationService
                                 .getUserInformationByUserInformationId(userInformationId));
         }

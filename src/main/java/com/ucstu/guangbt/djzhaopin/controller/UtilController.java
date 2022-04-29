@@ -41,23 +41,23 @@ public class UtilController {
         return ResponseBody.handle(utilService.getAreaInformations(city));
     }
 
-    @GetMapping("/filterinformation")
+    @GetMapping("/filterInformation")
     public ResponseEntity<ResponseBody<FilterInformation>> getFilterInformation() {
         return ResponseBody.handle(utilService.getFilterInformation());
     }
 
-    @GetMapping("/positiontypes")
+    @GetMapping("/positionTypes")
     public ResponseEntity<ResponseBody<List<PositionType>>> getPositionTypes() {
         return ResponseBody.handle(utilService.getPositionTypes());
     }
 
-    @GetMapping("/directiontags")
+    @GetMapping("/directionTags")
     public ResponseEntity<ResponseBody<List<DirectionTag>>> getDirectionTags(
             @RequestParam @NotBlank String positionName) {
         return ResponseBody.handle(utilService.getDirectionTags(positionName));
     }
 
-    @GetMapping("/cityinformations")
+    @GetMapping("/cityInformations")
     public ResponseEntity<ResponseBody<List<CityInformation>>> getCityInformations() {
         return ResponseBody.handle(utilService.getCityInformations());
     }
@@ -68,19 +68,19 @@ public class UtilController {
         return ResponseBody.handle(utilService.getRecommendations(pageable));
     }
 
-    @GetMapping("/messagerecords")
+    @GetMapping("/messageRecords")
     public ResponseEntity<ResponseBody<List<MessageRecord>>> getMessageRecords(
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(utilService.getMessageRecords(pageable));
     }
 
-    @GetMapping("/verificationcode")
+    @GetMapping("/verificationCode")
     public ResponseEntity<ResponseBody<String>> getVerificationCode(
             @RequestParam @NotBlank String phoneNumber) {
         return ResponseBody.handle(utilService.getVerificationCode(phoneNumber));
     }
 
-    @GetMapping("/newversion")
+    @GetMapping("/newVersion")
     public ResponseEntity<ResponseBody<String>> getNewVersion() {
         return ResponseBody.handle(utilService.getNewVersion());
     }

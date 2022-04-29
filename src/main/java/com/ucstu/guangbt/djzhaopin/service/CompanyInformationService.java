@@ -26,12 +26,15 @@ public interface CompanyInformationService {
                         UUID companyInformationId);
 
         public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
-                        UUID companyInformationId,
-                        Integer status,
-                        Integer workingYears,
-                        String sex, Integer age, UUID jobId, Date deliveryDate, String search, Pageable pageable);
+                        UUID companyInformationId, List<Integer> status, List<Integer> workingYears, List<String> sexs,
+                        List<Integer> ages, List<UUID> positionInformationIds, List<Date> deliveryDates, String search,
+                        Pageable pageable);
 
-        public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(Pageable pageable);
+        public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(String name, String salary,
+                        List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
+                        List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
+                        List<Integer> financingStages, List<String> comprehensions, String workingPlace,
+                        Pageable pageable);
 
         public ServiceToControllerBody<PositionInformation> createPositionInformation(UUID companyInformationId,
                         PositionInformation positionInformation);
@@ -47,7 +50,10 @@ public interface CompanyInformationService {
 
         public ServiceToControllerBody<List<PositionInformation>> getPositionInformationsByCompanyInformationId(
                         UUID companyInformationId,
-                        Pageable pageable);
+                        String name, String salary, List<Integer> workingYears, List<Integer> educations,
+                        List<String> directionTags, List<String> workAreas, List<Integer> positionTypes,
+                        List<Integer> scales, List<Integer> financingStages, List<String> comprehensions,
+                        String workingPlace, Pageable pageable);
 
         public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInformationId(
                         UUID companyInformationId,
