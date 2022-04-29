@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Validated
@@ -71,10 +70,10 @@ public class CompanyInformationController {
         public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByCompanyInformationId(
                         @PathVariable("companyinfoid") @NotNull UUID companyInformationId,
                         @RequestParam @NotNull Integer status,
-                        @RequestParam @NotNull Integer workingYears,
-                        @RequestParam @NotBlank String sex, @RequestParam @NotNull Integer age,
-                        @RequestParam @NotNull UUID jobId,
-                        @RequestParam @NotNull Date deliveryDate, @RequestParam @NotBlank String search,
+                        @RequestParam Integer workingYears,
+                        @RequestParam String sex, @RequestParam Integer age,
+                        @RequestParam UUID jobId,
+                        @RequestParam Date deliveryDate, @RequestParam String search,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getDeliveryRecordsByCompanyInformationId(companyInformationId, status, workingYears,

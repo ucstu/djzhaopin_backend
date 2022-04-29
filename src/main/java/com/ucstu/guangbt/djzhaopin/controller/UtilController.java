@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,13 +87,13 @@ public class UtilController {
 
     @PostMapping("/files")
     public ResponseEntity<ResponseBody<String>> uploadFiles(
-            MultipartFile file) {
+            @RequestBody MultipartFile file) {
         return ResponseBody.handle(utilService.uploadFile(file));
     }
 
     @PostMapping("/avatars")
     public ResponseEntity<ResponseBody<String>> uploadAvatars(
-            MultipartFile avatar) {
+            @RequestBody MultipartFile avatar) {
         return ResponseBody.handle(utilService.uploadAvatar(avatar));
     }
 }
