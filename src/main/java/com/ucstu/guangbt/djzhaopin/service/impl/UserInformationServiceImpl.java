@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
+import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
@@ -15,6 +17,8 @@ import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
+import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.PositionInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
@@ -29,6 +33,12 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Resource
     private UserInformationRepository userInformationRepository;
+
+    @Resource
+    private PositionInformationRepository positionInformationRepository;
+
+    @Resource
+    private CompanyInformationRepository companyInformationRepository;
 
     @Override
     public ServiceToControllerBody<UserInformation> updateUserInformationByUserInformationId(UUID userInformationId,
@@ -481,10 +491,18 @@ public class UserInformationServiceImpl implements UserInformationService {
             DeliveryRecord deliveryRecord) {
         ServiceToControllerBody<DeliveryRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        Optional<PositionInformation> positionInformation = positionInformationRepository
+                .findById(deliveryRecord.getPositionInformationId());
         if (userInformation.isPresent()) {
-            userInformation.get().getDeliveryRecords().add(deliveryRecord);
-            return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
-                    .getDeliveryRecords().get(userInformation.get().getDeliveryRecords().size() - 1));
+            if (positionInformation.isPresent()) {
+                deliveryRecord.setStatus(1);
+                userInformation.get().getDeliveryRecords().add(deliveryRecord);
+                return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                        .getDeliveryRecords().get(userInformation.get().getDeliveryRecords().size() - 1));
+            } else {
+                return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
+                        deliveryRecord.getPositionInformationId());
+            }
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -519,21 +537,28 @@ public class UserInformationServiceImpl implements UserInformationService {
             DeliveryRecord deliveryRecord) {
         ServiceToControllerBody<DeliveryRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        Optional<PositionInformation> positionInformation = positionInformationRepository
+                .findById(deliveryRecord.getPositionInformationId());
         if (userInformation.isPresent()) {
-            Optional<DeliveryRecord> deliveryRecord1 = userInformation.get().getDeliveryRecords()
-                    .stream()
-                    .filter(deliveryRecord2 -> deliveryRecordId
-                            .equals(deliveryRecord2.getDeliveryRecordId()))
-                    .findFirst();
-            if (deliveryRecord1.isPresent()) {
-                deliveryRecord1.get().setInterviewTime(deliveryRecord.getInterviewTime());
-                deliveryRecord1.get().setPositionInformationId(deliveryRecord.getPositionInformationId());
-                deliveryRecord1.get().setStatus(deliveryRecord.getStatus());
-                deliveryRecord1.get().setUserInformationId(deliveryRecord.getUserInformationId());
-                userInformationRepository.save(userInformation.get());
-                return serviceToControllerBody.success(deliveryRecord1.get());
+            if (positionInformation.isPresent()) {
+                Optional<DeliveryRecord> deliveryRecord1 = userInformation.get().getDeliveryRecords()
+                        .stream()
+                        .filter(deliveryRecord2 -> deliveryRecordId
+                                .equals(deliveryRecord2.getDeliveryRecordId()))
+                        .findFirst();
+                if (deliveryRecord1.isPresent()) {
+                    deliveryRecord1.get().setInterviewTime(deliveryRecord.getInterviewTime());
+                    deliveryRecord1.get().setPositionInformationId(deliveryRecord.getPositionInformationId());
+                    deliveryRecord1.get().setStatus(deliveryRecord.getStatus());
+                    deliveryRecord1.get().setUserInformationId(deliveryRecord.getUserInformationId());
+                    userInformationRepository.save(userInformation.get());
+                    return serviceToControllerBody.success(deliveryRecord1.get());
+                } else {
+                    return serviceToControllerBody.error("deliveryRecordId", "项目经历不存在", deliveryRecordId);
+                }
             } else {
-                return serviceToControllerBody.error("deliveryRecordId", "项目经历不存在", deliveryRecordId);
+                return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
+                        deliveryRecord.getPositionInformationId());
             }
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
@@ -582,10 +607,17 @@ public class UserInformationServiceImpl implements UserInformationService {
             AttentionRecord attentionRecord) {
         ServiceToControllerBody<AttentionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        Optional<CompanyInformation> companyInformation = companyInformationRepository
+                .findById(attentionRecord.getCompanyInformationId());
         if (userInformation.isPresent()) {
-            userInformation.get().getAttentionRecords().add(attentionRecord);
-            return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
-                    .getAttentionRecords().get(userInformation.get().getAttentionRecords().size() - 1));
+            if (companyInformation.isPresent()) {
+                userInformation.get().getAttentionRecords().add(attentionRecord);
+                return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                        .getAttentionRecords().get(userInformation.get().getAttentionRecords().size() - 1));
+            } else {
+                return serviceToControllerBody.error("companyInformationId", "公司信息不存在",
+                        attentionRecord.getCompanyInformationId());
+            }
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -620,19 +652,26 @@ public class UserInformationServiceImpl implements UserInformationService {
             AttentionRecord attentionRecord) {
         ServiceToControllerBody<AttentionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        Optional<CompanyInformation> companyInformation = companyInformationRepository
+                .findById(attentionRecord.getCompanyInformationId());
         if (userInformation.isPresent()) {
-            Optional<AttentionRecord> attentionRecord1 = userInformation.get().getAttentionRecords()
-                    .stream()
-                    .filter(attentionRecord2 -> attentionRecordId
-                            .equals(attentionRecord2.getAttentionRecordId()))
-                    .findFirst();
-            if (attentionRecord1.isPresent()) {
-                attentionRecord1.get().setCompanyInformationId(attentionRecord.getCompanyInformationId());
-                attentionRecord1.get().setUserInformationId(attentionRecord.getUserInformationId());
-                userInformationRepository.save(userInformation.get());
-                return serviceToControllerBody.success(attentionRecord1.get());
+            if (companyInformation.isPresent()) {
+                Optional<AttentionRecord> attentionRecord1 = userInformation.get().getAttentionRecords()
+                        .stream()
+                        .filter(attentionRecord2 -> attentionRecordId
+                                .equals(attentionRecord2.getAttentionRecordId()))
+                        .findFirst();
+                if (attentionRecord1.isPresent()) {
+                    attentionRecord1.get().setCompanyInformationId(attentionRecord.getCompanyInformationId());
+                    attentionRecord1.get().setUserInformationId(attentionRecord.getUserInformationId());
+                    userInformationRepository.save(userInformation.get());
+                    return serviceToControllerBody.success(attentionRecord1.get());
+                } else {
+                    return serviceToControllerBody.error("attentionRecordId", "关注记录不存在", attentionRecordId);
+                }
             } else {
-                return serviceToControllerBody.error("attentionRecordId", "关注记录不存在", attentionRecordId);
+                return serviceToControllerBody.error("companyInformationId", "公司信息不存在",
+                        attentionRecord.getCompanyInformationId());
             }
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
@@ -773,11 +812,18 @@ public class UserInformationServiceImpl implements UserInformationService {
     public ServiceToControllerBody<GarnerRecord> createGarnerRecord(UUID userInformationId, GarnerRecord garnerRecord) {
         ServiceToControllerBody<GarnerRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        Optional<PositionInformation> positionInformation = positionInformationRepository
+                .findById(garnerRecord.getPositionInformationId());
         if (userInformation.isPresent()) {
-            userInformation.get().getGarnerRecords().add(garnerRecord);
-            return serviceToControllerBody
-                    .created(userInformationRepository.save(userInformation.get()).getGarnerRecords()
-                            .get(userInformation.get().getGarnerRecords().size() - 1));
+            if (positionInformation.isPresent()) {
+                userInformation.get().getGarnerRecords().add(garnerRecord);
+                return serviceToControllerBody
+                        .created(userInformationRepository.save(userInformation.get()).getGarnerRecords()
+                                .get(userInformation.get().getGarnerRecords().size() - 1));
+            } else {
+                return serviceToControllerBody.error("positionInformationId", "岗位信息不存在",
+                        garnerRecord.getPositionInformationId());
+            }
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -812,19 +858,26 @@ public class UserInformationServiceImpl implements UserInformationService {
             GarnerRecord garnerRecord) {
         ServiceToControllerBody<GarnerRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        Optional<PositionInformation> positionInformation = positionInformationRepository
+                .findById(garnerRecord.getPositionInformationId());
         if (userInformation.isPresent()) {
-            Optional<GarnerRecord> garnerRecord1 = userInformation.get().getGarnerRecords()
-                    .stream()
-                    .filter(garnerRecord2 -> garnerRecordId
-                            .equals(garnerRecord2.getGarnerRecordId()))
-                    .findFirst();
-            if (garnerRecord1.isPresent()) {
-                garnerRecord1.get().setPositionInformationId(garnerRecord.getPositionInformationId());
-                garnerRecord1.get().setUserInformationId(garnerRecord.getUserInformationId());
-                userInformationRepository.save(userInformation.get());
-                return serviceToControllerBody.success(garnerRecord1.get());
+            if (positionInformation.isPresent()) {
+                Optional<GarnerRecord> garnerRecord1 = userInformation.get().getGarnerRecords()
+                        .stream()
+                        .filter(garnerRecord2 -> garnerRecordId
+                                .equals(garnerRecord2.getGarnerRecordId()))
+                        .findFirst();
+                if (garnerRecord1.isPresent()) {
+                    garnerRecord1.get().setPositionInformationId(garnerRecord.getPositionInformationId());
+                    garnerRecord1.get().setUserInformationId(garnerRecord.getUserInformationId());
+                    userInformationRepository.save(userInformation.get());
+                    return serviceToControllerBody.success(garnerRecord1.get());
+                } else {
+                    return serviceToControllerBody.error("garnerRecordId", "收藏记录不存在", garnerRecordId);
+                }
             } else {
-                return serviceToControllerBody.error("garnerRecordId", "收藏记录不存在", garnerRecordId);
+                return serviceToControllerBody.error("positionInformationId", "岗位信息不存在",
+                        garnerRecord.getPositionInformationId());
             }
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
