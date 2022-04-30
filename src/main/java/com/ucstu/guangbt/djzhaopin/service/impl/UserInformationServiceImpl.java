@@ -495,10 +495,18 @@ public class UserInformationServiceImpl implements UserInformationService {
                 .findById(deliveryRecord.getPositionInformationId());
         if (userInformation.isPresent()) {
             if (positionInformation.isPresent()) {
-                deliveryRecord.setStatus(1);
-                userInformation.get().getDeliveryRecords().add(deliveryRecord);
-                return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
-                        .getDeliveryRecords().get(userInformation.get().getDeliveryRecords().size() - 1));
+                List<DeliveryRecord> deliveryRecords = userInformation.get().getDeliveryRecords();
+                if (deliveryRecords.stream()
+                        .anyMatch(deliveryRecord1 -> deliveryRecord1.getPositionInformationId()
+                                .equals(deliveryRecord.getPositionInformationId()))) {
+                    return serviceToControllerBody.error("positionInformationId", "已经投递过该职位",
+                            deliveryRecord.getPositionInformationId());
+                } else {
+                    deliveryRecord.setStatus(1);
+                    userInformation.get().getDeliveryRecords().add(deliveryRecord);
+                    return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                            .getDeliveryRecords().get(userInformation.get().getDeliveryRecords().size() - 1));
+                }
             } else {
                 return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
                         deliveryRecord.getPositionInformationId());
@@ -611,9 +619,17 @@ public class UserInformationServiceImpl implements UserInformationService {
                 .findById(attentionRecord.getCompanyInformationId());
         if (userInformation.isPresent()) {
             if (companyInformation.isPresent()) {
-                userInformation.get().getAttentionRecords().add(attentionRecord);
-                return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
-                        .getAttentionRecords().get(userInformation.get().getAttentionRecords().size() - 1));
+                List<AttentionRecord> attentionRecords = userInformation.get().getAttentionRecords();
+                if (attentionRecords.stream()
+                        .anyMatch(attentionRecordInDb -> attentionRecordInDb.getCompanyInformationId()
+                                .equals(attentionRecord.getCompanyInformationId()))) {
+                    return serviceToControllerBody.error("companyInformationId", "公司信息已关注",
+                            attentionRecord.getCompanyInformationId());
+                } else {
+                    userInformation.get().getAttentionRecords().add(attentionRecord);
+                    return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                            .getAttentionRecords().get(userInformation.get().getAttentionRecords().size() - 1));
+                }
             } else {
                 return serviceToControllerBody.error("companyInformationId", "公司信息不存在",
                         attentionRecord.getCompanyInformationId());
@@ -714,6 +730,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Override
     public ServiceToControllerBody<InspectionRecord> createInspectionRecord(UUID userInformationId,
             InspectionRecord inspectionRecord) {
+        // TODO 这里有点问题
         ServiceToControllerBody<InspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
@@ -816,10 +833,16 @@ public class UserInformationServiceImpl implements UserInformationService {
                 .findById(garnerRecord.getPositionInformationId());
         if (userInformation.isPresent()) {
             if (positionInformation.isPresent()) {
-                userInformation.get().getGarnerRecords().add(garnerRecord);
-                return serviceToControllerBody
-                        .created(userInformationRepository.save(userInformation.get()).getGarnerRecords()
-                                .get(userInformation.get().getGarnerRecords().size() - 1));
+                List<GarnerRecord> garnerRecords = userInformation.get().getGarnerRecords();
+                if (garnerRecords.stream().anyMatch(garnerRecordInDb -> garnerRecord.getPositionInformationId()
+                        .equals(garnerRecordInDb.getPositionInformationId()))) {
+                    return serviceToControllerBody.error("positionInformationId", "该岗位已收藏",
+                            garnerRecord.getPositionInformationId());
+                } else {
+                    userInformation.get().getGarnerRecords().add(garnerRecord);
+                    return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                            .getGarnerRecords().get(userInformation.get().getGarnerRecords().size() - 1));
+                }
             } else {
                 return serviceToControllerBody.error("positionInformationId", "岗位信息不存在",
                         garnerRecord.getPositionInformationId());
