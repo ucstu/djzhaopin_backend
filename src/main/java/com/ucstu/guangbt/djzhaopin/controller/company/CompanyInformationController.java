@@ -71,12 +71,12 @@ public class CompanyInformationController {
         public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByCompanyInformationId(
                         @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
                         @RequestParam("status") @NotNull List<Integer> status,
-                        @RequestParam("workingYears") List<Integer> workingYears,
-                        @RequestParam("sexs") List<String> sexs,
-                        @RequestParam("ages") List<Integer> ages,
-                        @RequestParam("positionInfoIds") List<UUID> positionInformationIds,
-                        @RequestParam("deliveryDates") @DateTimeFormat(pattern = "yyyy-MM-dd") List<Date> deliveryDates,
-                        @RequestParam("search") String search,
+                        @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
+                        @RequestParam(value = "sexs", required = false) List<String> sexs,
+                        @RequestParam(value = "ages", required = false) List<Integer> ages,
+                        @RequestParam(value = "positionInfoIds", required = false) List<UUID> positionInformationIds,
+                        @RequestParam(value = "deliveryDates", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") List<Date> deliveryDates,
+                        @RequestParam(value = "search", required = false) String search,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getDeliveryRecordsByCompanyInformationId(companyInformationId, status, workingYears,
@@ -85,17 +85,17 @@ public class CompanyInformationController {
 
         @GetMapping("/positionInfos")
         public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInfos(
-                        @RequestParam("name") String name,
-                        @RequestParam("salary") String salary,
-                        @RequestParam("workingYears") List<Integer> workingYears,
-                        @RequestParam("educations") List<Integer> educations,
-                        @RequestParam("directionTags") List<String> directionTags,
-                        @RequestParam("workAreas") List<String> workAreas,
-                        @RequestParam("positionTypes") List<Integer> positionTypes,
-                        @RequestParam("scales") List<Integer> scales,
-                        @RequestParam("financingStages") List<Integer> financingStages,
-                        @RequestParam("comprehensions") List<String> comprehensions,
-                        @RequestParam("workingPlace") String workingPlace,
+                        @RequestParam(value = "name", required = false) String name,
+                        @RequestParam(value = "salary", required = false) String salary,
+                        @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
+                        @RequestParam(value = "educations", required = false) List<Integer> educations,
+                        @RequestParam(value = "directionTags", required = false) List<String> directionTags,
+                        @RequestParam(value = "workAreas", required = false) List<String> workAreas,
+                        @RequestParam(value = "positionTypes", required = false) List<Integer> positionTypes,
+                        @RequestParam(value = "scales", required = false) List<Integer> scales,
+                        @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
+                        @RequestParam(value = "comprehensions", required = false) List<String> comprehensions,
+                        @RequestParam(value = "workingPlace", required = false) String workingPlace,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getPositionInfos(name, salary, workingYears, educations, directionTags, workAreas,

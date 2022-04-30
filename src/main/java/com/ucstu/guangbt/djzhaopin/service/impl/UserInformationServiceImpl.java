@@ -82,7 +82,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userInformationId);
         if (userInformationOptional.isPresent()) {
             userInformationOptional.get().getJobExpectations().add(jobExpectation);
-            return serviceToControllerBody.created(jobExpectation);
+            return serviceToControllerBody.success(userInformationRepository.save(userInformationOptional.get())
+                    .getJobExpectations().get(userInformationOptional.get().getJobExpectations().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -139,6 +140,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Override
     public ServiceToControllerBody<List<JobExpectation>> getJobExpectationsByUserInformationId(UUID userInformationId,
             Pageable pageable) {
+        // TODO 未实现分页
         ServiceToControllerBody<List<JobExpectation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
@@ -174,7 +176,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
             userInformation.get().getEducationExperiences().add(educationExperience);
-            return serviceToControllerBody.created(educationExperience);
+            return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                    .getEducationExperiences().get(userInformation.get().getEducationExperiences().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -275,7 +278,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
             userInformation.get().getWorkExperiences().add(workExperience);
-            return serviceToControllerBody.created(workExperience);
+            return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                    .getWorkExperiences().get(userInformation.get().getWorkExperiences().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -338,6 +342,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Override
     public ServiceToControllerBody<List<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userInformationId,
             Pageable pageable) {
+        // TODO 未实现分页
         ServiceToControllerBody<List<WorkExperience>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
@@ -375,7 +380,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
             userInformation.get().getProjectExperiences().add(projectExperience);
-            return serviceToControllerBody.created(projectExperience);
+            return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                    .getProjectExperiences().get(userInformation.get().getProjectExperiences().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -439,6 +445,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     public ServiceToControllerBody<List<ProjectExperience>> getProjectExperiencesByUserInformationId(
             UUID userInformationId,
             Pageable pageable) {
+        // TODO 未实现分页
         ServiceToControllerBody<List<ProjectExperience>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
@@ -476,7 +483,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
             userInformation.get().getDeliveryRecords().add(deliveryRecord);
-            return serviceToControllerBody.created(deliveryRecord);
+            return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                    .getDeliveryRecords().get(userInformation.get().getDeliveryRecords().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -576,7 +584,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
             userInformation.get().getAttentionRecords().add(attentionRecord);
-            return serviceToControllerBody.created(attentionRecord);
+            return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                    .getAttentionRecords().get(userInformation.get().getAttentionRecords().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -670,7 +679,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
             userInformation.get().getInspectionRecords().add(inspectionRecord);
-            return serviceToControllerBody.created(inspectionRecord);
+            return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
+                    .getInspectionRecords().get(userInformation.get().getInspectionRecords().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }

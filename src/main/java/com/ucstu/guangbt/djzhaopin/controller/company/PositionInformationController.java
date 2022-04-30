@@ -65,17 +65,17 @@ public class PositionInformationController {
         @GetMapping("")
         public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
                         @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
-                        @RequestParam("name") String name,
-                        @RequestParam("salary") String salary,
-                        @RequestParam("workingYears") List<Integer> workingYears,
-                        @RequestParam("educations") List<Integer> educations,
-                        @RequestParam("directionTags") List<String> directionTags,
-                        @RequestParam("workAreas") List<String> workAreas,
-                        @RequestParam("positionTypes") List<Integer> positionTypes,
-                        @RequestParam("scales") List<Integer> scales,
-                        @RequestParam("financingStages") List<Integer> financingStages,
-                        @RequestParam("comprehensions") List<String> comprehensions,
-                        @RequestParam("workingPlace") String workingPlace,
+                        @RequestParam(value = "name", required = false) String name,
+                        @RequestParam(value = "salary", required = false) String salary,
+                        @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
+                        @RequestParam(value = "educations", required = false) List<Integer> educations,
+                        @RequestParam(value = "directionTags", required = false) List<String> directionTags,
+                        @RequestParam(value = "workAreas", required = false) List<String> workAreas,
+                        @RequestParam(value = "positionTypes", required = false) List<Integer> positionTypes,
+                        @RequestParam(value = "scales", required = false) List<Integer> scales,
+                        @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
+                        @RequestParam(value = "comprehensions", required = false) List<String> comprehensions,
+                        @RequestParam(value = "workingPlace", required = false) String workingPlace,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
                                 .getPositionInformationsByCompanyInformationId(companyInformationId, name, salary,
