@@ -38,7 +38,7 @@ public class SecurityConfig {
     private static final SessionCreationPolicy STATELESS = SessionCreationPolicy.STATELESS;
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
-            new AntPathRequestMatcher("/accountInfos/**"));
+            new AntPathRequestMatcher("/accountInfos/**"), new AntPathRequestMatcher("/**", "OPTIONS"));
 
     private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 
@@ -58,7 +58,8 @@ public class SecurityConfig {
             SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
             successHandler.setRedirectStrategy(new RedirectStrategy() {
                 @Override
-                public void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
+                public void sendRedirect(HttpServletRequest request, HttpServletResponse response,
+                        String url)
                         throws IOException {
                 }
             });
