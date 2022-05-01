@@ -48,10 +48,6 @@ public class ProjectExperience {
     private String projectName;
 
     @NotNull
-    @Type(type = "uuid-char")
-    private UUID workExperienceId;
-
-    @NotNull
     private String projectDescription;
 
     private String achievement;
