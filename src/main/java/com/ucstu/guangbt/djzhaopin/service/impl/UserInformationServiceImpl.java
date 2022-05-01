@@ -47,11 +47,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userInformationId);
         if (userInformationOptional.isPresent()) {
             UserInformation userInformation2 = userInformationOptional.get();
-            userInformation2.setAge(userInformation.getAge());
             userInformation2.setAvatarUrl(userInformation.getAvatarUrl());
             userInformation2.setCityName(userInformation.getCityName());
             userInformation2.setDateOfBirth(userInformation.getDateOfBirth());
-            userInformation2.setEducation(userInformation.getEducation());
             userInformation2.setEmail(userInformation.getEmail());
             userInformation2.setFirstName(userInformation.getFirstName());
             userInformation2.setJobStatus(userInformation.getJobStatus());

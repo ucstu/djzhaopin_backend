@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -66,8 +67,6 @@ public class UserInformation {
 
     private String sex;
 
-    private Integer age;
-
     private String cityName;
 
     private String phoneNumber;
@@ -76,10 +75,6 @@ public class UserInformation {
     private String email;
 
     private Integer workingYears;
-
-    // {1:大专,2:本科,3:硕士,4:博士}
-    @Range(min = 1, max = 4)
-    private Integer education;
 
     private String personalAdvantage;
 
@@ -127,4 +122,20 @@ public class UserInformation {
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
     private List<GarnerRecord> garnerRecords;
+
+    @JsonGetter("age")
+    public Integer getAge() {
+        return (int) ((new Date().getTime() - dateOfBirth.getTime()) / (1000 * 60 * 60 * 24) / 365);
+    }
+
+    @JsonGetter("education")
+    public Integer getEducation() {
+        Integer maxEducation = 0;
+        for (EducationExperience educationExperience : educationExperiences) {
+            if (educationExperience.getEducation() > maxEducation) {
+                maxEducation = educationExperience.getEducation();
+            }
+        }
+        return maxEducation;
+    }
 }
