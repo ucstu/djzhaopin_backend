@@ -17,11 +17,7 @@ import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.JwtUtil;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,10 +34,7 @@ public class AccountInformationServiceImpl implements
     private PasswordEncoder passwordEncoder;
 
     @Resource
-    private UserDetailServiceImpl userDetailsService;
-
-    @Resource
-    private AuthenticationManager authenticationManager;
+    private UserDetailsService userDetailsService;
 
     @Resource
     private AccountInformationRepository accountInformationRepository;
@@ -85,20 +78,21 @@ public class AccountInformationServiceImpl implements
     public ServiceToControllerBody<Map<String, Object>> loginAccount(LoginAccountRequest loginAccountRequest) {
         ServiceToControllerBody<Map<String, Object>> serviceToControllerBody = new ServiceToControllerBody<>();
         Map<String, Object> responseBody = new HashMap<>();
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    loginAccountRequest.getUserName(), loginAccountRequest.getPassword()));
-        } catch (DisabledException e) {
-            return serviceToControllerBody.error("userName", "用户名已被禁用", loginAccountRequest.getUserName());
-        } catch (BadCredentialsException e) {
-            return serviceToControllerBody.error("password", "密码错误", loginAccountRequest.getPassword());
+        Optional<AccountInformation> accountInformationOptional = accountInformationRepository
+                .findByUserName(loginAccountRequest.getUserName());
+        if (accountInformationOptional.isPresent()) {
+            if (passwordEncoder.matches(loginAccountRequest.getPassword(),
+                    accountInformationOptional.get().getPassword())) {
+                responseBody.put("token", jwtUtil.generateToken(userDetailsService.loadUserByUsername(
+                        accountInformationOptional.get().getUserName())));
+                responseBody.put("account", accountInformationOptional.get());
+                return serviceToControllerBody.success(responseBody);
+            } else {
+                return serviceToControllerBody.error("password", "密码错误", loginAccountRequest.getPassword());
+            }
+        } else {
+            return serviceToControllerBody.error("userName", "用户不存在", loginAccountRequest.getUserName());
         }
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginAccountRequest.getUserName());
-        String tokenString = jwtUtil.generateToken(userDetails);
-        responseBody.put("token", tokenString);
-        responseBody.put("accountInfo", accountInformationRepository
-                .findByUserName(loginAccountRequest.getUserName()));
-        return serviceToControllerBody.success(responseBody);
     }
 
     @Override

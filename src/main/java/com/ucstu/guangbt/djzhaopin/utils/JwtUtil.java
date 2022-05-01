@@ -1,22 +1,19 @@
 package com.ucstu.guangbt.djzhaopin.utils;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,7 +25,6 @@ public class JwtUtil {
 
     private String secret;
     private int jwtExpirationInMs;
-    private int refreshExpirationDateInMs;
 
     @Value("${jwt.secret}")
     public void setSecret(String secret) {
@@ -40,45 +36,32 @@ public class JwtUtil {
         this.jwtExpirationInMs = jwtExpirationInMs;
     }
 
-    @Value("${jwt.refreshExpirationDateInMs}")
-    public void setRefreshExpirationDateInMs(int refreshExpirationDateInMs) {
-        this.refreshExpirationDateInMs = refreshExpirationDateInMs;
-    }
-
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-
-        Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
-
-        if (roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-            claims.put("isAdmin", true);
-        }
-        if (roles.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            claims.put("isUser", true);
-        }
-
+        String userName = userDetails.getUsername();
+        Boolean isAccountNonExpired = userDetails.isAccountNonExpired();
+        Boolean isAccountNonLocked = userDetails.isAccountNonLocked();
+        Boolean isCredentialsNonExpired = userDetails.isCredentialsNonExpired();
+        Boolean isEnabled = userDetails.isEnabled();
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        claims.put("userName", userName);
+        claims.put("isAccountNonExpired", isAccountNonExpired);
+        claims.put("isAccountNonLocked", isAccountNonLocked);
+        claims.put("isCredentialsNonExpired", isCredentialsNonExpired);
+        claims.put("isEnabled", isEnabled);
+        claims.put("authorities", authorities);
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
-
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
-
-    }
-
-    public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {
-
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + refreshExpirationDateInMs))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
-
     }
 
     public boolean validateToken(String authToken) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
@@ -87,29 +70,55 @@ public class JwtUtil {
         }
     }
 
-    public String getUsernameFromToken(String token) {
+    public Optional<String> getUsernameFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        return claims.getSubject();
-
+        return Optional.ofNullable(claims.getSubject());
     }
 
-    public List<SimpleGrantedAuthority> getRolesFromToken(String token) {
+    public UserDetails getUserDetailsFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        String userName = claims.getSubject();
+        Boolean isAccountNonExpired = (Boolean) claims.get("isAccountNonExpired");
+        Boolean isAccountNonLocked = (Boolean) claims.get("isAccountNonLocked");
+        Boolean isCredentialsNonExpired = (Boolean) claims.get("isCredentialsNonExpired");
+        Boolean isEnabled = (Boolean) claims.get("isEnabled");
+        Collection<? extends GrantedAuthority> authorities = (Collection<? extends GrantedAuthority>) claims
+                .get("authorities");
+        return new UserDetails() {
+            @Override
+            public String getPassword() {
+                return "";
+            }
 
-        List<SimpleGrantedAuthority> roles = null;
+            @Override
+            public String getUsername() {
+                return userName;
+            }
 
-        Boolean isAdmin = claims.get("isAdmin", Boolean.class);
-        Boolean isUser = claims.get("isUser", Boolean.class);
+            @Override
+            public boolean isAccountNonExpired() {
+                return isAccountNonExpired;
+            }
 
-        if (isAdmin != null && isAdmin) {
-            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
+            @Override
+            public boolean isAccountNonLocked() {
+                return isAccountNonLocked;
+            }
 
-        if (isUser != null && isAdmin) {
-            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-        }
-        return roles;
+            @Override
+            public boolean isCredentialsNonExpired() {
+                return isCredentialsNonExpired;
+            }
 
+            @Override
+            public boolean isEnabled() {
+                return isEnabled;
+            }
+
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return authorities;
+            }
+        };
     }
-
 }
