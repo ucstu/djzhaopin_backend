@@ -29,28 +29,29 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping("/userInfos")
 public class UserInformationController {
 
-        @Resource
-        private UserInformationService userInformationService;
+    @Resource
+    private UserInformationService userInformationService;
 
-        @PutMapping("/{userInfoId}")
-        public ResponseEntity<ResponseBody<UserInformation>> updateUserInformationByUserInformationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @Valid @RequestBody UserInformation userInformation) {
-                return ResponseBody.handle(userInformationService
-                                .updateUserInformationByUserInformationId(userInformationId, userInformation));
-        }
+    @PutMapping("/{userInfoId}")
+    public ResponseEntity<ResponseBody<UserInformation>> updateUserInformationByUserInformationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @Valid @RequestBody UserInformation userInformation) {
+        return ResponseBody.handle(userInformationService
+                .updateUserInformationByUserInformationId(userInformationId, userInformation));
+    }
 
-        @GetMapping("")
-        public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
-                        @PageableDefault(size = 10) Pageable pageable) {
-                return ResponseBody.handle(userInformationService
-                                .getUserInformations(pageable));
-        }
+    @GetMapping("")
+    public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(userInformationService
+                .getUserInformations(pageable));
+    }
 
-        @GetMapping("/{userInfoId}")
-        public ResponseEntity<ResponseBody<UserInformation>> getUserInformationByUserInformationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId) {
-                return ResponseBody.handle(userInformationService
-                                .getUserInformationByUserInformationId(userInformationId));
-        }
+    @GetMapping("/{userInfoId}")
+    public ResponseEntity<ResponseBody<UserInformation>> getUserInformationByUserInformationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId) {
+        return ResponseBody.handle(userInformationService
+                .getUserInformationByUserInformationId(userInformationId));
+    }
+
 }

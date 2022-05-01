@@ -117,7 +117,7 @@ public class UserInformation {
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
-    private List<InspectionRecord> inspectionRecords;
+    private List<UserInspectionRecord> userInspectionRecords;
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })

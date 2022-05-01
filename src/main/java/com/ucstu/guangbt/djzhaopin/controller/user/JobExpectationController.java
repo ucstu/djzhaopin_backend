@@ -31,48 +31,49 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping("/userInfos/{userInfoId}/jobExpectations")
 public class JobExpectationController {
 
-        @Resource
-        private UserInformationService userInformationService;
+    @Resource
+    private UserInformationService userInformationService;
 
-        @PostMapping("")
-        public ResponseEntity<ResponseBody<JobExpectation>> createJobExpectation(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @Valid @RequestBody JobExpectation jobExpectation) {
-                return ResponseBody.handle(userInformationService
-                                .createJobExpectation(userInformationId, jobExpectation));
-        }
+    @PostMapping("")
+    public ResponseEntity<ResponseBody<JobExpectation>> createJobExpectation(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @Valid @RequestBody JobExpectation jobExpectation) {
+        return ResponseBody.handle(userInformationService
+                .createJobExpectation(userInformationId, jobExpectation));
+    }
 
-        @DeleteMapping("/{jobExpectationId}")
-        public ResponseEntity<ResponseBody<JobExpectation>> deleteJobExpectationByJobExpectationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("jobExpectationId") @NotNull UUID jobExpectationId) {
-                return ResponseBody.handle(userInformationService
-                                .deleteJobExpectationByJobExpectationId(userInformationId, jobExpectationId));
-        }
+    @DeleteMapping("/{jobExpectationId}")
+    public ResponseEntity<ResponseBody<JobExpectation>> deleteJobExpectationByJobExpectationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("jobExpectationId") @NotNull UUID jobExpectationId) {
+        return ResponseBody.handle(userInformationService
+                .deleteJobExpectationByJobExpectationId(userInformationId, jobExpectationId));
+    }
 
-        @PutMapping("/{jobExpectationId}")
-        public ResponseEntity<ResponseBody<JobExpectation>> updateJobExpectationByJobExpectationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("jobExpectationId") @NotNull UUID jobExpectationId,
-                        @Valid @RequestBody JobExpectation jobExpectation) {
-                return ResponseBody.handle(userInformationService
-                                .updateJobExpectationByJobExpectationId(userInformationId, jobExpectationId,
-                                                jobExpectation));
-        }
+    @PutMapping("/{jobExpectationId}")
+    public ResponseEntity<ResponseBody<JobExpectation>> updateJobExpectationByJobExpectationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("jobExpectationId") @NotNull UUID jobExpectationId,
+            @Valid @RequestBody JobExpectation jobExpectation) {
+        return ResponseBody.handle(userInformationService
+                .updateJobExpectationByJobExpectationId(userInformationId, jobExpectationId,
+                        jobExpectation));
+    }
 
-        @GetMapping("")
-        public ResponseEntity<ResponseBody<List<JobExpectation>>> getJobExpectationsByUserInformationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PageableDefault(size = 10) Pageable pageable) {
-                return ResponseBody.handle(userInformationService
-                                .getJobExpectationsByUserInformationId(userInformationId, pageable));
-        }
+    @GetMapping("")
+    public ResponseEntity<ResponseBody<List<JobExpectation>>> getJobExpectationsByUserInformationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(userInformationService
+                .getJobExpectationsByUserInformationId(userInformationId, pageable));
+    }
 
-        @GetMapping("/{jobExpectationId}")
-        public ResponseEntity<ResponseBody<JobExpectation>> getJobExpectationByJobExpectationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("jobExpectationId") @NotNull UUID jobExpectationId) {
-                return ResponseBody.handle(userInformationService
-                                .getJobExpectationByJobExpectationId(userInformationId, jobExpectationId));
-        }
+    @GetMapping("/{jobExpectationId}")
+    public ResponseEntity<ResponseBody<JobExpectation>> getJobExpectationByJobExpectationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("jobExpectationId") @NotNull UUID jobExpectationId) {
+        return ResponseBody.handle(userInformationService
+                .getJobExpectationByJobExpectationId(userInformationId, jobExpectationId));
+    }
+
 }

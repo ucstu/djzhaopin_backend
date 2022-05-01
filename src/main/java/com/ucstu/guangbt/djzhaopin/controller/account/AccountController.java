@@ -34,44 +34,44 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping("/accountInfos")
 public class AccountController {
 
-        @Resource
-        private AccountInformationService accountService;
+    @Resource
+    private AccountInformationService accountService;
 
-        @PostMapping("")
-        public ResponseEntity<ResponseBody<AccountInformation>> registerAccount(
-                        @Valid @RequestBody RegisterAccountRequest registerAccountRequest) {
-                return ResponseBody.handle(accountService
-                                .registerAccount(registerAccountRequest));
-        }
+    @PostMapping("")
+    public ResponseEntity<ResponseBody<AccountInformation>> registerAccount(
+            @Valid @RequestBody RegisterAccountRequest registerAccountRequest) {
+        return ResponseBody.handle(accountService
+                .registerAccount(registerAccountRequest));
+    }
 
-        @DeleteMapping("/{accountInfoId}")
-        public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
-                        @PathVariable("accountInfoId") @NotNull UUID accountInformationId,
-                        @RequestParam @NotBlank String verificationCode) {
-                return ResponseBody.handle(accountService
-                                .deleteAccount(accountInformationId, verificationCode));
-        }
+    @DeleteMapping("/{accountInfoId}")
+    public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
+            @PathVariable("accountInfoId") @NotNull UUID accountInformationId,
+            @RequestParam @NotBlank String verificationCode) {
+        return ResponseBody.handle(accountService
+                .deleteAccount(accountInformationId, verificationCode));
+    }
 
-        @PostMapping("/login")
-        public ResponseEntity<ResponseBody<Map<String, Object>>> loginAccount(
-                        @Valid @RequestBody LoginAccountRequest loginAccountRequest) {
-                return ResponseBody.handle(accountService
-                                .loginAccount(loginAccountRequest));
-        }
+    @PostMapping("/login")
+    public ResponseEntity<ResponseBody<Map<String, Object>>> loginAccount(
+            @Valid @RequestBody LoginAccountRequest loginAccountRequest) {
+        return ResponseBody.handle(accountService
+                .loginAccount(loginAccountRequest));
+    }
 
-        @PutMapping("/{accountInfoId}")
-        public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
-                        @PathVariable("accountInfoId") @NotNull UUID accountInformationId,
-                        @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
-                return ResponseBody.handle(accountService
-                                .changePassword(accountInformationId, changePasswordRequest));
-        }
+    @PutMapping("/{accountInfoId}")
+    public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
+            @PathVariable("accountInfoId") @NotNull UUID accountInformationId,
+            @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        return ResponseBody.handle(accountService
+                .changePassword(accountInformationId, changePasswordRequest));
+    }
 
-        @PutMapping("/forget")
-        public ResponseEntity<ResponseBody<AccountInformation>> forgetPassword(
-                        @Valid @RequestBody ForgetPasswordRequest forgetPasswordRequest) {
-                return ResponseBody.handle(accountService
-                                .forgetPassword(forgetPasswordRequest));
-        }
+    @PutMapping("/forget")
+    public ResponseEntity<ResponseBody<AccountInformation>> forgetPassword(
+            @Valid @RequestBody ForgetPasswordRequest forgetPasswordRequest) {
+        return ResponseBody.handle(accountService
+                .forgetPassword(forgetPasswordRequest));
+    }
 
 }

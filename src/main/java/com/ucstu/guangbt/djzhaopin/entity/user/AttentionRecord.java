@@ -28,6 +28,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class AttentionRecord {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -51,4 +52,5 @@ public class AttentionRecord {
     @NotNull
     @Type(type = "uuid-char")
     private UUID companyInformationId;
+
 }

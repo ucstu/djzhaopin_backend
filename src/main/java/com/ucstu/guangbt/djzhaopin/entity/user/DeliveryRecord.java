@@ -29,6 +29,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class DeliveryRecord {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -63,4 +64,5 @@ public class DeliveryRecord {
     @NotNull
     @Type(type = "uuid-char")
     private UUID positionInformationId;
+
 }

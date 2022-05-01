@@ -30,6 +30,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class HrInformation {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -61,4 +62,5 @@ public class HrInformation {
 
     @Size(min = 11, max = 11)
     private String phoneNumber;
+
 }

@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfig {
+
     @Bean
     public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
         return new RestTemplate(factory);
@@ -20,4 +21,5 @@ public class RestTemplateConfig {
         factory.setReadTimeout(5000);
         return factory;
     }
+
 }

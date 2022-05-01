@@ -31,65 +31,65 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping("/companyInfos/{companyInfoId}/positionInfos")
 public class PositionInformationController {
 
-        @Resource
-        private CompanyInformationService companyInformationService;
+    @Resource
+    private CompanyInformationService companyInformationService;
 
-        @PostMapping("")
-        public ResponseEntity<ResponseBody<PositionInformation>> createPositionInformation(
-                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
-                        @Valid @RequestBody PositionInformation positionInformation) {
-                return ResponseBody.handle(companyInformationService
-                                .createPositionInformation(companyInformationId, positionInformation));
-        }
+    @PostMapping("")
+    public ResponseEntity<ResponseBody<PositionInformation>> createPositionInformation(
+            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+            @Valid @RequestBody PositionInformation positionInformation) {
+        return ResponseBody.handle(companyInformationService
+                .createPositionInformation(companyInformationId, positionInformation));
+    }
 
-        @DeleteMapping("/{positionInfoId}")
-        public ResponseEntity<ResponseBody<PositionInformation>> deletePositionInformationByPositionInformationId(
-                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
-                        @PathVariable("positionInfoId") @NotNull UUID positionInformationId) {
-                return ResponseBody.handle(companyInformationService
-                                .deletePositionInformationByPositionInformationId(companyInformationId,
-                                                positionInformationId));
-        }
+    @DeleteMapping("/{positionInfoId}")
+    public ResponseEntity<ResponseBody<PositionInformation>> deletePositionInformationByPositionInformationId(
+            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+            @PathVariable("positionInfoId") @NotNull UUID positionInformationId) {
+        return ResponseBody.handle(companyInformationService
+                .deletePositionInformationByPositionInformationId(companyInformationId,
+                        positionInformationId));
+    }
 
-        @PostMapping("/{positionInfoId}")
-        public ResponseEntity<ResponseBody<PositionInformation>> updatePositionInformationByPositionInformationId(
-                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
-                        @PathVariable("positionInfoId") @NotNull UUID positionInformationId,
-                        @Valid @RequestBody PositionInformation positionInformation) {
-                return ResponseBody.handle(companyInformationService
-                                .updatePositionInformationByPositionInformationId(companyInformationId,
-                                                positionInformationId,
-                                                positionInformation));
-        }
+    @PostMapping("/{positionInfoId}")
+    public ResponseEntity<ResponseBody<PositionInformation>> updatePositionInformationByPositionInformationId(
+            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+            @PathVariable("positionInfoId") @NotNull UUID positionInformationId,
+            @Valid @RequestBody PositionInformation positionInformation) {
+        return ResponseBody.handle(companyInformationService
+                .updatePositionInformationByPositionInformationId(companyInformationId,
+                        positionInformationId,
+                        positionInformation));
+    }
 
-        @GetMapping("")
-        public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
-                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
-                        @RequestParam(value = "name", required = false) String name,
-                        @RequestParam(value = "salary", required = false) String salary,
-                        @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
-                        @RequestParam(value = "educations", required = false) List<Integer> educations,
-                        @RequestParam(value = "directionTags", required = false) List<String> directionTags,
-                        @RequestParam(value = "workAreas", required = false) List<String> workAreas,
-                        @RequestParam(value = "positionTypes", required = false) List<Integer> positionTypes,
-                        @RequestParam(value = "scales", required = false) List<Integer> scales,
-                        @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
-                        @RequestParam(value = "comprehensions", required = false) List<String> comprehensions,
-                        @RequestParam(value = "workingPlace", required = false) String workingPlace,
-                        @PageableDefault(size = 10) Pageable pageable) {
-                return ResponseBody.handle(companyInformationService
-                                .getPositionInformationsByCompanyInformationId(companyInformationId, name, salary,
-                                                workingYears, educations, directionTags, workAreas, positionTypes,
-                                                scales, financingStages, comprehensions, workingPlace, pageable));
-        }
+    @GetMapping("")
+    public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
+            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "salary", required = false) String salary,
+            @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
+            @RequestParam(value = "educations", required = false) List<Integer> educations,
+            @RequestParam(value = "directionTags", required = false) List<String> directionTags,
+            @RequestParam(value = "workAreas", required = false) List<String> workAreas,
+            @RequestParam(value = "positionTypes", required = false) List<Integer> positionTypes,
+            @RequestParam(value = "scales", required = false) List<Integer> scales,
+            @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
+            @RequestParam(value = "comprehensions", required = false) List<String> comprehensions,
+            @RequestParam(value = "workingPlace", required = false) String workingPlace,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(companyInformationService
+                .getPositionInformationsByCompanyInformationId(companyInformationId, name, salary,
+                        workingYears, educations, directionTags, workAreas, positionTypes,
+                        scales, financingStages, comprehensions, workingPlace, pageable));
+    }
 
-        @GetMapping("/{positionInfoId}")
-        public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInformationId(
-                        @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
-                        @PathVariable("positionInfoId") @NotNull UUID positionInformationId) {
-                return ResponseBody.handle(companyInformationService
-                                .getPositionInformationByPositionInformationId(companyInformationId,
-                                                positionInformationId));
-        }
+    @GetMapping("/{positionInfoId}")
+    public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInformationId(
+            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+            @PathVariable("positionInfoId") @NotNull UUID positionInformationId) {
+        return ResponseBody.handle(companyInformationService
+                .getPositionInformationByPositionInformationId(companyInformationId,
+                        positionInformationId));
+    }
 
 }

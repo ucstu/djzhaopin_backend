@@ -27,6 +27,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class AccountGroup {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -44,4 +45,5 @@ public class AccountGroup {
     private Date updatedAt;
 
     private String groupName;
+
 }

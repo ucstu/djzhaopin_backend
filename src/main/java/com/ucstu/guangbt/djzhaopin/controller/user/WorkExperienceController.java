@@ -31,48 +31,49 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping("/userInfos/{userInfoId}/workExperiences")
 public class WorkExperienceController {
 
-        @Resource
-        private UserInformationService userInformationService;
+    @Resource
+    private UserInformationService userInformationService;
 
-        @PostMapping("")
-        public ResponseEntity<ResponseBody<WorkExperience>> createWorkExperience(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @Valid @RequestBody WorkExperience workExperience) {
-                return ResponseBody.handle(userInformationService
-                                .createWorkExperience(userInformationId, workExperience));
-        }
+    @PostMapping("")
+    public ResponseEntity<ResponseBody<WorkExperience>> createWorkExperience(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @Valid @RequestBody WorkExperience workExperience) {
+        return ResponseBody.handle(userInformationService
+                .createWorkExperience(userInformationId, workExperience));
+    }
 
-        @DeleteMapping("/{workExperienceId}")
-        public ResponseEntity<ResponseBody<WorkExperience>> deleteWorkExperienceByWorkExperienceId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("workExperienceId") @NotNull UUID workExperienceId) {
-                return ResponseBody.handle(userInformationService
-                                .deleteWorkExperienceByWorkExperienceId(userInformationId, workExperienceId));
-        }
+    @DeleteMapping("/{workExperienceId}")
+    public ResponseEntity<ResponseBody<WorkExperience>> deleteWorkExperienceByWorkExperienceId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("workExperienceId") @NotNull UUID workExperienceId) {
+        return ResponseBody.handle(userInformationService
+                .deleteWorkExperienceByWorkExperienceId(userInformationId, workExperienceId));
+    }
 
-        @PutMapping("/{workExperienceId}")
-        public ResponseEntity<ResponseBody<WorkExperience>> updateWorkExperienceByWorkExperienceId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("workExperienceId") @NotNull UUID workExperienceId,
-                        @Valid @RequestBody WorkExperience workExperience) {
-                return ResponseBody.handle(userInformationService
-                                .updateWorkExperienceByWorkExperienceId(userInformationId, workExperienceId,
-                                                workExperience));
-        }
+    @PutMapping("/{workExperienceId}")
+    public ResponseEntity<ResponseBody<WorkExperience>> updateWorkExperienceByWorkExperienceId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("workExperienceId") @NotNull UUID workExperienceId,
+            @Valid @RequestBody WorkExperience workExperience) {
+        return ResponseBody.handle(userInformationService
+                .updateWorkExperienceByWorkExperienceId(userInformationId, workExperienceId,
+                        workExperience));
+    }
 
-        @GetMapping("")
-        public ResponseEntity<ResponseBody<List<WorkExperience>>> getWorkExperiencesByUserInformationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PageableDefault(size = 10) Pageable pageable) {
-                return ResponseBody.handle(userInformationService
-                                .getWorkExperiencesByUserInformationId(userInformationId, pageable));
-        }
+    @GetMapping("")
+    public ResponseEntity<ResponseBody<List<WorkExperience>>> getWorkExperiencesByUserInformationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(userInformationService
+                .getWorkExperiencesByUserInformationId(userInformationId, pageable));
+    }
 
-        @GetMapping("/{workExperienceId}")
-        public ResponseEntity<ResponseBody<WorkExperience>> getWorkExperienceByWorkExperienceId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("workExperienceId") @NotNull UUID workExperienceId) {
-                return ResponseBody.handle(userInformationService
-                                .getWorkExperienceByWorkExperienceId(userInformationId, workExperienceId));
-        }
+    @GetMapping("/{workExperienceId}")
+    public ResponseEntity<ResponseBody<WorkExperience>> getWorkExperienceByWorkExperienceId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("workExperienceId") @NotNull UUID workExperienceId) {
+        return ResponseBody.handle(userInformationService
+                .getWorkExperienceByWorkExperienceId(userInformationId, workExperienceId));
+    }
+
 }

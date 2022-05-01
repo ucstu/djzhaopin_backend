@@ -11,10 +11,10 @@ import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.GarnerRecord;
-import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
@@ -726,33 +726,34 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<InspectionRecord> createInspectionRecord(UUID userInformationId,
-            InspectionRecord inspectionRecord) {
+    public ServiceToControllerBody<UserInspectionRecord> createUserInspectionRecord(UUID userInformationId,
+            UserInspectionRecord inspectionRecord) {
         // TODO 这里有点问题
-        ServiceToControllerBody<InspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<UserInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
-            userInformation.get().getInspectionRecords().add(inspectionRecord);
+            userInformation.get().getUserInspectionRecords().add(inspectionRecord);
             return serviceToControllerBody.created(userInformationRepository.save(userInformation.get())
-                    .getInspectionRecords().get(userInformation.get().getInspectionRecords().size() - 1));
+                    .getUserInspectionRecords().get(userInformation.get().getUserInspectionRecords().size() - 1));
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
     @Override
-    public ServiceToControllerBody<InspectionRecord> deleteInspectionRecordByInspectionRecordId(UUID userInformationId,
+    public ServiceToControllerBody<UserInspectionRecord> deleteUserInspectionRecordByUserInspectionRecordId(
+            UUID userInformationId,
             UUID inspectionRecordId) {
-        ServiceToControllerBody<InspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<UserInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
-            Optional<InspectionRecord> inspectionRecord = userInformation.get().getInspectionRecords()
+            Optional<UserInspectionRecord> inspectionRecord = userInformation.get().getUserInspectionRecords()
                     .stream()
                     .filter(inspectionRecord1 -> inspectionRecordId
-                            .equals(inspectionRecord1.getInspectionRecordId()))
+                            .equals(inspectionRecord1.getUserInspectionRecordId()))
                     .findFirst();
             if (inspectionRecord.isPresent()) {
-                userInformation.get().getInspectionRecords().remove(inspectionRecord.get());
+                userInformation.get().getUserInspectionRecords().remove(inspectionRecord.get());
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(inspectionRecord.get());
             } else {
@@ -764,20 +765,21 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<InspectionRecord> updateInspectionRecordByInspectionRecordId(UUID userInformationId,
+    public ServiceToControllerBody<UserInspectionRecord> updateUserInspectionRecordByUserInspectionRecordId(
+            UUID userInformationId,
             UUID inspectionRecordId,
-            InspectionRecord inspectionRecord) {
-        ServiceToControllerBody<InspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
+            UserInspectionRecord inspectionRecord) {
+        ServiceToControllerBody<UserInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
-            Optional<InspectionRecord> inspectionRecord1 = userInformation.get().getInspectionRecords()
+            Optional<UserInspectionRecord> inspectionRecord1 = userInformation.get().getUserInspectionRecords()
                     .stream()
                     .filter(inspectionRecord2 -> inspectionRecordId
-                            .equals(inspectionRecord2.getInspectionRecordId()))
+                            .equals(inspectionRecord2.getUserInspectionRecordId()))
                     .findFirst();
             if (inspectionRecord1.isPresent()) {
-                inspectionRecord1.get().setFromId(inspectionRecord.getFromId());
-                inspectionRecord1.get().setToId(inspectionRecord.getToId());
+                inspectionRecord1.get().setUserInformationId(inspectionRecord.getUserInformationId());
+                inspectionRecord1.get().setPositionInformationId(inspectionRecord.getPositionInformationId());
                 userInformationRepository.save(userInformation.get());
                 return serviceToControllerBody.success(inspectionRecord1.get());
             } else {
@@ -789,29 +791,30 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<InspectionRecord>> getInspectionRecordsByUserInformationId(
+    public ServiceToControllerBody<List<UserInspectionRecord>> getUserInspectionRecordsByUserInformationId(
             UUID userInformationId,
             Pageable pageable) {
-        ServiceToControllerBody<List<InspectionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<List<UserInspectionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
-            // TODO 只返回了InspectionRecord，未返回pageable
-            return serviceToControllerBody.success(userInformation.get().getInspectionRecords());
+            // TODO 只返回了UserInspectionRecord，未返回pageable
+            return serviceToControllerBody.success(userInformation.get().getUserInspectionRecords());
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
     }
 
     @Override
-    public ServiceToControllerBody<InspectionRecord> getInspectionRecordByInspectionRecordId(UUID userInformationId,
+    public ServiceToControllerBody<UserInspectionRecord> getUserInspectionRecordByUserInspectionRecordId(
+            UUID userInformationId,
             UUID inspectionRecordId) {
-        ServiceToControllerBody<InspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<UserInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (userInformation.isPresent()) {
-            Optional<InspectionRecord> inspectionRecord = userInformation.get().getInspectionRecords()
+            Optional<UserInspectionRecord> inspectionRecord = userInformation.get().getUserInspectionRecords()
                     .stream()
                     .filter(inspectionRecord1 -> inspectionRecordId
-                            .equals(inspectionRecord1.getInspectionRecordId()))
+                            .equals(inspectionRecord1.getUserInspectionRecordId()))
                     .findFirst();
             if (inspectionRecord.isPresent()) {
                 return serviceToControllerBody.success(inspectionRecord.get());

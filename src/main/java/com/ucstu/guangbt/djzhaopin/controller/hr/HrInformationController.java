@@ -50,4 +50,5 @@ public class HrInformationController {
         return ResponseBody.handle(hrInformationService
                 .updateHrInformationByHrInformationId(hrInformationId, hrInformation));
     }
+
 }

@@ -28,6 +28,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class GarnerRecord {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -51,4 +52,5 @@ public class GarnerRecord {
     @NotNull
     @Type(type = "uuid-char")
     private UUID positionInformationId;
+
 }

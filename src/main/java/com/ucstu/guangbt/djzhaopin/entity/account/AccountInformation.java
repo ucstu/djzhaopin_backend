@@ -38,6 +38,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class AccountInformation {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -97,4 +98,5 @@ public class AccountInformation {
             return hrInformation.getHrInformationId();
         }
     }
+
 }

@@ -31,49 +31,49 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping("/userInfos/{userInfoId}/eduExperiences")
 public class EducationExperienceController {
 
-        @Resource
-        private UserInformationService userInformationService;
+    @Resource
+    private UserInformationService userInformationService;
 
-        @PostMapping("")
-        public ResponseEntity<ResponseBody<EducationExperience>> createEducationExperience(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @Valid @RequestBody EducationExperience educationExperience) {
-                return ResponseBody.handle(userInformationService
-                                .createEducationExperience(userInformationId, educationExperience));
-        }
+    @PostMapping("")
+    public ResponseEntity<ResponseBody<EducationExperience>> createEducationExperience(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @Valid @RequestBody EducationExperience educationExperience) {
+        return ResponseBody.handle(userInformationService
+                .createEducationExperience(userInformationId, educationExperience));
+    }
 
-        @DeleteMapping("/{eduExperienceId}")
-        public ResponseEntity<ResponseBody<EducationExperience>> deleteEducationExperienceByEducationExperienceId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("eduExperienceId") @NotNull UUID eduExperienceId) {
-                return ResponseBody.handle(userInformationService
-                                .deleteEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId));
-        }
+    @DeleteMapping("/{eduExperienceId}")
+    public ResponseEntity<ResponseBody<EducationExperience>> deleteEducationExperienceByEducationExperienceId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("eduExperienceId") @NotNull UUID eduExperienceId) {
+        return ResponseBody.handle(userInformationService
+                .deleteEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId));
+    }
 
-        @PutMapping("/{eduExperienceId}")
-        public ResponseEntity<ResponseBody<EducationExperience>> updateEducationExperienceByEducationExperienceId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("eduExperienceId") @NotNull UUID eduExperienceId,
-                        @Valid @RequestBody EducationExperience educationExperience) {
-                return ResponseBody.handle(userInformationService
-                                .updateEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId,
-                                                educationExperience));
-        }
+    @PutMapping("/{eduExperienceId}")
+    public ResponseEntity<ResponseBody<EducationExperience>> updateEducationExperienceByEducationExperienceId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("eduExperienceId") @NotNull UUID eduExperienceId,
+            @Valid @RequestBody EducationExperience educationExperience) {
+        return ResponseBody.handle(userInformationService
+                .updateEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId,
+                        educationExperience));
+    }
 
-        @GetMapping("")
-        public ResponseEntity<ResponseBody<List<EducationExperience>>> getEducationExperiencesByUserInformationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PageableDefault(size = 10) Pageable pageable) {
-                return ResponseBody.handle(userInformationService
-                                .getEducationExperiencesByUserInformationId(userInformationId, pageable));
-        }
+    @GetMapping("")
+    public ResponseEntity<ResponseBody<List<EducationExperience>>> getEducationExperiencesByUserInformationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(userInformationService
+                .getEducationExperiencesByUserInformationId(userInformationId, pageable));
+    }
 
-        @GetMapping("/{eduExperienceId}")
-        public ResponseEntity<ResponseBody<EducationExperience>> getEducationExperienceByEducationExperienceId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("eduExperienceId") @NotNull UUID eduExperienceId) {
-                return ResponseBody.handle(userInformationService
-                                .getEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId));
-        }
+    @GetMapping("/{eduExperienceId}")
+    public ResponseEntity<ResponseBody<EducationExperience>> getEducationExperienceByEducationExperienceId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("eduExperienceId") @NotNull UUID eduExperienceId) {
+        return ResponseBody.handle(userInformationService
+                .getEducationExperienceByEducationExperienceId(userInformationId, eduExperienceId));
+    }
 
 }

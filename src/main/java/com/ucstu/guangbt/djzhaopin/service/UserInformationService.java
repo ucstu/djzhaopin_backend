@@ -7,10 +7,10 @@ import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.GarnerRecord;
-import com.ucstu.guangbt.djzhaopin.entity.user.InspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.JobExpectation;
 import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 
@@ -133,24 +133,25 @@ public interface UserInformationService {
         public ServiceToControllerBody<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userInformationId,
                         UUID attentionRecordId);
 
-        public ServiceToControllerBody<InspectionRecord> createInspectionRecord(UUID userInformationId,
-                        InspectionRecord inspectionRecord);
+        public ServiceToControllerBody<UserInspectionRecord> createUserInspectionRecord(UUID userInformationId,
+                        UserInspectionRecord userInspectionRecord);
 
-        public ServiceToControllerBody<InspectionRecord> deleteInspectionRecordByInspectionRecordId(
+        public ServiceToControllerBody<UserInspectionRecord> deleteUserInspectionRecordByUserInspectionRecordId(
                         UUID userInformationId,
-                        UUID inspectionRecordId);
+                        UUID userInspectionRecordId);
 
-        public ServiceToControllerBody<InspectionRecord> updateInspectionRecordByInspectionRecordId(
+        public ServiceToControllerBody<UserInspectionRecord> updateUserInspectionRecordByUserInspectionRecordId(
                         UUID userInformationId,
-                        UUID inspectionRecordId,
-                        InspectionRecord inspectionRecord);
+                        UUID userInspectionRecordId,
+                        UserInspectionRecord userInspectionRecord);
 
-        public ServiceToControllerBody<List<InspectionRecord>> getInspectionRecordsByUserInformationId(
+        public ServiceToControllerBody<List<UserInspectionRecord>> getUserInspectionRecordsByUserInformationId(
                         UUID userInformationId,
                         Pageable pageable);
 
-        public ServiceToControllerBody<InspectionRecord> getInspectionRecordByInspectionRecordId(UUID userInformationId,
-                        UUID inspectionRecordId);
+        public ServiceToControllerBody<UserInspectionRecord> getUserInspectionRecordByUserInspectionRecordId(
+                        UUID userInformationId,
+                        UUID userInspectionRecordId);
 
         public ServiceToControllerBody<GarnerRecord> createGarnerRecord(UUID userInformationId,
                         GarnerRecord garnerRecord);

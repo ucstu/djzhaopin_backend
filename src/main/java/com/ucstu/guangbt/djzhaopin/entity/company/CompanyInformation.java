@@ -35,6 +35,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class CompanyInformation {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -90,4 +91,5 @@ public class CompanyInformation {
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL })
     private List<PositionInformation> positionInformations;
+
 }

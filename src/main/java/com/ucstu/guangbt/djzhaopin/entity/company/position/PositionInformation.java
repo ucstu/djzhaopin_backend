@@ -34,6 +34,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class PositionInformation {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")

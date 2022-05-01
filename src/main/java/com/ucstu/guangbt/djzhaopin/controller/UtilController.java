@@ -96,4 +96,5 @@ public class UtilController {
             @RequestBody MultipartFile avatar) {
         return ResponseBody.handle(utilService.uploadAvatar(avatar));
     }
+
 }

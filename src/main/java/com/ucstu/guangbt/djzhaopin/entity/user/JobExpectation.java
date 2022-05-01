@@ -33,6 +33,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class JobExpectation {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -67,4 +68,5 @@ public class JobExpectation {
 
     @NotNull
     private String cityName;
+
 }

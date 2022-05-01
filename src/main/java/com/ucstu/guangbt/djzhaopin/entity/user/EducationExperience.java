@@ -29,6 +29,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class EducationExperience {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -62,4 +63,5 @@ public class EducationExperience {
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date graduationTime;
+
 }

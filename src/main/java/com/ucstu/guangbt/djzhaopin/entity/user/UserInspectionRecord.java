@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.entity.company.position;
+package com.ucstu.guangbt.djzhaopin.entity.user;
 
 import java.util.Date;
 import java.util.UUID;
@@ -15,6 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,13 +27,13 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class PositionWorkingPlace {
+public class UserInspectionRecord {
 
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private UUID workingPlaceId;
+    private UUID userInspectionRecordId;
 
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -44,8 +45,12 @@ public class PositionWorkingPlace {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    private Float longitude;
+    @NotNull
+    @Type(type = "uuid-char")
+    private UUID userInformationId;
 
-    private Float latitude;
+    @NotNull
+    @Type(type = "uuid-char")
+    private UUID positionInformationId;
 
 }

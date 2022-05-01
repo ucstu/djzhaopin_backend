@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.entity.user;
+package com.ucstu.guangbt.djzhaopin.entity.hr;
 
 import java.util.Date;
 import java.util.UUID;
@@ -27,12 +27,13 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class InspectionRecord {
+public class HrInspectionRecord {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private UUID inspectionRecordId;
+    private UUID hrInspectionRecordId;
 
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -46,9 +47,10 @@ public class InspectionRecord {
 
     @NotNull
     @Type(type = "uuid-char")
-    private UUID fromId;
+    private UUID hrInformationId;
 
     @NotNull
     @Type(type = "uuid-char")
-    private UUID toId;
+    private UUID userInformationId;
+
 }

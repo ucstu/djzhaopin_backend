@@ -30,47 +30,49 @@ import jakarta.validation.constraints.NotNull;
 @RestController
 @RequestMapping("/userInfos/{userInfoId}/garnerRecords")
 public class GarnerRecordController {
-        @Resource
-        private UserInformationService userInformationService;
 
-        @PostMapping("")
-        public ResponseEntity<ResponseBody<GarnerRecord>> createGarnerRecord(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @Valid @RequestBody GarnerRecord garnerRecord) {
-                return ResponseBody.handle(userInformationService.createGarnerRecord(userInformationId,
-                                garnerRecord));
-        }
+    @Resource
+    private UserInformationService userInformationService;
 
-        @DeleteMapping("/{garnerRecordId}")
-        public ResponseEntity<ResponseBody<GarnerRecord>> deleteGarnerRecordByGarnerRecordId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("garnerRecordId") @NotNull UUID garnerRecordId) {
-                return ResponseBody.handle(userInformationService.deleteGarnerRecordByGarnerRecordId(
-                                userInformationId, garnerRecordId));
-        }
+    @PostMapping("")
+    public ResponseEntity<ResponseBody<GarnerRecord>> createGarnerRecord(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @Valid @RequestBody GarnerRecord garnerRecord) {
+        return ResponseBody.handle(userInformationService.createGarnerRecord(userInformationId,
+                garnerRecord));
+    }
 
-        @PutMapping("/{garnerRecordId}")
-        public ResponseEntity<ResponseBody<GarnerRecord>> updateGarnerRecordByGarnerRecordId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("garnerRecordId") @NotNull UUID garnerRecordId,
-                        @Valid @RequestBody GarnerRecord garnerRecord) {
-                return ResponseBody.handle(userInformationService.updateGarnerRecordByGarnerRecordId(
-                                userInformationId, garnerRecordId, garnerRecord));
-        }
+    @DeleteMapping("/{garnerRecordId}")
+    public ResponseEntity<ResponseBody<GarnerRecord>> deleteGarnerRecordByGarnerRecordId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("garnerRecordId") @NotNull UUID garnerRecordId) {
+        return ResponseBody.handle(userInformationService.deleteGarnerRecordByGarnerRecordId(
+                userInformationId, garnerRecordId));
+    }
 
-        @GetMapping("")
-        public ResponseEntity<ResponseBody<List<GarnerRecord>>> getGarnerRecordsByUserInformationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PageableDefault(size = 10) Pageable pageable) {
-                return ResponseBody.handle(userInformationService
-                                .getGarnerRecordsByUserInformationId(userInformationId, pageable));
-        }
+    @PutMapping("/{garnerRecordId}")
+    public ResponseEntity<ResponseBody<GarnerRecord>> updateGarnerRecordByGarnerRecordId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("garnerRecordId") @NotNull UUID garnerRecordId,
+            @Valid @RequestBody GarnerRecord garnerRecord) {
+        return ResponseBody.handle(userInformationService.updateGarnerRecordByGarnerRecordId(
+                userInformationId, garnerRecordId, garnerRecord));
+    }
 
-        @GetMapping("/{garnerRecordId}")
-        public ResponseEntity<ResponseBody<GarnerRecord>> getGarnerRecordByGarnerRecordId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("garnerRecordId") @NotNull UUID garnerRecordId) {
-                return ResponseBody.handle(userInformationService.getGarnerRecordByGarnerRecordId(
-                                userInformationId, garnerRecordId));
-        }
+    @GetMapping("")
+    public ResponseEntity<ResponseBody<List<GarnerRecord>>> getGarnerRecordsByUserInformationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(userInformationService
+                .getGarnerRecordsByUserInformationId(userInformationId, pageable));
+    }
+
+    @GetMapping("/{garnerRecordId}")
+    public ResponseEntity<ResponseBody<GarnerRecord>> getGarnerRecordByGarnerRecordId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("garnerRecordId") @NotNull UUID garnerRecordId) {
+        return ResponseBody.handle(userInformationService.getGarnerRecordByGarnerRecordId(
+                userInformationId, garnerRecordId));
+    }
+
 }
