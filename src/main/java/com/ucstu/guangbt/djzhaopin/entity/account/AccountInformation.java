@@ -91,7 +91,7 @@ public class AccountInformation {
     private Boolean enabled = true;
 
     @JsonGetter("fullInformationId")
-    public UUID getInformationId() {
+    public UUID getFullInformationId() {
         if (accountType == 1) {
             return userInformation.getUserInformationId();
         } else {

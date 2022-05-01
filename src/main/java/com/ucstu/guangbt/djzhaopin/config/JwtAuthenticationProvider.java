@@ -1,6 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.config;
 
-import com.ucstu.guangbt.djzhaopin.utils.JwtUtil;
+import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -14,18 +14,17 @@ import jakarta.annotation.Resource;
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     @Resource
-    private JwtUtil jwtUtil;
+    private JsonWebTokenUtil jwtUtil;
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails,
             UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-        // TODO Auto-generated method stub
     }
 
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
             throws AuthenticationException {
-        final Object token = authentication.getCredentials();
+        Object token = authentication.getCredentials();
         try {
             if (!jwtUtil.validateToken(String.valueOf(token))) {
                 throw new AuthenticationException("Token Is Invalid") {

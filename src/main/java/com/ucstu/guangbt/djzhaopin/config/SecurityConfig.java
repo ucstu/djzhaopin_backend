@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -38,6 +40,9 @@ public class SecurityConfig {
 
     @Resource
     private JwtAuthenticationProvider jwtAuthenticationProvider;
+
+    @Resource
+    private PermissionEvaluator permissionEvaluator;
 
     private static final SessionCreationPolicy STATELESS = SessionCreationPolicy.STATELESS;
 
@@ -63,8 +68,7 @@ public class SecurityConfig {
             successHandler.setRedirectStrategy(new RedirectStrategy() {
                 @Override
                 public void sendRedirect(HttpServletRequest request, HttpServletResponse response,
-                        String url)
-                        throws IOException {
+                        String url) throws IOException {
                 }
             });
             filter.setAuthenticationManager(authenticationManager);
@@ -79,7 +83,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
@@ -101,6 +105,8 @@ public class SecurityConfig {
                 .apply(new CustomDsl());
         http
                 .authorizeRequests()
+                .expressionHandler(
+                        defaultWebSecurityExpressionHandler())
                 .requestMatchers(PUBLIC_URLS)
                 .permitAll()
                 .requestMatchers(PROTECTED_URLS)
@@ -111,6 +117,12 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .logout().disable();
         return http.build();
+    }
+
+    private DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler() {
+        DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
+        defaultWebSecurityExpressionHandler.setPermissionEvaluator(permissionEvaluator);
+        return defaultWebSecurityExpressionHandler;
     }
 
 }

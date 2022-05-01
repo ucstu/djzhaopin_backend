@@ -10,6 +10,7 @@ import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,7 @@ public class HrInformationController {
     }
 
     @PutMapping("/{hrInfoId}")
+    @PreAuthorize("hasPermission(#hrInformationId, 'HrInformation', 'write')")
     public ResponseEntity<ResponseBody<HrInformation>> updateHrInformationByHrInformationId(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @Valid @RequestBody HrInformation hrInformation) {

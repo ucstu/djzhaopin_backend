@@ -15,9 +15,8 @@ import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
-import com.ucstu.guangbt.djzhaopin.utils.JwtUtil;
+import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +27,10 @@ public class AccountInformationServiceImpl implements
         AccountInformationService {
 
     @Resource
-    private JwtUtil jwtUtil;
+    private JsonWebTokenUtil jwtUtil;
 
     @Resource
     private PasswordEncoder passwordEncoder;
-
-    @Resource
-    private UserDetailsService userDetailsService;
 
     @Resource
     private AccountInformationRepository accountInformationRepository;
@@ -83,8 +79,7 @@ public class AccountInformationServiceImpl implements
         if (accountInformationOptional.isPresent()) {
             if (passwordEncoder.matches(loginAccountRequest.getPassword(),
                     accountInformationOptional.get().getPassword())) {
-                responseBody.put("token", jwtUtil.generateToken(userDetailsService.loadUserByUsername(
-                        accountInformationOptional.get().getUserName())));
+                responseBody.put("token", jwtUtil.generateToken(accountInformationOptional.get()));
                 responseBody.put("accountInfo", accountInformationOptional.get());
                 return serviceToControllerBody.success(responseBody);
             } else {

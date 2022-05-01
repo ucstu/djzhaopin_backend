@@ -3,6 +3,9 @@ package com.ucstu.guangbt.djzhaopin.config;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.ucstu.guangbt.djzhaopin.utils.ApplicationContextUtil;
+import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
+    private JsonWebTokenUtil jwtUtil;
+
     JwtAuthenticationFilter(RequestMatcher requiresAuth) {
         super(requiresAuth);
     }
@@ -25,6 +30,9 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
             HttpServletResponse response) {
+        if (jwtUtil == null) {
+            jwtUtil = ApplicationContextUtil.getBean(JsonWebTokenUtil.class);
+        }
         String param = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION)).orElse("");
         String token = Optional.ofNullable(param).map(value -> StringUtils.delete(value, "Bearer "))
                 .map(String::trim).orElseThrow(() -> new BadCredentialsException("No Token Found"));
