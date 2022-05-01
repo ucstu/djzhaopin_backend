@@ -85,7 +85,7 @@ public class AccountInformationServiceImpl implements
                     accountInformationOptional.get().getPassword())) {
                 responseBody.put("token", jwtUtil.generateToken(userDetailsService.loadUserByUsername(
                         accountInformationOptional.get().getUserName())));
-                responseBody.put("account", accountInformationOptional.get());
+                responseBody.put("accountInfo", accountInformationOptional.get());
                 return serviceToControllerBody.success(responseBody);
             } else {
                 return serviceToControllerBody.error("password", "密码错误", loginAccountRequest.getPassword());

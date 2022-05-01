@@ -5,11 +5,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.PropertyGenerator;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 
@@ -56,16 +54,12 @@ public class AccountInformation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    @JsonProperty(value = "userInformationId", access = JsonProperty.Access.READ_ONLY)
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnore
     @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "userInformationId")
     private UserInformation userInformation;
 
-    @JsonProperty(value = "hrInformationId", access = JsonProperty.Access.READ_ONLY)
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnore
     @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-    @JsonIdentityInfo(generator = PropertyGenerator.class, property = "hrInformationId")
     private HrInformation hrInformation;
 
     // {1:用户,2:HR}
@@ -94,4 +88,13 @@ public class AccountInformation {
 
     @JsonIgnore
     private Boolean enabled = true;
+
+    @JsonGetter("fullInformationId")
+    public UUID getInformationId() {
+        if (accountType == 1) {
+            return userInformation.getUserInformationId();
+        } else {
+            return hrInformation.getHrInformationId();
+        }
+    }
 }
