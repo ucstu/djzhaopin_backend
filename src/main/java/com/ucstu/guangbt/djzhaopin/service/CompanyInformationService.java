@@ -20,7 +20,8 @@ public interface CompanyInformationService {
                         UUID companyInformationId,
                         CompanyInformation companyInformation);
 
-        public ServiceToControllerBody<List<CompanyInformation>> getCompanyInformations(Pageable pageable);
+        public ServiceToControllerBody<List<CompanyInformation>> getCompanyInformations(String companyName,
+                        Pageable pageable);
 
         public ServiceToControllerBody<CompanyInformation> getCompanyInformationByCompanyInformationId(
                         UUID companyInformationId);

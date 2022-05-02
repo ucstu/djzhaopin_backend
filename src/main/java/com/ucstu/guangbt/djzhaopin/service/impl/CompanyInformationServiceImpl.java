@@ -54,7 +54,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<List<CompanyInformation>> getCompanyInformations(Pageable pageable) {
+    public ServiceToControllerBody<List<CompanyInformation>> getCompanyInformations(String companyName,
+            Pageable pageable) {
         ServiceToControllerBody<List<CompanyInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<CompanyInformation> companyInformations = companyInformationRepository.findAll(pageable);
         if (companyInformations.hasContent()) {
