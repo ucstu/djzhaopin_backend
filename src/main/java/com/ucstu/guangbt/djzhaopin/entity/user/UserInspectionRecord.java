@@ -51,6 +51,10 @@ public class UserInspectionRecord {
 
     @NotNull
     @Type(type = "uuid-char")
+    private UUID companyInformationId;
+
+    @NotNull
+    @Type(type = "uuid-char")
     private UUID positionInformationId;
 
 }
