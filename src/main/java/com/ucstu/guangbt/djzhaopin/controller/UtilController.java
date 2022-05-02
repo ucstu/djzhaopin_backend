@@ -37,8 +37,8 @@ public class UtilController {
 
     @GetMapping("/areaInformations")
     public ResponseEntity<ResponseBody<List<AreaInformation>>> getAreaInformations(
-            @RequestParam @NotBlank String city) {
-        return ResponseBody.handle(utilService.getAreaInformations(city));
+            @RequestParam @NotBlank String cityName) {
+        return ResponseBody.handle(utilService.getAreaInformations(cityName));
     }
 
     @GetMapping("/filterInformation")

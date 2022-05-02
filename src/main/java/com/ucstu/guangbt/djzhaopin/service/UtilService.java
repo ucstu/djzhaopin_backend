@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UtilService {
 
-    public ServiceToControllerBody<List<AreaInformation>> getAreaInformations(String city);
+    public ServiceToControllerBody<List<AreaInformation>> getAreaInformations(String cityName);
 
     public ServiceToControllerBody<FilterInformation> getFilterInformation();
 

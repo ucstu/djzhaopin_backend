@@ -35,7 +35,7 @@ public class UtilServiceImpl implements UtilService {
     private MessageRecordRepository messageRecordRepository;
 
     @Override
-    public ServiceToControllerBody<List<AreaInformation>> getAreaInformations(String city) {
+    public ServiceToControllerBody<List<AreaInformation>> getAreaInformations(String cityName) {
         ServiceToControllerBody<List<AreaInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         List<AreaInformation> areaInformations = new ArrayList<>();
         List<String> cityList = new ArrayList<>();
