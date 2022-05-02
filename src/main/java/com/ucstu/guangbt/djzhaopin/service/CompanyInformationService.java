@@ -31,7 +31,7 @@ public interface CompanyInformationService {
                         List<Integer> ages, List<UUID> positionInformationIds, List<Date> deliveryDates, String search,
                         Pageable pageable);
 
-        public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(String name, String salary,
+        public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(String positionName, String salary,
                         List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
                         List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
                         List<Integer> financingStages, List<String> comprehensions, String workingPlace,

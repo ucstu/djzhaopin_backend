@@ -87,7 +87,7 @@ public class CompanyInformationController {
 
         @GetMapping("/positionInfos")
         public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInfos(
-                        @RequestParam(value = "name", required = false) String name,
+                        @RequestParam(value = "positionName", required = false) String positionName,
                         @RequestParam(value = "salary", required = false) String salary,
                         @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
                         @RequestParam(value = "educations", required = false) List<Integer> educations,
@@ -100,7 +100,8 @@ public class CompanyInformationController {
                         @RequestParam(value = "workingPlace", required = false) String workingPlace,
                         @PageableDefault(size = 10) Pageable pageable) {
                 return ResponseBody.handle(companyInformationService
-                                .getPositionInfos(name, salary, workingYears, educations, directionTags, workAreas,
+                                .getPositionInfos(positionName, salary, workingYears, educations, directionTags,
+                                                workAreas,
                                                 positionTypes, scales, financingStages, comprehensions, workingPlace,
                                                 pageable));
         }
