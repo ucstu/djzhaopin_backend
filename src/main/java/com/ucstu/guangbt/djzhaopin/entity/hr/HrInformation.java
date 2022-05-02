@@ -60,7 +60,4 @@ public class HrInformation {
     @Email
     private String acceptEmail;
 
-    @Size(min = 11, max = 11)
-    private String phoneNumber;
-
 }

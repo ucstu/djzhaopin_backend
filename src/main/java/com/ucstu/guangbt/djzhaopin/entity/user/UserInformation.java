@@ -69,8 +69,6 @@ public class UserInformation {
 
     private String cityName;
 
-    private String phoneNumber;
-
     @Email
     private String email;
 

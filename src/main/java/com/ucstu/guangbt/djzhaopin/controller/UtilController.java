@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.annotation.Resource;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 @Validated
@@ -76,8 +77,8 @@ public class UtilController {
 
     @GetMapping("/verificationCode")
     public ResponseEntity<ResponseBody<String>> getVerificationCode(
-            @RequestParam @NotBlank String phoneNumber) {
-        return ResponseBody.handle(utilService.getVerificationCode(phoneNumber));
+            @RequestParam @Email String email) {
+        return ResponseBody.handle(utilService.getVerificationCode(email));
     }
 
     @GetMapping("/newVersion")

@@ -30,7 +30,7 @@ public interface UtilService {
 
     public ServiceToControllerBody<List<MessageRecord>> getMessageRecords(Pageable pageable);
 
-    public ServiceToControllerBody<String> getVerificationCode(String phoneNumber);
+    public ServiceToControllerBody<String> getVerificationCode(String email);
 
     public ServiceToControllerBody<String> getNewVersion();
 

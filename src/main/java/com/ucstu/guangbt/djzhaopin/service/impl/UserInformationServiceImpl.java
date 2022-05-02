@@ -54,7 +54,6 @@ public class UserInformationServiceImpl implements UserInformationService {
             userInformation2.setJobStatus(userInformation.getJobStatus());
             userInformation2.setLastName(userInformation.getLastName());
             userInformation2.setPersonalAdvantage(userInformation.getPersonalAdvantage());
-            userInformation2.setPhoneNumber(userInformation.getPhoneNumber());
             userInformation2.setPictureWorks(userInformation.getPictureWorks());
             userInformation2.setPrivacySettings(userInformation.getPrivacySettings());
             userInformation2.setSex(userInformation.getSex());

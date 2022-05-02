@@ -17,6 +17,7 @@ import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,9 @@ public class AccountInformationServiceImpl implements
     private PasswordEncoder passwordEncoder;
 
     @Resource
+    private RedisTemplate<String, String> verificationCodeTemplate;
+
+    @Resource
     private AccountInformationRepository accountInformationRepository;
 
     @Override
@@ -41,20 +45,29 @@ public class AccountInformationServiceImpl implements
         if (accountInformationRepository.findByUserName(registerRequest.getUserName()).isPresent()) {
             return serviceToControllerBody.error("userName", "用户名已存在", registerRequest.getUserName());
         }
+        String verificationCode = verificationCodeTemplate.opsForValue().get(registerRequest.getUserName());
+        if (verificationCode == null) {
+            return serviceToControllerBody.error("verificationCode", "验证码已过期或未发送",
+                    registerRequest.getVerificationCode());
+        }
+        if (!registerRequest.getVerificationCode().equals(verificationCode)) {
+            return serviceToControllerBody.error("verificationCode", "验证码错误", registerRequest.getVerificationCode());
+        }
         if (registerRequest.getAccountType() == 1) {
+            verificationCodeTemplate.delete(registerRequest.getUserName());
             return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()
                     .setUserName(registerRequest.getUserName())
                     .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
                     .setAccountType(registerRequest.getAccountType())
                     .setUserInformation(
-                            new UserInformation().setPhoneNumber(registerRequest.getUserName()).setAvatarUrl(
+                            new UserInformation().setEmail(registerRequest.getUserName()).setAvatarUrl(
                                     "/image/heard2.jpg"))));
         } else {
             return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()
                     .setUserName(registerRequest.getUserName())
                     .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
                     .setAccountType(registerRequest.getAccountType())
-                    .setHrInformation(new HrInformation().setPhoneNumber(registerRequest.getUserName()).setAvatarUrl(
+                    .setHrInformation(new HrInformation().setAcceptEmail(registerRequest.getUserName()).setAvatarUrl(
                             "/image/heard1.jpg"))));
         }
     }
@@ -65,6 +78,15 @@ public class AccountInformationServiceImpl implements
         Optional<AccountInformation> accountInformationOptional = accountInformationRepository.findById(accountId);
         if (!accountInformationOptional.isPresent()) {
             return serviceToControllerBody.error("accountId", "用户不存在", accountId);
+        }
+        String verificationCodeInRedis = verificationCodeTemplate.opsForValue()
+                .get(accountInformationOptional.get().getUserName());
+        if (verificationCodeInRedis != null) {
+            return serviceToControllerBody.error("verificationCode", "验证码已过期或未发送",
+                    verificationCode);
+        }
+        if (!verificationCode.equals(verificationCodeInRedis)) {
+            return serviceToControllerBody.error("verificationCode", "验证码错误", verificationCode);
         }
         accountInformationRepository.delete(accountInformationOptional.get());
         return serviceToControllerBody.success(accountInformationOptional.get());
