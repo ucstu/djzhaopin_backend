@@ -49,7 +49,8 @@ public class SecurityConfig {
         private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
                         new AntPathRequestMatcher("/accountInfos/**"),
                         new AntPathRequestMatcher("/verificationCode"),
-                        new AntPathRequestMatcher("/**", "OPTIONS"));
+                        new AntPathRequestMatcher("/**", "OPTIONS"),
+                        new AntPathRequestMatcher("/error/**"));
 
         private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 
