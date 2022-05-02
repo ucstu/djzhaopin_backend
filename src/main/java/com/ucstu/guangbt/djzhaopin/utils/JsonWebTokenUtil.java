@@ -86,7 +86,10 @@ public class JsonWebTokenUtil {
         return new JsonWebToken(
                 UUID.fromString(claims.get("accountInformationId", String.class)),
                 claims.get("accountType", Integer.class) == 2
-                        ? UUID.fromString(claims.get("companyInformationId", String.class))
+                        ? claims.get("companyInformationId",
+                                String.class) != null
+                                        ? UUID.fromString(claims.get("companyInformationId", String.class))
+                                        : null
                         : null,
                 UUID.fromString(claims.get("fullInformationId", String.class)),
                 claims.get("accountType", Integer.class),
