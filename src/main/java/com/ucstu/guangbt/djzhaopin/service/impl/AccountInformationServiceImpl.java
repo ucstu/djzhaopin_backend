@@ -81,7 +81,7 @@ public class AccountInformationServiceImpl implements
         }
         String verificationCodeInRedis = verificationCodeTemplate.opsForValue()
                 .get(accountInformationOptional.get().getUserName());
-        if (verificationCodeInRedis != null) {
+        if (verificationCodeInRedis == null) {
             return serviceToControllerBody.error("verificationCode", "验证码已过期或未发送",
                     verificationCode);
         }
