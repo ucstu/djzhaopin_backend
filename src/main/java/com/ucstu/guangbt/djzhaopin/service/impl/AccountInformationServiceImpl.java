@@ -102,7 +102,7 @@ public class AccountInformationServiceImpl implements
             if (passwordEncoder.matches(loginAccountRequest.getPassword(),
                     accountInformationOptional.get().getPassword())) {
                 responseBody.put("token", jwtUtil.generateToken(accountInformationOptional.get()));
-                responseBody.put("accountInfo", accountInformationOptional.get());
+                responseBody.put("accountInformation", accountInformationOptional.get());
                 return serviceToControllerBody.success(responseBody);
             } else {
                 return serviceToControllerBody.error("password", "密码错误", loginAccountRequest.getPassword());
