@@ -11,9 +11,11 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class ChangePasswordRequest {
+
     @Size(min = 6, max = 20)
     private String password;
 
     @Size(min = 4, max = 4)
     private String verificationCode;
+
 }

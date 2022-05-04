@@ -29,6 +29,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class WorkExperience {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -71,4 +72,5 @@ public class WorkExperience {
 
     @NotNull
     private String jobContent;
+
 }

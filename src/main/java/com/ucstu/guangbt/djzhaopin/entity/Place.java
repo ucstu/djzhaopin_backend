@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.entity.company.position;
+package com.ucstu.guangbt.djzhaopin.entity;
 
 import java.util.Date;
 import java.util.UUID;
@@ -26,13 +26,13 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class PositionWorkingPlace {
+public class Place {
 
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private UUID workingPlaceId;
+    private UUID placeId;
 
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

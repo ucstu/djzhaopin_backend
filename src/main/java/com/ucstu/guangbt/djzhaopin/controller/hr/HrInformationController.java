@@ -13,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,24 +35,40 @@ public class HrInformationController {
     @Resource
     private HrInformationService hrInformationService;
 
-    @GetMapping("/{hrInfoId}")
-    public ResponseEntity<ResponseBody<HrInformation>> getHrInformationByHrInformationId(
-            @PathVariable("hrInfoId") @NotNull UUID hrInformationId) {
-        return ResponseBody.handle(hrInformationService.getHrInformationByHrInformationId(hrInformationId));
+    @PostMapping("")
+    @PreAuthorize("hasPermission(#hrInformation, 'HrInformation', 'create')")
+    public ResponseEntity<ResponseBody<HrInformation>> createHrInformation(
+            @Valid @RequestBody HrInformation hrInformation) {
+        return ResponseBody.handle(hrInformationService.createHrInformation(hrInformation));
     }
 
-    @GetMapping("")
-    public ResponseEntity<ResponseBody<List<HrInformation>>> getHrInformations(@PageableDefault Pageable pageable) {
-        return ResponseBody.handle(hrInformationService.getHrInformations(pageable));
+    @DeleteMapping("/{hrInfoId}")
+    @PreAuthorize("hasPermission(#hrInformationId, 'HrInformation', 'delete')")
+    public ResponseEntity<ResponseBody<HrInformation>> deleteHrInformationByHrInfoId(
+            @PathVariable("hrInfoId") @NotNull UUID hrInformationId) {
+        return ResponseBody.handle(hrInformationService.deleteHrInformationByHrInfoId(hrInformationId));
     }
 
     @PutMapping("/{hrInfoId}")
-    @PreAuthorize("hasPermission(#hrInformationId, 'HrInformation', 'write')")
+    @PreAuthorize("hasPermission(#hrInformationId, 'HrInformation', 'update')")
     public ResponseEntity<ResponseBody<HrInformation>> updateHrInformationByHrInformationId(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @Valid @RequestBody HrInformation hrInformation) {
         return ResponseBody.handle(hrInformationService
                 .updateHrInformationByHrInformationId(hrInformationId, hrInformation));
+    }
+
+    @GetMapping("")
+    @PreAuthorize("hasPermission('HrInformations', 'read')")
+    public ResponseEntity<ResponseBody<List<HrInformation>>> getHrInformations(@PageableDefault Pageable pageable) {
+        return ResponseBody.handle(hrInformationService.getHrInformations(pageable));
+    }
+
+    @GetMapping("/{hrInfoId}")
+    @PreAuthorize("hasPermission(#hrInformationId, 'HrInformation', 'read')")
+    public ResponseEntity<ResponseBody<HrInformation>> getHrInformationByHrInformationId(
+            @PathVariable("hrInfoId") @NotNull UUID hrInformationId) {
+        return ResponseBody.handle(hrInformationService.getHrInformationByHrInformationId(hrInformationId));
     }
 
 }

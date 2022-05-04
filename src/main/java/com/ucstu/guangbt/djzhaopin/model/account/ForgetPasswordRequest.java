@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class ForgetPasswordRequest {
+
     @Email
     private String userName;
 
@@ -20,4 +21,5 @@ public class ForgetPasswordRequest {
 
     @Size(min = 4, max = 4)
     private String verificationCode;
+
 }

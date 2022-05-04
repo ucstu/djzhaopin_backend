@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class RegisterAccountRequest {
+
     @Email
     private String userName;
 
@@ -26,4 +27,5 @@ public class RegisterAccountRequest {
 
     @Size(min = 6, max = 20)
     private String password;
+
 }

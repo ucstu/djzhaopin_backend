@@ -28,6 +28,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class ProjectExperience {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -61,4 +62,5 @@ public class ProjectExperience {
     private Date endTime;
 
     private String projectLink;
+
 }

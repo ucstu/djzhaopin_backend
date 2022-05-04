@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotNull;
 
 @Service
 public class CompanyInformationServiceImpl implements CompanyInformationService {
@@ -54,7 +55,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<List<CompanyInformation>> getCompanyInformations(String companyName,
+    public ServiceToControllerBody<List<CompanyInformation>> getCompanyInformationsByCompanyName(String companyName,
             Pageable pageable) {
         ServiceToControllerBody<List<CompanyInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<CompanyInformation> companyInformations = companyInformationRepository.findAll(pageable);
@@ -173,7 +174,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 positionInformation1.setPositionName(positionInformation.getPositionName());
                 positionInformation1.setPositionInterviewInfo(positionInformation.getPositionInterviewInfo());
                 positionInformation1.setPositionType(positionInformation.getPositionType());
-                positionInformation1.setPositionWorkingPlace(positionInformation.getPositionWorkingPlace());
+                positionInformation1.setPlace(positionInformation.getPlace());
                 positionInformation1.setStartingSalary(positionInformation.getStartingSalary());
                 positionInformation1.setWeekendReleaseTime(positionInformation.getWeekendReleaseTime());
                 positionInformation1.setWorkCityName(positionInformation.getWorkCityName());
@@ -226,6 +227,31 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
         }
         return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
+    }
+
+    @Override
+    public ServiceToControllerBody<CompanyInformation> deleteCompanyInformationByCompanyInfoId(
+            UUID companyInformationId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
+            UUID companyInformationId, Date createdAt, Date updatedAt, List<Integer> status, List<Integer> workingYears,
+            List<String> sexs, List<Integer> ages, List<UUID> positionInformationIds, List<Date> deliveryDates,
+            String search, Pageable pageable) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ServiceToControllerBody<Integer> getDeliveryRecordCountByCompanyInformationId(
+            @NotNull UUID companyInformationId, Date createdAt, Date updatedAt, @NotNull List<Integer> status,
+            List<Integer> workingYears, List<String> sexs, List<Integer> ages, List<UUID> positionInformationIds,
+            List<Date> deliveryDates, String search) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

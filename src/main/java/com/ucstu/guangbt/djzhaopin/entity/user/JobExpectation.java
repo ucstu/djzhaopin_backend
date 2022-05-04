@@ -54,7 +54,7 @@ public class JobExpectation {
     @Range(min = 1, max = 3)
     private Integer positionType;
 
-    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> directionTags;
 
     @NotBlank

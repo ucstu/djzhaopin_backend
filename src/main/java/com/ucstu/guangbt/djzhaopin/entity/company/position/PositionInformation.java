@@ -1,11 +1,12 @@
 package com.ucstu.guangbt.djzhaopin.entity.company.position;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ucstu.guangbt.djzhaopin.entity.Place;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
@@ -17,6 +18,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
@@ -53,16 +55,19 @@ public class PositionInformation {
 
     @NotBlank
     private String positionName;
+
     @Range(min = 1, max = 6)
     private Integer workingYears;
+
     @Range(min = 1, max = 5)
     private Integer education;
 
-    @ElementCollection(targetClass = String.class)
-    private List<String> directionTags;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> directionTags;
 
     @NotNull
     private Integer startingSalary;
+
     @NotNull
     private Integer ceilingSalary;
 
@@ -80,13 +85,15 @@ public class PositionInformation {
 
     @Range(min = 1, max = 3)
     private Integer positionType;
+
     private String departmentName;
 
-    @ElementCollection(targetClass = String.class)
-    private List<String> highlights;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> highlights;
 
     @NotBlank
     private String description;
+
     @Range(min = 1, max = 3)
     private Integer weekendReleaseTime;
 
@@ -102,6 +109,6 @@ public class PositionInformation {
 
     @JsonProperty("workingPlace")
     @OneToOne(cascade = { CascadeType.ALL })
-    private PositionWorkingPlace positionWorkingPlace;
+    private Place place;
 
 }

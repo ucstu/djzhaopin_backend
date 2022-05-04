@@ -10,7 +10,11 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class ErrorContent {
+
     private String field;
+
     private String defaultMessage;
+
     private Object rejectedValue;
+
 }

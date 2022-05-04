@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -44,12 +45,16 @@ public class PositionInterviewInfo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
+    @Range(min = 1, max = 3)
     private Integer situation;
 
+    @Range(min = 1, max = 4)
     private Integer wheel;
 
+    @Range(min = 1, max = 2)
     private Integer time;
 
+    @Range(min = 1, max = 4)
     private Integer illustrate;
 
 }

@@ -12,9 +12,11 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class LoginAccountRequest {
+
     @Email
     private String userName;
 
     @Size(min = 6, max = 20)
     private String password;
+
 }

@@ -15,12 +15,19 @@ import lombok.experimental.Accessors;
 public class JsonWebToken {
 
     private UUID accountInformationId;
+
     private UUID companyInformationId;
+
     private UUID fullInformationId;
+
     private Integer accountType;
+
     private List<String> authorities;
+
     private Boolean expired;
+
     private Boolean locked;
+
     private Boolean enabled;
 
 }

@@ -38,6 +38,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class UserInformation {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -82,7 +83,7 @@ public class UserInformation {
     @Range(min = 1, max = 3)
     private Integer jobStatus;
 
-    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> pictureWorks;
 
     // {1:实名,2:匿名}
@@ -139,4 +140,5 @@ public class UserInformation {
         }
         return maxEducation;
     }
+
 }

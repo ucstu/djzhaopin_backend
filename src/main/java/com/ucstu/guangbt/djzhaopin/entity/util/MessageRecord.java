@@ -31,6 +31,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class MessageRecord {
+
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -51,12 +52,19 @@ public class MessageRecord {
     @NotNull
     private UUID initiateId;
 
+    @Range(min = 1, max = 2)
+    private Integer initiateType;
+
     @NotNull
     private UUID serviceId;
+
+    @Range(min = 1, max = 2)
+    private Integer serviceType;
 
     @Range(min = 1, max = 4)
     private Integer type;
 
     @NotBlank
     private String content;
+
 }

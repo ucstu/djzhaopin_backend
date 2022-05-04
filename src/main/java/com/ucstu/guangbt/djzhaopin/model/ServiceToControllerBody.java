@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class ServiceToControllerBody<T> {
+
     private List<ErrorContent> errors;
     private boolean create;
     private T content;
@@ -46,4 +47,5 @@ public class ServiceToControllerBody<T> {
         }
         return this;
     }
+
 }

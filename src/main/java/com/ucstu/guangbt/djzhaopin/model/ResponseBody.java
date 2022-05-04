@@ -30,6 +30,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class ResponseBody<T> {
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date timestamp = new Date(System.currentTimeMillis());
     private int status;
@@ -44,6 +45,7 @@ public class ResponseBody<T> {
     @AllArgsConstructor
     @Accessors(chain = true)
     public static class BodyBuilder {
+
         private Date timestamp = new Date(System.currentTimeMillis());
         private int status;
         private HttpHeaders headers = new HttpHeaders();
@@ -241,4 +243,5 @@ public class ResponseBody<T> {
             return badRequest(serviceToControllerBody.getErrors());
         }
     }
+
 }
