@@ -134,8 +134,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     .findFirst();
             if (positionInformationOptional.isPresent()) {
                 companyInformation.getPositionInformations().remove(positionInformationOptional.get());
+                companyInformationRepository.save(companyInformation);
                 return serviceToControllerBody
-                        .success(positionInformationRepository.save(positionInformationOptional.get()));
+                        .success(positionInformationOptional.get());
             }
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
         }
