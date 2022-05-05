@@ -32,7 +32,7 @@ public class HrInformationServiceImpl implements HrInformationService {
     @Transactional
     public ServiceToControllerBody<HrInformation> createHrInformation(HrInformation hrInformation) {
         ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
-        return serviceToControllerBody.success(hrInformationRepository.save(hrInformation));
+        return serviceToControllerBody.created(hrInformationRepository.save(hrInformation));
     }
 
     @Override
@@ -57,6 +57,7 @@ public class HrInformationServiceImpl implements HrInformationService {
             return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
         }
         hrInformation.setHrInformationId(hrInformationId);
+        hrInformation.setCreatedAt(hrInformationOptional.get().getCreatedAt());
         return serviceToControllerBody.success(hrInformationRepository.save(hrInformation));
     }
 
@@ -68,6 +69,7 @@ public class HrInformationServiceImpl implements HrInformationService {
         if (!hrInformations.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("hrInformations");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(hrInformations.getTotalElements());
@@ -96,7 +98,7 @@ public class HrInformationServiceImpl implements HrInformationService {
             return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
         }
         hrHrInspectionRecord.setHrInformation(hrInformationOptional.get());
-        return serviceToControllerBody.success(hrInspectionRecordRepository.save(hrHrInspectionRecord));
+        return serviceToControllerBody.created(hrInspectionRecordRepository.save(hrHrInspectionRecord));
     }
 
     @Override
@@ -124,6 +126,7 @@ public class HrInformationServiceImpl implements HrInformationService {
             return serviceToControllerBody.error("inspectionRecordId", "HR查看记录不存在", inspectionRecordId);
         }
         hrHrInspectionRecord.setHrInspectionRecordId(inspectionRecordId);
+        hrHrInspectionRecord.setCreatedAt(hrInspectionRecordOptional.get().getCreatedAt());
         return serviceToControllerBody.success(hrInspectionRecordRepository.save(hrHrInspectionRecord));
     }
 
@@ -141,6 +144,7 @@ public class HrInformationServiceImpl implements HrInformationService {
         if (!hrInspectionRecords.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("hrInspectionRecords");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(hrInspectionRecords.getTotalElements());

@@ -103,6 +103,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
         userInformation.setUserInformationId(userInformationId);
+        userInformation.setCreatedAt(userInformationOptional.get().getCreatedAt());
         return serviceToControllerBody.success(userInformationRepository.save(userInformation));
     }
 
@@ -114,6 +115,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!userInformations.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("userInformations");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(userInformations.getTotalElements());
@@ -179,7 +181,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!jobExpectationOptional.isPresent()) {
             return serviceToControllerBody.error("jobExpectationId", "职位期望不存在", jobExpectationId);
         }
+        jobExpectation.setJobExpectationId(jobExpectationId);
         jobExpectation.setUserInformation(userInformationOptional.get());
+        jobExpectation.setCreatedAt(jobExpectationOptional.get().getCreatedAt());
         return serviceToControllerBody.success(jobExpectationRepository.save(jobExpectation));
     }
 
@@ -197,6 +201,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!jobExpectations.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("jobExpectations");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(jobExpectations.getTotalElements());
@@ -271,7 +276,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!educationExperienceOptional.isPresent()) {
             return serviceToControllerBody.error("eduExperienceId", "教育经历不存在", eduExperienceId);
         }
+        educationExperience.setEducationExperienceId(eduExperienceId);
         educationExperience.setUserInformation(userInformationOptional.get());
+        educationExperience.setCreatedAt(educationExperienceOptional.get().getCreatedAt());
         return serviceToControllerBody.success(educationExperienceRepository.save(educationExperience));
     }
 
@@ -289,6 +296,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!educationExperiences.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("educationExperiences");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(educationExperiences.getTotalElements());
@@ -364,7 +372,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!workExperienceOptional.isPresent()) {
             return serviceToControllerBody.error("workExperienceId", "工作经历不存在", workExperienceId);
         }
+        workExperience.setWorkExperienceId(workExperienceId);
         workExperience.setUserInformation(userInformationOptional.get());
+        workExperience.setCreatedAt(workExperienceOptional.get().getCreatedAt());
         return serviceToControllerBody.success(workExperienceRepository.save(workExperience));
     }
 
@@ -382,6 +392,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!workExperiences.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("workExperiences");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(workExperiences.getTotalElements());
@@ -457,7 +468,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!projectExperienceOptional.isPresent()) {
             return serviceToControllerBody.error("projectExperienceId", "项目经历不存在", projectExperienceId);
         }
+        projectExperience.setProjectExperienceId(projectExperienceId);
         projectExperience.setUserInformation(userInformationOptional.get());
+        projectExperience.setCreatedAt(projectExperienceOptional.get().getCreatedAt());
         return serviceToControllerBody.success(projectExperienceRepository.save(projectExperience));
     }
 
@@ -475,6 +488,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!projectExperiences.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("projectExperiences");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(projectExperiences.getTotalElements());
@@ -573,6 +587,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!deliveryRecordOptional.isPresent()) {
             return serviceToControllerBody.error("deliveryRecordId", "投递记录不存在", deliveryRecordId);
         }
+        deliveryRecord.setDeliveryRecordId(deliveryRecordId);
+        deliveryRecord.setUserInformation(userInformationOptional.get());
+        deliveryRecord.setCreatedAt(deliveryRecordOptional.get().getCreatedAt());
         return serviceToControllerBody.success(deliveryRecordRepository.save(deliveryRecord));
     }
 
@@ -591,6 +608,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!deliveryRecords.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("deliveryRecords");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(deliveryRecords.getTotalElements());
@@ -632,7 +650,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在",
                     attentionRecord.getCompanyInformationId());
         }
-        return serviceToControllerBody.success(attentionRecordRepository.save(attentionRecord));
+        return serviceToControllerBody.created(attentionRecordRepository.save(attentionRecord));
     }
 
     @Override
@@ -658,8 +676,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     @Override
     @Transactional
     public ServiceToControllerBody<AttentionRecord> updateAttentionRecordByAttentionRecordId(UUID userInformationId,
-            UUID attentionRecordId,
-            AttentionRecord attentionRecord) {
+            UUID attentionRecordId, AttentionRecord attentionRecord) {
         ServiceToControllerBody<AttentionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userInformationId);
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
@@ -679,6 +696,8 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("attentionRecordId", "关注记录不存在", attentionRecordId);
         }
         attentionRecord.setAttentionRecordId(attentionRecordId);
+        attentionRecord.setUserInformation(userInformationOptional.get());
+        attentionRecord.setCreatedAt(attentionRecordOptional.get().getCreatedAt());
         return serviceToControllerBody.success(attentionRecordRepository.save(attentionRecord));
     }
 
@@ -696,6 +715,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!attentionRecords.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("attentionRecords");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(attentionRecords.getTotalElements());
@@ -732,7 +752,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
         inspectionRecord.setUserInformation(userInformationOptional.get());
-        return serviceToControllerBody.success(userInspectionRecordRepository.save(inspectionRecord));
+        return serviceToControllerBody.created(userInspectionRecordRepository.save(inspectionRecord));
     }
 
     @Override
@@ -773,7 +793,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!userInspectionRecordOptional.isPresent()) {
             return serviceToControllerBody.error("inspectionRecordId", "查看记录不存在", inspectionRecordId);
         }
+        inspectionRecord.setUserInformationId(inspectionRecordId);
         inspectionRecord.setUserInformation(userInformationOptional.get());
+        inspectionRecord.setCreatedAt(userInspectionRecordOptional.get().getCreatedAt());
         return serviceToControllerBody.success(userInspectionRecordRepository.save(inspectionRecord));
     }
 
@@ -791,6 +813,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!userInspectionRecords.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("userInspectionRecords");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(userInspectionRecords.getTotalElements());
@@ -838,7 +861,7 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
                     garnerRecord.getPositionInformationId());
         }
-        return serviceToControllerBody.success(garnerRecordRepository.save(garnerRecord));
+        return serviceToControllerBody.created(garnerRecordRepository.save(garnerRecord));
     }
 
     @Override
@@ -892,6 +915,8 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("garnerRecordId", "收藏记录不存在", garnerRecordId);
         }
         garnerRecord.setGarnerRecordId(garnerRecordId);
+        garnerRecord.setUserInformation(userInformationOptional.get());
+        garnerRecord.setCreatedAt(garnerRecordOptional.get().getCreatedAt());
         return serviceToControllerBody.success(garnerRecordRepository.save(garnerRecord));
     }
 
@@ -909,6 +934,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!garnerRecords.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("garnerRecords");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(garnerRecords.getTotalElements());

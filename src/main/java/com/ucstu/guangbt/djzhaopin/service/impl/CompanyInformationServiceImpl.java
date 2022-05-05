@@ -61,8 +61,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Override
     @Transactional
     public ServiceToControllerBody<CompanyInformation> updateCompanyInformationByCompanyInformationId(
-            UUID companyInformationId,
-            CompanyInformation companyInformation) {
+            UUID companyInformationId, CompanyInformation companyInformation) {
         ServiceToControllerBody<CompanyInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
@@ -70,6 +69,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
         }
         companyInformation.setCompanyInformationId(companyInformationId);
+        companyInformation.setCreatedAt(companyInformationOptional.get().getCreatedAt());
         return serviceToControllerBody.success(companyInformationRepository.save(companyInformation));
     }
 
@@ -83,6 +83,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         if (!companyInformations.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("companyInformations");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(companyInformations.getTotalElements());
@@ -115,6 +116,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         if (!deliveryRecords.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("deliveryRecords");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(deliveryRecords.getTotalElements());
@@ -136,6 +138,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         if (!positionInformations.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("positionInformations");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(positionInformations.getTotalElements());
@@ -183,9 +186,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Override
     @Transactional
     public ServiceToControllerBody<PositionInformation> updatePositionInformationByPositionInformationId(
-            UUID companyInformationId,
-            UUID positionInformationId,
-            PositionInformation positionInformation) {
+            UUID companyInformationId, UUID positionInformationId, PositionInformation positionInformation) {
         ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
@@ -202,16 +203,15 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         }
         positionInformation.setPositionInformationId(positionInformationId);
         positionInformation.setCompanyInformation(companyInformationOptional.get());
+        positionInformation.setCreatedAt(positionInformationOptional.get().getCreatedAt());
         return serviceToControllerBody.success(positionInformationRepository.save(positionInformation));
     }
 
     @Override
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInformationsByCompanyInformationId(
-            UUID companyInformationId,
-            String positionName, String salary,
-            List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
-            List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
-            List<Integer> financingStages, List<String> comprehensions, String workingPlace,
+            UUID companyInformationId, String positionName, String salary, List<Integer> workingYears,
+            List<Integer> educations, List<String> directionTags, List<String> workAreas, List<Integer> positionTypes,
+            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions, String workingPlace,
             Pageable pageable) {
         // TODO 完善搜索功能
         ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -225,6 +225,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         if (!positionInformations.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("positionInformations");
             return serviceToControllerBody.success(pageResult);
         }
         pageResult.setTotalCount(positionInformations.getTotalElements());
