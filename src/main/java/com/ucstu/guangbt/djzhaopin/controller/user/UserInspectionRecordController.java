@@ -65,7 +65,7 @@ public class UserInspectionRecordController {
     @GetMapping("")
     public ResponseEntity<ResponseBody<List<UserInspectionRecord>>> getUserInspectionRecordsByUserInformationId(
             @PathVariable("userInfoId") @NotNull UUID userInformationId,
-            @PageableDefault(page = 5, size = 10) Pageable pageable) {
+            @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(userInformationService
                 .getUserInspectionRecordsByUserInformationId(userInformationId, pageable));
     }

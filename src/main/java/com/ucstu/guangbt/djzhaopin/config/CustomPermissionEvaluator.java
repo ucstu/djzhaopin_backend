@@ -30,7 +30,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
             case "CompanyInformation":
                 return jsonWebToken.getCompanyInformationId().equals(targetId);
             default:
-                return false;
+                return true;
         }
     }
 
