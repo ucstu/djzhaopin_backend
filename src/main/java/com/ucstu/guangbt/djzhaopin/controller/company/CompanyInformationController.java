@@ -8,6 +8,7 @@ import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
+import com.ucstu.guangbt.djzhaopin.model.company.BigData;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
 import org.springframework.data.domain.Pageable;
@@ -98,26 +99,10 @@ public class CompanyInformationController {
             @RequestParam(value = "search", required = false) String search,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
-                .getDeliveryRecordsByCompanyInformationId(companyInformationId, createdAt, updatedAt, status,
-                        workingYears, sexs, ages, positionInformationIds, deliveryDates, search, pageable));
-    }
-
-    @GetMapping("{companyInfoId}/deliveryRecordCount")
-    @PreAuthorize("hasPermission('#companyInformationId', 'deliveryRecords', 'read')")
-    public ResponseEntity<ResponseBody<Integer>> getDeliveryRecordCountByCompanyInformationId(
-            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
-            @RequestParam(value = "createdAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdAt,
-            @RequestParam(value = "updatedAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date updatedAt,
-            @RequestParam("status") @NotNull List<Integer> status,
-            @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
-            @RequestParam(value = "sexs", required = false) List<String> sexs,
-            @RequestParam(value = "ages", required = false) List<Integer> ages,
-            @RequestParam(value = "positionInfoIds", required = false) List<UUID> positionInformationIds,
-            @RequestParam(value = "deliveryDates", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") List<Date> deliveryDates,
-            @RequestParam(value = "search", required = false) String search) {
-        return ResponseBody.handle(companyInformationService
-                .getDeliveryRecordCountByCompanyInformationId(companyInformationId, createdAt, updatedAt, status,
-                        workingYears, sexs, ages, positionInformationIds, deliveryDates, search));
+                .getDeliveryRecordsByCompanyInformationId(companyInformationId, createdAt, updatedAt,
+                        status,
+                        workingYears, sexs, ages, positionInformationIds, deliveryDates, search,
+                        pageable));
     }
 
     @GetMapping("/positionInfos")
@@ -140,6 +125,17 @@ public class CompanyInformationController {
                         workAreas,
                         positionTypes, scales, financingStages, comprehensions, workingPlace,
                         pageable));
+    }
+
+    @GetMapping("{companyInfoId}/bigData")
+    @PreAuthorize("hasPermission('#companyInformationId', 'bigData', 'read')")
+    public ResponseEntity<ResponseBody<List<BigData>>> getBigDataByCompanyInformationId(
+            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(companyInformationService
+                .getBigDataByCompanyInformationId(companyInformationId, startDate, endDate, pageable));
     }
 
 }

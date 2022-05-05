@@ -39,7 +39,6 @@ public class HrInformationServiceImpl implements HrInformationService {
     }
 
     @Override
-    @Transactional
     public ServiceToControllerBody<HrInformation> updateHrInformationByHrInformationId(UUID hrInformationId,
             HrInformation hrInformation) {
         ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -52,7 +51,6 @@ public class HrInformationServiceImpl implements HrInformationService {
     }
 
     @Override
-    @Transactional
     public ServiceToControllerBody<List<HrInformation>> getHrInformations(Pageable pageable) {
         ServiceToControllerBody<List<HrInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<HrInformation> hrInformations = hrInformationRepository.findAll(pageable);
@@ -63,7 +61,6 @@ public class HrInformationServiceImpl implements HrInformationService {
     }
 
     @Override
-    @Transactional
     public ServiceToControllerBody<HrInformation> getHrInformationByHrInformationId(UUID hrInformationId) {
         ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
@@ -98,7 +95,6 @@ public class HrInformationServiceImpl implements HrInformationService {
     }
 
     @Override
-    @Transactional
     public ServiceToControllerBody<List<HrInspectionRecord>> getHrInspectionRecordByHrInformationId(
             UUID hrInformationId, Pageable pageable) {
         // TODO Auto-generated method stub
@@ -106,7 +102,6 @@ public class HrInformationServiceImpl implements HrInformationService {
     }
 
     @Override
-    @Transactional
     public ServiceToControllerBody<HrInspectionRecord> getHrInspectionRecordByInspectionRecordId(
             UUID inspectionRecordId) {
         // TODO Auto-generated method stub

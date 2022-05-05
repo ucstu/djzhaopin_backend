@@ -8,6 +8,7 @@ import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
+import com.ucstu.guangbt.djzhaopin.model.company.BigData;
 
 import org.springframework.data.domain.Pageable;
 
@@ -36,11 +37,6 @@ public interface CompanyInformationService {
             List<Integer> workingYears, List<String> sexs, List<Integer> ages,
             List<UUID> positionInformationIds, List<Date> deliveryDates, String search, Pageable pageable);
 
-    public ServiceToControllerBody<Integer> getDeliveryRecordCountByCompanyInformationId(
-            @NotNull UUID companyInformationId, Date createdAt, Date updatedAt,
-            @NotNull List<Integer> status, List<Integer> workingYears, List<String> sexs,
-            List<Integer> ages, List<UUID> positionInformationIds, List<Date> deliveryDates, String search);
-
     public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(String positionName, String salary,
             List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
             List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
@@ -60,14 +56,17 @@ public interface CompanyInformationService {
             PositionInformation positionInformation);
 
     public ServiceToControllerBody<List<PositionInformation>> getPositionInformationsByCompanyInformationId(
-            UUID companyInformationId,
-            String name, String salary, List<Integer> workingYears, List<Integer> educations,
-            List<String> directionTags, List<String> workAreas, List<Integer> positionTypes,
-            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions,
-            String workingPlace, Pageable pageable);
+            UUID companyInformationId, String positionName, String salary, List<Integer> workingYears,
+            List<Integer> educations, List<String> directionTags, List<String> workAreas, List<Integer> positionTypes,
+            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions, String workingPlace,
+            Pageable pageable);
 
     public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInformationId(
             UUID companyInformationId,
             UUID positionInformationId);
+
+    public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(
+            @NotNull UUID companyInformationId, Date startDate,
+            Date endDate, Pageable pageable);
 
 }

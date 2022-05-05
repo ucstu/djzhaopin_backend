@@ -10,6 +10,7 @@ import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
+import com.ucstu.guangbt.djzhaopin.model.company.BigData;
 import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.DeliveryRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.PositionInformationRepository;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 @Service
@@ -35,12 +37,22 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     private PositionInformationRepository positionInformationRepository;
 
     @Override
+    @Transactional
     public ServiceToControllerBody<CompanyInformation> createCompanyInformation(CompanyInformation companyInformation) {
         ServiceToControllerBody<CompanyInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         return serviceToControllerBody.created(companyInformationRepository.save(companyInformation));
     }
 
     @Override
+    @Transactional
+    public ServiceToControllerBody<CompanyInformation> deleteCompanyInformationByCompanyInfoId(
+            UUID companyInformationId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    @Transactional
     public ServiceToControllerBody<CompanyInformation> updateCompanyInformationByCompanyInformationId(
             UUID companyInformationId,
             CompanyInformation companyInformation) {
@@ -79,9 +91,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Override
     public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
-            UUID companyInformationId, List<Integer> status, List<Integer> workingYears, List<String> sexs,
-            List<Integer> ages, List<UUID> positionInformationIds, List<Date> deliveryDates, String search,
-            Pageable pageable) {
+            UUID companyInformationId, Date createdAt, Date updatedAt, List<Integer> status,
+            List<Integer> workingYears, List<String> sexs, List<Integer> ages,
+            List<UUID> positionInformationIds, List<Date> deliveryDates, String search, Pageable pageable) {
         // TODO 完善搜索功能
         ServiceToControllerBody<List<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll(pageable);
@@ -107,6 +119,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<PositionInformation> createPositionInformation(UUID companyInformationId,
             PositionInformation positionInformation) {
         ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -120,6 +133,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<PositionInformation> deletePositionInformationByPositionInformationId(
             UUID companyInformationId,
             UUID positionInformationId) {
@@ -147,6 +161,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<PositionInformation> updatePositionInformationByPositionInformationId(
             UUID companyInformationId,
             UUID positionInformationId,
@@ -192,7 +207,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Override
     public ServiceToControllerBody<List<PositionInformation>> getPositionInformationsByCompanyInformationId(
             UUID companyInformationId,
-            String name, String salary,
+            String positionName, String salary,
             List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
             List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
             List<Integer> financingStages, List<String> comprehensions, String workingPlace,
@@ -230,26 +245,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<CompanyInformation> deleteCompanyInformationByCompanyInfoId(
-            UUID companyInformationId) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
-            UUID companyInformationId, Date createdAt, Date updatedAt, List<Integer> status, List<Integer> workingYears,
-            List<String> sexs, List<Integer> ages, List<UUID> positionInformationIds, List<Date> deliveryDates,
-            String search, Pageable pageable) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public ServiceToControllerBody<Integer> getDeliveryRecordCountByCompanyInformationId(
-            @NotNull UUID companyInformationId, Date createdAt, Date updatedAt, @NotNull List<Integer> status,
-            List<Integer> workingYears, List<String> sexs, List<Integer> ages, List<UUID> positionInformationIds,
-            List<Date> deliveryDates, String search) {
+    public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(@NotNull UUID companyInformationId,
+            Date startDate, Date endDate, Pageable pageable) {
         // TODO Auto-generated method stub
         return null;
     }

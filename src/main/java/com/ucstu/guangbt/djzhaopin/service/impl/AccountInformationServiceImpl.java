@@ -99,7 +99,6 @@ public class AccountInformationServiceImpl implements
     }
 
     @Override
-    @Transactional
     public ServiceToControllerBody<Map<String, Object>> loginAccount(LoginAccountRequest loginAccountRequest) {
         ServiceToControllerBody<Map<String, Object>> serviceToControllerBody = new ServiceToControllerBody<>();
         Map<String, Object> responseBody = new HashMap<>();
