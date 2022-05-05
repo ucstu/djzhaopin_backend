@@ -61,6 +61,7 @@ public class WorkExperience {
     private Date endTime;
 
     // {1:全职,2:兼职,3:实习}
+    @NotNull
     @Range(min = 1, max = 3)
     private Integer positionType;
 

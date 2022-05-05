@@ -24,6 +24,7 @@ import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
 
@@ -40,6 +41,21 @@ public class UserInformationServiceImpl implements UserInformationService {
     private CompanyInformationRepository companyInformationRepository;
 
     @Override
+    @Transactional
+    public ServiceToControllerBody<UserInformation> createUserInformation(UserInformation userInformation) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public ServiceToControllerBody<UserInformation> deleteUserInformationByUserInformationId(UUID userInformationId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    @Transactional
     public ServiceToControllerBody<UserInformation> updateUserInformationByUserInformationId(UUID userInformationId,
             UserInformation userInformation) {
         ServiceToControllerBody<UserInformation> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -82,6 +98,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<JobExpectation> createJobExpectation(UUID userInformationId,
             JobExpectation jobExpectation) {
         ServiceToControllerBody<JobExpectation> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -96,6 +113,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<JobExpectation> deleteJobExpectationByJobExpectationId(UUID userInformationId,
             UUID jobExpectationId) {
         ServiceToControllerBody<JobExpectation> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -117,6 +135,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<JobExpectation> updateJobExpectationByJobExpectationId(UUID userInformationId,
             UUID jobExpectationId,
             JobExpectation jobExpectation) {
@@ -176,6 +195,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<EducationExperience> createEducationExperience(UUID userInformationId,
             EducationExperience educationExperience) {
         ServiceToControllerBody<EducationExperience> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -190,6 +210,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<EducationExperience> deleteEducationExperienceByEducationExperienceId(
             UUID userInformationId,
             UUID eduExperienceId) {
@@ -214,6 +235,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<EducationExperience> updateEducationExperienceByEducationExperienceId(
             UUID userInformationId,
             UUID eduExperienceId,
@@ -278,6 +300,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<WorkExperience> createWorkExperience(UUID userInformationId,
             WorkExperience workExperience) {
         ServiceToControllerBody<WorkExperience> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -292,6 +315,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<WorkExperience> deleteWorkExperienceByWorkExperienceId(UUID userInformationId,
             UUID workExperienceId) {
         ServiceToControllerBody<WorkExperience> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -315,6 +339,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<WorkExperience> updateWorkExperienceByWorkExperienceId(UUID userInformationId,
             UUID workExperienceId,
             WorkExperience workExperience) {
@@ -380,6 +405,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<ProjectExperience> createProjectExperience(UUID userInformationId,
             ProjectExperience projectExperience) {
         ServiceToControllerBody<ProjectExperience> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -394,6 +420,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<ProjectExperience> deleteProjectExperienceByProjectExperienceId(
             UUID userInformationId,
             UUID projectExperienceId) {
@@ -418,6 +445,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<ProjectExperience> updateProjectExperienceByProjectExperienceId(
             UUID userInformationId,
             UUID projectExperienceId,
@@ -483,6 +511,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<DeliveryRecord> createDeliveryRecord(UUID userInformationId,
             DeliveryRecord deliveryRecord) {
         ServiceToControllerBody<DeliveryRecord> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -520,6 +549,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<DeliveryRecord> deleteDeliveryRecordByDeliveryRecordId(UUID userInformationId,
             UUID deliveryRecordId) {
         ServiceToControllerBody<DeliveryRecord> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -543,6 +573,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<DeliveryRecord> updateDeliveryRecordByDeliveryRecordId(UUID userInformationId,
             UUID deliveryRecordId,
             DeliveryRecord deliveryRecord) {
@@ -622,6 +653,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<AttentionRecord> createAttentionRecord(UUID userInformationId,
             AttentionRecord attentionRecord) {
         ServiceToControllerBody<AttentionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -651,6 +683,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<AttentionRecord> deleteAttentionRecordByAttentionRecordId(UUID userInformationId,
             UUID attentionRecordId) {
         ServiceToControllerBody<AttentionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -674,6 +707,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<AttentionRecord> updateAttentionRecordByAttentionRecordId(UUID userInformationId,
             UUID attentionRecordId,
             AttentionRecord attentionRecord) {
@@ -739,6 +773,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<UserInspectionRecord> createUserInspectionRecord(UUID userInformationId,
             UserInspectionRecord inspectionRecord) {
         // TODO 这里有点问题
@@ -754,6 +789,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<UserInspectionRecord> deleteUserInspectionRecordByUserInspectionRecordId(
             UUID userInformationId,
             UUID inspectionRecordId) {
@@ -778,6 +814,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<UserInspectionRecord> updateUserInspectionRecordByUserInspectionRecordId(
             UUID userInformationId,
             UUID inspectionRecordId,
@@ -855,6 +892,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<GarnerRecord> createGarnerRecord(UUID userInformationId, GarnerRecord garnerRecord) {
         ServiceToControllerBody<GarnerRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
@@ -889,6 +927,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<GarnerRecord> deleteGarnerRecordByGarnerRecordId(UUID userInformationId,
             UUID garnerRecordId) {
         ServiceToControllerBody<GarnerRecord> serviceToControllerBody = new ServiceToControllerBody<>();
@@ -912,6 +951,7 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<GarnerRecord> updateGarnerRecordByGarnerRecordId(UUID userInformationId,
             UUID garnerRecordId,
             GarnerRecord garnerRecord) {

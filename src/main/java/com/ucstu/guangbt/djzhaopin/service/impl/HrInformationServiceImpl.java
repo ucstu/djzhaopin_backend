@@ -39,6 +39,7 @@ public class HrInformationServiceImpl implements HrInformationService {
     }
 
     @Override
+    @Transactional
     public ServiceToControllerBody<HrInformation> updateHrInformationByHrInformationId(UUID hrInformationId,
             HrInformation hrInformation) {
         ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();

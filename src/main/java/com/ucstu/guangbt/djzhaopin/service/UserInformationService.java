@@ -18,6 +18,9 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.data.domain.Pageable;
 
 public interface UserInformationService {
+    public ServiceToControllerBody<UserInformation> createUserInformation(UserInformation userInformation);
+
+    public ServiceToControllerBody<UserInformation> deleteUserInformationByUserInformationId(UUID userInformationId);
 
     public ServiceToControllerBody<UserInformation> updateUserInformationByUserInformationId(UUID userInformationId,
             UserInformation userInformation);
@@ -168,5 +171,4 @@ public interface UserInformationService {
 
     public ServiceToControllerBody<GarnerRecord> getGarnerRecordByGarnerRecordId(UUID userInformationId,
             UUID garnerRecordId);
-
 }

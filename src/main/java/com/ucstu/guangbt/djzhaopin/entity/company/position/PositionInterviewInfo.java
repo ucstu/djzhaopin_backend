@@ -16,6 +16,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,15 +46,19 @@ public class PositionInterviewInfo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
+    @NotNull
     @Range(min = 1, max = 3)
     private Integer situation;
 
+    @NotNull
     @Range(min = 1, max = 4)
     private Integer wheel;
 
+    @NotNull
     @Range(min = 1, max = 2)
     private Integer time;
 
+    @NotNull
     @Range(min = 1, max = 4)
     private Integer illustrate;
 

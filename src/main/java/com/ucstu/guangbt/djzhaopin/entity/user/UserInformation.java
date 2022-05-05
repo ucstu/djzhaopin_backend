@@ -1,5 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
+import static org.mockito.ArgumentMatchers.nullable;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +28,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -87,6 +90,7 @@ public class UserInformation {
     private Set<String> pictureWorks;
 
     // {1:实名,2:匿名}
+    @NotNull
     @Range(min = 1, max = 2)
     private Integer privacySettings;
 

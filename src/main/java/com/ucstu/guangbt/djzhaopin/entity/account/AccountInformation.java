@@ -26,6 +26,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -64,6 +65,7 @@ public class AccountInformation {
     private HrInformation hrInformation;
 
     // {1:用户,2:HR}
+    @NotNull
     @Range(min = 1, max = 2)
     private Integer accountType;
 

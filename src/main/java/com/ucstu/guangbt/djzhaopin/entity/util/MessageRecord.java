@@ -52,15 +52,18 @@ public class MessageRecord {
     @NotNull
     private UUID initiateId;
 
+    @NotNull
     @Range(min = 1, max = 2)
     private Integer initiateType;
 
     @NotNull
     private UUID serviceId;
 
+    @NotNull
     @Range(min = 1, max = 2)
     private Integer serviceType;
 
+    @NotNull
     @Range(min = 1, max = 4)
     private Integer type;
 

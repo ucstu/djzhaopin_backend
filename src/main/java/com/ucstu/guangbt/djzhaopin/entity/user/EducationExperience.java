@@ -50,6 +50,7 @@ public class EducationExperience {
     private String schoolName;
 
     // {1:大专,2:本科,3:硕士,4:博士}
+    @NotNull
     @Range(min = 1, max = 4)
     private Integer education;
 

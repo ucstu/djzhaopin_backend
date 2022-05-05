@@ -56,9 +56,11 @@ public class PositionInformation {
     @NotBlank
     private String positionName;
 
+    @NotNull
     @Range(min = 1, max = 6)
     private Integer workingYears;
 
+    @NotNull
     @Range(min = 1, max = 5)
     private Integer education;
 
@@ -83,6 +85,7 @@ public class PositionInformation {
     @Type(type = "uuid-char")
     private UUID hrInformationId;
 
+    @NotNull
     @Range(min = 1, max = 3)
     private Integer positionType;
 
@@ -97,16 +100,20 @@ public class PositionInformation {
     @Range(min = 1, max = 3)
     private Integer weekendReleaseTime;
 
+    @NotNull
     @JsonFormat(pattern = "HH:mm:ss")
     private Date workTime;
 
+    @NotNull
     @JsonFormat(pattern = "HH:mm:ss")
     private Date overTime;
 
+    @NotNull
     @JsonProperty("interviewInfo")
     @OneToOne(cascade = { CascadeType.ALL })
     private PositionInterviewInfo positionInterviewInfo;
 
+    @NotNull
     @JsonProperty("workingPlace")
     @OneToOne(cascade = { CascadeType.ALL })
     private Place place;

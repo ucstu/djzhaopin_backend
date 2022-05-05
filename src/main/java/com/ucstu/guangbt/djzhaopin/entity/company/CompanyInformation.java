@@ -56,8 +56,6 @@ public class CompanyInformation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    private String hrInformationId;
-
     private String logoUrl;
 
     @NotNull
@@ -67,9 +65,11 @@ public class CompanyInformation {
 
     private String cityName;
 
+    @NotNull
     @Range(min = 1, max = 8)
     private Integer financingStage;
 
+    @NotNull
     @Range(min = 1, max = 6)
     private Integer scale;
 
