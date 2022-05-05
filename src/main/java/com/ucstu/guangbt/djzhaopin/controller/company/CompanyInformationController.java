@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
@@ -69,7 +70,7 @@ public class CompanyInformationController {
 
     @GetMapping("")
     @PreAuthorize("hasPermission('CompanyInformations', 'read')")
-    public ResponseEntity<ResponseBody<List<CompanyInformation>>> getCompanyInformationsByCompanyName(
+    public ResponseEntity<ResponseBody<PageResult<CompanyInformation>>> getCompanyInformationsByCompanyName(
             @RequestParam(value = "companyName", required = false) String companyName,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
@@ -86,7 +87,7 @@ public class CompanyInformationController {
 
     @GetMapping("{companyInfoId}/deliveryRecords")
     @PreAuthorize("hasPermission('#companyInformationId', 'deliveryRecords', 'read')")
-    public ResponseEntity<ResponseBody<List<DeliveryRecord>>> getDeliveryRecordsByCompanyInformationId(
+    public ResponseEntity<ResponseBody<PageResult<DeliveryRecord>>> getDeliveryRecordsByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam(value = "createdAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdAt,
             @RequestParam(value = "updatedAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date updatedAt,
@@ -107,7 +108,7 @@ public class CompanyInformationController {
 
     @GetMapping("/positionInfos")
     @PreAuthorize("hasPermission('CompanyInformations', 'read')")
-    public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInfos(
+    public ResponseEntity<ResponseBody<PageResult<PositionInformation>>> getPositionInfos(
             @RequestParam(value = "positionName", required = false) String positionName,
             @RequestParam(value = "salary", required = false) String salary,
             @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,

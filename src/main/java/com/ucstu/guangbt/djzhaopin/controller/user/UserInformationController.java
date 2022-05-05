@@ -1,9 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
@@ -55,7 +55,7 @@ public class UserInformationController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseBody<List<UserInformation>>> getUserInformations(
+    public ResponseEntity<ResponseBody<PageResult<UserInformation>>> getUserInformations(
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(userInformationService
                 .getUserInformations(pageable));

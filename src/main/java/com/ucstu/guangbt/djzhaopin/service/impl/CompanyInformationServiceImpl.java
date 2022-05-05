@@ -2,6 +2,7 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
 import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
@@ -67,14 +69,19 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<List<CompanyInformation>> getCompanyInformationsByCompanyName(String companyName,
+    public ServiceToControllerBody<PageResult<CompanyInformation>> getCompanyInformationsByCompanyName(
+            String companyName,
             Pageable pageable) {
-        ServiceToControllerBody<List<CompanyInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<CompanyInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<CompanyInformation> companyInformations = companyInformationRepository.findAll(pageable);
+        PageResult<CompanyInformation> responseBody = new HashMap<>();
         if (companyInformations.hasContent()) {
-            return serviceToControllerBody.success(companyInformations.getContent());
+            responseBody.put("companyInformations", companyInformations.getContent());
+            return serviceToControllerBody.success(responseBody);
         }
-        return serviceToControllerBody.success(new ArrayList<>());
+        responseBody.put("totalCount", companyInformations.getTotalElements());
+        responseBody.put("companyInformations", new ArrayList<>());
+        return serviceToControllerBody.success(responseBody);
     }
 
     @Override

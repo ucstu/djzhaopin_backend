@@ -1,6 +1,5 @@
 package com.ucstu.guangbt.djzhaopin.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
@@ -12,6 +11,7 @@ import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 
 import org.hibernate.validator.constraints.Range;
@@ -20,12 +20,13 @@ import org.springframework.data.domain.Pageable;
 public interface UserInformationService {
     public ServiceToControllerBody<UserInformation> createUserInformation(UserInformation userInformation);
 
-    public ServiceToControllerBody<UserInformation> deleteUserInformationByUserInformationId(UUID userInformationId);
+    public ServiceToControllerBody<UserInformation> deleteUserInformationByUserInformationId(
+            UUID userInformationId);
 
     public ServiceToControllerBody<UserInformation> updateUserInformationByUserInformationId(UUID userInformationId,
             UserInformation userInformation);
 
-    public ServiceToControllerBody<List<UserInformation>> getUserInformations(Pageable pageable);
+    public ServiceToControllerBody<PageResult<UserInformation>> getUserInformations(Pageable pageable);
 
     public ServiceToControllerBody<UserInformation> getUserInformationByUserInformationId(UUID userInformationId);
 
@@ -39,7 +40,7 @@ public interface UserInformationService {
             UUID jobExpectationId,
             JobExpectation jobExpectation);
 
-    public ServiceToControllerBody<List<JobExpectation>> getJobExpectationsByUserInformationId(
+    public ServiceToControllerBody<PageResult<JobExpectation>> getJobExpectationsByUserInformationId(
             UUID userInformationId,
             Pageable pageable);
 
@@ -58,7 +59,7 @@ public interface UserInformationService {
             UUID eduExperienceId,
             EducationExperience educationExperience);
 
-    public ServiceToControllerBody<List<EducationExperience>> getEducationExperiencesByUserInformationId(
+    public ServiceToControllerBody<PageResult<EducationExperience>> getEducationExperiencesByUserInformationId(
             UUID userInformationId,
             Pageable pageable);
 
@@ -76,7 +77,7 @@ public interface UserInformationService {
             UUID workExperienceId,
             WorkExperience workExperience);
 
-    public ServiceToControllerBody<List<WorkExperience>> getWorkExperiencesByUserInformationId(
+    public ServiceToControllerBody<PageResult<WorkExperience>> getWorkExperiencesByUserInformationId(
             UUID userInformationId,
             Pageable pageable);
 
@@ -95,7 +96,7 @@ public interface UserInformationService {
             UUID projectExperienceId,
             ProjectExperience projectExperience);
 
-    public ServiceToControllerBody<List<ProjectExperience>> getProjectExperiencesByUserInformationId(
+    public ServiceToControllerBody<PageResult<ProjectExperience>> getProjectExperiencesByUserInformationId(
             UUID userInformationId,
             Pageable pageable);
 
@@ -113,7 +114,7 @@ public interface UserInformationService {
             UUID deliveryRecordId,
             DeliveryRecord deliveryRecord);
 
-    public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByUserInformationId(
+    public ServiceToControllerBody<PageResult<DeliveryRecord>> getDeliveryRecordsByUserInformationId(
             UUID userInformationId,
             @Range(min = 1, max = 5) Integer status, Pageable pageable);
 
@@ -130,7 +131,7 @@ public interface UserInformationService {
             UUID attentionRecordId,
             AttentionRecord attentionRecord);
 
-    public ServiceToControllerBody<List<AttentionRecord>> getAttentionRecordsByUserInformationId(
+    public ServiceToControllerBody<PageResult<AttentionRecord>> getAttentionRecordsByUserInformationId(
             UUID userInformationId);
 
     public ServiceToControllerBody<AttentionRecord> getAttentionRecordByAttentionRecordId(UUID userInformationId,
@@ -148,7 +149,7 @@ public interface UserInformationService {
             UUID userInspectionRecordId,
             UserInspectionRecord userInspectionRecord);
 
-    public ServiceToControllerBody<List<UserInspectionRecord>> getUserInspectionRecordsByUserInformationId(
+    public ServiceToControllerBody<PageResult<UserInspectionRecord>> getUserInspectionRecordsByUserInformationId(
             UUID userInformationId,
             Pageable pageable);
 
@@ -166,7 +167,8 @@ public interface UserInformationService {
             UUID garnerRecordId,
             GarnerRecord garnerRecord);
 
-    public ServiceToControllerBody<List<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userInformationId,
+    public ServiceToControllerBody<PageResult<GarnerRecord>> getGarnerRecordsByUserInformationId(
+            UUID userInformationId,
             Pageable pageable);
 
     public ServiceToControllerBody<GarnerRecord> getGarnerRecordByGarnerRecordId(UUID userInformationId,

@@ -1,9 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
@@ -66,7 +66,7 @@ public class AttentionRecordController {
 
     @GetMapping("")
     @PreAuthorize("hasPermission('#userInformationId', 'AttentionRecords', 'read')")
-    public ResponseEntity<ResponseBody<List<AttentionRecord>>> getAttentionRecordsByUserInformationId(
+    public ResponseEntity<ResponseBody<PageResult<AttentionRecord>>> getAttentionRecordsByUserInformationId(
             @PathVariable("userInfoId") @NotNull UUID userInformationId,
             @PageableDefault(size = 10) Pageable pageable) {
 

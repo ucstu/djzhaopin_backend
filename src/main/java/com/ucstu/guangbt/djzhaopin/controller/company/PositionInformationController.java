@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
@@ -68,7 +69,7 @@ public class PositionInformationController {
 
     @GetMapping("")
     @PreAuthorize("hasPermission('#companyInformationId', 'PositionInformations', 'read')")
-    public ResponseEntity<ResponseBody<List<PositionInformation>>> getPositionInformationsByCompanyInformationId(
+    public ResponseEntity<ResponseBody<PageResult<PositionInformation>>> getPositionInformationsByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam(value = "positionName", required = false) String positionName,
             @RequestParam(value = "salary", required = false) String salary,
@@ -83,7 +84,8 @@ public class PositionInformationController {
             @RequestParam(value = "workingPlace", required = false) String workingPlace,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
-                .getPositionInformationsByCompanyInformationId(companyInformationId, positionName, salary,
+                .getPositionInformationsByCompanyInformationId(companyInformationId, positionName,
+                        salary,
                         workingYears, educations, directionTags, workAreas, positionTypes,
                         scales, financingStages, comprehensions, workingPlace, pageable));
     }

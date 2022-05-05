@@ -1,9 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.controller.hr;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInspectionRecord;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
@@ -40,7 +40,8 @@ public class HrInspectionRecordController {
     public ResponseEntity<ResponseBody<HrInspectionRecord>> createHrInspectionRecord(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @Valid @RequestBody HrInspectionRecord hrInspectionRecord) {
-        return ResponseBody.handle(hrInformationService.createHrInspectionRecord(hrInformationId, hrInspectionRecord));
+        return ResponseBody.handle(
+                hrInformationService.createHrInspectionRecord(hrInformationId, hrInspectionRecord));
     }
 
     @DeleteMapping("/{inspectionRecordId}")
@@ -49,7 +50,8 @@ public class HrInspectionRecordController {
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId) {
         return ResponseBody
-                .handle(hrInformationService.deleteHrInspectionRecordByInspectionRecordId(inspectionRecordId));
+                .handle(hrInformationService
+                        .deleteHrInspectionRecordByInspectionRecordId(inspectionRecordId));
     }
 
     @PutMapping("/{inspectionRecordId}")
@@ -59,16 +61,19 @@ public class HrInspectionRecordController {
             @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId,
             @Valid @RequestBody HrInspectionRecord hrInspectionRecord) {
         return ResponseBody
-                .handle(hrInformationService.updateHrInspectionRecordByInspectionRecordId(inspectionRecordId,
+                .handle(hrInformationService.updateHrInspectionRecordByInspectionRecordId(
+                        inspectionRecordId,
                         hrInspectionRecord));
     }
 
     @GetMapping("")
     @PreAuthorize("hasPermission(#hrInformationId, 'HrInspectionRecords', 'read')")
-    public ResponseEntity<ResponseBody<List<HrInspectionRecord>>> getHrInspectionRecordByHrInformationId(
-            @PathVariable("hrInfoId") @NotNull UUID hrInformationId, @PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<ResponseBody<PageResult<HrInspectionRecord>>> getHrInspectionRecordByHrInformationId(
+            @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
+            @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody
-                .handle(hrInformationService.getHrInspectionRecordByHrInformationId(hrInformationId, pageable));
+                .handle(hrInformationService.getHrInspectionRecordByHrInformationId(hrInformationId,
+                        pageable));
     }
 
     @GetMapping("/{inspectionRecordId}")
@@ -77,7 +82,8 @@ public class HrInspectionRecordController {
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId) {
         return ResponseBody
-                .handle(hrInformationService.getHrInspectionRecordByInspectionRecordId(inspectionRecordId));
+                .handle(hrInformationService
+                        .getHrInspectionRecordByInspectionRecordId(inspectionRecordId));
     }
 
 }

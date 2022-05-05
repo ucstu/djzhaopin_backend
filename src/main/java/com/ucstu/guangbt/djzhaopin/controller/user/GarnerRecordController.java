@@ -1,9 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.GarnerRecord;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
@@ -60,7 +60,7 @@ public class GarnerRecordController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseBody<List<GarnerRecord>>> getGarnerRecordsByUserInformationId(
+    public ResponseEntity<ResponseBody<PageResult<GarnerRecord>>> getGarnerRecordsByUserInformationId(
             @PathVariable("userInfoId") @NotNull UUID userInformationId,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(userInformationService

@@ -1,9 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.controller.hr;
 
-import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
@@ -60,7 +60,8 @@ public class HrInformationController {
 
     @GetMapping("")
     @PreAuthorize("hasPermission('HrInformations', 'read')")
-    public ResponseEntity<ResponseBody<List<HrInformation>>> getHrInformations(@PageableDefault Pageable pageable) {
+    public ResponseEntity<ResponseBody<PageResult<HrInformation>>> getHrInformations(
+            @PageableDefault Pageable pageable) {
         return ResponseBody.handle(hrInformationService.getHrInformations(pageable));
     }
 
