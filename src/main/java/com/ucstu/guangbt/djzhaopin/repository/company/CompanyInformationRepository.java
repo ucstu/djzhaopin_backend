@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.repository;
+package com.ucstu.guangbt.djzhaopin.repository.company;
 
 import java.util.UUID;
 

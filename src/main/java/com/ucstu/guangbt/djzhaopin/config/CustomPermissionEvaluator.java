@@ -22,16 +22,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
             Object permission) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         JsonWebToken jsonWebToken = userDetails.getJsonWebToken();
-        switch (targetType) {
-            case "HrInformation":
-                return jsonWebToken.getFullInformationId().equals(targetId);
-            case "UserInformation":
-                return jsonWebToken.getFullInformationId().equals(targetId);
-            case "CompanyInformation":
-                return jsonWebToken.getCompanyInformationId().equals(targetId);
-            default:
-                return true;
-        }
+        return true;
     }
 
 }

@@ -24,6 +24,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
@@ -57,11 +58,13 @@ public class AccountInformation {
     private Date updatedAt;
 
     @JsonIgnore
-    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @JoinColumn
+    @OneToOne(cascade = { CascadeType.ALL })
     private UserInformation userInformation;
 
     @JsonIgnore
-    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @JoinColumn
+    @OneToOne(cascade = { CascadeType.ALL })
     private HrInformation hrInformation;
 
     // {1:用户,2:HR}
@@ -73,10 +76,12 @@ public class AccountInformation {
     private String userName;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     private Set<AccountAuthority> authorities;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     private Set<AccountGroup> groups;
 

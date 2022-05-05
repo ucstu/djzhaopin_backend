@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PageResult<T> {
 
-    private Integer totalCount;
+    private long totalCount;
 
     @JsonIgnore
     private List<T> contents;

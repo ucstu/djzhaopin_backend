@@ -13,7 +13,7 @@ import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
-import com.ucstu.guangbt.djzhaopin.repository.AccountInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.account.AccountInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
 

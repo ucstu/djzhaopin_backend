@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,7 +16,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,12 +47,12 @@ public class HrInspectionRecord {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    @NotNull
-    @Type(type = "uuid-char")
-    private UUID hrInformationId;
+    @OneToOne
+    @JoinColumn
+    private HrInformation hrInformation;
 
-    @NotNull
-    @Type(type = "uuid-char")
-    private UUID userInformationId;
+    @OneToOne
+    @JoinColumn
+    private UserInformation userInformation;
 
 }

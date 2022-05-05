@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.config.CustomUserDetails;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
+import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.model.JsonWebToken;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +39,13 @@ public class JsonWebTokenUtil {
         claims.put("accountInformationId", accountInformation.getAccountInformationId());
         claims.put("fullInformationId", accountInformation.getFullInformationId());
         if (accountInformation.getAccountType() == 2) {
-            claims.put("companyInformationId", accountInformation.getHrInformation().getCompanyInformationId());
+            Optional<CompanyInformation> companyInformationOptional = Optional
+                    .ofNullable(accountInformation.getHrInformation().getCompanyInformation());
+            if (companyInformationOptional.isPresent()) {
+                claims.put("companyInformationId", companyInformationOptional.get().getCompanyInformationId());
+            } else {
+                claims.put("companyInformationId", null);
+            }
         }
         claims.put("accountType", accountInformation.getAccountType());
         List<String> authorities = new ArrayList<>();

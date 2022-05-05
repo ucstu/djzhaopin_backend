@@ -15,10 +15,11 @@ import com.ucstu.guangbt.djzhaopin.entity.user.ProjectExperience;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.WorkExperience;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
-import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
-import com.ucstu.guangbt.djzhaopin.repository.PositionInformationRepository;
-import com.ucstu.guangbt.djzhaopin.repository.UserInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.user.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
 import org.springframework.data.domain.Page;
@@ -81,10 +82,14 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<UserInformation>> getUserInformations(Pageable pageable) {
-        ServiceToControllerBody<List<UserInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
+    public ServiceToControllerBody<PageResult<UserInformation>> getUserInformations(Pageable pageable) {
+        ServiceToControllerBody<PageResult<UserInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<UserInformation> userInformations = userInformationRepository.findAll(pageable);
-        return serviceToControllerBody.success(userInformations.getContent());
+        PageResult<UserInformation> pageResult = new PageResult<>();
+        pageResult.setTotalCount(userInformations.getTotalElements());
+        pageResult.setContents(userInformations.getContent());
+        pageResult.setContentsName("userInformations");
+        return serviceToControllerBody.success(pageResult);
     }
 
     @Override
@@ -163,13 +168,18 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<JobExpectation>> getJobExpectationsByUserInformationId(UUID userInformationId,
+    public ServiceToControllerBody<PageResult<JobExpectation>> getJobExpectationsByUserInformationId(
+            UUID userInformationId,
             Pageable pageable) {
         // TODO 未实现分页
-        ServiceToControllerBody<List<JobExpectation>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<JobExpectation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        PageResult<JobExpectation> pageResult = new PageResult<>();
         if (userInformation.isPresent()) {
-            return serviceToControllerBody.success(userInformation.get().getJobExpectations());
+            pageResult.setTotalCount(userInformation.get().getJobExpectations().size());
+            pageResult.setContents(userInformation.get().getJobExpectations());
+            pageResult.setContentsName("jobExpectations");
+            return serviceToControllerBody.success(pageResult);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -265,13 +275,17 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<EducationExperience>> getEducationExperiencesByUserInformationId(
+    public ServiceToControllerBody<PageResult<EducationExperience>> getEducationExperiencesByUserInformationId(
             UUID userInformationId,
             Pageable pageable) {
-        ServiceToControllerBody<List<EducationExperience>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<EducationExperience>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        PageResult<EducationExperience> pageResult = new PageResult<>();
         if (userInformation.isPresent()) {
-            return serviceToControllerBody.success(userInformation.get().getEducationExperiences());
+            pageResult.setTotalCount(userInformation.get().getEducationExperiences().size());
+            pageResult.setContents(userInformation.get().getEducationExperiences());
+            pageResult.setContentsName("educationExperiences");
+            return serviceToControllerBody.success(pageResult);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -371,13 +385,18 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<WorkExperience>> getWorkExperiencesByUserInformationId(UUID userInformationId,
+    public ServiceToControllerBody<PageResult<WorkExperience>> getWorkExperiencesByUserInformationId(
+            UUID userInformationId,
             Pageable pageable) {
         // TODO 未实现分页
-        ServiceToControllerBody<List<WorkExperience>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<WorkExperience>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        PageResult<WorkExperience> pageResult = new PageResult<>();
         if (userInformation.isPresent()) {
-            return serviceToControllerBody.success(userInformation.get().getWorkExperiences());
+            pageResult.setTotalCount(userInformation.get().getWorkExperiences().size());
+            pageResult.setContents(userInformation.get().getWorkExperiences());
+            pageResult.setContentsName("workExperiences");
+            return serviceToControllerBody.success(pageResult);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -476,14 +495,18 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<ProjectExperience>> getProjectExperiencesByUserInformationId(
+    public ServiceToControllerBody<PageResult<ProjectExperience>> getProjectExperiencesByUserInformationId(
             UUID userInformationId,
             Pageable pageable) {
         // TODO 未实现分页
-        ServiceToControllerBody<List<ProjectExperience>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<ProjectExperience>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        PageResult<ProjectExperience> pageResult = new PageResult<>();
         if (userInformation.isPresent()) {
-            return serviceToControllerBody.success(userInformation.get().getProjectExperiences());
+            pageResult.setTotalCount(userInformation.get().getProjectExperiences().size());
+            pageResult.setContents(userInformation.get().getProjectExperiences());
+            pageResult.setContentsName("projectExperiences");
+            return serviceToControllerBody.success(pageResult);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -616,16 +639,24 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByUserInformationId(UUID userInformationId,
+    public ServiceToControllerBody<PageResult<DeliveryRecord>> getDeliveryRecordsByUserInformationId(
+            UUID userInformationId,
             Integer status, Pageable pageable) {
-        ServiceToControllerBody<List<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        PageResult<DeliveryRecord> pageResult = new PageResult<>();
         if (userInformation.isPresent()) {
             List<DeliveryRecord> deliveryRecords = userInformation.get().getDeliveryRecords()
                     .stream()
                     .filter(deliveryRecord -> status == null || deliveryRecord.getStatus().equals(status))
                     .collect(Collectors.toList());
-            return serviceToControllerBody.success(deliveryRecords);
+            pageResult.setTotalCount(deliveryRecords.size());
+            pageResult.setContents(deliveryRecords.stream()
+                    .skip(pageable.getPageSize() * pageable.getPageNumber())
+                    .limit(pageable.getPageSize())
+                    .collect(Collectors.toList()));
+            pageResult.setContentsName("deliveryRecords");
+            return serviceToControllerBody.success(pageResult);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -740,12 +771,16 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<AttentionRecord>> getAttentionRecordsByUserInformationId(
+    public ServiceToControllerBody<PageResult<AttentionRecord>> getAttentionRecordsByUserInformationId(
             UUID userInformationId) {
-        ServiceToControllerBody<List<AttentionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<AttentionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        PageResult<AttentionRecord> pageResult = new PageResult<>();
         if (userInformation.isPresent()) {
-            return serviceToControllerBody.success(userInformation.get().getAttentionRecords());
+            pageResult.setTotalCount(userInformation.get().getAttentionRecords().size());
+            pageResult.setContents(userInformation.get().getAttentionRecords());
+            pageResult.setContentsName("attentionRecords");
+            return serviceToControllerBody.success(pageResult);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -856,14 +891,20 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<UserInspectionRecord>> getUserInspectionRecordsByUserInformationId(
+    public ServiceToControllerBody<PageResult<UserInspectionRecord>> getUserInspectionRecordsByUserInformationId(
             UUID userInformationId,
             Pageable pageable) {
-        ServiceToControllerBody<List<UserInspectionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<UserInspectionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        PageResult<UserInspectionRecord> pageResult = new PageResult<>();
         if (userInformation.isPresent()) {
-            // TODO 只返回了UserInspectionRecord，未返回pageable
-            return serviceToControllerBody.success(userInformation.get().getUserInspectionRecords());
+            pageResult.setTotalCount(userInformation.get().getUserInspectionRecords().size());
+            pageResult.setContents(userInformation.get().getUserInspectionRecords().stream()
+                    .skip(pageable.getPageNumber() * pageable.getPageSize())
+                    .limit(pageable.getPageSize())
+                    .collect(Collectors.toList()));
+            pageResult.setContentsName("inspectionRecords");
+            return serviceToControllerBody.success(pageResult);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
@@ -998,12 +1039,18 @@ public class UserInformationServiceImpl implements UserInformationService {
     }
 
     @Override
-    public ServiceToControllerBody<List<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userInformationId,
+    public ServiceToControllerBody<PageResult<GarnerRecord>> getGarnerRecordsByUserInformationId(UUID userInformationId,
             Pageable pageable) {
-        ServiceToControllerBody<List<GarnerRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<GarnerRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
+        PageResult<GarnerRecord> pageResult = new PageResult<>();
         if (userInformation.isPresent()) {
-            return serviceToControllerBody.success(userInformation.get().getGarnerRecords());
+            pageResult.setTotalCount(userInformation.get().getGarnerRecords().size());
+            pageResult.setContents(userInformation.get().getGarnerRecords().stream()
+                    .skip(pageable.getPageNumber() * pageable.getPageSize())
+                    .limit(pageable.getPageSize()).collect(Collectors.toList()));
+            pageResult.setContentsName("garnerRecords");
+            return serviceToControllerBody.success(pageResult);
         } else {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }

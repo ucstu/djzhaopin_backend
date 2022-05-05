@@ -39,31 +39,31 @@ public class HrInspectionRecordController {
     @PreAuthorize("hasPermission(#hrInformationId, 'HrInspectionRecord', 'create')")
     public ResponseEntity<ResponseBody<HrInspectionRecord>> createHrInspectionRecord(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
-            @Valid @RequestBody HrInspectionRecord hrInspectionRecord) {
+            @Valid @RequestBody HrInspectionRecord hrHrInspectionRecord) {
         return ResponseBody.handle(
-                hrInformationService.createHrInspectionRecord(hrInformationId, hrInspectionRecord));
+                hrInformationService.createHrInspectionRecord(hrInformationId, hrHrInspectionRecord));
     }
 
     @DeleteMapping("/{inspectionRecordId}")
     @PreAuthorize("hasPermission(#hrInformationId, 'HrInspectionRecord', 'delete')")
-    public ResponseEntity<ResponseBody<HrInspectionRecord>> deleteHrInspectionRecordByInspectionRecordId(
+    public ResponseEntity<ResponseBody<HrInspectionRecord>> deleteHrInspectionRecordByHrInspectionRecordId(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId) {
         return ResponseBody
                 .handle(hrInformationService
-                        .deleteHrInspectionRecordByInspectionRecordId(inspectionRecordId));
+                        .deleteHrInspectionRecordByHrInspectionRecordId(inspectionRecordId));
     }
 
     @PutMapping("/{inspectionRecordId}")
     @PreAuthorize("hasPermission(#hrInformationId, 'HrInspectionRecord', 'update')")
-    public ResponseEntity<ResponseBody<HrInspectionRecord>> updateHrInspectionRecordByInspectionRecordId(
+    public ResponseEntity<ResponseBody<HrInspectionRecord>> updateHrInspectionRecordByHrInspectionRecordId(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId,
-            @Valid @RequestBody HrInspectionRecord hrInspectionRecord) {
+            @Valid @RequestBody HrInspectionRecord hrHrInspectionRecord) {
         return ResponseBody
-                .handle(hrInformationService.updateHrInspectionRecordByInspectionRecordId(
+                .handle(hrInformationService.updateHrInspectionRecordByHrInspectionRecordId(
                         inspectionRecordId,
-                        hrInspectionRecord));
+                        hrHrInspectionRecord));
     }
 
     @GetMapping("")
@@ -78,12 +78,12 @@ public class HrInspectionRecordController {
 
     @GetMapping("/{inspectionRecordId}")
     @PreAuthorize("hasPermission(#hrInformationId, 'HrInspectionRecord', 'read')")
-    public ResponseEntity<ResponseBody<HrInspectionRecord>> getHrInspectionRecordByInspectionRecordId(
+    public ResponseEntity<ResponseBody<HrInspectionRecord>> getHrInspectionRecordByHrInspectionRecordId(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId) {
         return ResponseBody
                 .handle(hrInformationService
-                        .getHrInspectionRecordByInspectionRecordId(inspectionRecordId));
+                        .getHrInspectionRecordByHrInspectionRecordId(inspectionRecordId));
     }
 
 }

@@ -1,7 +1,5 @@
 package com.ucstu.guangbt.djzhaopin.entity.user;
 
-import static org.mockito.ArgumentMatchers.nullable;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +24,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -86,6 +85,7 @@ public class UserInformation {
     @Range(min = 1, max = 3)
     private Integer jobStatus;
 
+    @JoinColumn
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> pictureWorks;
 
@@ -95,34 +95,42 @@ public class UserInformation {
     private Integer privacySettings;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<JobExpectation> jobExpectations;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<EducationExperience> educationExperiences;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<WorkExperience> workExperiences;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<ProjectExperience> projectExperiences;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<DeliveryRecord> deliveryRecords;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<AttentionRecord> attentionRecords;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<UserInspectionRecord> userInspectionRecords;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<GarnerRecord> garnerRecords;
 

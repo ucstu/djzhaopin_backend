@@ -2,10 +2,10 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
@@ -13,9 +13,9 @@ import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
-import com.ucstu.guangbt.djzhaopin.repository.CompanyInformationRepository;
-import com.ucstu.guangbt.djzhaopin.repository.DeliveryRecordRepository;
-import com.ucstu.guangbt.djzhaopin.repository.PositionInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.user.DeliveryRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
 import org.springframework.data.domain.Page;
@@ -74,14 +74,16 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             Pageable pageable) {
         ServiceToControllerBody<PageResult<CompanyInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<CompanyInformation> companyInformations = companyInformationRepository.findAll(pageable);
-        PageResult<CompanyInformation> responseBody = new HashMap<>();
+        PageResult<CompanyInformation> pageResult = new PageResult<>();
         if (companyInformations.hasContent()) {
-            responseBody.put("companyInformations", companyInformations.getContent());
-            return serviceToControllerBody.success(responseBody);
+            pageResult.setTotalCount(companyInformations.getTotalElements());
+            pageResult.setContents(companyInformations.getContent());
+            pageResult.setContentsName("companyInformations");
+            return serviceToControllerBody.success(pageResult);
         }
-        responseBody.put("totalCount", companyInformations.getTotalElements());
-        responseBody.put("companyInformations", new ArrayList<>());
-        return serviceToControllerBody.success(responseBody);
+        pageResult.setTotalCount(0);
+        pageResult.setContents(new ArrayList<>());
+        return serviceToControllerBody.success(pageResult);
     }
 
     @Override
@@ -97,32 +99,44 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<List<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
+    public ServiceToControllerBody<PageResult<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
             UUID companyInformationId, Date createdAt, Date updatedAt, List<Integer> status,
             List<Integer> workingYears, List<String> sexs, List<Integer> ages,
             List<UUID> positionInformationIds, List<Date> deliveryDates, String search, Pageable pageable) {
         // TODO 完善搜索功能
-        ServiceToControllerBody<List<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll(pageable);
+        PageResult<DeliveryRecord> pageResult = new PageResult<>();
         if (deliveryRecords.hasContent()) {
-            return serviceToControllerBody.success(deliveryRecords.getContent());
+            pageResult.setTotalCount(deliveryRecords.getTotalElements());
+            pageResult.setContents(deliveryRecords.getContent());
+            pageResult.setContentsName("deliveryRecords");
+            return serviceToControllerBody.success(pageResult);
         }
-        return serviceToControllerBody.success(new ArrayList<>());
+        pageResult.setTotalCount(0);
+        pageResult.setContents(new ArrayList<>());
+        return serviceToControllerBody.success(pageResult);
     }
 
     @Override
-    public ServiceToControllerBody<List<PositionInformation>> getPositionInfos(String positionName, String salary,
+    public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName, String salary,
             List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
             List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
             List<Integer> financingStages, List<String> comprehensions, String workingPlace,
             Pageable pageable) {
         // TODO 完善搜索功能
-        ServiceToControllerBody<List<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody();
+        ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody();
         Page<PositionInformation> positionInformations = positionInformationRepository.findAll(pageable);
+        PageResult<PositionInformation> pageResult = new PageResult<>();
         if (positionInformations.hasContent()) {
-            return serviceToControllerBody.success(positionInformations.getContent());
+            pageResult.setTotalCount(positionInformations.getTotalElements());
+            pageResult.setContents(positionInformations.getContent());
+            pageResult.setContentsName("positionInformations");
+            return serviceToControllerBody.success(pageResult);
         }
-        return serviceToControllerBody.success(new ArrayList<>());
+        pageResult.setTotalCount(0);
+        pageResult.setContents(new ArrayList<>());
+        return serviceToControllerBody.success(pageResult);
     }
 
     @Override
@@ -186,17 +200,17 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             if (positionInformationOptional.isPresent()) {
                 PositionInformation positionInformation1 = positionInformationOptional.get();
                 positionInformation1.setCeilingSalary(positionInformation.getCeilingSalary());
-                positionInformation1.setCompanyInformationId(positionInformation.getCompanyInformationId());
+                positionInformation1.setCompanyInformation(companyInformation);
                 positionInformation1.setDepartmentName(positionInformation.getDepartmentName());
                 positionInformation1.setDescription(positionInformation.getDescription());
                 positionInformation1.setDirectionTags(positionInformation.getDirectionTags());
                 positionInformation1.setEducation(positionInformation.getEducation());
                 positionInformation1.setHighlights(positionInformation.getHighlights());
-                positionInformation1.setHrInformationId(positionInformation.getHrInformationId());
+                positionInformation1.setHrInformation(positionInformation.getHrInformation());
                 positionInformation1.setPositionName(positionInformation.getPositionName());
-                positionInformation1.setPositionInterviewInfo(positionInformation.getPositionInterviewInfo());
+                positionInformation1.setInterviewInfo(positionInformation.getInterviewInfo());
                 positionInformation1.setPositionType(positionInformation.getPositionType());
-                positionInformation1.setPlace(positionInformation.getPlace());
+                positionInformation1.setExactAddress(positionInformation.getExactAddress());
                 positionInformation1.setStartingSalary(positionInformation.getStartingSalary());
                 positionInformation1.setWeekendReleaseTime(positionInformation.getWeekendReleaseTime());
                 positionInformation1.setWorkCityName(positionInformation.getWorkCityName());
@@ -212,7 +226,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<List<PositionInformation>> getPositionInformationsByCompanyInformationId(
+    public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInformationsByCompanyInformationId(
             UUID companyInformationId,
             String positionName, String salary,
             List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
@@ -220,11 +234,79 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             List<Integer> financingStages, List<String> comprehensions, String workingPlace,
             Pageable pageable) {
         // TODO 完善搜索功能
-        ServiceToControllerBody<List<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
+        ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
+        PageResult<PositionInformation> pageResult = new PageResult<>();
         if (companyInformationOptional.isPresent()) {
-            return serviceToControllerBody.success(companyInformationOptional.get().getPositionInformations());
+            CompanyInformation companyInformation = companyInformationOptional.get();
+            List<PositionInformation> positionInformations = companyInformation.getPositionInformations();
+            if (positionName != null) {
+                positionInformations = positionInformations.stream()
+                        .filter(positionInformation -> positionInformation.getPositionName()
+                                .contains(positionName))
+                        .collect(Collectors.toList());
+            }
+            // if (salary != null) {
+            // positionInformations = positionInformations.stream()
+            // .filter(positionInformation -> positionInformation.getStartingSalary()
+            // .contains(salary))
+            // .collect(Collectors.toList());
+            // }
+            if (workingYears != null) {
+                positionInformations = positionInformations.stream()
+                        .filter(positionInformation -> workingYears.contains(positionInformation.getWorkingYears()))
+                        .collect(Collectors.toList());
+            }
+            if (educations != null) {
+                positionInformations = positionInformations.stream()
+                        .filter(positionInformation -> educations.contains(positionInformation.getEducation()))
+                        .collect(Collectors.toList());
+            }
+            if (directionTags != null) {
+                positionInformations = positionInformations.stream()
+                        .filter(positionInformation -> directionTags.contains(positionInformation.getDirectionTags()))
+                        .collect(Collectors.toList());
+            }
+            if (workAreas != null) {
+                positionInformations = positionInformations.stream()
+                        .filter(positionInformation -> workAreas.contains(positionInformation.getWorkAreaName()))
+                        .collect(Collectors.toList());
+            }
+            if (positionTypes != null) {
+                positionInformations = positionInformations.stream()
+                        .filter(positionInformation -> positionTypes.contains(positionInformation.getPositionType()))
+                        .collect(Collectors.toList());
+            }
+            // if (scales != null) {
+            // positionInformations = positionInformations.stream()
+            // .filter(positionInformation -> scales.contains(positionInformation.get()))
+            // .collect(Collectors.toList());
+            // }
+            // if (financingStages != null) {
+            // positionInformations = positionInformations.stream()
+            // .filter(positionInformation -> financingStages
+            // .contains(positionInformation.getFinancingStage()))
+            // .collect(Collectors.toList());
+            // }
+            // if (comprehensions != null) {
+            // positionInformations = positionInformations.stream()
+            // .filter(positionInformation ->
+            // comprehensions.contains(positionInformation.getComprehension()))
+            // .collect(Collectors.toList());
+            // }
+            if (workingPlace != null) {
+                positionInformations = positionInformations.stream()
+                        .filter(positionInformation -> positionInformation.getWorkCityName()
+                                .contains(workingPlace))
+                        .collect(Collectors.toList());
+            }
+            pageResult.setTotalCount(positionInformations.size());
+            pageResult.setContents(positionInformations.stream()
+                    .skip(pageable.getPageSize() * pageable.getPageNumber())
+                    .limit(pageable.getPageSize())
+                    .collect(Collectors.toList()));
+            return serviceToControllerBody.success(pageResult);
         }
         return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
     }

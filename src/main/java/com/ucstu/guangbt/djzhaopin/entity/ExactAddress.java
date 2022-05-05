@@ -1,4 +1,4 @@
-package com.ucstu.guangbt.djzhaopin.entity.company.position;
+package com.ucstu.guangbt.djzhaopin.entity;
 
 import java.util.Date;
 import java.util.UUID;
@@ -28,13 +28,13 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-public class PositionInterviewInfo {
+public class ExactAddress {
 
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private UUID interviewInfoId;
+    private UUID exactAddressId;
 
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -47,19 +47,11 @@ public class PositionInterviewInfo {
     private Date updatedAt;
 
     @NotNull
-    @Range(min = 1, max = 3)
-    private Integer situation;
+    @Range(min = 0, max = 180)
+    private Float longitude;
 
     @NotNull
-    @Range(min = 1, max = 4)
-    private Integer wheel;
-
-    @NotNull
-    @Range(min = 1, max = 2)
-    private Integer time;
-
-    @NotNull
-    @Range(min = 1, max = 4)
-    private Integer illustrate;
+    @Range(min = 0, max = 90)
+    private Float latitude;
 
 }

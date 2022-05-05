@@ -8,7 +8,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ucstu.guangbt.djzhaopin.entity.Place;
+import com.ucstu.guangbt.djzhaopin.entity.ExactAddress;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 
 import org.hibernate.annotations.Type;
@@ -24,6 +24,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
@@ -89,14 +90,17 @@ public class CompanyInformation {
 
     private String establishmentTime;
 
+    @JoinColumn
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> benefits;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<PositionInformation> positionInformations;
 
+    @JoinColumn
     @JsonProperty("location")
-    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-    private Place place;
+    @OneToOne(cascade = { CascadeType.ALL })
+    private ExactAddress exactAddress;
 }
