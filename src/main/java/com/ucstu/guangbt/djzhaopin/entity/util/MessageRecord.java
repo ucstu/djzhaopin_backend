@@ -70,4 +70,6 @@ public class MessageRecord {
     @NotBlank
     private String content;
 
+    private Boolean isRead;
+
 }
