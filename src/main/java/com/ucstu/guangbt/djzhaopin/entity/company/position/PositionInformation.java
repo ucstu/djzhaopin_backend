@@ -12,6 +12,8 @@ import com.ucstu.guangbt.djzhaopin.entity.ExactAddress;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.entity.user.GarnerRecord;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
@@ -86,10 +88,12 @@ public class PositionInformation {
     private String workAreaName;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn
     private CompanyInformation companyInformation;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn
     private HrInformation hrInformation;
 
@@ -130,7 +134,18 @@ public class PositionInformation {
     private ExactAddress exactAddress;
 
     @JsonIgnore
+    @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<DeliveryRecord> deliveryRecords;
+
+    @JsonIgnore
+    @JoinColumn
+    @OneToMany(cascade = { CascadeType.ALL })
+    private List<GarnerRecord> garnerRecords;
+
+    @JsonIgnore
+    @JoinColumn
+    @OneToMany(cascade = { CascadeType.ALL })
+    private List<UserInspectionRecord> userInspectionRecords;
 
 }

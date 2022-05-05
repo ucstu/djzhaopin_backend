@@ -55,8 +55,9 @@ public class HrInformation {
     @Column(nullable = false)
     private Date updatedAt;
 
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn
-    @ManyToOne(cascade = CascadeType.ALL)
     private CompanyInformation companyInformation;
 
     private String avatarUrl;

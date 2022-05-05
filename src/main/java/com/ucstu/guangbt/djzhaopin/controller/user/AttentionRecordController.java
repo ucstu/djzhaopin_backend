@@ -71,7 +71,7 @@ public class AttentionRecordController {
             @PageableDefault(size = 10) Pageable pageable) {
 
         return ResponseBody.handle(userInformationService
-                .getAttentionRecordsByUserInformationId(userInformationId));
+                .getAttentionRecordsByUserInformationId(userInformationId, pageable));
     }
 
     @GetMapping("/{attentionRecordId}")

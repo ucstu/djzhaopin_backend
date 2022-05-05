@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ucstu.guangbt.djzhaopin.entity.ExactAddress;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
+import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
+import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
@@ -103,4 +105,14 @@ public class CompanyInformation {
     @JsonProperty("location")
     @OneToOne(cascade = { CascadeType.ALL })
     private ExactAddress exactAddress;
+
+    @JsonIgnore
+    @JoinColumn
+    @OneToMany(cascade = { CascadeType.ALL })
+    private List<AttentionRecord> attentionRecords;
+
+    @JsonIgnore
+    @JoinColumn
+    @OneToMany(cascade = { CascadeType.ALL })
+    private List<HrInformation> hrInformations;
 }

@@ -9,6 +9,7 @@ import com.ucstu.guangbt.djzhaopin.entity.hr.HrInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.hr.HrInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
 import org.springframework.data.domain.Page;
@@ -24,18 +25,26 @@ public class HrInformationServiceImpl implements HrInformationService {
     @Resource
     private HrInformationRepository hrInformationRepository;
 
+    @Resource
+    private HrInspectionRecordRepository hrInspectionRecordRepository;
+
     @Override
     @Transactional
     public ServiceToControllerBody<HrInformation> createHrInformation(HrInformation hrInformation) {
-        // TODO Auto-generated method stub
-        return null;
+        ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
+        return serviceToControllerBody.success(hrInformationRepository.save(hrInformation));
     }
 
     @Override
     @Transactional
     public ServiceToControllerBody<HrInformation> deleteHrInformationByHrInfoId(UUID hrInformationId) {
-        // TODO Auto-generated method stub
-        return null;
+        ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
+        if (!hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
+        }
+        hrInformationRepository.delete(hrInformationOptional.get());
+        return serviceToControllerBody.success(hrInformationOptional.get());
     }
 
     @Override
@@ -44,11 +53,11 @@ public class HrInformationServiceImpl implements HrInformationService {
             HrInformation hrInformation) {
         ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
-        if (hrInformationOptional.isPresent()) {
-            hrInformation.setHrInformationId(hrInformationId);
-            return serviceToControllerBody.success(hrInformationRepository.save(hrInformation));
+        if (!hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
         }
-        return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
+        hrInformation.setHrInformationId(hrInformationId);
+        return serviceToControllerBody.success(hrInformationRepository.save(hrInformation));
     }
 
     @Override
@@ -56,14 +65,14 @@ public class HrInformationServiceImpl implements HrInformationService {
         ServiceToControllerBody<PageResult<HrInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Page<HrInformation> hrInformations = hrInformationRepository.findAll(pageable);
         PageResult<HrInformation> pageResult = new PageResult<>();
-        if (hrInformations.hasContent()) {
-            pageResult.setTotalCount(hrInformations.getTotalElements());
-            pageResult.setContents(hrInformations.getContent());
-            pageResult.setContentsName("hrInformations");
+        if (!hrInformations.hasContent()) {
+            pageResult.setTotalCount(0);
+            pageResult.setContents(new ArrayList<>());
             return serviceToControllerBody.success(pageResult);
         }
-        pageResult.setTotalCount(0);
-        pageResult.setContents(new ArrayList<>());
+        pageResult.setTotalCount(hrInformations.getTotalElements());
+        pageResult.setContents(hrInformations.getContent());
+        pageResult.setContentsName("hrInformations");
         return serviceToControllerBody.success(pageResult);
     }
 
@@ -71,48 +80,85 @@ public class HrInformationServiceImpl implements HrInformationService {
     public ServiceToControllerBody<HrInformation> getHrInformationByHrInformationId(UUID hrInformationId) {
         ServiceToControllerBody<HrInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
-        if (hrInformationOptional.isPresent()) {
-            return serviceToControllerBody.success(hrInformationOptional.get());
+        if (!hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
         }
-        return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
+        return serviceToControllerBody.success(hrInformationOptional.get());
     }
 
     @Override
     @Transactional
     public ServiceToControllerBody<HrInspectionRecord> createHrInspectionRecord(UUID hrInformationId,
             HrInspectionRecord hrHrInspectionRecord) {
-        // TODO Auto-generated method stub
-        return null;
+        ServiceToControllerBody<HrInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
+        if (!hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
+        }
+        hrHrInspectionRecord.setHrInformation(hrInformationOptional.get());
+        return serviceToControllerBody.success(hrInspectionRecordRepository.save(hrHrInspectionRecord));
     }
 
     @Override
     @Transactional
     public ServiceToControllerBody<HrInspectionRecord> deleteHrInspectionRecordByHrInspectionRecordId(
             UUID inspectionRecordId) {
-        // TODO Auto-generated method stub
-        return null;
+        ServiceToControllerBody<HrInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<HrInspectionRecord> hrInspectionRecordOptional = hrInspectionRecordRepository
+                .findById(inspectionRecordId);
+        if (!hrInspectionRecordOptional.isPresent()) {
+            return serviceToControllerBody.error("inspectionRecordId", "HR查看记录不存在", inspectionRecordId);
+        }
+        hrInspectionRecordRepository.delete(hrInspectionRecordOptional.get());
+        return serviceToControllerBody.success(hrInspectionRecordOptional.get());
     }
 
     @Override
     @Transactional
     public ServiceToControllerBody<HrInspectionRecord> updateHrInspectionRecordByHrInspectionRecordId(
             UUID inspectionRecordId, HrInspectionRecord hrHrInspectionRecord) {
-        // TODO Auto-generated method stub
-        return null;
+        ServiceToControllerBody<HrInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<HrInspectionRecord> hrInspectionRecordOptional = hrInspectionRecordRepository
+                .findById(inspectionRecordId);
+        if (!hrInspectionRecordOptional.isPresent()) {
+            return serviceToControllerBody.error("inspectionRecordId", "HR查看记录不存在", inspectionRecordId);
+        }
+        hrHrInspectionRecord.setHrInspectionRecordId(inspectionRecordId);
+        return serviceToControllerBody.success(hrInspectionRecordRepository.save(hrHrInspectionRecord));
     }
 
     @Override
     public ServiceToControllerBody<PageResult<HrInspectionRecord>> getHrInspectionRecordByHrInformationId(
             UUID hrInformationId, Pageable pageable) {
-        // TODO Auto-generated method stub
-        return null;
+        ServiceToControllerBody<PageResult<HrInspectionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
+        if (!hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
+        }
+        Page<HrInspectionRecord> hrInspectionRecords = hrInspectionRecordRepository.findByHrInformation(
+                hrInformationOptional.get(), pageable);
+        PageResult<HrInspectionRecord> pageResult = new PageResult<>();
+        if (!hrInspectionRecords.hasContent()) {
+            pageResult.setTotalCount(0);
+            pageResult.setContents(new ArrayList<>());
+            return serviceToControllerBody.success(pageResult);
+        }
+        pageResult.setTotalCount(hrInspectionRecords.getTotalElements());
+        pageResult.setContents(hrInspectionRecords.getContent());
+        pageResult.setContentsName("hrInspectionRecords");
+        return serviceToControllerBody.success(pageResult);
     }
 
     @Override
     public ServiceToControllerBody<HrInspectionRecord> getHrInspectionRecordByHrInspectionRecordId(
             UUID inspectionRecordId) {
-        // TODO Auto-generated method stub
-        return null;
+        ServiceToControllerBody<HrInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<HrInspectionRecord> hrInspectionRecordOptional = hrInspectionRecordRepository
+                .findById(inspectionRecordId);
+        if (!hrInspectionRecordOptional.isPresent()) {
+            return serviceToControllerBody.error("inspectionRecordId", "HR查看记录不存在", inspectionRecordId);
+        }
+        return serviceToControllerBody.success(hrInspectionRecordOptional.get());
     }
 
 }

@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 
 import org.hibernate.annotations.Type;
@@ -48,11 +51,33 @@ public class HrInspectionRecord {
     private Date updatedAt;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn
     private HrInformation hrInformation;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn
     private UserInformation userInformation;
+
+    @JsonGetter("hrInformationId")
+    public UUID getHrInformationId() {
+        return hrInformation.getHrInformationId();
+    }
+
+    @JsonSetter("hrInformationId")
+    public void setHrInformationId(UUID hrInformationId) {
+        hrInformation = new HrInformation().setHrInformationId(hrInformationId);
+    }
+
+    @JsonGetter("userInformationId")
+    public UUID getUserInformationId() {
+        return userInformation.getUserInformationId();
+    }
+
+    @JsonSetter("userInformationId")
+    public void setUserInformationId(UUID userInformationId) {
+        userInformation = new UserInformation().setUserInformationId(userInformationId);
+    }
 
 }

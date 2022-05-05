@@ -4,7 +4,12 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
+import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
@@ -16,7 +21,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,10 +52,6 @@ public class DeliveryRecord {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    @NotNull
-    @Type(type = "uuid-char")
-    private UUID userInformationId;
-
     // {1:待查看,2:已查看,3:通过筛选,4:约面试,5:不合适}
     @Range(min = 1, max = 5)
     private Integer status;
@@ -57,12 +59,49 @@ public class DeliveryRecord {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date interviewTime;
 
-    @NotNull
-    @Type(type = "uuid-char")
-    private UUID companyInformationId;
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn
+    private UserInformation userInformation;
 
-    @NotNull
-    @Type(type = "uuid-char")
-    private UUID positionInformationId;
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn
+    private CompanyInformation companyInformation;
+
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn
+    private PositionInformation positionInformation;
+
+    @JsonGetter("userInformationId")
+    public UUID getUserInformationId() {
+        return userInformation.getUserInformationId();
+    }
+
+    @JsonSetter("userInformationId")
+    public void setUserInformationId(UUID userInformationId) {
+        userInformation = new UserInformation().setUserInformationId(userInformationId);
+    }
+
+    @JsonGetter("companyInformationId")
+    public UUID getCompanyInformationId() {
+        return companyInformation.getCompanyInformationId();
+    }
+
+    @JsonSetter("companyInformationId")
+    public void setCompanyInformationId(UUID companyInformationId) {
+        companyInformation = new CompanyInformation().setCompanyInformationId(companyInformationId);
+    }
+
+    @JsonGetter("positionInformationId")
+    public UUID getPositionInformationId() {
+        return positionInformation.getPositionInformationId();
+    }
+
+    @JsonSetter("positionInformationId")
+    public void setPositionInformationId(UUID positionInformationId) {
+        positionInformation = new PositionInformation().setPositionInformationId(positionInformationId);
+    }
 
 }
