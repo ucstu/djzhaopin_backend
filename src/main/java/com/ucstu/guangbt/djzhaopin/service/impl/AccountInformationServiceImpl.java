@@ -63,7 +63,7 @@ public class AccountInformationServiceImpl implements
                     .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
                     .setAccountType(registerRequest.getAccountType())
                     .setUserInformation(new UserInformation().setEmail(registerRequest.getUserName()).setAvatarUrl(
-                            "/image/heard1.jpg"))));
+                            "/image/heard1.jpg").setPrivacySettings(1))));
         }
         if (registerRequest.getAccountType() == 2) {
             return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()

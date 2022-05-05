@@ -31,7 +31,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class UtilServiceImpl implements UtilService {
 
@@ -614,25 +616,39 @@ public class UtilServiceImpl implements UtilService {
     @Override
     public ServiceToControllerBody<String> uploadFile(MultipartFile file) {
         ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
-        File newFile = new File("/var/www/html/file/" + file.getOriginalFilename());
+        if (file.isEmpty()) {
+            return serviceToControllerBody.error("file", "文件为空", null);
+        }
+        String fileName = file.getOriginalFilename();
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        fileName = UUID.randomUUID().toString() + suffixName;
+        File dest = new File("/var/www/html/file/" + fileName);
         try {
-            file.transferTo(newFile);
+            file.transferTo(dest);
         } catch (IOException e) {
+            log.error("文件上传失败:{}", e);
             return serviceToControllerBody.error("file", "文件上传失败", file.getOriginalFilename());
         }
-        return serviceToControllerBody.success("/file/" + file.getOriginalFilename());
+        return serviceToControllerBody.success("/file/" + fileName);
     }
 
     @Override
     public ServiceToControllerBody<String> uploadAvatar(MultipartFile avatar) {
         ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
-        File newAvatar = new File("/var/www/html/avatar/" + avatar.getOriginalFilename());
+        if (avatar.isEmpty()) {
+            return serviceToControllerBody.error("file", "文件为空", null);
+        }
+        String avatarName = avatar.getOriginalFilename();
+        String suffixName = avatarName.substring(avatarName.lastIndexOf("."));
+        avatarName = UUID.randomUUID() + suffixName;
+        File dest = new File("/var/www/html/avatar/" + avatarName);
         try {
-            avatar.transferTo(newAvatar);
+            avatar.transferTo(dest);
         } catch (IOException e) {
+            log.error("头像上传失败:{}", e);
             return serviceToControllerBody.error("avatar", "头像上传失败", avatar.getOriginalFilename());
         }
-        return serviceToControllerBody.success("/avatar/" + avatar.getOriginalFilename());
+        return serviceToControllerBody.success("/avatar/" + avatarName);
     }
 
 }

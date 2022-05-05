@@ -8,12 +8,14 @@ import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
+import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
 import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.DeliveryRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
@@ -33,6 +35,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Resource
     private PositionInformationRepository positionInformationRepository;
+
+    @Resource
+    private HrInformationRepository hrInformationRepository;
 
     @Resource
     private DeliveryRecordRepository deliveryRecordRepository;
@@ -154,10 +159,17 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
+        Optional<HrInformation> hrInformationOptional = hrInformationRepository
+                .findById(positionInformation.getHrInformationId());
         if (!companyInformationOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
         }
+        if (!hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在",
+                    positionInformation.getHrInformationId());
+        }
         positionInformation.setCompanyInformation(companyInformationOptional.get());
+        positionInformation.setHrInformation(hrInformationOptional.get());
         return serviceToControllerBody.created(positionInformationRepository.save(positionInformation));
     }
 
@@ -190,8 +202,14 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         ServiceToControllerBody<PositionInformation> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
+        Optional<HrInformation> hrInformationOptional = hrInformationRepository
+                .findById(positionInformation.getHrInformationId());
         if (!companyInformationOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
+        }
+        if (!hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在",
+                    positionInformation.getHrInformationId());
         }
         Optional<PositionInformation> positionInformationOptional = companyInformationOptional.get()
                 .getPositionInformations()

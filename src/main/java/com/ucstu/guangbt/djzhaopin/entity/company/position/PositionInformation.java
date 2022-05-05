@@ -6,8 +6,10 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.ucstu.guangbt.djzhaopin.entity.ExactAddress;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
@@ -147,5 +149,25 @@ public class PositionInformation {
     @JoinColumn
     @OneToMany(cascade = { CascadeType.ALL })
     private List<UserInspectionRecord> userInspectionRecords;
+
+    @JsonGetter("companyInformationId")
+    public UUID getCompanyInformationId() {
+        return companyInformation.getCompanyInformationId();
+    }
+
+    @JsonSetter("companyInformationId")
+    public void setCompanyInformationId(UUID companyInformationId) {
+        companyInformation = new CompanyInformation().setCompanyInformationId(companyInformationId);
+    }
+
+    @JsonGetter("hrInformationId")
+    public UUID getHrInformationId() {
+        return hrInformation.getHrInformationId();
+    }
+
+    @JsonSetter("hrInformationId")
+    public void setHrInformationId(UUID hrInformationId) {
+        hrInformation = new HrInformation().setHrInformationId(hrInformationId);
+    }
 
 }
