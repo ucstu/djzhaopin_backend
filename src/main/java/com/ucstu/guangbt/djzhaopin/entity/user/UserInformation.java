@@ -145,9 +145,11 @@ public class UserInformation {
     @JsonGetter("education")
     public Integer getEducation() {
         Integer maxEducation = 0;
-        for (EducationExperience educationExperience : educationExperiences) {
-            if (educationExperience.getEducation() > maxEducation) {
-                maxEducation = educationExperience.getEducation();
+        if (educationExperiences != null) {
+            for (EducationExperience educationExperience : educationExperiences) {
+                if (educationExperience.getEducation() > maxEducation) {
+                    maxEducation = educationExperience.getEducation();
+                }
             }
         }
         return maxEducation;
