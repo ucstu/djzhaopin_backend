@@ -789,8 +789,20 @@ public class UserInformationServiceImpl implements UserInformationService {
             UserInspectionRecord inspectionRecord) {
         ServiceToControllerBody<UserInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userInformationId);
+        Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
+                .findById(inspectionRecord.getCompanyInformationId());
+        Optional<PositionInformation> positionInformationOptional = positionInformationRepository
+                .findById(inspectionRecord.getPositionInformationId());
         if (!userInformationOptional.isPresent()) {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
+        }
+        if (!companyInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("companyInformationId", "公司信息不存在",
+                    inspectionRecord.getCompanyInformationId());
+        }
+        if (!positionInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
+                    inspectionRecord.getPositionInformationId());
         }
         inspectionRecord.setUserInformation(userInformationOptional.get());
         return serviceToControllerBody.created(userInspectionRecordRepository.save(inspectionRecord));
@@ -823,8 +835,20 @@ public class UserInformationServiceImpl implements UserInformationService {
             UUID userInformationId, UUID inspectionRecordId, UserInspectionRecord inspectionRecord) {
         ServiceToControllerBody<UserInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userInformationId);
+        Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
+                .findById(inspectionRecord.getCompanyInformationId());
+        Optional<PositionInformation> positionInformationOptional = positionInformationRepository
+                .findById(inspectionRecord.getPositionInformationId());
         if (!userInformationOptional.isPresent()) {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
+        }
+        if (!companyInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("companyInformationId", "公司信息不存在",
+                    inspectionRecord.getCompanyInformationId());
+        }
+        if (!positionInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
+                    inspectionRecord.getPositionInformationId());
         }
         Optional<UserInspectionRecord> userInspectionRecordOptional = userInformationOptional.get()
                 .getUserInspectionRecords().stream()

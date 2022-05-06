@@ -6,10 +6,12 @@ import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInspectionRecord;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.hr.HrInspectionRecordRepository;
+import com.ucstu.guangbt.djzhaopin.repository.user.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 
 import org.springframework.data.domain.Page;
@@ -27,6 +29,9 @@ public class HrInformationServiceImpl implements HrInformationService {
 
     @Resource
     private HrInspectionRecordRepository hrInspectionRecordRepository;
+
+    @Resource
+    private UserInformationRepository userInformationRepository;
 
     @Override
     @Transactional
@@ -60,6 +65,7 @@ public class HrInformationServiceImpl implements HrInformationService {
         hrInformation.setCreatedAt(hrInformationOptional.get().getCreatedAt());
         hrInformation.setCompanyInformation(hrInformationOptional.get().getCompanyInformation());
         hrInformation.setHrInspectionRecords(hrInformationOptional.get().getHrInspectionRecords());
+        hrInformation.setPositionInformations(hrInformationOptional.get().getPositionInformations());
         return serviceToControllerBody.success(hrInformationRepository.save(hrInformation));
     }
 
@@ -95,11 +101,19 @@ public class HrInformationServiceImpl implements HrInformationService {
     public ServiceToControllerBody<HrInspectionRecord> createHrInspectionRecord(UUID hrInformationId,
             HrInspectionRecord hrHrInspectionRecord) {
         ServiceToControllerBody<HrInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
-        Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrInformationId);
+        Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrHrInspectionRecord
+                .getHrInformation().getHrInformationId());
+        Optional<UserInformation> userInformationOptional = userInformationRepository
+                .findById(hrHrInspectionRecord.getUserInformation().getUserInformationId());
         if (!hrInformationOptional.isPresent()) {
-            return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrInformationId);
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrHrInspectionRecord.getHrInformation()
+                    .getHrInformationId());
         }
-        hrHrInspectionRecord.setHrInformation(hrInformationOptional.get());
+        if (!userInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在",
+                    hrHrInspectionRecord.getUserInformation()
+                            .getUserInformationId());
+        }
         return serviceToControllerBody.created(hrInspectionRecordRepository.save(hrHrInspectionRecord));
     }
 
@@ -124,8 +138,20 @@ public class HrInformationServiceImpl implements HrInformationService {
         ServiceToControllerBody<HrInspectionRecord> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<HrInspectionRecord> hrInspectionRecordOptional = hrInspectionRecordRepository
                 .findById(inspectionRecordId);
+        Optional<HrInformation> hrInformationOptional = hrInformationRepository.findById(hrHrInspectionRecord
+                .getHrInformation().getHrInformationId());
+        Optional<UserInformation> userInformationOptional = userInformationRepository
+                .findById(hrHrInspectionRecord.getUserInformation().getUserInformationId());
         if (!hrInspectionRecordOptional.isPresent()) {
             return serviceToControllerBody.error("inspectionRecordId", "HR查看记录不存在", inspectionRecordId);
+        }
+        if (!hrInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("hrInformationId", "HR信息不存在", hrHrInspectionRecord.getHrInformation()
+                    .getHrInformationId());
+        }
+        if (!userInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在",
+                    hrHrInspectionRecord.getUserInformation().getUserInformationId());
         }
         hrHrInspectionRecord.setHrInspectionRecordId(inspectionRecordId);
         hrHrInspectionRecord.setCreatedAt(hrInspectionRecordOptional.get().getCreatedAt());

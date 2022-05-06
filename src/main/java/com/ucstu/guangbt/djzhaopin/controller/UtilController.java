@@ -94,7 +94,7 @@ public class UtilController {
 
     @PostMapping("/avatars")
     public ResponseEntity<ResponseBody<String>> uploadAvatars(
-            MultipartFile avatar) {
+            @RequestBody MultipartFile avatar) {
         return ResponseBody.handle(utilService.uploadAvatar(avatar));
     }
 

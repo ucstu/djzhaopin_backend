@@ -100,17 +100,17 @@ public class CompanyInformation {
     private Set<String> benefits;
 
     @JsonIgnore
-    @JoinColumn(name = "company_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
-    private List<PositionInformation> positionInformations;
-
-    @JsonIgnore
     @Range(min = 0, max = 180)
     private Float longitude;
 
     @JsonIgnore
     @Range(min = 0, max = 90)
     private Float latitude;
+
+    @JsonIgnore
+    @JoinColumn(name = "company_information_id")
+    @OneToMany(cascade = { CascadeType.ALL })
+    private List<PositionInformation> positionInformations;
 
     @JsonIgnore
     @JoinColumn(name = "company_information_id")

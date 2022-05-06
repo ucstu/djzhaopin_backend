@@ -30,7 +30,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
                 throw new AuthenticationException("Token Is Invalid") {
                 };
             }
-            UserDetails userDetails = jwtUtil.getUserDetailsFromToken(token.toString());
+            CustomUserDetails userDetails = jwtUtil.getCustomUserDetailsFromToken(token.toString());
             if (userDetails == null) {
                 throw new AuthenticationException("User Not Found") {
                 };

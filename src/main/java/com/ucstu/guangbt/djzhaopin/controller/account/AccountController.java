@@ -12,7 +12,6 @@ import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,7 +45,6 @@ public class AccountController {
     }
 
     @DeleteMapping("/{accountInfoId}")
-    @PreAuthorize("hasPermission(#accountInformationId, 'AccountInformation', 'delete')")
     public ResponseEntity<ResponseBody<AccountInformation>> deleteAccount(
             @PathVariable("accountInfoId") @NotNull UUID accountInformationId,
             @RequestParam("verificationCode") @NotBlank String verificationCode) {
@@ -62,7 +60,6 @@ public class AccountController {
     }
 
     @PutMapping("/{accountInfoId}")
-    @PreAuthorize("hasPermission(#accountInformationId, 'accountInformation', 'update')")
     public ResponseEntity<ResponseBody<AccountInformation>> changePassword(
             @PathVariable("accountInfoId") @NotNull UUID accountInformationId,
             @Valid @RequestBody ChangePasswordRequest changePasswordRequest) {

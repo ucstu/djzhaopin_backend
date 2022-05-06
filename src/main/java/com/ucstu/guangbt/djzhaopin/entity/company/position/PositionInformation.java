@@ -92,16 +92,6 @@ public class PositionInformation {
 
     private String workAreaName;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "company_information_id")
-    private CompanyInformation companyInformation;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "hr_information_id")
-    private HrInformation hrInformation;
-
     @NotNull
     @Range(min = 1, max = 3)
     private Integer positionType;
@@ -125,12 +115,6 @@ public class PositionInformation {
     @JsonFormat(pattern = "HH:mm:ss")
     private Date overTime;
 
-    @NotNull
-    @JoinColumn
-    @JsonProperty("interviewInfo")
-    @OneToOne(cascade = { CascadeType.ALL })
-    private InterviewInfo interviewInfo;
-
     @JsonIgnore
     @Range(min = 0, max = 180)
     private Float longitude;
@@ -138,6 +122,22 @@ public class PositionInformation {
     @JsonIgnore
     @Range(min = 0, max = 90)
     private Float latitude;
+
+    @NotNull
+    @JoinColumn
+    @JsonProperty("interviewInfo")
+    @OneToOne(cascade = { CascadeType.ALL })
+    private InterviewInfo interviewInfo;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "company_information_id")
+    private CompanyInformation companyInformation;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "hr_information_id")
+    private HrInformation hrInformation;
 
     @JsonIgnore
     @JoinColumn(name = "position_information_id")
@@ -156,7 +156,7 @@ public class PositionInformation {
 
     @JsonGetter("companyInformationId")
     public UUID getCompanyInformationId() {
-        return companyInformation.getCompanyInformationId();
+        return companyInformation != null ? companyInformation.getCompanyInformationId() : null;
     }
 
     @JsonSetter("companyInformationId")
@@ -166,7 +166,7 @@ public class PositionInformation {
 
     @JsonGetter("hrInformationId")
     public UUID getHrInformationId() {
-        return hrInformation.getHrInformationId();
+        return hrInformation != null ? hrInformation.getHrInformationId() : null;
     }
 
     @JsonSetter("hrInformationId")

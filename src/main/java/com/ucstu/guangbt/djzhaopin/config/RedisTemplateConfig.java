@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-public class RedisConfig {
+public class RedisTemplateConfig {
 
     @Bean
     public RedisTemplate<String, String> verificationCodeTemplate(RedisConnectionFactory redisConnectionFactory) {

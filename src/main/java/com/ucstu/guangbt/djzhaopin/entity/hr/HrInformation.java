@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
+import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
@@ -57,11 +58,6 @@ public class HrInformation {
     @Column(nullable = false)
     private Date updatedAt;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "company_information_id")
-    private CompanyInformation companyInformation;
-
     private String avatarUrl;
 
     private String hrName;
@@ -70,6 +66,16 @@ public class HrInformation {
 
     @Email
     private String acceptEmail;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "company_information_id")
+    private CompanyInformation companyInformation;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hr_information_id")
+    private List<PositionInformation> positionInformations;
 
     @JsonIgnore
     @JoinColumn(name = "hr_information_id")

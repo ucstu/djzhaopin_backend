@@ -11,7 +11,6 @@ import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +37,6 @@ public class PositionInformationController {
     private CompanyInformationService companyInformationService;
 
     @PostMapping("")
-    @PreAuthorize("hasPermission('PositionInformation', 'create')")
     public ResponseEntity<ResponseBody<PositionInformation>> createPositionInformation(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @Valid @RequestBody PositionInformation positionInformation) {
@@ -47,7 +45,6 @@ public class PositionInformationController {
     }
 
     @DeleteMapping("/{positionInfoId}")
-    @PreAuthorize("hasPermission('#companyInformationId', 'PositionInformation', 'delete')")
     public ResponseEntity<ResponseBody<PositionInformation>> deletePositionInformationByPositionInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @PathVariable("positionInfoId") @NotNull UUID positionInformationId) {
@@ -57,7 +54,6 @@ public class PositionInformationController {
     }
 
     @PutMapping("/{positionInfoId}")
-    @PreAuthorize("hasPermission('#companyInformationId', 'PositionInformation', 'update')")
     public ResponseEntity<ResponseBody<PositionInformation>> updatePositionInformationByPositionInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @PathVariable("positionInfoId") @NotNull UUID positionInformationId,
@@ -69,7 +65,6 @@ public class PositionInformationController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasPermission('#companyInformationId', 'PositionInformations', 'read')")
     public ResponseEntity<ResponseBody<PageResult<PositionInformation>>> getPositionInformationsByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam(value = "positionName", required = false) String positionName,
@@ -77,7 +72,9 @@ public class PositionInformationController {
             @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
             @RequestParam(value = "educations", required = false) List<Integer> educations,
             @RequestParam(value = "directionTags", required = false) List<String> directionTags,
-            @RequestParam(value = "workAreas", required = false) List<String> workAreas,
+            @RequestParam(value = "workProvinceName", required = false) String workProvinceName,
+            @RequestParam(value = "workCityName", required = false) String workCityName,
+            @RequestParam(value = "workAreaNames", required = false) List<String> workAreaNames,
             @RequestParam(value = "positionTypes", required = false) List<Integer> positionTypes,
             @RequestParam(value = "scales", required = false) List<Integer> scales,
             @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
@@ -86,13 +83,12 @@ public class PositionInformationController {
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
                 .getPositionInformationsByCompanyInformationId(companyInformationId, positionName,
-                        salary,
-                        workingYears, educations, directionTags, workAreas, positionTypes,
-                        scales, financingStages, comprehensions, workingPlace, pageable));
+                        salary, workingYears, educations, directionTags, workProvinceName,
+                        workCityName, workAreaNames, positionTypes, scales, financingStages,
+                        comprehensions, workingPlace, pageable));
     }
 
     @GetMapping("/{positionInfoId}")
-    @PreAuthorize("hasPermission('#companyInformationId', 'PositionInformation', 'read')")
     public ResponseEntity<ResponseBody<PositionInformation>> getPositionInformationByPositionInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @PathVariable("positionInfoId") @NotNull UUID positionInformationId) {

@@ -30,12 +30,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.ListJoin;
 import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 
 @Service
 public class CompanyInformationServiceImpl implements CompanyInformationService {
@@ -94,16 +93,41 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         companyInformation.setPositionInformations(companyInformationOptional.get().getPositionInformations());
         companyInformation.setAttentionRecords(companyInformationOptional.get().getAttentionRecords());
         companyInformation.setHrInformations(companyInformationOptional.get().getHrInformations());
-
         return serviceToControllerBody.success(companyInformationRepository.save(companyInformation));
     }
 
     @Override
-    public ServiceToControllerBody<PageResult<CompanyInformation>> getCompanyInformationsByCompanyName(
-            String companyName,
-            Pageable pageable) {
+    public ServiceToControllerBody<PageResult<CompanyInformation>> getCompanyInformations(
+            String companyName, List<Integer> scales, List<Integer> financingStages, List<Integer> comprehensions,
+            String location, Pageable pageable) {
         ServiceToControllerBody<PageResult<CompanyInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
-        Page<CompanyInformation> companyInformations = companyInformationRepository.findAll(pageable);
+        Specification<CompanyInformation> specification = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (companyName != null && !companyName.isEmpty()) {
+                predicates.add(cb.like(root.get("companyName"), "%" + companyName + "%"));
+            }
+            if (scales != null && !scales.isEmpty()) {
+                predicates.add(cb.in(root.get("scale")).value(scales));
+            }
+            if (financingStages != null && !financingStages.isEmpty()) {
+                predicates.add(cb.in(root.get("financingStage")).value(financingStages));
+            }
+            if (comprehensions != null && !comprehensions.isEmpty()) {
+                predicates.add(cb.in(root.get("comprehension")).value(comprehensions));
+            }
+            if (location != null && !location.isEmpty()) {
+                Float longitude = Float.valueOf(location.split(",")[0]);
+                Float latitude = Float.valueOf(location.split(",")[1]);
+                Expression<Double> expression = cb.sqrt(cb.diff(
+                        cb.prod(cb.diff(root.get("longitude"), longitude),
+                                cb.diff(root.get("longitude"), longitude)),
+                        cb.prod(cb.diff(root.get("latitude"), latitude),
+                                cb.diff(root.get("latitude"), latitude))));
+                query.orderBy(cb.asc(expression));
+            }
+            return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
+        };
+        Page<CompanyInformation> companyInformations = companyInformationRepository.findAll(specification, pageable);
         PageResult<CompanyInformation> pageResult = new PageResult<>();
         if (!companyInformations.hasContent()) {
             pageResult.setTotalCount(0);
@@ -140,44 +164,50 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         if (!companyInformationOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
         }
-        Specification<DeliveryRecord> specification = new Specification<DeliveryRecord>() {
-            @Override
-            public Predicate toPredicate(Root<DeliveryRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>();
-                if (createdAt != null) {
-                    predicates.add(cb.equal(root.get("createdAt"), createdAt));
-                }
-                if (updatedAt != null) {
-                    predicates.add(cb.equal(root.get("updatedAt"), updatedAt));
-                }
-                if (status != null && !status.isEmpty()) {
-                    predicates.add(root.get("status").in(status));
-                }
-                if (interviewTime != null) {
-                    predicates.add(cb.equal(root.get("interviewTime"), interviewTime));
-                }
-                Join<DeliveryRecord, UserInformation> userInformationJoin = root.join("userInformation");
-                if (workingYears != null && !workingYears.isEmpty()) {
-                    predicates.add(userInformationJoin.get("workingYears").in(workingYears));
-                }
-                if (sexs != null && !sexs.isEmpty()) {
-                    predicates.add(userInformationJoin.get("sex").in(sexs));
-                }
-                // if (ages != null && !ages.isEmpty()) {
-                // predicates.add(userInformationJoin.get("age").in(ages));
-                // }
-                Join<DeliveryRecord, PositionInformation> positionInformationJoin = root.join("positionInformation");
-                if (positionInformationIds != null && !positionInformationIds.isEmpty()) {
-                    predicates.add(positionInformationJoin.get("positionInformationId").in(positionInformationIds));
-                }
-                if (deliveryDates != null && !deliveryDates.isEmpty()) {
-                    predicates.add(root.get("createdAt").in(deliveryDates));
-                }
-                if (userName != null) {
-                    predicates.add(cb.like(userInformationJoin.get("userName"), "%" + userName + "%"));
-                }
-                return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+        Specification<DeliveryRecord> specification = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (createdAt != null) {
+                predicates.add(cb.equal(root.get("createdAt"), createdAt));
             }
+            if (updatedAt != null) {
+                predicates.add(cb.equal(root.get("updatedAt"), updatedAt));
+            }
+            if (status != null && !status.isEmpty()) {
+                predicates.add(root.get("status").in(status));
+            }
+            if (interviewTime != null) {
+                predicates.add(cb.equal(root.get("interviewTime"), interviewTime));
+            }
+            Join<DeliveryRecord, UserInformation> userInformationJoin = root.join("userInformation");
+            if (workingYears != null && !workingYears.isEmpty()) {
+                predicates.add(userInformationJoin.get("workingYears").in(workingYears));
+            }
+            if (sexs != null && !sexs.isEmpty()) {
+                predicates.add(userInformationJoin.get("sex").in(sexs));
+            }
+            if (ages != null && !ages.isEmpty()) {
+                In<Integer> ageIn = cb.in(
+                        cb.function(
+                                "DATEDIFF",
+                                Integer.class,
+                                cb.literal("CURDATE()"),
+                                userInformationJoin.get("dateOfBirth")));
+                for (Integer age1 : ages) {
+                    ageIn.value(age1);
+                }
+                predicates.add(ageIn);
+            }
+            Join<DeliveryRecord, PositionInformation> positionInformationJoin = root.join("positionInformation");
+            if (positionInformationIds != null && !positionInformationIds.isEmpty()) {
+                predicates.add(positionInformationJoin.get("positionInformationId").in(positionInformationIds));
+            }
+            if (deliveryDates != null && !deliveryDates.isEmpty()) {
+                predicates.add(root.get("createdAt").in(deliveryDates));
+            }
+            if (userName != null) {
+                predicates.add(cb.like(userInformationJoin.get("userName"), "%" + userName + "%"));
+            }
+            return cb.and(predicates.toArray(new Predicate[predicates.size()]));
         };
         Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll(specification, pageable);
         PageResult<DeliveryRecord> pageResult = new PageResult<>();
@@ -194,62 +224,66 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName, String salary,
-            List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
-            List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
-            List<Integer> financingStages, List<String> comprehensions, String workingPlace,
+    public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName,
+            String salary, List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
+            String workProvinceName, String workCityName, List<String> workAreaNames, List<Integer> positionTypes,
+            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions, String workingPlace,
             Pageable pageable) {
         ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
-        Specification<PositionInformation> specification = new Specification<PositionInformation>() {
-            @Override
-            public Predicate toPredicate(Root<PositionInformation> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>();
-                if (positionName != null) {
-                    predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
-                }
-                if (salary != null) {
-                    String startingSalary = salary.split(",")[0];
-                    String ceilingSalary = salary.split(",")[1];
-                    predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
-                    predicates.add(cb.lessThan(root.get("ceilingSalary"), ceilingSalary));
-                }
-                if (workingYears != null && !workingYears.isEmpty()) {
-                    predicates.add(root.get("workingYears").in(workingYears));
-                }
-                if (educations != null && !educations.isEmpty()) {
-                    predicates.add(root.get("education").in(educations));
-                }
-                // if (directionTags != null && !directionTags.isEmpty()) {
-                // predicates.add(root.get("directionTag").in(directionTags));
-                // }
-                if (workAreas != null && !workAreas.isEmpty()) {
-                    predicates.add(root.get("workAreaName").in(workAreas));
-                }
-                if (positionTypes != null && !positionTypes.isEmpty()) {
-                    predicates.add(root.get("positionType").in(positionTypes));
-                }
-                Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
-                if (scales != null && !scales.isEmpty()) {
-                    predicates.add(companyInformationJoin.get("scale").in(scales));
-                }
-                if (financingStages != null && !financingStages.isEmpty()) {
-                    predicates.add(companyInformationJoin.get("financingStage").in(financingStages));
-                }
-                if (comprehensions != null && !comprehensions.isEmpty()) {
-                    predicates.add(companyInformationJoin.get("comprehensionName").in(comprehensions));
-                }
-                if (workingPlace != null) {
-                    Float longitude = Float.valueOf(workingPlace.split(",")[0]);
-                    Float latitude = Float.valueOf(workingPlace.split(",")[1]);
-                    Expression<Double> expression = cb.sqrt(cb.diff(
-                            cb.prod(cb.diff(root.get("longitude"), longitude),
-                                    cb.diff(root.get("longitude"), longitude)),
-                            cb.prod(cb.diff(root.get("latitude"), latitude),
-                                    cb.diff(root.get("latitude"), latitude))));
-                    query.orderBy(cb.asc(expression));
-                }
-                return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+        Specification<PositionInformation> specification = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (positionName != null) {
+                predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
             }
+            if (salary != null) {
+                String startingSalary = salary.split(",")[0];
+                String ceilingSalary = salary.split(",")[1];
+                predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
+                predicates.add(cb.lessThan(root.get("ceilingSalary"), ceilingSalary));
+            }
+            if (workingYears != null && !workingYears.isEmpty()) {
+                predicates.add(root.get("workingYears").in(workingYears));
+            }
+            if (educations != null && !educations.isEmpty()) {
+                predicates.add(root.get("education").in(educations));
+            }
+            if (directionTags != null && !directionTags.isEmpty()) {
+                ListJoin<PositionInformation, String> directionTagsJoin = root.joinList("directionTags");
+                predicates.add(directionTagsJoin.in(directionTags));
+            }
+            if (workProvinceName != null) {
+                predicates.add(cb.like(root.get("workProvinceName"), "%" + workProvinceName + "%"));
+            }
+            if (workCityName != null) {
+                predicates.add(cb.like(root.get("workCityName"), "%" + workCityName + "%"));
+            }
+            if (workAreaNames != null && !workAreaNames.isEmpty()) {
+                predicates.add(root.get("workAreaName").in(workAreaNames));
+            }
+            if (positionTypes != null && !positionTypes.isEmpty()) {
+                predicates.add(root.get("positionType").in(positionTypes));
+            }
+            Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
+            if (scales != null && !scales.isEmpty()) {
+                predicates.add(companyInformationJoin.get("scale").in(scales));
+            }
+            if (financingStages != null && !financingStages.isEmpty()) {
+                predicates.add(companyInformationJoin.get("financingStage").in(financingStages));
+            }
+            if (comprehensions != null && !comprehensions.isEmpty()) {
+                predicates.add(companyInformationJoin.get("comprehensionName").in(comprehensions));
+            }
+            if (workingPlace != null) {
+                Float longitude = Float.valueOf(workingPlace.split(",")[0]);
+                Float latitude = Float.valueOf(workingPlace.split(",")[1]);
+                Expression<Double> expression = cb.sqrt(cb.diff(
+                        cb.prod(cb.diff(root.get("longitude"), longitude),
+                                cb.diff(root.get("longitude"), longitude)),
+                        cb.prod(cb.diff(root.get("latitude"), latitude),
+                                cb.diff(root.get("latitude"), latitude))));
+                query.orderBy(cb.asc(expression));
+            }
+            return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
         };
         Page<PositionInformation> positionInformations = positionInformationRepository.findAll(specification, pageable);
         PageResult<PositionInformation> pageResult = new PageResult<>();
@@ -332,10 +366,10 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         if (!positionInformationOptional.isPresent()) {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
         }
+        positionInformation.setHrInformation(hrInformationOptional.get());
         positionInformation.setPositionInformationId(positionInformationId);
         positionInformation.setCompanyInformation(companyInformationOptional.get());
         positionInformation.setCreatedAt(positionInformationOptional.get().getCreatedAt());
-        positionInformation.setInterviewInfo(positionInformationOptional.get().getInterviewInfo());
         positionInformation.setDeliveryRecords(positionInformationOptional.get().getDeliveryRecords());
         positionInformation.setGarnerRecords(positionInformationOptional.get().getGarnerRecords());
         positionInformation.setUserInspectionRecords(positionInformationOptional.get().getUserInspectionRecords());
@@ -345,65 +379,70 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Override
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInformationsByCompanyInformationId(
             UUID companyInformationId, String positionName, String salary, List<Integer> workingYears,
-            List<Integer> educations, List<String> directionTags, List<String> workAreas, List<Integer> positionTypes,
-            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions, String workingPlace,
-            Pageable pageable) {
+            List<Integer> educations, List<String> directionTags, String workProvinceName, String workCityName,
+            List<String> workAreaNames, List<Integer> positionTypes, List<Integer> scales,
+            List<Integer> financingStages, List<String> comprehensions, String workingPlace, Pageable pageable) {
         ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (!companyInformationOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
         }
-        Specification<PositionInformation> specification = new Specification<PositionInformation>() {
-            @Override
-            public Predicate toPredicate(Root<PositionInformation> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>();
-                if (positionName != null) {
-                    predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
-                }
-                if (salary != null) {
-                    String startingSalary = salary.split(",")[0];
-                    String ceilingSalary = salary.split(",")[1];
-                    predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
-                    predicates.add(cb.lessThan(root.get("ceilingSalary"), ceilingSalary));
-                }
-                if (workingYears != null && !workingYears.isEmpty()) {
-                    predicates.add(root.get("workingYears").in(workingYears));
-                }
-                if (educations != null && !educations.isEmpty()) {
-                    predicates.add(root.get("education").in(educations));
-                }
-                // if (directionTags != null && !directionTags.isEmpty()) {
-                // predicates.add(root.get("directionTag").in(directionTags));
-                // }
-                if (workAreas != null && !workAreas.isEmpty()) {
-                    predicates.add(root.get("workAreaName").in(workAreas));
-                }
-                if (positionTypes != null && !positionTypes.isEmpty()) {
-                    predicates.add(root.get("positionType").in(positionTypes));
-                }
-                Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
-                if (scales != null && !scales.isEmpty()) {
-                    predicates.add(companyInformationJoin.get("scale").in(scales));
-                }
-                if (financingStages != null && !financingStages.isEmpty()) {
-                    predicates.add(companyInformationJoin.get("financingStage").in(financingStages));
-                }
-                if (comprehensions != null && !comprehensions.isEmpty()) {
-                    predicates.add(companyInformationJoin.get("comprehensionName").in(comprehensions));
-                }
-                if (workingPlace != null) {
-                    Float longitude = Float.valueOf(workingPlace.split(",")[0]);
-                    Float latitude = Float.valueOf(workingPlace.split(",")[1]);
-                    Expression<Double> expression = cb.sqrt(cb.diff(
-                            cb.prod(cb.diff(root.get("longitude"), longitude),
-                                    cb.diff(root.get("longitude"), longitude)),
-                            cb.prod(cb.diff(root.get("latitude"), latitude),
-                                    cb.diff(root.get("latitude"), latitude))));
-                    query.orderBy(cb.asc(expression));
-                }
-                return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+        Specification<PositionInformation> specification = (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (positionName != null) {
+                predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
             }
+            if (salary != null) {
+                String startingSalary = salary.split(",")[0];
+                String ceilingSalary = salary.split(",")[1];
+                predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
+                predicates.add(cb.lessThan(root.get("ceilingSalary"), ceilingSalary));
+            }
+            if (workingYears != null && !workingYears.isEmpty()) {
+                predicates.add(root.get("workingYears").in(workingYears));
+            }
+            if (educations != null && !educations.isEmpty()) {
+                predicates.add(root.get("education").in(educations));
+            }
+            if (directionTags != null && !directionTags.isEmpty()) {
+                ListJoin<PositionInformation, String> directionTagsJoin = root.joinList("directionTags");
+                predicates.add(directionTagsJoin.in(directionTags));
+            }
+            if (workProvinceName != null) {
+                predicates.add(cb.like(root.get("workProvinceName"), "%" + workProvinceName + "%"));
+            }
+            if (workCityName != null) {
+                predicates.add(cb.like(root.get("workCityName"), "%" + workCityName + "%"));
+            }
+            if (workAreaNames != null && !workAreaNames.isEmpty()) {
+                ListJoin<PositionInformation, String> workAreaNamesJoin = root.joinList("workAreaNames");
+                predicates.add(workAreaNamesJoin.in(workAreaNames));
+            }
+            if (positionTypes != null && !positionTypes.isEmpty()) {
+                predicates.add(root.get("positionType").in(positionTypes));
+            }
+            Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
+            if (scales != null && !scales.isEmpty()) {
+                predicates.add(companyInformationJoin.get("scale").in(scales));
+            }
+            if (financingStages != null && !financingStages.isEmpty()) {
+                predicates.add(companyInformationJoin.get("financingStage").in(financingStages));
+            }
+            if (comprehensions != null && !comprehensions.isEmpty()) {
+                predicates.add(companyInformationJoin.get("comprehensionName").in(comprehensions));
+            }
+            if (workingPlace != null) {
+                Float longitude = Float.valueOf(workingPlace.split(",")[0]);
+                Float latitude = Float.valueOf(workingPlace.split(",")[1]);
+                Expression<Double> expression = cb.sqrt(cb.diff(
+                        cb.prod(cb.diff(root.get("longitude"), longitude),
+                                cb.diff(root.get("longitude"), longitude)),
+                        cb.prod(cb.diff(root.get("latitude"), latitude),
+                                cb.diff(root.get("latitude"), latitude))));
+                query.orderBy(cb.asc(expression));
+            }
+            return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
         };
         Page<PositionInformation> positionInformations = positionInformationRepository.findAll(specification, pageable);
         PageResult<PositionInformation> pageResult = new PageResult<>();

@@ -38,94 +38,94 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
 
-        @Resource
-        private JwtAuthenticationProvider jwtAuthenticationProvider;
+    @Resource
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
 
-        @Resource
-        private PermissionEvaluator permissionEvaluator;
+    @Resource
+    private PermissionEvaluator permissionEvaluator;
 
-        private static final SessionCreationPolicy STATELESS = SessionCreationPolicy.STATELESS;
+    private static final SessionCreationPolicy STATELESS = SessionCreationPolicy.STATELESS;
 
-        private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
-                        new AntPathRequestMatcher("/accountInfos/**"),
-                        new AntPathRequestMatcher("/verificationCode"),
-                        new AntPathRequestMatcher("/**", "OPTIONS"),
-                        new AntPathRequestMatcher("/error/**"));
+    private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/accountInfos/**"),
+            new AntPathRequestMatcher("/verificationCode"),
+            new AntPathRequestMatcher("/**", "OPTIONS"),
+            new AntPathRequestMatcher("/error/**"));
 
-        private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
+    private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 
-        class CustomDsl extends AbstractHttpConfigurer<CustomDsl, HttpSecurity> {
+    class CustomDsl extends AbstractHttpConfigurer<CustomDsl, HttpSecurity> {
 
+        @Override
+        public void configure(HttpSecurity http) throws Exception {
+            AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+            http
+                    .authenticationProvider(jwtAuthenticationProvider)
+                    .addFilterBefore(jwtAuthenticationFilter(authenticationManager),
+                            AnonymousAuthenticationFilter.class);
+        }
+
+        private JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+            JwtAuthenticationFilter filter = new JwtAuthenticationFilter(PROTECTED_URLS);
+            SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
+            successHandler.setRedirectStrategy(new RedirectStrategy() {
                 @Override
-                public void configure(HttpSecurity http) throws Exception {
-                        AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-                        http
-                                        .authenticationProvider(jwtAuthenticationProvider)
-                                        .addFilterBefore(jwtAuthenticationFilter(authenticationManager),
-                                                        AnonymousAuthenticationFilter.class);
+                public void sendRedirect(HttpServletRequest request, HttpServletResponse response,
+                        String url) throws IOException {
                 }
-
-                private JwtAuthenticationFilter jwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-                        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(PROTECTED_URLS);
-                        SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
-                        successHandler.setRedirectStrategy(new RedirectStrategy() {
-                                @Override
-                                public void sendRedirect(HttpServletRequest request, HttpServletResponse response,
-                                                String url) throws IOException {
-                                }
-                        });
-                        filter.setAuthenticationManager(authenticationManager);
-                        filter.setAuthenticationSuccessHandler(successHandler);
-                        return filter;
-                }
+            });
+            filter.setAuthenticationManager(authenticationManager);
+            filter.setAuthenticationSuccessHandler(successHandler);
+            return filter;
         }
+    }
 
-        @Bean
-        public PasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder();
-        }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        @Bean
-        public CorsConfigurationSource corsConfigurationSource() {
-                CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(Arrays.asList("*"));
-                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/**", configuration);
-                return source;
-        }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
-        @Bean
-        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-                http
-                                .sessionManagement()
-                                .sessionCreationPolicy(STATELESS);
-                http
-                                .exceptionHandling()
-                                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN),
-                                                PROTECTED_URLS);
-                http
-                                .apply(new CustomDsl());
-                http
-                                .authorizeRequests()
-                                .expressionHandler(
-                                                defaultWebSecurityExpressionHandler())
-                                .requestMatchers(PUBLIC_URLS)
-                                .permitAll()
-                                .requestMatchers(PROTECTED_URLS)
-                                .authenticated();
-                http
-                                .csrf().disable()
-                                .formLogin().disable()
-                                .httpBasic().disable()
-                                .logout().disable();
-                return http.build();
-        }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .sessionManagement()
+                .sessionCreationPolicy(STATELESS);
+        http
+                .exceptionHandling()
+                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN),
+                        PROTECTED_URLS);
+        http
+                .apply(new CustomDsl());
+        http
+                .authorizeRequests()
+                .expressionHandler(
+                        defaultWebSecurityExpressionHandler())
+                .requestMatchers(PUBLIC_URLS)
+                .permitAll()
+                .requestMatchers(PROTECTED_URLS)
+                .authenticated();
+        http
+                .csrf().disable()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .logout().disable();
+        return http.build();
+    }
 
-        private DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler() {
-                DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
-                defaultWebSecurityExpressionHandler.setPermissionEvaluator(permissionEvaluator);
-                return defaultWebSecurityExpressionHandler;
-        }
+    private DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler() {
+        DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
+        defaultWebSecurityExpressionHandler.setPermissionEvaluator(permissionEvaluator);
+        return defaultWebSecurityExpressionHandler;
+    }
 
 }

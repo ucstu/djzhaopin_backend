@@ -10,7 +10,6 @@ import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,21 +35,18 @@ public class HrInformationController {
     private HrInformationService hrInformationService;
 
     @PostMapping("")
-    @PreAuthorize("hasPermission(#hrInformation, 'HrInformation', 'create')")
     public ResponseEntity<ResponseBody<HrInformation>> createHrInformation(
             @Valid @RequestBody HrInformation hrInformation) {
         return ResponseBody.handle(hrInformationService.createHrInformation(hrInformation));
     }
 
     @DeleteMapping("/{hrInfoId}")
-    @PreAuthorize("hasPermission(#hrInformationId, 'HrInformation', 'delete')")
     public ResponseEntity<ResponseBody<HrInformation>> deleteHrInformationByHrInfoId(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId) {
         return ResponseBody.handle(hrInformationService.deleteHrInformationByHrInfoId(hrInformationId));
     }
 
     @PutMapping("/{hrInfoId}")
-    @PreAuthorize("hasPermission(#hrInformationId, 'HrInformation', 'update')")
     public ResponseEntity<ResponseBody<HrInformation>> updateHrInformationByHrInformationId(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @Valid @RequestBody HrInformation hrInformation) {
@@ -59,14 +55,12 @@ public class HrInformationController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasPermission('HrInformations', 'read')")
     public ResponseEntity<ResponseBody<PageResult<HrInformation>>> getHrInformations(
             @PageableDefault Pageable pageable) {
         return ResponseBody.handle(hrInformationService.getHrInformations(pageable));
     }
 
     @GetMapping("/{hrInfoId}")
-    @PreAuthorize("hasPermission(#hrInformationId, 'HrInformation', 'read')")
     public ResponseEntity<ResponseBody<HrInformation>> getHrInformationByHrInformationId(
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId) {
         return ResponseBody.handle(hrInformationService.getHrInformationByHrInformationId(hrInformationId));

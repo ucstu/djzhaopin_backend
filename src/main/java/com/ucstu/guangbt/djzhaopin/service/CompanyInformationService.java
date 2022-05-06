@@ -23,12 +23,11 @@ public interface CompanyInformationService {
             UUID companyInformationId);
 
     public ServiceToControllerBody<CompanyInformation> updateCompanyInformationByCompanyInformationId(
-            UUID companyInformationId,
-            CompanyInformation companyInformation);
+            UUID companyInformationId, CompanyInformation companyInformation);
 
-    public ServiceToControllerBody<PageResult<CompanyInformation>> getCompanyInformationsByCompanyName(
-            String companyName,
-            Pageable pageable);
+    public ServiceToControllerBody<PageResult<CompanyInformation>> getCompanyInformations(
+            String companyName, List<Integer> scales, List<Integer> financingStages, List<Integer> comprehensions,
+            String location, Pageable pageable);
 
     public ServiceToControllerBody<CompanyInformation> getCompanyInformationByCompanyInformationId(
             UUID companyInformationId);
@@ -40,31 +39,25 @@ public interface CompanyInformationService {
             Pageable pageable);
 
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName,
-            String salary,
-            List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
-            List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
-            List<Integer> financingStages, List<String> comprehensions, String workingPlace,
+            String salary, List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
+            String workProvinceName, String workCityName, List<String> workAreaNames, List<Integer> positionTypes,
+            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions, String workingPlace,
             Pageable pageable);
 
     public ServiceToControllerBody<PositionInformation> createPositionInformation(UUID companyInformationId,
             PositionInformation positionInformation);
 
     public ServiceToControllerBody<PositionInformation> deletePositionInformationByPositionInformationId(
-            UUID companyInformationId,
-            UUID positionInformationId);
+            UUID companyInformationId, UUID positionInformationId);
 
     public ServiceToControllerBody<PositionInformation> updatePositionInformationByPositionInformationId(
-            UUID companyInformationId,
-            UUID positionInformationId,
-            PositionInformation positionInformation);
+            UUID companyInformationId, UUID positionInformationId, PositionInformation positionInformation);
 
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInformationsByCompanyInformationId(
             UUID companyInformationId, String positionName, String salary, List<Integer> workingYears,
-            List<Integer> educations, List<String> directionTags, List<String> workAreas,
-            List<Integer> positionTypes,
-            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions,
-            String workingPlace,
-            Pageable pageable);
+            List<Integer> educations, List<String> directionTags, String workProvinceName, String workCityName,
+            List<String> workAreaNames, List<Integer> positionTypes, List<Integer> scales,
+            List<Integer> financingStages, List<String> comprehensions, String workingPlace, Pageable pageable);
 
     public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInformationId(
             UUID companyInformationId, UUID positionInformationId);
@@ -73,7 +66,6 @@ public interface CompanyInformationService {
             UUID companyInformationId, Date startDate, Date endDate, Pageable pageable);
 
     public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(
-            UUID companyInformationId, UUID hrInformationId, Date startDate, Date endDate,
-            Pageable pageable);
+            UUID companyInformationId, UUID hrInformationId, Date startDate, Date endDate, Pageable pageable);
 
 }

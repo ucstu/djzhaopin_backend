@@ -31,52 +31,52 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping("/userInfos/{userInfoId}/inspectionRecords")
 public class UserInspectionRecordController {
 
-        @Resource
-        private UserInformationService userInformationService;
+    @Resource
+    private UserInformationService userInformationService;
 
-        @PostMapping("")
-        public ResponseEntity<ResponseBody<UserInspectionRecord>> createUserInspectionRecord(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @Valid @RequestBody UserInspectionRecord userUserInspectionRecord) {
-                return ResponseBody.handle(userInformationService
-                                .createUserInspectionRecord(userInformationId, userUserInspectionRecord));
-        }
+    @PostMapping("")
+    public ResponseEntity<ResponseBody<UserInspectionRecord>> createUserInspectionRecord(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @Valid @RequestBody UserInspectionRecord userUserInspectionRecord) {
+        return ResponseBody.handle(userInformationService
+                .createUserInspectionRecord(userInformationId, userUserInspectionRecord));
+    }
 
-        @DeleteMapping("/{inspectionRecordId}")
-        public ResponseEntity<ResponseBody<UserInspectionRecord>> deleteUserInspectionRecordByUserInspectionRecordId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("inspectionRecordId") @NotNull UUID userUserInspectionRecordId) {
-                return ResponseBody.handle(userInformationService
-                                .deleteUserInspectionRecordByUserInspectionRecordId(userInformationId,
-                                                userUserInspectionRecordId));
-        }
+    @DeleteMapping("/{inspectionRecordId}")
+    public ResponseEntity<ResponseBody<UserInspectionRecord>> deleteUserInspectionRecordByUserInspectionRecordId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("inspectionRecordId") @NotNull UUID userUserInspectionRecordId) {
+        return ResponseBody.handle(userInformationService
+                .deleteUserInspectionRecordByUserInspectionRecordId(userInformationId,
+                        userUserInspectionRecordId));
+    }
 
-        @PutMapping("/{inspectionRecordId}")
-        public ResponseEntity<ResponseBody<UserInspectionRecord>> updateUserInspectionRecordByUserInspectionRecordId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("inspectionRecordId") @NotNull UUID userUserInspectionRecordId,
-                        @Valid @RequestBody UserInspectionRecord userUserInspectionRecord) {
-                return ResponseBody.handle(userInformationService
-                                .updateUserInspectionRecordByUserInspectionRecordId(userInformationId,
-                                                userUserInspectionRecordId,
-                                                userUserInspectionRecord));
-        }
+    @PutMapping("/{inspectionRecordId}")
+    public ResponseEntity<ResponseBody<UserInspectionRecord>> updateUserInspectionRecordByUserInspectionRecordId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("inspectionRecordId") @NotNull UUID userUserInspectionRecordId,
+            @Valid @RequestBody UserInspectionRecord userUserInspectionRecord) {
+        return ResponseBody.handle(userInformationService
+                .updateUserInspectionRecordByUserInspectionRecordId(userInformationId,
+                        userUserInspectionRecordId,
+                        userUserInspectionRecord));
+    }
 
-        @GetMapping("")
-        public ResponseEntity<ResponseBody<PageResult<UserInspectionRecord>>> getUserInspectionRecordsByUserInformationId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PageableDefault(size = 10) Pageable pageable) {
-                return ResponseBody.handle(userInformationService
-                                .getUserInspectionRecordsByUserInformationId(userInformationId, pageable));
-        }
+    @GetMapping("")
+    public ResponseEntity<ResponseBody<PageResult<UserInspectionRecord>>> getUserInspectionRecordsByUserInformationId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(userInformationService
+                .getUserInspectionRecordsByUserInformationId(userInformationId, pageable));
+    }
 
-        @GetMapping("/{inspectionRecordId}")
-        public ResponseEntity<ResponseBody<UserInspectionRecord>> getUserInspectionRecordByUserInspectionRecordId(
-                        @PathVariable("userInfoId") @NotNull UUID userInformationId,
-                        @PathVariable("inspectionRecordId") @NotNull UUID userUserInspectionRecordId) {
-                return ResponseBody.handle(userInformationService
-                                .getUserInspectionRecordByUserInspectionRecordId(userInformationId,
-                                                userUserInspectionRecordId));
-        }
+    @GetMapping("/{inspectionRecordId}")
+    public ResponseEntity<ResponseBody<UserInspectionRecord>> getUserInspectionRecordByUserInspectionRecordId(
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PathVariable("inspectionRecordId") @NotNull UUID userUserInspectionRecordId) {
+        return ResponseBody.handle(userInformationService
+                .getUserInspectionRecordByUserInspectionRecordId(userInformationId,
+                        userUserInspectionRecordId));
+    }
 
 }

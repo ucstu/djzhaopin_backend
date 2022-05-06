@@ -15,7 +15,6 @@ import com.ucstu.guangbt.djzhaopin.model.JsonWebToken;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -99,7 +98,7 @@ public class JsonWebTokenUtil {
                 claims.get("enabled", Boolean.class));
     }
 
-    public UserDetails getUserDetailsFromToken(String token) {
+    public CustomUserDetails getCustomUserDetailsFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         JsonWebToken jsonWebToken = getJsonWebTokenFromToken(token);
         return new CustomUserDetails(claims.getSubject(), jsonWebToken);

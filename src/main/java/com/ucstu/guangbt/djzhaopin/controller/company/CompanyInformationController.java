@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +43,6 @@ public class CompanyInformationController {
     private CompanyInformationService companyInformationService;
 
     @PostMapping("")
-    @PreAuthorize("hasPermission('CompanyInformation', 'create')")
     public ResponseEntity<ResponseBody<CompanyInformation>> createCompanyInformation(
             @Valid @RequestBody CompanyInformation companyInformation) {
         return ResponseBody.handle(companyInformationService
@@ -52,7 +50,6 @@ public class CompanyInformationController {
     }
 
     @DeleteMapping("/{companyInfoId}")
-    @PreAuthorize("hasPermission('#companyInformationId', 'CompanyInformation', 'delete')")
     public ResponseEntity<ResponseBody<CompanyInformation>> deleteCompanyInformationByCompanyInfoId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId) {
         return ResponseBody.handle(companyInformationService
@@ -60,7 +57,6 @@ public class CompanyInformationController {
     }
 
     @PutMapping("{companyInfoId}")
-    @PreAuthorize("hasPermission('#companyInformationId', 'CompanyInformation', 'update')")
     public ResponseEntity<ResponseBody<CompanyInformation>> updateCompanyInformationByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @Valid @RequestBody CompanyInformation companyInformation) {
@@ -70,16 +66,19 @@ public class CompanyInformationController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasPermission('CompanyInformations', 'read')")
-    public ResponseEntity<ResponseBody<PageResult<CompanyInformation>>> getCompanyInformationsByCompanyName(
+    public ResponseEntity<ResponseBody<PageResult<CompanyInformation>>> getCompanyInformations(
             @RequestParam(value = "companyName", required = false) String companyName,
+            @RequestParam(value = "scales", required = false) List<Integer> scales,
+            @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
+            @RequestParam(value = "comprehensions", required = false) List<Integer> comprehensions,
+            @RequestParam(value = "location", required = false) String location,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
-                .getCompanyInformationsByCompanyName(companyName, pageable));
+                .getCompanyInformations(companyName, scales, financingStages, comprehensions, location,
+                        pageable));
     }
 
     @GetMapping("{companyInfoId}")
-    @PreAuthorize("hasPermission('#companyInformationId', 'CompanyInformation', 'read')")
     public ResponseEntity<ResponseBody<CompanyInformation>> getCompanyInformationByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId) {
         return ResponseBody.handle(companyInformationService
@@ -87,7 +86,6 @@ public class CompanyInformationController {
     }
 
     @GetMapping("{companyInfoId}/deliveryRecords")
-    @PreAuthorize("hasPermission('#companyInformationId', 'deliveryRecords', 'read')")
     public ResponseEntity<ResponseBody<PageResult<DeliveryRecord>>> getDeliveryRecordsByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam(value = "createdAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdAt,
@@ -108,14 +106,15 @@ public class CompanyInformationController {
     }
 
     @GetMapping("/positionInfos")
-    @PreAuthorize("hasPermission('CompanyInformations', 'read')")
     public ResponseEntity<ResponseBody<PageResult<PositionInformation>>> getPositionInfos(
             @RequestParam(value = "positionName", required = false) String positionName,
             @RequestParam(value = "salary", required = false) String salary,
             @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
             @RequestParam(value = "educations", required = false) List<Integer> educations,
             @RequestParam(value = "directionTags", required = false) List<String> directionTags,
-            @RequestParam(value = "workAreas", required = false) List<String> workAreas,
+            @RequestParam(value = "workProvinceName", required = false) String workProvinceName,
+            @RequestParam(value = "workCityName", required = false) String workCityName,
+            @RequestParam(value = "workAreaNames", required = false) List<String> workAreaNames,
             @RequestParam(value = "positionTypes", required = false) List<Integer> positionTypes,
             @RequestParam(value = "scales", required = false) List<Integer> scales,
             @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
@@ -123,14 +122,12 @@ public class CompanyInformationController {
             @RequestParam(value = "workingPlace", required = false) String workingPlace,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
-                .getPositionInfos(positionName, salary, workingYears, educations, directionTags,
-                        workAreas,
-                        positionTypes, scales, financingStages, comprehensions, workingPlace,
-                        pageable));
+                .getPositionInfos(positionName, salary, workingYears, educations, directionTags, workProvinceName,
+                        workCityName, workAreaNames, positionTypes, scales, financingStages, comprehensions,
+                        workingPlace, pageable));
     }
 
     @GetMapping("{companyInfoId}/bigData")
-    @PreAuthorize("hasPermission('#companyInformationId', 'bigData', 'read')")
     public ResponseEntity<ResponseBody<List<BigData>>> getBigDataByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam("hrInformationId") @NotNull UUID hrInformationId,
@@ -143,7 +140,6 @@ public class CompanyInformationController {
     }
 
     @GetMapping("{companyInfoId}/sawMeRecords")
-    @PreAuthorize("hasPermission('#companyInformationId', 'sawMeRecords', 'read')")
     public ResponseEntity<ResponseBody<PageResult<UserInspectionRecord>>> getSawMeRecordsByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
