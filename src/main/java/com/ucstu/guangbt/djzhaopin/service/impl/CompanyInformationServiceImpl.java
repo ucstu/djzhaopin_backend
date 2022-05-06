@@ -194,9 +194,48 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
             List<Integer> financingStages, List<String> comprehensions, String workingPlace,
             Pageable pageable) {
-        // TODO 完善搜索功能
         ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
-        Page<PositionInformation> positionInformations = positionInformationRepository.findAll(pageable);
+        Specification<PositionInformation> specification = new Specification<PositionInformation>() {
+            @Override
+            public Predicate toPredicate(Root<PositionInformation> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (positionName != null) {
+                    predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
+                }
+                if (salary != null) {
+                    predicates.add(cb.like(root.get("salary"), "%" + salary + "%"));
+                }
+                if (workingYears != null && !workingYears.isEmpty()) {
+                    predicates.add(root.get("workingYears").in(workingYears));
+                }
+                if (educations != null && !educations.isEmpty()) {
+                    predicates.add(root.get("education").in(educations));
+                }
+                if (directionTags != null && !directionTags.isEmpty()) {
+                    predicates.add(root.get("directionTag").in(directionTags));
+                }
+                if (workAreas != null && !workAreas.isEmpty()) {
+                    predicates.add(root.get("workArea").in(workAreas));
+                }
+                if (positionTypes != null && !positionTypes.isEmpty()) {
+                    predicates.add(root.get("positionType").in(positionTypes));
+                }
+                if (scales != null && !scales.isEmpty()) {
+                    predicates.add(root.get("scale").in(scales));
+                }
+                if (financingStages != null && !financingStages.isEmpty()) {
+                    predicates.add(root.get("financingStage").in(financingStages));
+                }
+                if (comprehensions != null && !comprehensions.isEmpty()) {
+                    predicates.add(root.get("comprehension").in(comprehensions));
+                }
+                if (workingPlace != null) {
+                    predicates.add(cb.like(root.get("workingPlace"), "%" + workingPlace + "%"));
+                }
+                return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        };
+        Page<PositionInformation> positionInformations = positionInformationRepository.findAll(specification, pageable);
         PageResult<PositionInformation> pageResult = new PageResult<>();
         if (!positionInformations.hasContent()) {
             pageResult.setTotalCount(0);
@@ -289,15 +328,54 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             List<Integer> educations, List<String> directionTags, List<String> workAreas, List<Integer> positionTypes,
             List<Integer> scales, List<Integer> financingStages, List<String> comprehensions, String workingPlace,
             Pageable pageable) {
-        // TODO 完善搜索功能
         ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
                 .findById(companyInformationId);
         if (!companyInformationOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
         }
+        Specification<PositionInformation> specification = new Specification<PositionInformation>() {
+            @Override
+            public Predicate toPredicate(Root<PositionInformation> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (positionName != null) {
+                    predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
+                }
+                if (salary != null) {
+                    predicates.add(cb.like(root.get("salary"), "%" + salary + "%"));
+                }
+                if (workingYears != null && !workingYears.isEmpty()) {
+                    predicates.add(root.get("workingYears").in(workingYears));
+                }
+                if (educations != null && !educations.isEmpty()) {
+                    predicates.add(root.get("education").in(educations));
+                }
+                if (directionTags != null && !directionTags.isEmpty()) {
+                    predicates.add(root.get("directionTag").in(directionTags));
+                }
+                if (workAreas != null && !workAreas.isEmpty()) {
+                    predicates.add(root.get("workArea").in(workAreas));
+                }
+                if (positionTypes != null && !positionTypes.isEmpty()) {
+                    predicates.add(root.get("positionType").in(positionTypes));
+                }
+                if (scales != null && !scales.isEmpty()) {
+                    predicates.add(root.get("scale").in(scales));
+                }
+                if (financingStages != null && !financingStages.isEmpty()) {
+                    predicates.add(root.get("financingStage").in(financingStages));
+                }
+                if (comprehensions != null && !comprehensions.isEmpty()) {
+                    predicates.add(root.get("comprehension").in(comprehensions));
+                }
+                if (workingPlace != null) {
+                    predicates.add(cb.like(root.get("workingPlace"), "%" + workingPlace + "%"));
+                }
+                return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        };
+        Page<PositionInformation> positionInformations = positionInformationRepository.findAll(specification, pageable);
         PageResult<PositionInformation> pageResult = new PageResult<>();
-        Page<PositionInformation> positionInformations = positionInformationRepository.findAll(pageable);
         if (!positionInformations.hasContent()) {
             pageResult.setTotalCount(0);
             pageResult.setContents(new ArrayList<>());
