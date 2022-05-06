@@ -1,7 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.entity.company.position;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,7 +22,6 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.geo.Point;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.CascadeType;
@@ -129,7 +130,12 @@ public class PositionInformation {
     private InterviewInfo interviewInfo;
 
     @JsonIgnore
-    private Point point;
+    @Range(min = 0, max = 180)
+    private Float longitude;
+
+    @JsonIgnore
+    @Range(min = 0, max = 90)
+    private Float latitude;
 
     @JsonIgnore
     @JoinColumn(name = "position_information_id")
@@ -164,6 +170,22 @@ public class PositionInformation {
     @JsonSetter("hrInformationId")
     public void setHrInformationId(UUID hrInformationId) {
         hrInformation = new HrInformation().setHrInformationId(hrInformationId);
+    }
+
+    @JsonGetter("workingPlace")
+    public Map<String, Float> getWorkingPlace() {
+        return new HashMap<String, Float>() {
+            {
+                put("longitude", longitude);
+                put("latitude", latitude);
+            }
+        };
+    }
+
+    @JsonSetter("workingPlace")
+    public void setWorkingPlace(Map<String, Float> workingPlace) {
+        longitude = workingPlace.get("longitude");
+        latitude = workingPlace.get("latitude");
     }
 
 }

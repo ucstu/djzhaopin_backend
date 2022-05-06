@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
@@ -158,9 +159,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 if (sexs != null && !sexs.isEmpty()) {
                     predicates.add(userInformationJoin.get("sex").in(sexs));
                 }
-                if (ages != null && !ages.isEmpty()) {
-                    predicates.add(userInformationJoin.get("age").in(ages));
-                }
+                // if (ages != null && !ages.isEmpty()) {
+                // predicates.add(userInformationJoin.get("age").in(ages));
+                // }
                 Join<DeliveryRecord, PositionInformation> positionInformationJoin = root.join("positionInformation");
                 if (positionInformationIds != null && !positionInformationIds.isEmpty()) {
                     predicates.add(positionInformationJoin.get("positionInformationId").in(positionInformationIds));
@@ -214,26 +215,34 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 if (educations != null && !educations.isEmpty()) {
                     predicates.add(root.get("education").in(educations));
                 }
-                if (directionTags != null && !directionTags.isEmpty()) {
-                    predicates.add(root.get("directionTag").in(directionTags));
-                }
+                // if (directionTags != null && !directionTags.isEmpty()) {
+                // predicates.add(root.get("directionTag").in(directionTags));
+                // }
                 if (workAreas != null && !workAreas.isEmpty()) {
-                    predicates.add(root.get("workArea").in(workAreas));
+                    predicates.add(root.get("workAreaName").in(workAreas));
                 }
                 if (positionTypes != null && !positionTypes.isEmpty()) {
                     predicates.add(root.get("positionType").in(positionTypes));
                 }
+                Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
                 if (scales != null && !scales.isEmpty()) {
-                    predicates.add(root.get("scale").in(scales));
+                    predicates.add(companyInformationJoin.get("scale").in(scales));
                 }
                 if (financingStages != null && !financingStages.isEmpty()) {
-                    predicates.add(root.get("financingStage").in(financingStages));
+                    predicates.add(companyInformationJoin.get("financingStage").in(financingStages));
                 }
                 if (comprehensions != null && !comprehensions.isEmpty()) {
-                    predicates.add(root.get("comprehension").in(comprehensions));
+                    predicates.add(companyInformationJoin.get("comprehensionName").in(comprehensions));
                 }
                 if (workingPlace != null) {
-                    predicates.add(cb.like(root.get("workingPlace"), "%" + workingPlace + "%"));
+                    Float longitude = Float.valueOf(workingPlace.split(",")[0]);
+                    Float latitude = Float.valueOf(workingPlace.split(",")[1]);
+                    Expression<Double> expression = cb.sqrt(cb.diff(
+                            cb.prod(cb.diff(root.get("longitude"), longitude),
+                                    cb.diff(root.get("longitude"), longitude)),
+                            cb.prod(cb.diff(root.get("latitude"), latitude),
+                                    cb.diff(root.get("latitude"), latitude))));
+                    query.orderBy(cb.asc(expression));
                 }
                 return cb.and(predicates.toArray(new Predicate[predicates.size()]));
             }
@@ -345,7 +354,10 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
                 }
                 if (salary != null) {
-                    predicates.add(cb.like(root.get("salary"), "%" + salary + "%"));
+                    String startingSalary = salary.split(",")[0];
+                    String endingSalary = salary.split(",")[1];
+                    predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
+                    predicates.add(cb.lessThan(root.get("endingSalary"), endingSalary));
                 }
                 if (workingYears != null && !workingYears.isEmpty()) {
                     predicates.add(root.get("workingYears").in(workingYears));
@@ -353,26 +365,34 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 if (educations != null && !educations.isEmpty()) {
                     predicates.add(root.get("education").in(educations));
                 }
-                if (directionTags != null && !directionTags.isEmpty()) {
-                    predicates.add(root.get("directionTag").in(directionTags));
-                }
+                // if (directionTags != null && !directionTags.isEmpty()) {
+                // predicates.add(root.get("directionTag").in(directionTags));
+                // }
                 if (workAreas != null && !workAreas.isEmpty()) {
-                    predicates.add(root.get("workArea").in(workAreas));
+                    predicates.add(root.get("workAreaName").in(workAreas));
                 }
                 if (positionTypes != null && !positionTypes.isEmpty()) {
                     predicates.add(root.get("positionType").in(positionTypes));
                 }
+                Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
                 if (scales != null && !scales.isEmpty()) {
-                    predicates.add(root.get("scale").in(scales));
+                    predicates.add(companyInformationJoin.get("scale").in(scales));
                 }
                 if (financingStages != null && !financingStages.isEmpty()) {
-                    predicates.add(root.get("financingStage").in(financingStages));
+                    predicates.add(companyInformationJoin.get("financingStage").in(financingStages));
                 }
                 if (comprehensions != null && !comprehensions.isEmpty()) {
-                    predicates.add(root.get("comprehension").in(comprehensions));
+                    predicates.add(companyInformationJoin.get("comprehensionName").in(comprehensions));
                 }
                 if (workingPlace != null) {
-                    predicates.add(cb.like(root.get("workingPlace"), "%" + workingPlace + "%"));
+                    Float longitude = Float.valueOf(workingPlace.split(",")[0]);
+                    Float latitude = Float.valueOf(workingPlace.split(",")[1]);
+                    Expression<Double> expression = cb.sqrt(cb.diff(
+                            cb.prod(cb.diff(root.get("longitude"), longitude),
+                                    cb.diff(root.get("longitude"), longitude)),
+                            cb.prod(cb.diff(root.get("latitude"), latitude),
+                                    cb.diff(root.get("latitude"), latitude))));
+                    query.orderBy(cb.asc(expression));
                 }
                 return cb.and(predicates.toArray(new Predicate[predicates.size()]));
             }
