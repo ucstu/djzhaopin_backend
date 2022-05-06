@@ -7,13 +7,12 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
 
 import org.springframework.data.domain.Pageable;
-
-import jakarta.validation.constraints.NotNull;
 
 public interface CompanyInformationService {
 
@@ -39,7 +38,8 @@ public interface CompanyInformationService {
             List<Integer> workingYears, List<String> sexs, List<Integer> ages,
             List<UUID> positionInformationIds, List<Date> deliveryDates, String search, Pageable pageable);
 
-    public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName, String salary,
+    public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName,
+            String salary,
             List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
             List<String> workAreas, List<Integer> positionTypes, List<Integer> scales,
             List<Integer> financingStages, List<String> comprehensions, String workingPlace,
@@ -66,11 +66,12 @@ public interface CompanyInformationService {
             Pageable pageable);
 
     public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInformationId(
-            UUID companyInformationId,
-            UUID positionInformationId);
+            UUID companyInformationId, UUID positionInformationId);
+
+    public ServiceToControllerBody<PageResult<UserInspectionRecord>> getSawMeRecordsByCompanyInformationId(
+            UUID companyInformationId, Date startDate, Date endDate, Pageable pageable);
 
     public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(
-            @NotNull UUID companyInformationId, Date startDate,
-            Date endDate, Pageable pageable);
+            UUID companyInformationId, Date startDate, Date endDate, Pageable pageable);
 
 }

@@ -1,11 +1,13 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
+import com.ucstu.guangbt.djzhaopin.entity.hr.HrInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.EducationExperience;
@@ -19,6 +21,7 @@ import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.hr.HrInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.AttentionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.DeliveryRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.EducationExperienceRepository;
@@ -73,6 +76,9 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Resource
     private PositionInformationRepository positionInformationRepository;
+
+    @Resource
+    private HrInspectionRecordRepository hrInspectionRecordRepository;
 
     @Override
     @Transactional
@@ -132,6 +138,29 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
         return serviceToControllerBody.success(userInformationOptional.get());
+    }
+
+    @Override
+    public ServiceToControllerBody<PageResult<HrInspectionRecord>> getSawMeRecordsByUserInformationId(
+            UUID userInformationId, Date startDate, Date endDate, Pageable pageable) {
+        ServiceToControllerBody<PageResult<HrInspectionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userInformationId);
+        if (!userInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
+        }
+        Page<HrInspectionRecord> hrInspectionRecords = hrInspectionRecordRepository
+                .findByUserInformationAndCreatedAtBetween(userInformationOptional.get(), startDate, endDate, pageable);
+        PageResult<HrInspectionRecord> pageResult = new PageResult<>();
+        if (!hrInspectionRecords.hasContent()) {
+            pageResult.setTotalCount(0);
+            pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("hrInspectionRecords");
+            return serviceToControllerBody.success(pageResult);
+        }
+        pageResult.setTotalCount(hrInspectionRecords.getTotalElements());
+        pageResult.setContents(hrInspectionRecords.getContent());
+        pageResult.setContentsName("hrInspectionRecords");
+        return serviceToControllerBody.success(pageResult);
     }
 
     @Override

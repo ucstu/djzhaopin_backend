@@ -10,6 +10,7 @@ import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
@@ -17,6 +18,7 @@ import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationReposito
 import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.DeliveryRecordRepository;
+import com.ucstu.guangbt.djzhaopin.repository.user.UserInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
 import org.springframework.data.domain.Page;
@@ -25,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
-import jakarta.validation.constraints.NotNull;
 
 @Service
 public class CompanyInformationServiceImpl implements CompanyInformationService {
@@ -41,6 +42,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Resource
     private DeliveryRecordRepository deliveryRecordRepository;
+
+    @Resource
+    private UserInspectionRecordRepository userInspectionRecordRepository;
 
     @Override
     @Transactional
@@ -274,7 +278,32 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     }
 
     @Override
-    public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(@NotNull UUID companyInformationId,
+    public ServiceToControllerBody<PageResult<UserInspectionRecord>> getSawMeRecordsByCompanyInformationId(
+            UUID companyInformationId, Date startDate, Date endDate, Pageable pageable) {
+        ServiceToControllerBody<PageResult<UserInspectionRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
+                .findById(companyInformationId);
+        if (!companyInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
+        }
+        Page<UserInspectionRecord> userInspectionRecords = userInspectionRecordRepository
+                .findByCompanyInformationAndCreatedAtBetween(companyInformationOptional.get(), startDate, endDate,
+                        pageable);
+        PageResult<UserInspectionRecord> pageResult = new PageResult<>();
+        if (!userInspectionRecords.hasContent()) {
+            pageResult.setTotalCount(0);
+            pageResult.setContents(new ArrayList<>());
+            pageResult.setContentsName("userInspectionRecords");
+            return serviceToControllerBody.success(pageResult);
+        }
+        pageResult.setTotalCount(userInspectionRecords.getTotalElements());
+        pageResult.setContents(userInspectionRecords.getContent());
+        pageResult.setContentsName("userInspectionRecords");
+        return serviceToControllerBody.success(pageResult);
+    }
+
+    @Override
+    public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(UUID companyInformationId,
             Date startDate, Date endDate, Pageable pageable) {
         // TODO 完善大数据查询功能
         return new ServiceToControllerBody<List<BigData>>().error("暂时未做", "暂时未做", "暂时未做");

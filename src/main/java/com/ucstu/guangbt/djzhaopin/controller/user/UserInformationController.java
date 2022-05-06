@@ -1,7 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
+import java.util.Date;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.hr.HrInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
@@ -9,6 +11,7 @@ import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
@@ -66,6 +70,16 @@ public class UserInformationController {
             @PathVariable("userInfoId") @NotNull UUID userInformationId) {
         return ResponseBody.handle(userInformationService
                 .getUserInformationByUserInformationId(userInformationId));
+    }
+
+    @GetMapping("/{userInfoId}/sawMeRecords")
+    public ResponseEntity<ResponseBody<PageResult<HrInspectionRecord>>> getSawMeRecordsByUserInformationId(
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @PathVariable("userInfoId") @NotNull UUID userInformationId,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(userInformationService
+                .getSawMeRecordsByUserInformationId(userInformationId, startDate, endDate, pageable));
     }
 
 }

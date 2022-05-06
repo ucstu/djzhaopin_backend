@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
@@ -137,6 +138,17 @@ public class CompanyInformationController {
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
                 .getBigDataByCompanyInformationId(companyInformationId, startDate, endDate, pageable));
+    }
+
+    @GetMapping("{companyInfoId}/sawMeRecords")
+    @PreAuthorize("hasPermission('#companyInformationId', 'sawMeRecords', 'read')")
+    public ResponseEntity<ResponseBody<PageResult<UserInspectionRecord>>> getSawMeRecordsByCompanyInformationId(
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseBody.handle(companyInformationService
+                .getSawMeRecordsByCompanyInformationId(companyInformationId, startDate, endDate, pageable));
     }
 
 }
