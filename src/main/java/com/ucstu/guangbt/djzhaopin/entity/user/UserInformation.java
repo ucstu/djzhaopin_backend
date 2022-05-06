@@ -85,7 +85,6 @@ public class UserInformation {
     @Range(min = 1, max = 3)
     private Integer jobStatus;
 
-    @JoinColumn
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> pictureWorks;
 
@@ -95,42 +94,42 @@ public class UserInformation {
     private Integer privacySettings;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<JobExpectation> jobExpectations;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<EducationExperience> educationExperiences;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<WorkExperience> workExperiences;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<ProjectExperience> projectExperiences;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<DeliveryRecord> deliveryRecords;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<AttentionRecord> attentionRecords;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<UserInspectionRecord> userInspectionRecords;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<GarnerRecord> garnerRecords;
 

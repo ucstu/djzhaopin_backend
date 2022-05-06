@@ -61,17 +61,17 @@ public class DeliveryRecord {
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     private UserInformation userInformation;
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "company_information_id")
     private CompanyInformation companyInformation;
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "position_information_id")
     private PositionInformation positionInformation;
 
     @JsonGetter("userInformationId")

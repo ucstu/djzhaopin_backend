@@ -51,7 +51,7 @@ public class WorkExperience {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     private UserInformation userInformation;
 
     @NotNull

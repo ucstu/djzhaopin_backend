@@ -55,7 +55,7 @@ public class JobExpectation {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     private UserInformation userInformation;
 
     // {1:全职,2:兼职,3:实习}

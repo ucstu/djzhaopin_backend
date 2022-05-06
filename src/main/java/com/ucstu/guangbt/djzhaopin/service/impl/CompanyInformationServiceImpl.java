@@ -277,7 +277,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(@NotNull UUID companyInformationId,
             Date startDate, Date endDate, Pageable pageable) {
         // TODO 完善大数据查询功能
-        return new ServiceToControllerBody<List<BigData>>().error("暂无数据", "暂无数据", "暂无数据");
+        return new ServiceToControllerBody<List<BigData>>().error("暂时未做", "暂时未做", "暂时未做");
     }
 
 }

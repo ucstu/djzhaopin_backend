@@ -29,6 +29,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -78,6 +79,7 @@ public class CompanyInformation {
 
     private String comprehensionName;
 
+    @NotBlank
     private String address;
 
     private String about;
@@ -92,12 +94,11 @@ public class CompanyInformation {
 
     private String establishmentTime;
 
-    @JoinColumn
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> benefits;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "company_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<PositionInformation> positionInformations;
 
@@ -107,12 +108,12 @@ public class CompanyInformation {
     private ExactAddress exactAddress;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "company_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<AttentionRecord> attentionRecords;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "company_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<HrInformation> hrInformations;
 }

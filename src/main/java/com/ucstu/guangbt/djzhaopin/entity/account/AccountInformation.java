@@ -58,12 +58,12 @@ public class AccountInformation {
     private Date updatedAt;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     @OneToOne(cascade = { CascadeType.ALL })
     private UserInformation userInformation;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "hr_information_id")
     @OneToOne(cascade = { CascadeType.ALL })
     private HrInformation hrInformation;
 

@@ -91,12 +91,12 @@ public class PositionInformation {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "company_information_id")
     private CompanyInformation companyInformation;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "hr_information_id")
     private HrInformation hrInformation;
 
     @NotNull
@@ -105,7 +105,6 @@ public class PositionInformation {
 
     private String departmentName;
 
-    @JoinColumn
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> highlights;
 
@@ -136,17 +135,17 @@ public class PositionInformation {
     private ExactAddress exactAddress;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "position_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<DeliveryRecord> deliveryRecords;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "position_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<GarnerRecord> garnerRecords;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "position_information_id")
     @OneToMany(cascade = { CascadeType.ALL })
     private List<UserInspectionRecord> userInspectionRecords;
 

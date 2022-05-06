@@ -52,12 +52,12 @@ public class AttentionRecord {
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     private UserInformation userInformation;
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "company_information_id")
     private CompanyInformation companyInformation;
 
     @JsonGetter("userInformationId")

@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 
 import org.hibernate.annotations.Type;
@@ -57,7 +59,6 @@ public class HrInformation {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn
     private CompanyInformation companyInformation;
 
     private String avatarUrl;
@@ -70,8 +71,18 @@ public class HrInformation {
     private String acceptEmail;
 
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "hr_information_id")
     @OneToMany(cascade = CascadeType.ALL)
     private List<HrInspectionRecord> hrInspectionRecords;
+
+    @JsonGetter("companyInformationId")
+    public UUID getCompanyInformationId() {
+        return companyInformation.getCompanyInformationId();
+    }
+
+    @JsonSetter("companyInformationId")
+    public void setCompanyInformationId(UUID companyInformationId) {
+        companyInformation = new CompanyInformation().setCompanyInformationId(companyInformationId);
+    }
 
 }

@@ -52,12 +52,12 @@ public class HrInspectionRecord {
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "hr_information_id")
     private HrInformation hrInformation;
 
     @OneToOne
     @JsonIgnore
-    @JoinColumn
+    @JoinColumn(name = "user_information_id")
     private UserInformation userInformation;
 
     @JsonGetter("hrInformationId")
