@@ -133,19 +133,20 @@ public class CompanyInformationController {
     @PreAuthorize("hasPermission('#companyInformationId', 'bigData', 'read')")
     public ResponseEntity<ResponseBody<List<BigData>>> getBigDataByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
+            @RequestParam("hrInformationId") @NotNull UUID hrInformationId,
             @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
-                .getBigDataByCompanyInformationId(companyInformationId, startDate, endDate, pageable));
+                .getBigDataByCompanyInformationId(companyInformationId, hrInformationId, startDate, endDate, pageable));
     }
 
     @GetMapping("{companyInfoId}/sawMeRecords")
     @PreAuthorize("hasPermission('#companyInformationId', 'sawMeRecords', 'read')")
     public ResponseEntity<ResponseBody<PageResult<UserInspectionRecord>>> getSawMeRecordsByCompanyInformationId(
+            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
-            @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
                 .getSawMeRecordsByCompanyInformationId(companyInformationId, startDate, endDate, pageable));

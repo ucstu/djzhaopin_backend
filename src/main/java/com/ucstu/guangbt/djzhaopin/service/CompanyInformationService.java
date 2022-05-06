@@ -72,6 +72,6 @@ public interface CompanyInformationService {
             UUID companyInformationId, Date startDate, Date endDate, Pageable pageable);
 
     public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(
-            UUID companyInformationId, Date startDate, Date endDate, Pageable pageable);
+            UUID companyInformationId, UUID hrInformationId, Date startDate, Date endDate, Pageable pageable);
 
 }

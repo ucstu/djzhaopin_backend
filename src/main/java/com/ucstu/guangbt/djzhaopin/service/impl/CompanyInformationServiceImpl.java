@@ -14,6 +14,7 @@ import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
+import com.ucstu.guangbt.djzhaopin.repository.MessageRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
@@ -45,6 +46,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Resource
     private UserInspectionRecordRepository userInspectionRecordRepository;
+
+    @Resource
+    private MessageRecordRepository messageRecordRepository;
 
     @Override
     @Transactional
@@ -304,9 +308,27 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Override
     public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(UUID companyInformationId,
-            Date startDate, Date endDate, Pageable pageable) {
-        // TODO 完善大数据查询功能
-        return new ServiceToControllerBody<List<BigData>>().error("暂时未做", "暂时未做", "暂时未做");
+            UUID hrInformationId, Date startDate, Date endDate, Pageable pageable) {
+        ServiceToControllerBody<List<BigData>> serviceToControllerBody = new ServiceToControllerBody<>();
+        Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
+                .findById(companyInformationId);
+        if (!companyInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
+        }
+        List<BigData> bigDatas = new ArrayList<>();
+        while (startDate.before(endDate)) {
+            BigData bigData = new BigData();
+            bigData.setDate(startDate);
+            bigData.setInspectionRecordCount(userInspectionRecordRepository
+                    .countByCompanyInformationAndCreatedAt(companyInformationOptional.get(), startDate));
+            bigData.setDeliveryRecordCount(deliveryRecordRepository
+                    .countByCompanyInformationAndCreatedAt(companyInformationOptional.get(), startDate));
+            bigData.setOnlineCommunicateCount(
+                    messageRecordRepository.countByServiceIdAndCreatedAt(hrInformationId,
+                            startDate));
+            bigDatas.add(bigData);
+        }
+        return serviceToControllerBody.success(bigDatas);
     }
 
 }
