@@ -86,6 +86,8 @@ public class PositionInformation {
     @NotNull
     private Integer ceilingSalary;
 
+    private String workProvinceName;
+
     private String workCityName;
 
     private String workAreaName;

@@ -59,6 +59,7 @@ public class HrInformation {
 
     @ManyToOne
     @JsonIgnore
+    @JoinColumn(name = "company_information_id")
     private CompanyInformation companyInformation;
 
     private String avatarUrl;

@@ -91,6 +91,10 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         }
         companyInformation.setCompanyInformationId(companyInformationId);
         companyInformation.setCreatedAt(companyInformationOptional.get().getCreatedAt());
+        companyInformation.setPositionInformations(companyInformationOptional.get().getPositionInformations());
+        companyInformation.setAttentionRecords(companyInformationOptional.get().getAttentionRecords());
+        companyInformation.setHrInformations(companyInformationOptional.get().getHrInformations());
+
         return serviceToControllerBody.success(companyInformationRepository.save(companyInformation));
     }
 
@@ -205,9 +209,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 }
                 if (salary != null) {
                     String startingSalary = salary.split(",")[0];
-                    String endingSalary = salary.split(",")[1];
+                    String ceilingSalary = salary.split(",")[1];
                     predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
-                    predicates.add(cb.lessThan(root.get("endingSalary"), endingSalary));
+                    predicates.add(cb.lessThan(root.get("ceilingSalary"), ceilingSalary));
                 }
                 if (workingYears != null && !workingYears.isEmpty()) {
                     predicates.add(root.get("workingYears").in(workingYears));
@@ -331,6 +335,10 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         positionInformation.setPositionInformationId(positionInformationId);
         positionInformation.setCompanyInformation(companyInformationOptional.get());
         positionInformation.setCreatedAt(positionInformationOptional.get().getCreatedAt());
+        positionInformation.setInterviewInfo(positionInformationOptional.get().getInterviewInfo());
+        positionInformation.setDeliveryRecords(positionInformationOptional.get().getDeliveryRecords());
+        positionInformation.setGarnerRecords(positionInformationOptional.get().getGarnerRecords());
+        positionInformation.setUserInspectionRecords(positionInformationOptional.get().getUserInspectionRecords());
         return serviceToControllerBody.success(positionInformationRepository.save(positionInformation));
     }
 
@@ -355,9 +363,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 }
                 if (salary != null) {
                     String startingSalary = salary.split(",")[0];
-                    String endingSalary = salary.split(",")[1];
+                    String ceilingSalary = salary.split(",")[1];
                     predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
-                    predicates.add(cb.lessThan(root.get("endingSalary"), endingSalary));
+                    predicates.add(cb.lessThan(root.get("ceilingSalary"), ceilingSalary));
                 }
                 if (workingYears != null && !workingYears.isEmpty()) {
                     predicates.add(root.get("workingYears").in(workingYears));

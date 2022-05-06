@@ -110,6 +110,14 @@ public class UserInformationServiceImpl implements UserInformationService {
         }
         userInformation.setUserInformationId(userInformationId);
         userInformation.setCreatedAt(userInformationOptional.get().getCreatedAt());
+        userInformation.setJobExpectations(userInformationOptional.get().getJobExpectations());
+        userInformation.setEducationExperiences(userInformationOptional.get().getEducationExperiences());
+        userInformation.setWorkExperiences(userInformationOptional.get().getWorkExperiences());
+        userInformation.setProjectExperiences(userInformationOptional.get().getProjectExperiences());
+        userInformation.setDeliveryRecords(userInformationOptional.get().getDeliveryRecords());
+        userInformation.setAttentionRecords(userInformationOptional.get().getAttentionRecords());
+        userInformation.setUserInspectionRecords(userInformationOptional.get().getUserInspectionRecords());
+        userInformation.setGarnerRecords(userInformationOptional.get().getGarnerRecords());
         return serviceToControllerBody.success(userInformationRepository.save(userInformation));
     }
 

@@ -58,6 +58,8 @@ public class HrInformationServiceImpl implements HrInformationService {
         }
         hrInformation.setHrInformationId(hrInformationId);
         hrInformation.setCreatedAt(hrInformationOptional.get().getCreatedAt());
+        hrInformation.setCompanyInformation(hrInformationOptional.get().getCompanyInformation());
+        hrInformation.setHrInspectionRecords(hrInformationOptional.get().getHrInspectionRecords());
         return serviceToControllerBody.success(hrInformationRepository.save(hrInformation));
     }
 
