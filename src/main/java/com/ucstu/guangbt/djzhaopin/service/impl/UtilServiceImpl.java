@@ -2,8 +2,6 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,12 +18,11 @@ import com.ucstu.guangbt.djzhaopin.model.util.positiontype.Direction;
 import com.ucstu.guangbt.djzhaopin.model.util.positiontype.PositionType;
 import com.ucstu.guangbt.djzhaopin.repository.MessageRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.UtilService;
+import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +38,7 @@ public class UtilServiceImpl implements UtilService {
     private RestTemplate restTemplate;
 
     @Resource
-    private JavaMailSenderImpl mailSender;
+    private EmailMessageUtil emailMessageUtil;
 
     @Resource
     private RedisTemplate<String, String> verificationCodeTemplate;
@@ -589,21 +586,10 @@ public class UtilServiceImpl implements UtilService {
     @Override
     public ServiceToControllerBody<String> getVerificationCode(String email) {
         ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        Random random;
-        try {
-            random = SecureRandom.getInstanceStrong();
-            simpleMailMessage.setFrom("djzhaopine@163.com");
-            simpleMailMessage.setTo(email);
-            simpleMailMessage.setSubject("东江人才招聘验证码");
-            String verificationCode = String.valueOf(random.nextInt(8999) + 1000);
-            verificationCodeTemplate.opsForValue().set(email, verificationCode, 5, TimeUnit.MINUTES);
-            simpleMailMessage.setText("您的验证码为：" + verificationCode + "，请在5分钟内使用");
-            mailSender.send(simpleMailMessage);
-            return serviceToControllerBody.success(email);
-        } catch (NoSuchAlgorithmException e) {
-            return serviceToControllerBody.error("email", "验证码发送失败", email);
-        }
+        String verificationCode = String.valueOf(new Random().nextInt(8999) + 1000);
+        emailMessageUtil.sendEmail(email, "东江招聘-验证码", "您的验证码为：" + verificationCode + "，请在5分钟内使用。");
+        verificationCodeTemplate.opsForValue().set(email, verificationCode, 5, TimeUnit.MINUTES);
+        return serviceToControllerBody.success("验证码已发送，请注意查收。");
     }
 
     @Override

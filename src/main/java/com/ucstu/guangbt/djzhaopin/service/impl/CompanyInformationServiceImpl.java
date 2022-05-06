@@ -9,7 +9,9 @@ import java.util.UUID;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
+import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.entity.user.GarnerRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
@@ -22,6 +24,7 @@ import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.DeliveryRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.UserInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
+import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,6 +60,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Resource
     private MessageRecordRepository messageRecordRepository;
 
+    @Resource
+    private EmailMessageUtil emailMessageUtil;
+
     @Override
     @Transactional
     public ServiceToControllerBody<CompanyInformation> createCompanyInformation(CompanyInformation companyInformation) {
@@ -74,6 +80,11 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         if (!companyInformationOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
         }
+        for (AttentionRecord attentionRecord : companyInformationOptional.get().getAttentionRecords()) {
+            emailMessageUtil.sendEmail(attentionRecord.getUserInformation().getEmail(),
+                    "东江招聘-关注公司通知",
+                    "您关注的公司《" + companyInformationOptional.get().getCompanyName() + "》已被删除，请登录系统查看！");
+        }
         companyInformationRepository.delete(companyInformationOptional.get());
         return serviceToControllerBody.success(companyInformationOptional.get());
     }
@@ -87,6 +98,11 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 .findById(companyInformationId);
         if (!companyInformationOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
+        }
+        for (AttentionRecord attentionRecord : companyInformationOptional.get().getAttentionRecords()) {
+            emailMessageUtil.sendEmail(attentionRecord.getUserInformation().getEmail(),
+                    "东江招聘-关注公司通知",
+                    "您关注的公司《" + companyInformationOptional.get().getCompanyName() + "》已被更新，请登录系统查看！");
         }
         companyInformation.setCompanyInformationId(companyInformationId);
         companyInformation.setCreatedAt(companyInformationOptional.get().getCreatedAt());
@@ -315,6 +331,11 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             return serviceToControllerBody.error("hrInformationId", "HR信息不存在",
                     positionInformation.getHrInformationId());
         }
+        for (AttentionRecord attentionRecord : companyInformationOptional.get().getAttentionRecords()) {
+            emailMessageUtil.sendEmail(attentionRecord.getUserInformation().getEmail(),
+                    "东江人才网-关注公司通知",
+                    "您关注的公司《" + companyInformationOptional.get().getCompanyName() + "》发布了新职位，请登录系统查看！");
+        }
         positionInformation.setCompanyInformation(companyInformationOptional.get());
         positionInformation.setHrInformation(hrInformationOptional.get());
         return serviceToControllerBody.created(positionInformationRepository.save(positionInformation));
@@ -337,6 +358,11 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 .findFirst();
         if (!positionInformationOptional.isPresent()) {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
+        }
+        for (GarnerRecord garnerRecord : positionInformationOptional.get().getGarnerRecords()) {
+            emailMessageUtil.sendEmail(garnerRecord.getUserInformation().getEmail(),
+                    "东江人才网-收藏职位通知",
+                    "您收藏的职位《" + positionInformationOptional.get().getPositionName() + "》已被删除，请登录系统查看！");
         }
         positionInformationRepository.delete(positionInformationOptional.get());
         return serviceToControllerBody.success(positionInformationOptional.get());
@@ -365,6 +391,11 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 .findFirst();
         if (!positionInformationOptional.isPresent()) {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
+        }
+        for (GarnerRecord garnerRecord : positionInformationOptional.get().getGarnerRecords()) {
+            emailMessageUtil.sendEmail(garnerRecord.getUserInformation().getEmail(),
+                    "东江人才网-收藏职位通知",
+                    "您收藏的职位《" + positionInformationOptional.get().getPositionName() + "》已被更新，请登录系统查看！");
         }
         positionInformation.setHrInformation(hrInformationOptional.get());
         positionInformation.setPositionInformationId(positionInformationId);

@@ -102,6 +102,7 @@ public class AccountInformation {
         } else if (accountType == 2) {
             return hrInformation != null ? hrInformation.getHrInformationId() : null;
         }
+        return null;
     }
 
 }

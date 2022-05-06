@@ -32,6 +32,7 @@ import com.ucstu.guangbt.djzhaopin.repository.user.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.UserInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.WorkExperienceRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
+import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -79,6 +80,9 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Resource
     private HrInspectionRecordRepository hrInspectionRecordRepository;
+
+    @Resource
+    private EmailMessageUtil emailMessageUtil;
 
     @Override
     @Transactional
@@ -573,6 +577,8 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
                     deliveryRecord.getPositionInformationId());
         }
+        emailMessageUtil.sendEmail(positionInformationOptional.get().getHrInformation().getAcceptEmail(),
+                "东江招聘-投递记录通知", "您有一条新的投递记录，请登录系统查看！");
         return serviceToControllerBody.created(deliveryRecordRepository.save(deliveryRecord));
     }
 
@@ -624,6 +630,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!deliveryRecordOptional.isPresent()) {
             return serviceToControllerBody.error("deliveryRecordId", "投递记录不存在", deliveryRecordId);
         }
+        emailMessageUtil.sendEmail(userInformationOptional.get().getEmail(), "东江招聘-投递记录通知",
+                "您的投递记录已被更新，请登录系统查看！");
         deliveryRecord.setDeliveryRecordId(deliveryRecordId);
         deliveryRecord.setUserInformation(userInformationOptional.get());
         deliveryRecord.setCreatedAt(deliveryRecordOptional.get().getCreatedAt());
