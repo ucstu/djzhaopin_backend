@@ -10,6 +10,7 @@ import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
@@ -24,10 +25,16 @@ import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 @Service
 public class CompanyInformationServiceImpl implements CompanyInformationService {
@@ -119,12 +126,55 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Override
     public ServiceToControllerBody<PageResult<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
-            UUID companyInformationId, Date createdAt, Date updatedAt, List<Integer> status,
+            UUID companyInformationId, Date createdAt, Date updatedAt, List<Integer> status, Date interviewTime,
             List<Integer> workingYears, List<String> sexs, List<Integer> ages,
-            List<UUID> positionInformationIds, List<Date> deliveryDates, String search, Pageable pageable) {
-        // TODO 完善搜索功能
+            List<UUID> positionInformationIds, List<Date> deliveryDates, String userName, Pageable pageable) {
         ServiceToControllerBody<PageResult<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
-        Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll(pageable);
+        Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
+                .findById(companyInformationId);
+        if (!companyInformationOptional.isPresent()) {
+            return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
+        }
+        Specification<DeliveryRecord> specification = new Specification<DeliveryRecord>() {
+            @Override
+            public Predicate toPredicate(Root<DeliveryRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (createdAt != null) {
+                    predicates.add(cb.equal(root.get("createdAt"), createdAt));
+                }
+                if (updatedAt != null) {
+                    predicates.add(cb.equal(root.get("updatedAt"), updatedAt));
+                }
+                if (status != null && !status.isEmpty()) {
+                    predicates.add(root.get("status").in(status));
+                }
+                if (interviewTime != null) {
+                    predicates.add(cb.equal(root.get("interviewTime"), interviewTime));
+                }
+                Join<DeliveryRecord, UserInformation> userInformationJoin = root.join("userInformation");
+                if (workingYears != null && !workingYears.isEmpty()) {
+                    predicates.add(userInformationJoin.get("workingYears").in(workingYears));
+                }
+                if (sexs != null && !sexs.isEmpty()) {
+                    predicates.add(userInformationJoin.get("sex").in(sexs));
+                }
+                if (ages != null && !ages.isEmpty()) {
+                    predicates.add(userInformationJoin.get("age").in(ages));
+                }
+                Join<DeliveryRecord, PositionInformation> positionInformationJoin = root.join("positionInformation");
+                if (positionInformationIds != null && !positionInformationIds.isEmpty()) {
+                    predicates.add(positionInformationJoin.get("positionInformationId").in(positionInformationIds));
+                }
+                if (deliveryDates != null && !deliveryDates.isEmpty()) {
+                    predicates.add(root.get("createdAt").in(deliveryDates));
+                }
+                if (userName != null) {
+                    predicates.add(cb.like(userInformationJoin.get("userName"), "%" + userName + "%"));
+                }
+                return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        };
+        Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll(specification, pageable);
         PageResult<DeliveryRecord> pageResult = new PageResult<>();
         if (!deliveryRecords.hasContent()) {
             pageResult.setTotalCount(0);

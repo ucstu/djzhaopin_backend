@@ -77,7 +77,7 @@ public class HrInformation {
 
     @JsonGetter("companyInformationId")
     public UUID getCompanyInformationId() {
-        return companyInformation.getCompanyInformationId();
+        return companyInformation != null ? companyInformation.getCompanyInformationId() : null;
     }
 
     @JsonSetter("companyInformationId")

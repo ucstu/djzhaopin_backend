@@ -13,7 +13,6 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
 
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
-        // TODO Auto-generated method stub
         return true;
     }
 

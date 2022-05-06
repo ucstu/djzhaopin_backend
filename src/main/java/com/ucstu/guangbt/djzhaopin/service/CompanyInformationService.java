@@ -35,8 +35,9 @@ public interface CompanyInformationService {
 
     public ServiceToControllerBody<PageResult<DeliveryRecord>> getDeliveryRecordsByCompanyInformationId(
             UUID companyInformationId, Date createdAt, Date updatedAt, List<Integer> status,
-            List<Integer> workingYears, List<String> sexs, List<Integer> ages,
-            List<UUID> positionInformationIds, List<Date> deliveryDates, String search, Pageable pageable);
+            Date interviewTime, List<Integer> workingYears, List<String> sexs, List<Integer> ages,
+            List<UUID> positionInformationIds, List<Date> deliveryDates, String userName,
+            Pageable pageable);
 
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName,
             String salary,
@@ -72,6 +73,7 @@ public interface CompanyInformationService {
             UUID companyInformationId, Date startDate, Date endDate, Pageable pageable);
 
     public ServiceToControllerBody<List<BigData>> getBigDataByCompanyInformationId(
-            UUID companyInformationId, UUID hrInformationId, Date startDate, Date endDate, Pageable pageable);
+            UUID companyInformationId, UUID hrInformationId, Date startDate, Date endDate,
+            Pageable pageable);
 
 }

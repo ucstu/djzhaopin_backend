@@ -93,18 +93,18 @@ public class CompanyInformationController {
             @RequestParam(value = "createdAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdAt,
             @RequestParam(value = "updatedAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date updatedAt,
             @RequestParam("status") @NotNull List<Integer> status,
+            @RequestParam(value = "interviewTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date interviewTime,
             @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
             @RequestParam(value = "sexs", required = false) List<String> sexs,
             @RequestParam(value = "ages", required = false) List<Integer> ages,
             @RequestParam(value = "positionInfoIds", required = false) List<UUID> positionInformationIds,
             @RequestParam(value = "deliveryDates", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") List<Date> deliveryDates,
-            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "userName", required = false) String userName,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
                 .getDeliveryRecordsByCompanyInformationId(companyInformationId, createdAt, updatedAt,
-                        status,
-                        workingYears, sexs, ages, positionInformationIds, deliveryDates, search,
-                        pageable));
+                        status, interviewTime, workingYears, sexs, ages, positionInformationIds,
+                        deliveryDates, userName, pageable));
     }
 
     @GetMapping("/positionInfos")
@@ -138,7 +138,8 @@ public class CompanyInformationController {
             @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
-                .getBigDataByCompanyInformationId(companyInformationId, hrInformationId, startDate, endDate, pageable));
+                .getBigDataByCompanyInformationId(companyInformationId, hrInformationId, startDate,
+                        endDate, pageable));
     }
 
     @GetMapping("{companyInfoId}/sawMeRecords")
@@ -149,7 +150,8 @@ public class CompanyInformationController {
             @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
-                .getSawMeRecordsByCompanyInformationId(companyInformationId, startDate, endDate, pageable));
+                .getSawMeRecordsByCompanyInformationId(companyInformationId, startDate, endDate,
+                        pageable));
     }
 
 }

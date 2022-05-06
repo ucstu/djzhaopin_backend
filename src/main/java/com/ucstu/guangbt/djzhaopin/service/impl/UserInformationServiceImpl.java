@@ -624,14 +624,18 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public ServiceToControllerBody<PageResult<DeliveryRecord>> getDeliveryRecordsByUserInformationId(
-            UUID userInformationId, Integer status, Pageable pageable) {
+            UUID userInformationId, Integer status, Date interviewTime, Pageable pageable) {
         ServiceToControllerBody<PageResult<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (!userInformation.isPresent()) {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
-        Example<DeliveryRecord> deliveryRecordExample = Example
-                .of(new DeliveryRecord().setStatus(status).setUserInformation(userInformation.get()));
+        DeliveryRecord deliveryRecord = new DeliveryRecord().setStatus(status)
+                .setUserInformation(userInformation.get());
+        if (interviewTime != null) {
+            deliveryRecord.setInterviewTime(interviewTime);
+        }
+        Example<DeliveryRecord> deliveryRecordExample = Example.of(deliveryRecord);
         Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll(deliveryRecordExample, pageable);
         PageResult<DeliveryRecord> pageResult = new PageResult<>();
         if (!deliveryRecords.hasContent()) {
