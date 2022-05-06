@@ -98,9 +98,9 @@ public class AccountInformation {
     @JsonGetter("fullInformationId")
     public UUID getFullInformationId() {
         if (accountType == 1) {
-            return userInformation.getUserInformationId();
-        } else {
-            return hrInformation.getHrInformationId();
+            return userInformation != null ? userInformation.getUserInformationId() : null;
+        } else if (accountType == 2) {
+            return hrInformation != null ? hrInformation.getHrInformationId() : null;
         }
     }
 

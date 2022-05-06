@@ -68,7 +68,7 @@ public class GarnerRecord {
 
     @JsonGetter("userInformationId")
     public UUID getUserInformationId() {
-        return userInformation.getUserInformationId();
+        return userInformation != null ? userInformation.getUserInformationId() : null;
     }
 
     @JsonSetter("userInformationId")
@@ -78,7 +78,7 @@ public class GarnerRecord {
 
     @JsonGetter("companyInformationId")
     public UUID getCompanyInformationId() {
-        return companyInformation.getCompanyInformationId();
+        return companyInformation != null ? companyInformation.getCompanyInformationId() : null;
     }
 
     @JsonSetter("companyInformationId")
@@ -88,7 +88,7 @@ public class GarnerRecord {
 
     @JsonGetter("positionInformationId")
     public UUID getPositionInformationId() {
-        return positionInformation.getPositionInformationId();
+        return positionInformation != null ? positionInformation.getPositionInformationId() : null;
     }
 
     @JsonSetter("positionInformationId")

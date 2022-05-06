@@ -62,7 +62,7 @@ public class HrInspectionRecord {
 
     @JsonGetter("hrInformationId")
     public UUID getHrInformationId() {
-        return hrInformation.getHrInformationId();
+        return hrInformation != null ? hrInformation.getHrInformationId() : null;
     }
 
     @JsonSetter("hrInformationId")
@@ -72,7 +72,7 @@ public class HrInspectionRecord {
 
     @JsonGetter("userInformationId")
     public UUID getUserInformationId() {
-        return userInformation.getUserInformationId();
+        return userInformation != null ? userInformation.getUserInformationId() : null;
     }
 
     @JsonSetter("userInformationId")

@@ -62,7 +62,7 @@ public class AttentionRecord {
 
     @JsonGetter("userInformationId")
     public UUID getUserInformationId() {
-        return userInformation.getUserInformationId();
+        return userInformation != null ? userInformation.getUserInformationId() : null;
     }
 
     @JsonSetter("userInformationId")
@@ -72,7 +72,7 @@ public class AttentionRecord {
 
     @JsonGetter("companyInformationId")
     public UUID getCompanyInformationId() {
-        return companyInformation.getCompanyInformationId();
+        return companyInformation != null ? companyInformation.getCompanyInformationId() : null;
     }
 
     @JsonSetter("companyInformationId")
