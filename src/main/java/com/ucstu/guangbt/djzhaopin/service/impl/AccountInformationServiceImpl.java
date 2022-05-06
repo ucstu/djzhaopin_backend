@@ -1,10 +1,13 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.entity.account.AccountGroup;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
@@ -13,6 +16,7 @@ import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
+import com.ucstu.guangbt.djzhaopin.repository.account.AccountGroupRepository;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
@@ -40,6 +44,9 @@ public class AccountInformationServiceImpl implements
     @Resource
     private AccountInformationRepository accountInformationRepository;
 
+    @Resource
+    private AccountGroupRepository accountGroupRepository;
+
     @Override
     @Transactional
     public ServiceToControllerBody<AccountInformation> registerAccount(RegisterAccountRequest registerRequest) {
@@ -58,7 +65,10 @@ public class AccountInformationServiceImpl implements
         }
         verificationCodeTemplate.delete(registerRequest.getUserName());
         if (registerRequest.getAccountType() == 1) {
+            Set<AccountGroup> accountGroups = new HashSet<>();
+            accountGroups.add(accountGroupRepository.findByGroupName("USER").get());
             return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()
+                    .setGroups(accountGroups)
                     .setUserName(registerRequest.getUserName())
                     .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
                     .setAccountType(registerRequest.getAccountType())
@@ -66,7 +76,10 @@ public class AccountInformationServiceImpl implements
                             "/image/heard1.jpg").setPrivacySettings(1))));
         }
         if (registerRequest.getAccountType() == 2) {
+            Set<AccountGroup> accountGroups = new HashSet<>();
+            accountGroups.add(accountGroupRepository.findByGroupName("HR").get());
             return serviceToControllerBody.created(accountInformationRepository.save(new AccountInformation()
+                    .setGroups(accountGroups)
                     .setUserName(registerRequest.getUserName())
                     .setPassword(passwordEncoder.encode(registerRequest.getPassword()))
                     .setAccountType(registerRequest.getAccountType())

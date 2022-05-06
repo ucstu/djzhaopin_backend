@@ -36,14 +36,14 @@ public class JsonWebTokenUtil {
     public String generateToken(AccountInformation accountInformation) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("accountInformationId", accountInformation.getAccountInformationId());
-        claims.put("fullInformationId", accountInformation.getFullInformationId());
+        if (accountInformation.getAccountType() == 1 || accountInformation.getAccountType() == 2) {
+            claims.put("fullInformationId", accountInformation.getFullInformationId());
+        }
         if (accountInformation.getAccountType() == 2) {
             Optional<CompanyInformation> companyInformationOptional = Optional
                     .ofNullable(accountInformation.getHrInformation().getCompanyInformation());
             if (companyInformationOptional.isPresent()) {
                 claims.put("companyInformationId", companyInformationOptional.get().getCompanyInformationId());
-            } else {
-                claims.put("companyInformationId", null);
             }
         }
         claims.put("accountType", accountInformation.getAccountType());
@@ -84,13 +84,17 @@ public class JsonWebTokenUtil {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         return new JsonWebToken(
                 UUID.fromString(claims.get("accountInformationId", String.class)),
+                claims.get("accountType", Integer.class) == 1 || claims.get("accountType", Integer.class) == 2
+                        ? claims.get("fullInformationId", String.class) != null
+                                ? UUID.fromString(claims.get("fullInformationId", String.class))
+                                : null
+                        : null,
                 claims.get("accountType", Integer.class) == 2
                         ? claims.get("companyInformationId",
                                 String.class) != null
                                         ? UUID.fromString(claims.get("companyInformationId", String.class))
                                         : null
                         : null,
-                UUID.fromString(claims.get("fullInformationId", String.class)),
                 claims.get("accountType", Integer.class),
                 claims.get("authorities", List.class),
                 claims.get("expired", Boolean.class),

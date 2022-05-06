@@ -16,9 +16,9 @@ public class JsonWebToken {
 
     private UUID accountInformationId;
 
-    private UUID companyInformationId;
-
     private UUID fullInformationId;
+
+    private UUID companyInformationId;
 
     private Integer accountType;
 
