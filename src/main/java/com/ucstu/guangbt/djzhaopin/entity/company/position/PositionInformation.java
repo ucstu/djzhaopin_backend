@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.ucstu.guangbt.djzhaopin.entity.ExactAddress;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
@@ -21,6 +20,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.geo.Point;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.CascadeType;
@@ -128,11 +128,8 @@ public class PositionInformation {
     @OneToOne(cascade = { CascadeType.ALL })
     private InterviewInfo interviewInfo;
 
-    @NotNull
-    @JoinColumn
-    @JsonProperty("workingPlace")
-    @OneToOne(cascade = { CascadeType.ALL })
-    private ExactAddress exactAddress;
+    @JsonIgnore
+    private Point point;
 
     @JsonIgnore
     @JoinColumn(name = "position_information_id")

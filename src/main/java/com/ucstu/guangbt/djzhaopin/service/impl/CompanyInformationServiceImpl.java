@@ -203,7 +203,10 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
                 }
                 if (salary != null) {
-                    predicates.add(cb.like(root.get("salary"), "%" + salary + "%"));
+                    String startingSalary = salary.split(",")[0];
+                    String endingSalary = salary.split(",")[1];
+                    predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
+                    predicates.add(cb.lessThan(root.get("endingSalary"), endingSalary));
                 }
                 if (workingYears != null && !workingYears.isEmpty()) {
                     predicates.add(root.get("workingYears").in(workingYears));

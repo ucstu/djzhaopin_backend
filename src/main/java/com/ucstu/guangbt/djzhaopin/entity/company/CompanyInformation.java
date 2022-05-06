@@ -8,7 +8,6 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ucstu.guangbt.djzhaopin.entity.ExactAddress;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
@@ -17,6 +16,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.geo.Point;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.CascadeType;
@@ -28,7 +28,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -102,10 +101,8 @@ public class CompanyInformation {
     @OneToMany(cascade = { CascadeType.ALL })
     private List<PositionInformation> positionInformations;
 
-    @JoinColumn
-    @JsonProperty("location")
-    @OneToOne(cascade = { CascadeType.ALL })
-    private ExactAddress exactAddress;
+    @JsonIgnore
+    private Point point;
 
     @JsonIgnore
     @JoinColumn(name = "company_information_id")
