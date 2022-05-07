@@ -68,6 +68,7 @@ public class PositionInformationController {
     public ResponseEntity<ResponseBody<PageResult<PositionInformation>>> getPositionInformationsByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam(value = "positionName", required = false) String positionName,
+            @RequestParam(value = "positionType", required = false) String positionType,
             @RequestParam(value = "salary", required = false) String salary,
             @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
             @RequestParam(value = "educations", required = false) List<Integer> educations,
@@ -75,16 +76,16 @@ public class PositionInformationController {
             @RequestParam(value = "workProvinceName", required = false) String workProvinceName,
             @RequestParam(value = "workCityName", required = false) String workCityName,
             @RequestParam(value = "workAreaNames", required = false) List<String> workAreaNames,
-            @RequestParam(value = "positionTypes", required = false) List<Integer> positionTypes,
+            @RequestParam(value = "workTypes", required = false) List<Integer> workTypes,
             @RequestParam(value = "scales", required = false) List<Integer> scales,
             @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
             @RequestParam(value = "comprehensions", required = false) List<String> comprehensions,
             @RequestParam(value = "workingPlace", required = false) String workingPlace,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
-                .getPositionInformationsByCompanyInformationId(companyInformationId, positionName,
+                .getPositionInformationsByCompanyInformationId(companyInformationId, positionName, positionType,
                         salary, workingYears, educations, directionTags, workProvinceName,
-                        workCityName, workAreaNames, positionTypes, scales, financingStages,
+                        workCityName, workAreaNames, workTypes, scales, financingStages,
                         comprehensions, workingPlace, pageable));
     }
 

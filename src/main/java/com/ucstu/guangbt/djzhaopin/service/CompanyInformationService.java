@@ -39,9 +39,10 @@ public interface CompanyInformationService {
             Pageable pageable);
 
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName,
-            String salary, List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
-            String workProvinceName, String workCityName, List<String> workAreaNames, List<Integer> positionTypes,
-            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions, String workingPlace,
+            String positionType, String salary, List<Integer> workingYears, List<Integer> educations,
+            List<String> directionTags, String workProvinceName, String workCityName, List<String> workAreaNames,
+            List<Integer> workTypes, List<Integer> scales, List<Integer> financingStages,
+            List<String> comprehensions, String workingPlace,
             Pageable pageable);
 
     public ServiceToControllerBody<PositionInformation> createPositionInformation(UUID companyInformationId,
@@ -54,9 +55,9 @@ public interface CompanyInformationService {
             UUID companyInformationId, UUID positionInformationId, PositionInformation positionInformation);
 
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInformationsByCompanyInformationId(
-            UUID companyInformationId, String positionName, String salary, List<Integer> workingYears,
+            UUID companyInformationId, String positionName, String salary, String salary2, List<Integer> workingYears,
             List<Integer> educations, List<String> directionTags, String workProvinceName, String workCityName,
-            List<String> workAreaNames, List<Integer> positionTypes, List<Integer> scales,
+            List<String> workAreaNames, List<Integer> workTypes, List<Integer> scales,
             List<Integer> financingStages, List<String> comprehensions, String workingPlace, Pageable pageable);
 
     public ServiceToControllerBody<PositionInformation> getPositionInformationByPositionInformationId(

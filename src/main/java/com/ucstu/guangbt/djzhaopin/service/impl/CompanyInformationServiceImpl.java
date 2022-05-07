@@ -241,15 +241,18 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Override
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInfos(String positionName,
-            String salary, List<Integer> workingYears, List<Integer> educations, List<String> directionTags,
-            String workProvinceName, String workCityName, List<String> workAreaNames, List<Integer> positionTypes,
-            List<Integer> scales, List<Integer> financingStages, List<String> comprehensions, String workingPlace,
-            Pageable pageable) {
+            String positionType, String salary, List<Integer> workingYears, List<Integer> educations,
+            List<String> directionTags, String workProvinceName, String workCityName, List<String> workAreaNames,
+            List<Integer> workTypes, List<Integer> scales, List<Integer> financingStages,
+            List<String> comprehensions, String workingPlace, Pageable pageable) {
         ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Specification<PositionInformation> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (positionName != null) {
                 predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
+            }
+            if (positionType != null) {
+                predicates.add(cb.like(root.get("positionType"), "%" + positionType + "%"));
             }
             if (salary != null) {
                 String startingSalary = salary.split(",")[0];
@@ -276,8 +279,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             if (workAreaNames != null && !workAreaNames.isEmpty()) {
                 predicates.add(root.get("workAreaName").in(workAreaNames));
             }
-            if (positionTypes != null && !positionTypes.isEmpty()) {
-                predicates.add(root.get("positionType").in(positionTypes));
+            if (workTypes != null && !workTypes.isEmpty()) {
+                predicates.add(root.get("positionType").in(workTypes));
             }
             Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
             if (scales != null && !scales.isEmpty()) {
@@ -409,9 +412,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Override
     public ServiceToControllerBody<PageResult<PositionInformation>> getPositionInformationsByCompanyInformationId(
-            UUID companyInformationId, String positionName, String salary, List<Integer> workingYears,
-            List<Integer> educations, List<String> directionTags, String workProvinceName, String workCityName,
-            List<String> workAreaNames, List<Integer> positionTypes, List<Integer> scales,
+            UUID companyInformationId, String positionName, String positionType, String salary,
+            List<Integer> workingYears, List<Integer> educations, List<String> directionTags, String workProvinceName,
+            String workCityName, List<String> workAreaNames, List<Integer> workTypes, List<Integer> scales,
             List<Integer> financingStages, List<String> comprehensions, String workingPlace, Pageable pageable) {
         ServiceToControllerBody<PageResult<PositionInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<CompanyInformation> companyInformationOptional = companyInformationRepository
@@ -423,6 +426,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             List<Predicate> predicates = new ArrayList<>();
             if (positionName != null) {
                 predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
+            }
+            if (positionType != null) {
+                predicates.add(cb.like(root.get("positionType"), "%" + positionType + "%"));
             }
             if (salary != null) {
                 String startingSalary = salary.split(",")[0];
@@ -450,8 +456,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 ListJoin<PositionInformation, String> workAreaNamesJoin = root.joinList("workAreaNames");
                 predicates.add(workAreaNamesJoin.in(workAreaNames));
             }
-            if (positionTypes != null && !positionTypes.isEmpty()) {
-                predicates.add(root.get("positionType").in(positionTypes));
+            if (workTypes != null && !workTypes.isEmpty()) {
+                predicates.add(root.get("positionType").in(workTypes));
             }
             Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
             if (scales != null && !scales.isEmpty()) {

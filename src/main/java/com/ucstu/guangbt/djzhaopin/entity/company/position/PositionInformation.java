@@ -69,6 +69,9 @@ public class PositionInformation {
     @NotBlank
     private String positionName;
 
+    @NotBlank
+    private String positionType;
+
     @NotNull
     @Range(min = 1, max = 6)
     private Integer workingYears;
@@ -94,7 +97,7 @@ public class PositionInformation {
 
     @NotNull
     @Range(min = 1, max = 3)
-    private Integer positionType;
+    private Integer workType;
 
     private String departmentName;
 
