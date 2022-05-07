@@ -16,12 +16,11 @@ spring:
       max-request-size: 100MB
       max-file-size: 10MB
   mail:
-    port: 25
     protocol: smtp
-    host: smtp.163.com
+    host: smtp.sina.com
     default-encoding: UTF-8
-    username: djzhaopine@163.com
-    password: ZGAYMXRNFASVMPQG
+    username: djzhaopine@sina.com
+    password: 99b8829cfd32fb64
     test-connection: true
 jwt:
   secret: djzhaopin123456
