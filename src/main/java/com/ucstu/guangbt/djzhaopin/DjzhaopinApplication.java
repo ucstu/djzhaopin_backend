@@ -1,6 +1,7 @@
 package com.ucstu.guangbt.djzhaopin;
 
 import com.ucstu.guangbt.djzhaopin.utils.ApplicationContextUtil;
+import com.ucstu.guangbt.djzhaopin.utils.ApplicationInitUtil;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +15,7 @@ public class DjzhaopinApplication {
 
 	public static void main(String[] args) {
 		ApplicationContextUtil.setApplicationContext(SpringApplication.run(DjzhaopinApplication.class, args));
+		ApplicationContextUtil.getBean(ApplicationInitUtil.class).init();
 	}
 
 }
