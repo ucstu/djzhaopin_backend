@@ -203,7 +203,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!jobExpectationOptional.isPresent()) {
             return serviceToControllerBody.error("jobExpectationId", "职位期望不存在", jobExpectationId);
         }
-        jobExpectationRepository.delete(jobExpectationOptional.get());
+        userInformationOptional.get().getJobExpectations().remove(jobExpectationOptional.get());
+        userInformationRepository.save(userInformationOptional.get());
         return serviceToControllerBody.success(jobExpectationOptional.get());
     }
 
@@ -297,7 +298,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!educationExperienceOptional.isPresent()) {
             return serviceToControllerBody.error("eduExperienceId", "教育经历不存在", eduExperienceId);
         }
-        educationExperienceRepository.delete(educationExperienceOptional.get());
+        userInformationOptional.get().getEducationExperiences().remove(educationExperienceOptional.get());
+        userInformationRepository.save(userInformationOptional.get());
         return serviceToControllerBody.success(educationExperienceOptional.get());
     }
 
@@ -393,7 +395,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!workExperienceOptional.isPresent()) {
             return serviceToControllerBody.error("workExperienceId", "工作经历不存在", workExperienceId);
         }
-        workExperienceRepository.delete(workExperienceOptional.get());
+        userInformationOptional.get().getWorkExperiences().remove(workExperienceOptional.get());
+        userInformationRepository.save(userInformationOptional.get());
         return serviceToControllerBody.success(workExperienceOptional.get());
     }
 
@@ -489,7 +492,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!projectExperienceOptional.isPresent()) {
             return serviceToControllerBody.error("projectExperienceId", "项目经历不存在", projectExperienceId);
         }
-        projectExperienceRepository.delete(projectExperienceOptional.get());
+        userInformationOptional.get().getProjectExperiences().remove(projectExperienceOptional.get());
+        userInformationRepository.save(userInformationOptional.get());
         return serviceToControllerBody.success(projectExperienceOptional.get());
     }
 
@@ -598,7 +602,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!deliveryRecordOptional.isPresent()) {
             return serviceToControllerBody.error("deliveryRecordId", "投递记录不存在", deliveryRecordId);
         }
-        deliveryRecordRepository.delete(deliveryRecordOptional.get());
+        userInformationOptional.get().getDeliveryRecords().remove(deliveryRecordOptional.get());
+        userInformationRepository.save(userInformationOptional.get());
         return serviceToControllerBody.success(deliveryRecordOptional.get());
     }
 
@@ -718,7 +723,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!attentionRecordOptional.isPresent()) {
             return serviceToControllerBody.error("attentionRecordId", "关注记录不存在", attentionRecordId);
         }
-        attentionRecordRepository.delete(attentionRecordOptional.get());
+        userInformationOptional.get().getAttentionRecords().remove(attentionRecordOptional.get());
+        userInformationRepository.save(userInformationOptional.get());
         return serviceToControllerBody.success(attentionRecordOptional.get());
     }
 
@@ -833,7 +839,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!userInspectionRecordOptional.isPresent()) {
             return serviceToControllerBody.error("inspectionRecordId", "查看记录不存在", inspectionRecordId);
         }
-        userInspectionRecordRepository.delete(userInspectionRecordOptional.get());
+        userInformationOptional.get().getUserInspectionRecords().remove(userInspectionRecordOptional.get());
+        userInformationRepository.save(userInformationOptional.get());
         return serviceToControllerBody.success(userInspectionRecordOptional.get());
     }
 
@@ -954,7 +961,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!garnerRecordOptional.isPresent()) {
             return serviceToControllerBody.error("garnerRecordId", "收藏记录不存在", garnerRecordId);
         }
-        garnerRecordRepository.delete(garnerRecordOptional.get());
+        userInformationOptional.get().getGarnerRecords().remove(garnerRecordOptional.get());
+        userInformationRepository.save(userInformationOptional.get());
         return serviceToControllerBody.success(garnerRecordOptional.get());
     }
 

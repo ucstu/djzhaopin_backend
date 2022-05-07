@@ -109,17 +109,17 @@ public class CompanyInformation {
 
     @JsonIgnore
     @JoinColumn(name = "company_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<PositionInformation> positionInformations;
 
     @JsonIgnore
     @JoinColumn(name = "company_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<AttentionRecord> attentionRecords;
 
     @JsonIgnore
     @JoinColumn(name = "company_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<HrInformation> hrInformations;
 
     @JsonGetter("location")

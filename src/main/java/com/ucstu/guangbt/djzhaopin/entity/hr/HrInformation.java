@@ -73,13 +73,13 @@ public class HrInformation {
     private CompanyInformation companyInformation;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "hr_information_id")
     private List<PositionInformation> positionInformations;
 
     @JsonIgnore
     @JoinColumn(name = "hr_information_id")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HrInspectionRecord> hrInspectionRecords;
 
     @JsonGetter("companyInformationId")

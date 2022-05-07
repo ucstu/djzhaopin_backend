@@ -95,42 +95,42 @@ public class UserInformation {
 
     @JsonIgnore
     @JoinColumn(name = "user_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<JobExpectation> jobExpectations;
 
     @JsonIgnore
     @JoinColumn(name = "user_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<EducationExperience> educationExperiences;
 
     @JsonIgnore
     @JoinColumn(name = "user_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<WorkExperience> workExperiences;
 
     @JsonIgnore
     @JoinColumn(name = "user_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<ProjectExperience> projectExperiences;
 
     @JsonIgnore
     @JoinColumn(name = "user_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<DeliveryRecord> deliveryRecords;
 
     @JsonIgnore
     @JoinColumn(name = "user_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<AttentionRecord> attentionRecords;
 
     @JsonIgnore
     @JoinColumn(name = "user_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<UserInspectionRecord> userInspectionRecords;
 
     @JsonIgnore
     @JoinColumn(name = "user_information_id")
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
     private List<GarnerRecord> garnerRecords;
 
     @JsonGetter("age")

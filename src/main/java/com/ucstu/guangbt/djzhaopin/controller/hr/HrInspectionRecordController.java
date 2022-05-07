@@ -47,8 +47,8 @@ public class HrInspectionRecordController {
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId) {
         return ResponseBody
-                .handle(hrInformationService
-                        .deleteHrInspectionRecordByHrInspectionRecordId(inspectionRecordId));
+                .handle(hrInformationService.deleteHrInspectionRecordByHrInspectionRecordId(
+                        hrInformationId, inspectionRecordId));
     }
 
     @PutMapping("/{inspectionRecordId}")
@@ -58,8 +58,7 @@ public class HrInspectionRecordController {
             @Valid @RequestBody HrInspectionRecord hrHrInspectionRecord) {
         return ResponseBody
                 .handle(hrInformationService.updateHrInspectionRecordByHrInspectionRecordId(
-                        inspectionRecordId,
-                        hrHrInspectionRecord));
+                        hrInformationId, inspectionRecordId, hrHrInspectionRecord));
     }
 
     @GetMapping("")
@@ -76,8 +75,8 @@ public class HrInspectionRecordController {
             @PathVariable("hrInfoId") @NotNull UUID hrInformationId,
             @PathVariable("inspectionRecordId") @NotNull UUID inspectionRecordId) {
         return ResponseBody
-                .handle(hrInformationService
-                        .getHrInspectionRecordByHrInspectionRecordId(inspectionRecordId));
+                .handle(hrInformationService.getHrInspectionRecordByHrInspectionRecordId(
+                        hrInformationId, inspectionRecordId));
     }
 
 }

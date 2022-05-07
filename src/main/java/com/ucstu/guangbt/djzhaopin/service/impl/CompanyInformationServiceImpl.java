@@ -367,7 +367,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     "东江人才网-收藏职位通知",
                     "您收藏的职位《" + positionInformationOptional.get().getPositionName() + "》已被删除，请登录系统查看！");
         }
-        positionInformationRepository.delete(positionInformationOptional.get());
+        companyInformationOptional.get().getPositionInformations().remove(positionInformationOptional.get());
+        companyInformationRepository.save(companyInformationOptional.get());
         return serviceToControllerBody.success(positionInformationOptional.get());
     }
 

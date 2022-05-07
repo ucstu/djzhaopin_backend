@@ -23,18 +23,18 @@ public interface HrInformationService {
     public ServiceToControllerBody<HrInformation> getHrInformationByHrInformationId(UUID hrInformationId);
 
     public ServiceToControllerBody<HrInspectionRecord> createHrInspectionRecord(UUID hrInformationId,
-            HrInspectionRecord hrHrInspectionRecord);
+            HrInspectionRecord hrInspectionRecord);
 
     public ServiceToControllerBody<HrInspectionRecord> deleteHrInspectionRecordByHrInspectionRecordId(
-            UUID inspectionRecordId);
+            UUID hrInformationId, UUID hrInspectionRecordId);
 
     public ServiceToControllerBody<HrInspectionRecord> updateHrInspectionRecordByHrInspectionRecordId(
-            UUID inspectionRecordId, HrInspectionRecord hrHrInspectionRecord);
+            UUID hrInformationId, UUID hrInspectionRecordId, HrInspectionRecord hrInspectionRecord);
 
     public ServiceToControllerBody<PageResult<HrInspectionRecord>> getHrInspectionRecordByHrInformationId(
             UUID hrInformationId, Pageable pageable);
 
     public ServiceToControllerBody<HrInspectionRecord> getHrInspectionRecordByHrInspectionRecordId(
-            UUID inspectionRecordId);
+            UUID hrInformationId, UUID hrInspectionRecordId);
 
 }
