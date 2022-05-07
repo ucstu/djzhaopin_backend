@@ -267,8 +267,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 predicates.add(root.get("education").in(educations));
             }
             if (directionTags != null && !directionTags.isEmpty()) {
-                ListJoin<PositionInformation, String> directionTagsJoin = root.joinList("directionTags");
-                predicates.add(directionTagsJoin.in(directionTags));
+                predicates.add(root.join("directionTags").in(directionTags));
             }
             if (workProvinceName != null) {
                 predicates.add(cb.like(root.get("workProvinceName"), "%" + workProvinceName + "%"));
@@ -443,8 +442,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 predicates.add(root.get("education").in(educations));
             }
             if (directionTags != null && !directionTags.isEmpty()) {
-                ListJoin<PositionInformation, String> directionTagsJoin = root.joinList("directionTags");
-                predicates.add(directionTagsJoin.in(directionTags));
+                predicates.add(root.join("directionTags").in(directionTags));
             }
             if (workProvinceName != null) {
                 predicates.add(cb.like(root.get("workProvinceName"), "%" + workProvinceName + "%"));

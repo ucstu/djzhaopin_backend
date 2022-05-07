@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,6 +49,7 @@ public class UserInformationController {
     @DeleteMapping("/{userInformationId}")
     public ResponseEntity<ResponseBody<UserInformation>> deleteUserInformationByUserInformationId(
             @PathVariable("userInformationId") @NotNull UUID userInformationId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ResponseBody.handle(userInformationService.deleteUserInformationByUserInformationId(userInformationId));
     }
 
