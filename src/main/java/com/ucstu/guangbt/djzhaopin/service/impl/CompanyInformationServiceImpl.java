@@ -31,6 +31,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.CriteriaBuilder.In;
@@ -67,6 +68,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
     @Transactional
     public ServiceToControllerBody<CompanyInformation> createCompanyInformation(CompanyInformation companyInformation) {
         ServiceToControllerBody<CompanyInformation> serviceToControllerBody = new ServiceToControllerBody<>();
+        if (companyInformation.getLogoUrl() == null || !StringUtils.hasLength(companyInformation.getLogoUrl())) {
+            companyInformation.setLogoUrl("/image/heard3.webp");
+        }
         return serviceToControllerBody.created(companyInformationRepository.save(companyInformation));
     }
 
@@ -255,7 +259,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             if (positionType != null) {
                 predicates.add(cb.like(root.get("positionType"), "%" + positionType + "%"));
             }
-            if (salary != null) {
+            if (salary != null && StringUtils.hasLength(salary)) {
                 String startingSalary = salary.split(",")[0];
                 String ceilingSalary = salary.split(",")[1];
                 predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
