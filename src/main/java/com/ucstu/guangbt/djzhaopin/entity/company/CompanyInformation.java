@@ -67,8 +67,6 @@ public class CompanyInformation {
     @NotNull
     private String companyName;
 
-    private Integer recruitmentPosition;
-
     private String cityName;
 
     @NotNull
@@ -136,6 +134,11 @@ public class CompanyInformation {
     public void setLocation(Map<String, Float> location) {
         this.longitude = location.get("longitude");
         this.latitude = location.get("latitude");
+    }
+
+    @JsonGetter("recruitmentPosition")
+    public Integer getRecruitmentPosition() {
+        return positionInformations != null ? positionInformations.size() : 0;
     }
 
 }

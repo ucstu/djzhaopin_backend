@@ -583,6 +583,7 @@ public class UserInformationServiceImpl implements UserInformationService {
         }
         emailMessageUtil.sendEmail(positionInformationOptional.get().getHrInformation().getAcceptEmail(),
                 "东江招聘-投递记录通知", "您有一条新的投递记录，请登录系统查看！");
+        deliveryRecord.setStatus(1);
         return serviceToControllerBody.created(deliveryRecordRepository.save(deliveryRecord));
     }
 
