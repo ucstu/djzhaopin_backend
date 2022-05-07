@@ -120,7 +120,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         Specification<CompanyInformation> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (companyName != null && !companyName.isEmpty()) {
-                predicates.add(cb.like(root.get("companyName"), "%" + companyName + "%"));
+                predicates.add(cb.or(cb.like(root.get("companyName"), "%" + companyName + "%"),
+                        cb.like(root.get("fullName"), "%" + companyName + "%")));
             }
             if (scales != null && !scales.isEmpty()) {
                 predicates.add(cb.in(root.get("scale")).value(scales));
