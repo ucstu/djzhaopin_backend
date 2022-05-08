@@ -14,18 +14,12 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
-import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
@@ -69,33 +63,6 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
                 return message;
             }
 
-        });
-    }
-
-    @Override
-    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
-        registry.addDecoratorFactory((webSocketHandler) -> new WebSocketHandlerDecorator(webSocketHandler) {
-
-            @Override
-            public void afterConnectionEstablished(final WebSocketSession session) throws Exception {
-                // 输出进行 websocket 连接的用户信息
-                super.afterConnectionEstablished(session);
-                if (session.getPrincipal() != null) {
-                    String username = session.getPrincipal().getName();
-                    log.info("用户 {} 已连接", username);
-                }
-            }
-
-            @Override
-            public void afterConnectionClosed(final WebSocketSession session, CloseStatus closeStatus)
-                    throws Exception {
-                // 输出关闭 websocket 连接的用户信息
-                super.afterConnectionClosed(session, closeStatus);
-                if (session.getPrincipal() != null) {
-                    String username = session.getPrincipal().getName();
-                    log.info("用户 {} 已断开", username);
-                }
-            }
         });
     }
 

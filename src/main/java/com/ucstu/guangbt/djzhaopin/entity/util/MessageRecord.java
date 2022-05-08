@@ -48,12 +48,23 @@ public class MessageRecord {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
+    private Date updatedAt;
 
     @NotNull
+    @Type(type = "uuid-char")
     private UUID initiateId;
 
     @NotNull
+    @Range(min = 1, max = 2)
+    private Integer initiateType;
+
+    @NotNull
+    @Type(type = "uuid-char")
     private UUID serviceId;
+
+    @NotNull
+    @Range(min = 1, max = 2)
+    private Integer serviceType;
 
     @NotNull
     @Range(min = 1, max = 4)

@@ -17,4 +17,14 @@ public class RedisTemplateConfig {
         verificationCodeTemplate.setConnectionFactory(redisConnectionFactory);
         return verificationCodeTemplate;
     }
+
+    @Bean
+    public RedisTemplate<String, String> onlineUserTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, String> onlineUserTemplate = new RedisTemplate<>();
+        onlineUserTemplate.setKeySerializer(new StringRedisSerializer());
+        onlineUserTemplate.setValueSerializer(new StringRedisSerializer());
+        onlineUserTemplate.setConnectionFactory(redisConnectionFactory);
+        return onlineUserTemplate;
+    }
+
 }

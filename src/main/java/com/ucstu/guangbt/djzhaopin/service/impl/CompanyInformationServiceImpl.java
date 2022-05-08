@@ -562,9 +562,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     .countByCompanyInformationAndCreatedAt(companyInformationOptional.get(), startDate));
             bigData.setDeliveryRecordCount(deliveryRecordRepository
                     .countByCompanyInformationAndCreatedAt(companyInformationOptional.get(), startDate));
-            bigData.setOnlineCommunicateCount(
-                    messageRecordRepository.countByServiceIdAndCreatedAt(hrInformationId,
-                            startDate));
+            bigData.setOnlineCommunicateCount(0);
             bigDatas.add(bigData);
         }
         return serviceToControllerBody.success(bigDatas);
