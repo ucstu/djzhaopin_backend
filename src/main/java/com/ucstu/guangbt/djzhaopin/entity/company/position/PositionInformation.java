@@ -126,6 +126,7 @@ public class PositionInformation {
     @Range(min = 0, max = 90)
     private Float latitude;
 
+    @Valid
     @NotNull
     @JoinColumn
     @JsonProperty("interviewInfo")

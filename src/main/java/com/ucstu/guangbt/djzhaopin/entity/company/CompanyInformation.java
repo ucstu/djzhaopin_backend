@@ -131,7 +131,7 @@ public class CompanyInformation {
     }
 
     @JsonSetter("location")
-    public void setLocation(Map<String, Float> location) {
+    public void setLocation(@NotNull Map<String, Float> location) {
         this.longitude = location.get("longitude");
         this.latitude = location.get("latitude");
     }
