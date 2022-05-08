@@ -581,11 +581,11 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
                     deliveryRecord.getPositionInformationId());
         }
-        Optional<AttentionRecord> attentionRecordOptional = userInformationOptional.get()
-                .getAttentionRecords().stream().filter(attentionRecord -> attentionRecord.getCompanyInformation()
+        Optional<DeliveryRecord> deliveryRecordOptional = userInformationOptional.get()
+                .getDeliveryRecords().stream().filter(deliveryRecord1 -> deliveryRecord1
                         .getCompanyInformationId().equals(deliveryRecord.getCompanyInformationId()))
                 .findAny();
-        if (!attentionRecordOptional.isPresent()) {
+        if (!deliveryRecordOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "投递记录已存在",
                     deliveryRecord.getCompanyInformationId());
         }
@@ -959,8 +959,8 @@ public class UserInformationServiceImpl implements UserInformationService {
                     garnerRecord.getPositionInformationId());
         }
         Optional<GarnerRecord> garnerRecordOptional = userInformationOptional.get().getGarnerRecords().stream()
-                .filter(garnerRecord1 -> garnerRecord1.getPositionInformationId() == garnerRecord
-                        .getPositionInformationId())
+                .filter(garnerRecord1 -> garnerRecord1.getPositionInformationId().equals(garnerRecord
+                        .getPositionInformationId()))
                 .findAny();
         if (garnerRecordOptional.isPresent()) {
             return serviceToControllerBody.error("positionInformationId", "投递记录已存在",
