@@ -1,41 +1,69 @@
 package com.ucstu.guangbt.djzhaopin.config;
 
+import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
-import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
+import org.springframework.messaging.simp.stomp.StompCommand;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.messaging.support.MessageHeaderAccessor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
+import jakarta.annotation.Resource;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketBrokerConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer {
+public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
+
+    @Resource
+    private JsonWebTokenUtil jsonWebTokenUtil;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        // 设置一个或者多个代理前缀，在 Controller 类中的方法里面发生的消息，会首先转发到代理从而发送到对应广播或者队列中。
         registry.enableSimpleBroker("/queue");
-        // 配置客户端发送请求消息的一个或多个前缀，该前缀会筛选消息目标转发到 Controller 类中注解对应的方法里
-        registry.setApplicationDestinationPrefixes("/chart");
-        // 服务端通知特定用户客户端的前缀，可以不设置，默认为user
-        registry.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOrigins("*");
-        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/ws").setAllowedOriginPatterns("*");
+        registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
     }
 
     @Override
-    protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
-        messages
-                .anyMessage().permitAll();
-    }
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(new ChannelInterceptor() {
 
-    @Override
-    protected boolean sameOriginDisabled() {
-        return true;
+            @Override
+            public Message<?> preSend(Message<?> message, MessageChannel channel) {
+                StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+                if (StompCommand.CONNECT.equals(accessor.getCommand())) {
+                    String param = accessor.getFirstNativeHeader("Authorization");
+                    if (StringUtils.hasLength(param)) {
+                        String token = StringUtils.delete(param, "Bearer ");
+                        if (jsonWebTokenUtil.validateToken(token)) {
+                            CustomUserDetails userDetails = jsonWebTokenUtil.getCustomUserDetailsFromToken(token);
+                            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                                    userDetails, null, userDetails.getAuthorities());
+                            SecurityContextHolder.getContext().setAuthentication(authentication);
+                            accessor.setUser(() -> {
+                                return userDetails.getJsonWebToken().getFullInformationId().toString();
+                            });
+                        }
+                    }
+                }
+                return message;
+            }
+
+        });
     }
 
 }

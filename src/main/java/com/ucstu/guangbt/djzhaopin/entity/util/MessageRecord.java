@@ -36,7 +36,7 @@ public class MessageRecord {
     @GeneratedValue
     @Type(type = "uuid-char")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private UUID userInformationId;
+    private UUID messageRecordId;
 
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -69,7 +69,5 @@ public class MessageRecord {
 
     @NotBlank
     private String content;
-
-    private Boolean isRead;
 
 }

@@ -49,6 +49,7 @@ public class SecurityConfig {
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher("/accountInfos/**"),
             new AntPathRequestMatcher("/verificationCode"),
+            new AntPathRequestMatcher("/ws/**"),
             new AntPathRequestMatcher("/**", "OPTIONS"),
             new AntPathRequestMatcher("/error/**"));
 
@@ -88,7 +89,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

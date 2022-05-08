@@ -581,6 +581,14 @@ public class UserInformationServiceImpl implements UserInformationService {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
                     deliveryRecord.getPositionInformationId());
         }
+        Optional<AttentionRecord> attentionRecordOptional = userInformationOptional.get()
+                .getAttentionRecords().stream().filter(attentionRecord -> attentionRecord.getCompanyInformation()
+                        .getCompanyInformationId().equals(deliveryRecord.getCompanyInformationId()))
+                .findAny();
+        if (!attentionRecordOptional.isPresent()) {
+            return serviceToControllerBody.error("companyInformationId", "投递记录已存在",
+                    deliveryRecord.getCompanyInformationId());
+        }
         emailMessageUtil.sendEmail(positionInformationOptional.get().getHrInformation().getAcceptEmail(),
                 "东江招聘-投递记录通知", "您有一条新的投递记录，请登录系统查看！");
         deliveryRecord.setStatus(1);
@@ -703,6 +711,14 @@ public class UserInformationServiceImpl implements UserInformationService {
         }
         if (!companyInformationOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在",
+                    attentionRecord.getCompanyInformationId());
+        }
+        Optional<AttentionRecord> attentionRecordOptional = userInformationOptional.get()
+                .getAttentionRecords().stream().filter(attentionRecord1 -> attentionRecord1
+                        .getCompanyInformationId().equals(attentionRecord.getCompanyInformationId()))
+                .findAny();
+        if (attentionRecordOptional.isPresent()) {
+            return serviceToControllerBody.error("companyInformationId", "关注记录已存在",
                     attentionRecord.getCompanyInformationId());
         }
         return serviceToControllerBody.created(attentionRecordRepository.save(attentionRecord));
@@ -940,6 +956,14 @@ public class UserInformationServiceImpl implements UserInformationService {
         }
         if (!positionInformationOptional.isPresent()) {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在",
+                    garnerRecord.getPositionInformationId());
+        }
+        Optional<GarnerRecord> garnerRecordOptional = userInformationOptional.get().getGarnerRecords().stream()
+                .filter(garnerRecord1 -> garnerRecord1.getPositionInformationId() == garnerRecord
+                        .getPositionInformationId())
+                .findAny();
+        if (garnerRecordOptional.isPresent()) {
+            return serviceToControllerBody.error("positionInformationId", "投递记录已存在",
                     garnerRecord.getPositionInformationId());
         }
         return serviceToControllerBody.created(garnerRecordRepository.save(garnerRecord));
