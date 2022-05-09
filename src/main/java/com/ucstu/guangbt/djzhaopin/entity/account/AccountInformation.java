@@ -76,11 +76,11 @@ public class AccountInformation {
     private String userName;
 
     @JsonIgnore
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<AccountAuthority> authorities;
 
     @JsonIgnore
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<AccountGroup> groups;
 
     @JsonIgnore
