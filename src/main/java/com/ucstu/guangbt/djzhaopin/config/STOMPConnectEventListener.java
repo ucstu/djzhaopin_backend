@@ -37,11 +37,13 @@ public class STOMPConnectEventListener implements ApplicationListener {
         if (event instanceof SessionConnectEvent) {
             SessionConnectEvent connectEvent = (SessionConnectEvent) event;
             StompHeaderAccessor accessor = StompHeaderAccessor.wrap(connectEvent.getMessage());
-            onlineUserTemplate.opsForSet().add("onlineUser", accessor.getUser().getName());
+            if (accessor.getUser() != null) {
+                onlineUserTemplate.opsForSet().add("onlineUser", accessor.getUser().getName());
+            }
         } else if (event instanceof SessionSubscribeEvent) {
             SessionSubscribeEvent subscribeEvent = (SessionSubscribeEvent) event;
             StompHeaderAccessor accessor = StompHeaderAccessor.wrap(subscribeEvent.getMessage());
-            if (accessor.getDestination().equals("/user/queue/message")) {
+            if (accessor.getDestination().equals("/user/queue/message") && accessor.getUser() != null) {
                 List<MessageRecord> messageRecords = messageRecordRepository.findByServiceId(UUID.fromString(
                         accessor.getUser().getName()));
                 simpMessagingTemplate.convertAndSendToUser(accessor.getUser().getName(), "/queue/message",
