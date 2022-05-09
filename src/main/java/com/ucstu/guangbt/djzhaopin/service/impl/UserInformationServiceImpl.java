@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.config.CustomUserDetails;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
+import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.AttentionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
@@ -21,6 +23,7 @@ import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.hr.HrInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.AttentionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.DeliveryRecordRepository;
@@ -37,6 +40,7 @@ import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,6 +84,9 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Resource
     private HrInspectionRecordRepository hrInspectionRecordRepository;
+
+    @Resource
+    private HrInformationRepository hrInformationRepository;
 
     @Resource
     private EmailMessageUtil emailMessageUtil;
@@ -148,6 +155,15 @@ public class UserInformationServiceImpl implements UserInformationService {
         Optional<UserInformation> userInformationOptional = userInformationRepository.findById(userInformationId);
         if (!userInformationOptional.isPresent()) {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
+        }
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        if (userDetails.getJsonWebToken().getAccountType() == 2) {
+            Optional<HrInformation> hrInformationOptional = hrInformationRepository
+                    .findById(userDetails.getJsonWebToken().getFullInformationId());
+            hrInspectionRecordRepository.save(new HrInspectionRecord().setHrInformation(hrInformationOptional.get())
+                    .setUserInformation(userInformationOptional.get()));
         }
         return serviceToControllerBody.success(userInformationOptional.get());
     }

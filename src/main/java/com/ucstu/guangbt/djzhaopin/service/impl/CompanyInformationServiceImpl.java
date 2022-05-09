@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.ucstu.guangbt.djzhaopin.config.CustomUserDetails;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
@@ -23,6 +24,7 @@ import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationReposito
 import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.DeliveryRecordRepository;
+import com.ucstu.guangbt.djzhaopin.repository.user.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.UserInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
@@ -30,6 +32,7 @@ import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -58,6 +61,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Resource
     private UserInspectionRecordRepository userInspectionRecordRepository;
+
+    @Resource
+    private UserInformationRepository userInformationRepository;
 
     @Resource
     private MessageRecordRepository messageRecordRepository;
@@ -517,6 +523,17 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 .findFirst();
         if (!positionInformationOptional.isPresent()) {
             return serviceToControllerBody.error("positionInformationId", "职位信息不存在", positionInformationId);
+        }
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        if (userDetails.getJsonWebToken().getAccountType() == 1) {
+            Optional<UserInformation> userInformationOptional = userInformationRepository
+                    .findById(userDetails.getJsonWebToken().getFullInformationId());
+            userInspectionRecordRepository
+                    .save(new UserInspectionRecord().setUserInformation(userInformationOptional.get())
+                            .setCompanyInformation(companyInformationOptional.get())
+                            .setPositionInformation(positionInformationOptional.get()));
         }
         return serviceToControllerBody.success(positionInformationOptional.get());
     }
