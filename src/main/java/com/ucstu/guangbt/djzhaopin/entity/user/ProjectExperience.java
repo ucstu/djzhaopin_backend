@@ -57,6 +57,7 @@ public class ProjectExperience {
     private String projectName;
 
     @NotNull
+    @Type(type = "text")
     private String projectDescription;
 
     private String achievement;

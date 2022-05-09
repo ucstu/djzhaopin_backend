@@ -4,15 +4,21 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
+import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
 import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
 import com.ucstu.guangbt.djzhaopin.model.ErrorContent;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.repository.MessageRecordRepository;
+import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
+import com.ucstu.guangbt.djzhaopin.repository.user.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.MessageRecordService;
+import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -30,6 +36,9 @@ public class MessageRecordServiceImpl implements MessageRecordService {
     private ObjectMapper objectMapper;
 
     @Resource
+    private EmailMessageUtil emailMessageUtil;
+
+    @Resource
     private RedisTemplate<String, String> onlineUserTemplate;
 
     @Resource
@@ -37,6 +46,12 @@ public class MessageRecordServiceImpl implements MessageRecordService {
 
     @Resource
     private MessageRecordRepository messageRecordRepository;
+
+    @Resource
+    private UserInformationRepository userInformationRepository;
+
+    @Resource
+    private HrInformationRepository hrInformationRepository;
 
     @Override
     public void sendUserMessage(Principal principal, MessageRecord messageRecord) {
@@ -64,6 +79,34 @@ public class MessageRecordServiceImpl implements MessageRecordService {
                                     }
                                 }));
             } else {
+                if (messageRecord.getMessageType() == 1) {
+                    Optional<UserInformation> userInformation = userInformationRepository
+                            .findById(messageRecord.getServiceId());
+                    if (userInformation.isPresent()) {
+                        emailMessageUtil.sendEmail(userInformation.get().getEmail(), "东江招聘-消息提示", "您有一条新消息，请登录系统查收！");
+                    } else {
+                        List<ErrorContent> errorContents = new ArrayList<>();
+                        errorContents.add(new ErrorContent().setField("serviceId").setDefaultMessage("用户不存在")
+                                .setRejectedValue(messageRecord.getServiceId()));
+                        simpMessagingTemplate.convertAndSendToUser(principal.getName(), "/queue/error",
+                                new ResponseBody<>().setStatus(HttpStatus.BAD_REQUEST.value()).setMessage(
+                                        HttpStatus.BAD_REQUEST.getReasonPhrase()).setErrors(errorContents));
+                    }
+                } else if (messageRecord.getMessageType() == 2) {
+                    Optional<HrInformation> hrInformation = hrInformationRepository
+                            .findById(messageRecord.getServiceId());
+                    if (hrInformation.isPresent()) {
+                        emailMessageUtil.sendEmail(hrInformation.get().getAcceptEmail(), "东江招聘-消息提示",
+                                "您有一条新消息，请登录系统查收！");
+                    } else {
+                        List<ErrorContent> errorContents = new ArrayList<>();
+                        errorContents.add(new ErrorContent().setField("serviceId").setDefaultMessage("用户不存在")
+                                .setRejectedValue(messageRecord.getServiceId()));
+                        simpMessagingTemplate.convertAndSendToUser(principal.getName(), "/queue/error",
+                                new ResponseBody<>().setStatus(HttpStatus.BAD_REQUEST.value()).setMessage(
+                                        HttpStatus.BAD_REQUEST.getReasonPhrase()).setErrors(errorContents));
+                    }
+                }
                 messageRecordRepository.save(messageRecord);
             }
         }

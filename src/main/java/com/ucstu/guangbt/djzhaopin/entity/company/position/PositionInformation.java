@@ -106,6 +106,7 @@ public class PositionInformation {
     private Set<String> highlights;
 
     @NotBlank
+    @Type(type = "text")
     private String description;
 
     @Range(min = 1, max = 3)

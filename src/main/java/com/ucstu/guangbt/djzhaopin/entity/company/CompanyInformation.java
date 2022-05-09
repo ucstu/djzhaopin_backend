@@ -82,6 +82,7 @@ public class CompanyInformation {
     @NotBlank
     private String address;
 
+    @Type(type = "text")
     private String about;
 
     private String fullName;

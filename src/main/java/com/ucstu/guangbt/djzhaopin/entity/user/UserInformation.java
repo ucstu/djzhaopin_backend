@@ -77,6 +77,7 @@ public class UserInformation {
 
     private Integer workingYears;
 
+    @Type(type = "text")
     private String personalAdvantage;
 
     private String socialHomepage;

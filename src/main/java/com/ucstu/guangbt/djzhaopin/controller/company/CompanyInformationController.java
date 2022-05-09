@@ -132,8 +132,8 @@ public class CompanyInformationController {
     public ResponseEntity<ResponseBody<List<BigData>>> getBigDataByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam("hrInformationId") @NotNull UUID hrInformationId,
-            @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
                 .getBigDataByCompanyInformationId(companyInformationId, hrInformationId, startDate,
@@ -143,8 +143,8 @@ public class CompanyInformationController {
     @GetMapping("{companyInfoId}/sawMeRecords")
     public ResponseEntity<ResponseBody<PageResult<UserInspectionRecord>>> getSawMeRecordsByCompanyInformationId(
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
-            @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
                 .getSawMeRecordsByCompanyInformationId(companyInformationId, startDate, endDate,

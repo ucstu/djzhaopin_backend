@@ -80,6 +80,7 @@ public class WorkExperience {
     private String departmentName;
 
     @NotNull
+    @Type(type = "text")
     private String jobContent;
 
 }

@@ -1,6 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -555,6 +556,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             return serviceToControllerBody.error("companyInformationId", "公司信息不存在", companyInformationId);
         }
         List<BigData> bigDatas = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
         while (startDate.before(endDate)) {
             BigData bigData = new BigData();
             bigData.setDate(startDate);
@@ -564,6 +566,9 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     .countByCompanyInformationAndCreatedAt(companyInformationOptional.get(), startDate));
             bigData.setOnlineCommunicateCount(0);
             bigDatas.add(bigData);
+            calendar.setTime(startDate);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            startDate = calendar.getTime();
         }
         return serviceToControllerBody.success(bigDatas);
     }
