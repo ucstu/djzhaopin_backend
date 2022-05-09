@@ -75,6 +75,7 @@ public class UserInformation {
     @Email
     private String email;
 
+    @Range(min = 1, max = 6)
     private Integer workingYears;
 
     @Type(type = "text")
