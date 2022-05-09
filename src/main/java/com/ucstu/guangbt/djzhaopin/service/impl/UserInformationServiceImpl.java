@@ -583,9 +583,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         }
         Optional<DeliveryRecord> deliveryRecordOptional = userInformationOptional.get()
                 .getDeliveryRecords().stream().filter(deliveryRecord1 -> deliveryRecord1
-                        .getCompanyInformationId().equals(deliveryRecord.getCompanyInformationId()))
+                        .getPositionInformation().equals(deliveryRecord.getPositionInformation()))
                 .findAny();
-        if (!deliveryRecordOptional.isPresent()) {
+        if (deliveryRecordOptional.isPresent()) {
             return serviceToControllerBody.error("companyInformationId", "投递记录已存在",
                     deliveryRecord.getCompanyInformationId());
         }
