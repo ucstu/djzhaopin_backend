@@ -54,7 +54,9 @@ public class STOMPConnectEventListener implements ApplicationListener {
         } else if (event instanceof SessionDisconnectEvent) {
             SessionDisconnectEvent disconnectEvent = (SessionDisconnectEvent) event;
             StompHeaderAccessor accessor = StompHeaderAccessor.wrap(disconnectEvent.getMessage());
-            onlineUserTemplate.opsForSet().remove("onlineUser", accessor.getUser().getName());
+            if (accessor.getUser() != null) {
+                onlineUserTemplate.opsForSet().remove("onlineUser", accessor.getUser().getName());
+            }
         }
     }
 
