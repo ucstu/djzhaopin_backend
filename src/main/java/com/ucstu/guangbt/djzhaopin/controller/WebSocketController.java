@@ -27,7 +27,7 @@ public class WebSocketController {
         messageRecordService.sendUserMessage(principal, messageRecord);
     }
 
-    @Scheduled(fixedDelay = 20000L)
+    @Scheduled(fixedDelay = 30000L)
     @SendTo("/topic/pingpong")
     public void sendPong() {
         simpMessagingTemplate.convertAndSend("/topic/pingpong", "pong (periodic)");
