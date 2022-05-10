@@ -79,7 +79,7 @@ public class MessageRecordServiceImpl implements MessageRecordService {
                                     }
                                 }));
             } else {
-                if (messageRecord.getMessageType() == 1) {
+                if (messageRecord.getServiceType() == 1) {
                     Optional<UserInformation> userInformation = userInformationRepository
                             .findById(messageRecord.getServiceId());
                     if (userInformation.isPresent()) {
@@ -92,7 +92,7 @@ public class MessageRecordServiceImpl implements MessageRecordService {
                                 new ResponseBody<>().setStatus(HttpStatus.BAD_REQUEST.value()).setMessage(
                                         HttpStatus.BAD_REQUEST.getReasonPhrase()).setErrors(errorContents));
                     }
-                } else if (messageRecord.getMessageType() == 2) {
+                } else if (messageRecord.getServiceType() == 2) {
                     Optional<HrInformation> hrInformation = hrInformationRepository
                             .findById(messageRecord.getServiceId());
                     if (hrInformation.isPresent()) {
