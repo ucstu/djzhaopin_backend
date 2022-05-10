@@ -42,7 +42,7 @@ public class STOMPConnectEventListener implements ApplicationListener {
             if (accessor.getUser() != null) {
                 onlineUserTemplate.opsForSet().add("onlineUser", accessor.getUser().getName());
             } else {
-                log.error("disconnectEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
+                log.error("SessionConnectEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
             }
         } else if (event instanceof SessionSubscribeEvent) {
             SessionSubscribeEvent subscribeEvent = (SessionSubscribeEvent) event;
@@ -55,7 +55,7 @@ public class STOMPConnectEventListener implements ApplicationListener {
                                 HttpStatus.OK.getReasonPhrase()).setBody(messageRecords));
                 messageRecordRepository.deleteAll(messageRecords);
             } else {
-                log.error("disconnectEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
+                log.error("SessionSubscribeEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
             }
         } else if (event instanceof SessionDisconnectEvent) {
             SessionDisconnectEvent disconnectEvent = (SessionDisconnectEvent) event;
@@ -63,7 +63,7 @@ public class STOMPConnectEventListener implements ApplicationListener {
             if (accessor.getUser() != null) {
                 onlineUserTemplate.opsForSet().remove("onlineUser", accessor.getUser().getName());
             } else {
-                log.error("disconnectEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
+                log.error("SessionDisconnectEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
             }
         }
     }
