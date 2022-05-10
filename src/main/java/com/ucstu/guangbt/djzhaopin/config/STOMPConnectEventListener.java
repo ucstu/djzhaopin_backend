@@ -19,7 +19,9 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class STOMPConnectEventListener implements ApplicationListener {
 
@@ -39,6 +41,8 @@ public class STOMPConnectEventListener implements ApplicationListener {
             StompHeaderAccessor accessor = StompHeaderAccessor.wrap(connectEvent.getMessage());
             if (accessor.getUser() != null) {
                 onlineUserTemplate.opsForSet().add("onlineUser", accessor.getUser().getName());
+            } else {
+                log.error("disconnectEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
             }
         } else if (event instanceof SessionSubscribeEvent) {
             SessionSubscribeEvent subscribeEvent = (SessionSubscribeEvent) event;
@@ -50,12 +54,16 @@ public class STOMPConnectEventListener implements ApplicationListener {
                         new ResponseBody<>().setStatus(HttpStatus.OK.value()).setMessage(
                                 HttpStatus.OK.getReasonPhrase()).setBody(messageRecords));
                 messageRecordRepository.deleteAll(messageRecords);
+            } else {
+                log.error("disconnectEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
             }
         } else if (event instanceof SessionDisconnectEvent) {
             SessionDisconnectEvent disconnectEvent = (SessionDisconnectEvent) event;
             StompHeaderAccessor accessor = StompHeaderAccessor.wrap(disconnectEvent.getMessage());
             if (accessor.getUser() != null) {
                 onlineUserTemplate.opsForSet().remove("onlineUser", accessor.getUser().getName());
+            } else {
+                log.error("disconnectEvent.getMessage() is null, sessionId: {}", accessor.getSessionId());
             }
         }
     }
