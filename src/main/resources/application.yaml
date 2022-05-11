@@ -19,8 +19,8 @@ spring:
     protocol: smtp
     host: smtp.sina.com
     default-encoding: UTF-8
-    username: djzhaopine@sina.com
-    password: 99b8829cfd32fb64
+    username: mrlinzc@sina.com
+    password: c0f6312871978056
     test-connection: true
 jwt:
   secret: djzhaopin123456
