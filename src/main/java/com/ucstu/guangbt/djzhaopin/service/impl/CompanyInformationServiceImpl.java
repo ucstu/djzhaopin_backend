@@ -233,7 +233,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 predicates.add(root.get("createdAt").in(deliveryDates));
             }
             if (userName != null) {
-                predicates.add(cb.like(userInformationJoin.get("userName"), "%" + userName + "%"));
+                predicates.add(cb.or(cb.like(userInformationJoin.get("firstName"), "%" + userName + "%"),
+                        cb.like(userInformationJoin.get("lastName"), "%" + userName + "%")));
             }
             return cb.and(predicates.toArray(new Predicate[predicates.size()]));
         };
