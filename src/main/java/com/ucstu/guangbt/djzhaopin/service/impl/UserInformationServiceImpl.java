@@ -121,6 +121,9 @@ public class UserInformationServiceImpl implements UserInformationService {
         }
         userInformation.setUserInformationId(userInformationId);
         userInformation.setCreatedAt(userInformationOptional.get().getCreatedAt());
+        if (userInformation.getAvatarUrl() == null) {
+            userInformation.setAvatarUrl(userInformationOptional.get().getAvatarUrl());
+        }
         userInformation.setJobExpectations(userInformationOptional.get().getJobExpectations());
         userInformation.setEducationExperiences(userInformationOptional.get().getEducationExperiences());
         userInformation.setWorkExperiences(userInformationOptional.get().getWorkExperiences());
