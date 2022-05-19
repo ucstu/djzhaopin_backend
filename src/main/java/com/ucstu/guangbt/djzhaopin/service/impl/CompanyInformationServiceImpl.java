@@ -438,6 +438,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         }
         Specification<PositionInformation> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
+            predicates.add(cb.equal(root.get("companyInformation"), companyInformationOptional.get()));
             if (positionName != null) {
                 predicates.add(cb.like(root.get("positionName"), "%" + positionName + "%"));
             }
