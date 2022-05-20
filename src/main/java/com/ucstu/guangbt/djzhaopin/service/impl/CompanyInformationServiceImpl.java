@@ -238,12 +238,15 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 predicates.add(positionInformationJoin.get("positionInformationId").in(positionInformationIds));
             }
             if (deliveryDates != null && !deliveryDates.isEmpty()) {
-                Predicate predicate = cb.and();
-                for (Date deliveryDate : deliveryDates) {
+                Date firstDeliveryDate = deliveryDates.get(0);
+                calendar.setTime(firstDeliveryDate);
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                Predicate predicate = cb.between(root.get("createdAt"), firstDeliveryDate, calendar.getTime());
+                for (int i = 1; i < deliveryDates.size(); i++) {
+                    Date deliveryDate = deliveryDates.get(i);
                     calendar.setTime(deliveryDate);
                     calendar.add(Calendar.DAY_OF_MONTH, 1);
-                    predicate = cb.or(predicate,
-                            cb.between(root.get("createdAt"), deliveryDate, calendar.getTime()));
+                    predicate = cb.or(predicate, cb.between(root.get("createdAt"), deliveryDate, calendar.getTime()));
                 }
                 predicates.add(predicate);
             }
