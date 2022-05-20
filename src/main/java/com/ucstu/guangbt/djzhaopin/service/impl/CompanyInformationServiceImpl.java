@@ -223,11 +223,12 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             }
             if (ages != null && !ages.isEmpty()) {
                 In<Integer> ageIn = cb.in(
-                        cb.function(
-                                "DATEDIFF",
-                                Integer.class,
-                                cb.literal("CURDATE()"),
-                                userInformationJoin.get("dateOfBirth")));
+                        cb.function("ROUND", Integer.class,
+                                cb.quot(cb.function(
+                                        "DATEDIFF",
+                                        Integer.class,
+                                        cb.function("CURDATE", Date.class),
+                                        userInformationJoin.get("dateOfBirth")), 365)));
                 for (Integer age1 : ages) {
                     ageIn.value(age1);
                 }
