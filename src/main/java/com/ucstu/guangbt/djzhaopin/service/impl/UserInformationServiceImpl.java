@@ -675,7 +675,7 @@ public class UserInformationServiceImpl implements UserInformationService {
 
     @Override
     public ServiceToControllerBody<PageResult<DeliveryRecord>> getDeliveryRecordsByUserInformationId(
-            UUID userInformationId, Integer status, Date interviewTime, Pageable pageable) {
+            UUID userInformationId, List<Integer> status, Date interviewTime, Pageable pageable) {
         ServiceToControllerBody<PageResult<DeliveryRecord>> serviceToControllerBody = new ServiceToControllerBody<>();
         Optional<UserInformation> userInformation = userInformationRepository.findById(userInformationId);
         if (!userInformation.isPresent()) {
@@ -684,8 +684,8 @@ public class UserInformationServiceImpl implements UserInformationService {
         Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll((root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(cb.equal(root.get("userInformation"), userInformation.get()));
-            if (status != null) {
-                predicates.add(cb.equal(root.get("status"), status));
+            if (status != null && !status.isEmpty()) {
+                predicates.add(root.get("status").in(status));
             }
             if (interviewTime != null) {
                 Calendar calendar = Calendar.getInstance();

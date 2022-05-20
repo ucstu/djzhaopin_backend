@@ -1,6 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInspectionRecord;
@@ -101,7 +102,7 @@ public interface UserInformationService {
             UUID deliveryRecordId, DeliveryRecord deliveryRecord);
 
     public ServiceToControllerBody<PageResult<DeliveryRecord>> getDeliveryRecordsByUserInformationId(
-            UUID userInformationId, Integer status, Date interviewTime, Pageable pageable);
+            UUID userInformationId, List<Integer> status, Date interviewTime, Pageable pageable);
 
     public ServiceToControllerBody<DeliveryRecord> getDeliveryRecordByDeliveryRecordId(UUID userInformationId,
             UUID deliveryRecordId);

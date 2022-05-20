@@ -1,6 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.controller.user;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
@@ -67,7 +68,7 @@ public class DeliveryRecordController {
     @GetMapping("")
     public ResponseEntity<ResponseBody<PageResult<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
             @PathVariable("userInfoId") @NotNull UUID userInformationId,
-            @RequestParam("status") @Range(min = 1, max = 5) Integer status,
+            @RequestParam("status") @Range(min = 1, max = 5) List<Integer> status,
             @RequestParam(value = "interviewTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date interviewTime,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(userInformationService
