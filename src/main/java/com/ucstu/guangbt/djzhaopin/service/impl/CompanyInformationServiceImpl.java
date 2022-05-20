@@ -243,7 +243,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                     calendar.setTime(deliveryDate);
                     calendar.add(Calendar.DAY_OF_MONTH, 1);
                     predicate = cb.or(predicate,
-                            cb.between(root.get("deliveryDate"), deliveryDate, calendar.getTime()));
+                            cb.between(root.get("createdAt"), deliveryDate, calendar.getTime()));
                 }
                 predicates.add(predicate);
             }
