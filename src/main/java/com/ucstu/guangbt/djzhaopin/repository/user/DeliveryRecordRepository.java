@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface DeliveryRecordRepository
         extends JpaRepository<DeliveryRecord, UUID>, JpaSpecificationExecutor<DeliveryRecord> {
 
-    Integer countByCompanyInformationAndCreatedAtAfterAndCreatedAtBefore(
+    Integer countByCompanyInformationAndCreatedAtBetween(
             CompanyInformation companyInformation,
             Date createdAt,
             Date nextDate);

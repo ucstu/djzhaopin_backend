@@ -194,18 +194,25 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         }
         Specification<DeliveryRecord> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
+            Calendar calendar = Calendar.getInstance();
             predicates.add(cb.equal(root.get("companyInformation"), companyInformationOptional.get()));
             if (createdAt != null) {
-                predicates.add(cb.equal(root.get("createdAt"), createdAt));
+                calendar.setTime(createdAt);
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                predicates.add(cb.between(root.get("createdAt"), createdAt, calendar.getTime()));
             }
             if (updatedAt != null) {
-                predicates.add(cb.equal(root.get("updatedAt"), updatedAt));
+                calendar.setTime(updatedAt);
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                predicates.add(cb.between(root.get("updatedAt"), updatedAt, calendar.getTime()));
             }
             if (status != null && !status.isEmpty()) {
                 predicates.add(root.get("status").in(status));
             }
             if (interviewTime != null) {
-                predicates.add(cb.equal(root.get("interviewTime"), interviewTime));
+                calendar.setTime(interviewTime);
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                predicates.add(cb.between(root.get("interviewTime"), interviewTime, calendar.getTime()));
             }
             Join<DeliveryRecord, UserInformation> userInformationJoin = root.join("userInformation");
             if (workingYears != null && !workingYears.isEmpty()) {
@@ -231,7 +238,14 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 predicates.add(positionInformationJoin.get("positionInformationId").in(positionInformationIds));
             }
             if (deliveryDates != null && !deliveryDates.isEmpty()) {
-                predicates.add(root.get("createdAt").in(deliveryDates));
+                Predicate predicate = cb.and();
+                for (Date deliveryDate : deliveryDates) {
+                    calendar.setTime(deliveryDate);
+                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    predicate = cb.or(predicate,
+                            cb.between(root.get("deliveryDate"), deliveryDate, calendar.getTime()));
+                }
+                predicates.add(predicate);
             }
             if (userName != null) {
                 predicates.add(
@@ -587,10 +601,10 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             calendar.add(Calendar.DAY_OF_MONTH, 1);
             bigData.setDate(startDate);
             bigData.setInspectionRecordCount(userInspectionRecordRepository
-                    .countByCompanyInformationAndCreatedAtAfterAndCreatedAtBefore(companyInformationOptional.get(),
+                    .countByCompanyInformationAndCreatedAtBetween(companyInformationOptional.get(),
                             startDate, calendar.getTime()));
             bigData.setDeliveryRecordCount(deliveryRecordRepository
-                    .countByCompanyInformationAndCreatedAtAfterAndCreatedAtBefore(companyInformationOptional.get(),
+                    .countByCompanyInformationAndCreatedAtBetween(companyInformationOptional.get(),
                             startDate,
                             calendar.getTime()));
             bigData.setOnlineCommunicateCount(0);

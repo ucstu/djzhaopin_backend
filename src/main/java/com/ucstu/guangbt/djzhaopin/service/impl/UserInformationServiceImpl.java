@@ -1,7 +1,9 @@
 package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,7 +39,6 @@ import com.ucstu.guangbt.djzhaopin.repository.user.WorkExperienceRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,6 +46,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
+import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class UserInformationServiceImpl implements UserInformationService {
@@ -679,13 +681,21 @@ public class UserInformationServiceImpl implements UserInformationService {
         if (!userInformation.isPresent()) {
             return serviceToControllerBody.error("userInformationId", "用户信息不存在", userInformationId);
         }
-        DeliveryRecord deliveryRecord = new DeliveryRecord().setStatus(status)
-                .setUserInformation(userInformation.get());
-        if (interviewTime != null) {
-            deliveryRecord.setInterviewTime(interviewTime);
-        }
-        Example<DeliveryRecord> deliveryRecordExample = Example.of(deliveryRecord);
-        Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll(deliveryRecordExample, pageable);
+        Page<DeliveryRecord> deliveryRecords = deliveryRecordRepository.findAll((root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            predicates.add(cb.equal(root.get("userInformation"), userInformation.get()));
+            if (status != null) {
+                predicates.add(cb.equal(root.get("status"), status));
+            }
+            if (interviewTime != null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(interviewTime);
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                predicates.add(cb.between(root.get("interviewTime"), interviewTime,
+                        calendar.getTime()));
+            }
+            return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+        }, pageable);
         PageResult<DeliveryRecord> pageResult = new PageResult<>();
         if (!deliveryRecords.hasContent()) {
             pageResult.setTotalCount(0);
