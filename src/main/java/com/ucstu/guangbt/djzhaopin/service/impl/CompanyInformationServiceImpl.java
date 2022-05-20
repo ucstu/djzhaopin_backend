@@ -194,6 +194,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         }
         Specification<DeliveryRecord> specification = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
+            predicates.add(cb.equal(root.get("companyInformation"), companyInformationOptional.get()));
             if (createdAt != null) {
                 predicates.add(cb.equal(root.get("createdAt"), createdAt));
             }
