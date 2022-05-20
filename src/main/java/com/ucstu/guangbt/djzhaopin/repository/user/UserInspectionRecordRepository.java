@@ -18,5 +18,8 @@ public interface UserInspectionRecordRepository extends JpaRepository<UserInspec
     Page<UserInspectionRecord> findByCompanyInformationAndCreatedAtBetween(CompanyInformation companyInformation,
             Date startDate, Date endDate, Pageable pageable);
 
-    Integer countByCompanyInformationAndCreatedAt(CompanyInformation companyInformation, Date createdAt);
+    Integer countByCompanyInformationAndCreatedAtAfterAndCreatedAtBefore(
+            CompanyInformation companyInformation,
+            Date createdAt,
+            Date nextDate);
 }

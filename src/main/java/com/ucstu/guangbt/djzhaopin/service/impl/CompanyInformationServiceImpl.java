@@ -578,17 +578,23 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
         }
         List<BigData> bigDatas = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(endDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        endDate = calendar.getTime();
         while (startDate.before(endDate)) {
             BigData bigData = new BigData();
-            bigData.setDate(startDate);
-            bigData.setInspectionRecordCount(userInspectionRecordRepository
-                    .countByCompanyInformationAndCreatedAt(companyInformationOptional.get(), startDate));
-            bigData.setDeliveryRecordCount(deliveryRecordRepository
-                    .countByCompanyInformationAndCreatedAt(companyInformationOptional.get(), startDate));
-            bigData.setOnlineCommunicateCount(0);
-            bigDatas.add(bigData);
             calendar.setTime(startDate);
             calendar.add(Calendar.DAY_OF_MONTH, 1);
+            bigData.setDate(startDate);
+            bigData.setInspectionRecordCount(userInspectionRecordRepository
+                    .countByCompanyInformationAndCreatedAtAfterAndCreatedAtBefore(companyInformationOptional.get(),
+                            startDate, calendar.getTime()));
+            bigData.setDeliveryRecordCount(deliveryRecordRepository
+                    .countByCompanyInformationAndCreatedAtAfterAndCreatedAtBefore(companyInformationOptional.get(),
+                            startDate,
+                            calendar.getTime()));
+            bigData.setOnlineCommunicateCount(0);
+            bigDatas.add(bigData);
             startDate = calendar.getTime();
         }
         return serviceToControllerBody.success(bigDatas);
