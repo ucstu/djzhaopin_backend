@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Validated
@@ -68,7 +69,7 @@ public class DeliveryRecordController {
     @GetMapping("")
     public ResponseEntity<ResponseBody<PageResult<DeliveryRecord>>> getDeliveryRecordsByUserInformationId(
             @PathVariable("userInfoId") @NotNull UUID userInformationId,
-            @RequestParam("status") @Range(min = 1, max = 5) List<Integer> status,
+            @RequestParam("status") @NotEmpty List<@Valid @Range(min = 1, max = 5) Integer> status,
             @RequestParam(value = "interviewTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date interviewTime,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(userInformationService
