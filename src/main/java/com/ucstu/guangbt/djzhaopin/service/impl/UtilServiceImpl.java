@@ -282,12 +282,12 @@ public class UtilServiceImpl implements UtilService {
         List<CityInformation> cityInformations = new ArrayList<>();
         cityInformations.add(new CityInformation("北京", new ArrayList<>() {
             {
+                add("海淀区");
                 add("东城区");
                 add("西城区");
                 add("朝阳区");
                 add("丰台区");
                 add("石景山区");
-                add("海淀区");
                 add("门头沟区");
                 add("房山区");
                 add("通州区");
