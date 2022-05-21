@@ -125,7 +125,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
 
     @Override
     public ServiceToControllerBody<PageResult<CompanyInformation>> getCompanyInformations(
-            String companyName, List<Integer> scales, List<Integer> financingStages, List<Integer> comprehensions,
+            String companyName, List<Integer> scales, List<Integer> financingStages, List<String> comprehensions,
             String location, Pageable pageable) {
         ServiceToControllerBody<PageResult<CompanyInformation>> serviceToControllerBody = new ServiceToControllerBody<>();
         Specification<CompanyInformation> specification = (root, query, cb) -> {
@@ -141,7 +141,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 predicates.add(cb.in(root.get("financingStage")).value(financingStages));
             }
             if (comprehensions != null && !comprehensions.isEmpty()) {
-                predicates.add(cb.in(root.get("comprehension")).value(comprehensions));
+                predicates.add(cb.in(root.get("comprehensionName")).value(comprehensions));
             }
             if (location != null && !location.isEmpty()) {
                 Float longitude = Float.valueOf(location.split(",")[0]);

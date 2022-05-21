@@ -13,6 +13,7 @@ import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.model.company.BigData;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Validated
@@ -68,9 +70,9 @@ public class CompanyInformationController {
     @GetMapping("")
     public ResponseEntity<ResponseBody<PageResult<CompanyInformation>>> getCompanyInformations(
             @RequestParam(value = "companyName", required = false) String companyName,
-            @RequestParam(value = "scales", required = false) List<Integer> scales,
-            @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
-            @RequestParam(value = "comprehensions", required = false) List<Integer> comprehensions,
+            @RequestParam(value = "scales", required = false) List<@Valid @Range(min = 1, max = 6) Integer> scales,
+            @RequestParam(value = "financingStages", required = false) List<@Valid @Range(min = 1, max = 8) Integer> financingStages,
+            @RequestParam(value = "comprehensions", required = false) List<String> comprehensions,
             @RequestParam(value = "location", required = false) String location,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(companyInformationService
@@ -90,9 +92,9 @@ public class CompanyInformationController {
             @PathVariable("companyInfoId") @NotNull UUID companyInformationId,
             @RequestParam(value = "createdAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdAt,
             @RequestParam(value = "updatedAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date updatedAt,
-            @RequestParam("status") @NotNull List<Integer> status,
+            @RequestParam("status") @NotEmpty List<@Valid @Range(min = 1, max = 5) Integer> status,
             @RequestParam(value = "interviewTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date interviewTime,
-            @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
+            @RequestParam(value = "workingYears", required = false) List<@Valid @Range(min = 1, max = 6) Integer> workingYears,
             @RequestParam(value = "sexs", required = false) List<String> sexs,
             @RequestParam(value = "ages", required = false) List<Integer> ages,
             @RequestParam(value = "positionInfoIds", required = false) List<UUID> positionInformationIds,
@@ -110,15 +112,15 @@ public class CompanyInformationController {
             @RequestParam(value = "positionName", required = false) String positionName,
             @RequestParam(value = "positionType", required = false) String positionType,
             @RequestParam(value = "salary", required = false) String salary,
-            @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
-            @RequestParam(value = "educations", required = false) List<Integer> educations,
+            @RequestParam(value = "workingYears", required = false) List<@Valid @Range(min = 1, max = 6) Integer> workingYears,
+            @RequestParam(value = "educations", required = false) List<@Valid @Range(min = 1, max = 5) Integer> educations,
             @RequestParam(value = "directionTags", required = false) List<String> directionTags,
             @RequestParam(value = "workProvinceName", required = false) String workProvinceName,
             @RequestParam(value = "workCityName", required = false) String workCityName,
             @RequestParam(value = "workAreaNames", required = false) List<String> workAreaNames,
-            @RequestParam(value = "workTypes", required = false) List<Integer> workTypes,
-            @RequestParam(value = "scales", required = false) List<Integer> scales,
-            @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
+            @RequestParam(value = "workTypes", required = false) List<@Valid @Range(min = 1, max = 3) Integer> workTypes,
+            @RequestParam(value = "scales", required = false) List<@Valid @Range(min = 1, max = 6) Integer> scales,
+            @RequestParam(value = "financingStages", required = false) List<@Valid @Range(min = 1, max = 8) Integer> financingStages,
             @RequestParam(value = "comprehensions", required = false) List<String> comprehensions,
             @RequestParam(value = "workingPlace", required = false) String workingPlace,
             @PageableDefault(size = 10) Pageable pageable) {

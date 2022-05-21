@@ -8,6 +8,7 @@ import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -70,15 +71,15 @@ public class PositionInformationController {
             @RequestParam(value = "positionName", required = false) String positionName,
             @RequestParam(value = "positionType", required = false) String positionType,
             @RequestParam(value = "salary", required = false) String salary,
-            @RequestParam(value = "workingYears", required = false) List<Integer> workingYears,
-            @RequestParam(value = "educations", required = false) List<Integer> educations,
+            @RequestParam(value = "workingYears", required = false) List<@Valid @Range(min = 1, max = 6) Integer> workingYears,
+            @RequestParam(value = "educations", required = false) List<@Valid @Range(min = 1, max = 5) Integer> educations,
             @RequestParam(value = "directionTags", required = false) List<String> directionTags,
             @RequestParam(value = "workProvinceName", required = false) String workProvinceName,
             @RequestParam(value = "workCityName", required = false) String workCityName,
             @RequestParam(value = "workAreaNames", required = false) List<String> workAreaNames,
-            @RequestParam(value = "workTypes", required = false) List<Integer> workTypes,
-            @RequestParam(value = "scales", required = false) List<Integer> scales,
-            @RequestParam(value = "financingStages", required = false) List<Integer> financingStages,
+            @RequestParam(value = "workTypes", required = false) List<@Valid @Range(min = 1, max = 3) Integer> workTypes,
+            @RequestParam(value = "scales", required = false) List<@Valid @Range(min = 1, max = 6) Integer> scales,
+            @RequestParam(value = "financingStages", required = false) List<@Valid @Range(min = 1, max = 8) Integer> financingStages,
             @RequestParam(value = "comprehensions", required = false) List<String> comprehensions,
             @RequestParam(value = "workingPlace", required = false) String workingPlace,
             @PageableDefault(size = 10) Pageable pageable) {

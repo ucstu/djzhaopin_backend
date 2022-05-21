@@ -26,7 +26,7 @@ public interface CompanyInformationService {
             UUID companyInformationId, CompanyInformation companyInformation);
 
     public ServiceToControllerBody<PageResult<CompanyInformation>> getCompanyInformations(
-            String companyName, List<Integer> scales, List<Integer> financingStages, List<Integer> comprehensions,
+            String companyName, List<Integer> scales, List<Integer> financingStages, List<String> comprehensions,
             String location, Pageable pageable);
 
     public ServiceToControllerBody<CompanyInformation> getCompanyInformationByCompanyInformationId(
