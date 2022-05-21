@@ -2,6 +2,7 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -69,13 +70,16 @@ public class MessageRecordServiceImpl implements MessageRecordService {
                             HttpStatus.BAD_REQUEST.getReasonPhrase()).setErrors(errorContents));
         } else {
             if (onlineUserTemplate.opsForSet().isMember("onlineUser", messageRecord.getServiceId().toString())) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date(System.currentTimeMillis()));
+                calendar.add(Calendar.HOUR_OF_DAY, 8);
                 simpMessagingTemplate.convertAndSendToUser(messageRecord.getServiceId().toString(), "/queue/message",
                         new ResponseBody<>().setStatus(HttpStatus.BAD_REQUEST.value()).setMessage(
                                 HttpStatus.BAD_REQUEST.getReasonPhrase()).setBody(new ArrayList<>() {
                                     {
                                         add(messageRecord.setMessageRecordId(UUID.randomUUID())
-                                                .setCreatedAt(new Date(System.currentTimeMillis()))
-                                                .setUpdatedAt(new Date(System.currentTimeMillis())));
+                                                .setCreatedAt(calendar.getTime())
+                                                .setUpdatedAt(calendar.getTime()));
                                     }
                                 }));
             } else {
