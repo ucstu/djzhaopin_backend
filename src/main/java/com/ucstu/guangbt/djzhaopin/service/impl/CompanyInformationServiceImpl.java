@@ -290,8 +290,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             if (salary != null && StringUtils.hasLength(salary)) {
                 String startingSalary = salary.split(",")[0];
                 String ceilingSalary = salary.split(",")[1];
-                predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
-                predicates.add(cb.lessThan(root.get("ceilingSalary"), ceilingSalary));
+                predicates.add(cb.greaterThanOrEqualTo(root.get("startingSalary"), startingSalary));
+                predicates.add(cb.lessThanOrEqualTo(root.get("ceilingSalary"), ceilingSalary));
             }
             if (workingYears != null && !workingYears.isEmpty()) {
                 predicates.add(root.get("workingYears").in(workingYears));
@@ -312,7 +312,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 predicates.add(root.get("workAreaName").in(workAreaNames));
             }
             if (workTypes != null && !workTypes.isEmpty()) {
-                predicates.add(root.get("positionType").in(workTypes));
+                predicates.add(root.get("workType").in(workTypes));
             }
             Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
             if (scales != null && !scales.isEmpty()) {
@@ -334,6 +334,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                                 cb.diff(root.get("latitude"), latitude))));
                 query.orderBy(cb.asc(expression));
             }
+            query.distinct(true);
             return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
         };
         Page<PositionInformation> positionInformations = positionInformationRepository.findAll(specification, pageable);
@@ -467,8 +468,8 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
             if (salary != null) {
                 String startingSalary = salary.split(",")[0];
                 String ceilingSalary = salary.split(",")[1];
-                predicates.add(cb.greaterThan(root.get("startingSalary"), startingSalary));
-                predicates.add(cb.lessThan(root.get("ceilingSalary"), ceilingSalary));
+                predicates.add(cb.greaterThanOrEqualTo(root.get("startingSalary"), startingSalary));
+                predicates.add(cb.lessThanOrEqualTo(root.get("ceilingSalary"), ceilingSalary));
             }
             if (workingYears != null && !workingYears.isEmpty()) {
                 predicates.add(root.get("workingYears").in(workingYears));
@@ -490,7 +491,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                 predicates.add(workAreaNamesJoin.in(workAreaNames));
             }
             if (workTypes != null && !workTypes.isEmpty()) {
-                predicates.add(root.get("positionType").in(workTypes));
+                predicates.add(root.get("workType").in(workTypes));
             }
             Join<PositionInformation, CompanyInformation> companyInformationJoin = root.join("companyInformation");
             if (scales != null && !scales.isEmpty()) {
@@ -512,6 +513,7 @@ public class CompanyInformationServiceImpl implements CompanyInformationService 
                                 cb.diff(root.get("latitude"), latitude))));
                 query.orderBy(cb.asc(expression));
             }
+            query.distinct(true);
             return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
         };
         Page<PositionInformation> positionInformations = positionInformationRepository.findAll(specification, pageable);
