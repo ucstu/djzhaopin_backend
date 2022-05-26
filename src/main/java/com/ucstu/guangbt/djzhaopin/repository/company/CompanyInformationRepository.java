@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface CompanyInformationRepository
-        extends JpaRepository<CompanyInformation, UUID>, JpaSpecificationExecutor<CompanyInformation> {
+                extends JpaRepository<CompanyInformation, UUID>, JpaSpecificationExecutor<CompanyInformation> {
 
 }

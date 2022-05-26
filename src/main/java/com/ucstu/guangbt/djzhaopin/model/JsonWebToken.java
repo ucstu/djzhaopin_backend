@@ -1,5 +1,6 @@
 package com.ucstu.guangbt.djzhaopin.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +13,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class JsonWebToken {
+public class JsonWebToken implements Serializable {
+
+    private static final long serialVersionUID = -859098590985909859L;
 
     private UUID accountInformationId;
 

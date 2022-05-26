@@ -5,12 +5,16 @@ import com.ucstu.guangbt.djzhaopin.utils.ApplicationInitUtil;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 
+@EnableCaching
 @EnableJpaAuditing
 @SpringBootApplication
 @EnableGlobalAuthentication
+@EnableMongoRepositories(basePackages = "com.ucstu.guangbt.djzhaopin.entity")
 public class DjzhaopinApplication {
 
 	public static void main(String[] args) {

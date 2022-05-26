@@ -10,16 +10,18 @@ import com.ucstu.guangbt.djzhaopin.entity.user.UserInspectionRecord;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface UserInspectionRecordRepository extends JpaRepository<UserInspectionRecord, UUID> {
+public interface UserInspectionRecordRepository extends JpaRepository<UserInspectionRecord, UUID>,
+                JpaSpecificationExecutor<UserInspectionRecord> {
 
-    Page<UserInspectionRecord> findByUserInformation(UserInformation userInformation, Pageable pageable);
+        Page<UserInspectionRecord> findByUserInformation(UserInformation userInformation, Pageable pageable);
 
-    Page<UserInspectionRecord> findByCompanyInformationAndCreatedAtBetween(CompanyInformation companyInformation,
-            Date startDate, Date endDate, Pageable pageable);
+        Page<UserInspectionRecord> findByCompanyInformationAndCreatedAtBetween(CompanyInformation companyInformation,
+                        Date startDate, Date endDate, Pageable pageable);
 
-    Integer countByCompanyInformationAndCreatedAtBetween(
-            CompanyInformation companyInformation,
-            Date createdAt,
-            Date nextDate);
+        Integer countByCompanyInformationAndCreatedAtBetween(
+                        CompanyInformation companyInformation,
+                        Date createdAt,
+                        Date nextDate);
 }
