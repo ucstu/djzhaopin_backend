@@ -25,7 +25,6 @@ public class RegisterAccountRequest {
     @Range(min = 1, max = 2)
     private Integer accountType;
 
-    @Size(min = 6, max = 20)
     private String password;
 
 }
