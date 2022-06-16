@@ -16,7 +16,6 @@ public class ForgetPasswordRequest {
     @Email
     private String userName;
 
-    @Size(min = 6, max = 20)
     private String password;
 
     @Size(min = 4, max = 4)

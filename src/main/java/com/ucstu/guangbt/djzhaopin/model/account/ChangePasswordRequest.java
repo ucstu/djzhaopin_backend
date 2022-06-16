@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ChangePasswordRequest {
 
-    @Size(min = 6, max = 20)
     private String password;
 
     @Size(min = 4, max = 4)
