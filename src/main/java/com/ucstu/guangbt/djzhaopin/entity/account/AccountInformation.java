@@ -67,9 +67,9 @@ public class AccountInformation {
     @OneToOne(cascade = { CascadeType.ALL })
     private HrInformation hrInformation;
 
-    // {1:用户,2:HR}
+    // {0:Admin,1:用户,2:HR}
     @NotNull
-    @Range(min = 1, max = 2)
+    @Range(min = 0, max = 2)
     private Integer accountType;
 
     @Column(unique = true)
