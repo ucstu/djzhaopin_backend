@@ -8,6 +8,13 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
 import com.ucstu.guangbt.djzhaopin.model.ServiceToControllerBody;
 import com.ucstu.guangbt.djzhaopin.model.util.CityInformation;
@@ -19,13 +26,6 @@ import com.ucstu.guangbt.djzhaopin.model.util.positiontype.PositionType;
 import com.ucstu.guangbt.djzhaopin.repository.MessageRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.UtilService;
 import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -628,6 +628,7 @@ public class UtilServiceImpl implements UtilService {
         ServiceToControllerBody<String> serviceToControllerBody = new ServiceToControllerBody<>();
         String verificationCode = String.valueOf(new Random().nextInt(8999) + 1000);
         emailMessageUtil.sendEmail(email, "东江招聘-验证码", "您的验证码为：" + verificationCode + "，请在5分钟内使用。");
+        // 将验证码存入redis,并设置过期时间5分钟
         verificationCodeTemplate.opsForValue().set(email, verificationCode, 5, TimeUnit.MINUTES);
         return serviceToControllerBody.success("验证码已发送，请注意查收。");
     }

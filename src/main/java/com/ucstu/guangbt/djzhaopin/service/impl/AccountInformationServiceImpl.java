@@ -7,6 +7,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountGroup;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
@@ -20,11 +25,6 @@ import com.ucstu.guangbt.djzhaopin.repository.account.AccountGroupRepository;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
-
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
 
@@ -54,6 +54,7 @@ public class AccountInformationServiceImpl implements
         if (accountInformationRepository.findByUserName(registerRequest.getUserName()).isPresent()) {
             return serviceToControllerBody.error("userName", "用户名已存在", registerRequest.getUserName());
         }
+        // 从redis中获取验证码
         Optional<String> verificationCodeOptional = Optional.ofNullable(verificationCodeTemplate.opsForValue()
                 .get(registerRequest.getUserName()));
         if (!verificationCodeOptional.isPresent()) {
@@ -63,6 +64,7 @@ public class AccountInformationServiceImpl implements
         if (!registerRequest.getVerificationCode().equals(verificationCodeOptional.get())) {
             return serviceToControllerBody.error("verificationCode", "验证码错误", registerRequest.getVerificationCode());
         }
+        // 删除redis中的验证码
         verificationCodeTemplate.delete(registerRequest.getUserName());
         if (registerRequest.getAccountType() == 1) {
             Set<AccountGroup> accountGroups = new HashSet<>();

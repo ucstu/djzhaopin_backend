@@ -3,14 +3,6 @@ package com.ucstu.guangbt.djzhaopin.controller.account;
 import java.util.Map;
 import java.util.UUID;
 
-import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
-import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
-import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
-import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
-import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
-import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
-import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
+import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
+import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
+import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
+import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
+import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
+import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;

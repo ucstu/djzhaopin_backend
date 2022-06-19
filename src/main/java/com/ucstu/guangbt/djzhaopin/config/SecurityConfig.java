@@ -47,6 +47,7 @@ public class SecurityConfig {
     private static final SessionCreationPolicy STATELESS = SessionCreationPolicy.STATELESS;
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/**"),
             new AntPathRequestMatcher("/accountInfos/**"),
             new AntPathRequestMatcher("/verificationCode"),
             new AntPathRequestMatcher("/ws/**"),

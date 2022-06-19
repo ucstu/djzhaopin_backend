@@ -1,6 +1,5 @@
 package com.ucstu.guangbt.djzhaopin.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountAuthority;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountGroup;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.AdminService;
 
@@ -57,7 +57,7 @@ public class AdminController {
     }
 
     @GetMapping("/accounts")
-    public ResponseEntity<ResponseBody<List<AccountInformation>>> getAccounts(
+    public ResponseEntity<ResponseBody<PageResult<AccountInformation>>> getAccounts(
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(adminService.getAccounts(pageable));
     }
@@ -70,8 +70,8 @@ public class AdminController {
 
     @PostMapping("/accountgroups")
     public ResponseEntity<ResponseBody<AccountGroup>> createAccountGroup(
-            @Valid @RequestBody AccountInformation accountInformation) {
-        return ResponseBody.handle(adminService.createAccountGroup(accountInformation));
+            @Valid @RequestBody AccountGroup accountGroup) {
+        return ResponseBody.handle(adminService.createAccountGroup(accountGroup));
     }
 
     @DeleteMapping("/accountgroups/{accountgroupid}")
@@ -83,13 +83,13 @@ public class AdminController {
     @PutMapping("/accountgroups/{accountgroupid}")
     public ResponseEntity<ResponseBody<AccountGroup>> updateAccountGroupByAccountGroupId(
             @PathVariable("accountgroupid") @NotNull UUID accountGroupId,
-            @Valid @RequestBody AccountInformation accountInformation) {
+            @Valid @RequestBody AccountGroup accountGroup) {
         return ResponseBody.handle(adminService.updateAccountGroupByAccountGroupId(accountGroupId,
-                accountInformation));
+                accountGroup));
     }
 
     @GetMapping("/accountgroups")
-    public ResponseEntity<ResponseBody<List<AccountGroup>>> getAccountGroups(
+    public ResponseEntity<ResponseBody<PageResult<AccountGroup>>> getAccountGroups(
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(adminService.getAccountGroups(pageable));
     }
@@ -102,8 +102,8 @@ public class AdminController {
 
     @PostMapping("/accountauthorities")
     public ResponseEntity<ResponseBody<AccountAuthority>> createAccountAuthority(
-            @Valid @RequestBody AccountInformation accountInformation) {
-        return ResponseBody.handle(adminService.createAccountAuthority(accountInformation));
+            @Valid @RequestBody AccountAuthority accountAuthority) {
+        return ResponseBody.handle(adminService.createAccountAuthority(accountAuthority));
     }
 
     @DeleteMapping("/accountauthorities/{accountauthorityid}")
@@ -115,13 +115,13 @@ public class AdminController {
     @PutMapping("/accountauthorities/{accountauthorityid}")
     public ResponseEntity<ResponseBody<AccountAuthority>> updateAccountAuthorityByAccountAuthorityId(
             @PathVariable("accountauthorityid") @NotNull UUID accountAuthorityId,
-            @Valid @RequestBody AccountInformation accountInformation) {
+            @Valid @RequestBody AccountAuthority accountAuthority) {
         return ResponseBody.handle(adminService.updateAccountAuthorityByAccountAuthorityId(accountAuthorityId,
-                accountInformation));
+                accountAuthority));
     }
 
     @GetMapping("/accountauthorities")
-    public ResponseEntity<ResponseBody<List<AccountAuthority>>> getAccountAuthorities(
+    public ResponseEntity<ResponseBody<PageResult<AccountAuthority>>> getAccountAuthorities(
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseBody.handle(adminService.getAccountAuthorities(pageable));
     }
