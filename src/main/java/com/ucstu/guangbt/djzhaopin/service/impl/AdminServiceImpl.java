@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountAuthority;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountGroup;
@@ -20,6 +21,7 @@ import com.ucstu.guangbt.djzhaopin.service.AdminService;
 
 import jakarta.annotation.Resource;
 
+@Service
 public class AdminServiceImpl implements AdminService {
 
     @Resource
