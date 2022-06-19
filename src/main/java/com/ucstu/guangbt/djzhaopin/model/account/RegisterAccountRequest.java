@@ -2,7 +2,7 @@ package com.ucstu.guangbt.djzhaopin.model.account;
 
 import org.hibernate.validator.constraints.Range;
 
-import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class RegisterAccountRequest {
 
-    @Email
+    @NotBlank
     private String userName;
 
     @Size(min = 4, max = 4)
