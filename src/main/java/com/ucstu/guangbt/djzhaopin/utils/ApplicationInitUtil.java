@@ -3,15 +3,15 @@ package com.ucstu.guangbt.djzhaopin.utils;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountAuthority;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountGroup;
 import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountAuthorityRepository;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountGroupRepository;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountInformationRepository;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 import jakarta.annotation.Resource;
 
@@ -89,6 +89,7 @@ public class ApplicationInitUtil {
             Set<AccountGroup> accountGroups1 = new HashSet<>();
             accountGroups1.add(accountGroup1);
             accountInformation1.setGroups(accountGroups1);
+            accountInformationRepository.save(accountInformation1);
         }
     }
 
