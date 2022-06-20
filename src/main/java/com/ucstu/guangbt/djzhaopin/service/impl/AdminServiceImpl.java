@@ -67,8 +67,8 @@ public class AdminServiceImpl implements AdminService {
         if (!accountInformationOptional.isPresent()) {
             return serviceToControllerBody.error("accountId", "用户不存在", accountId);
         }
-        accountInformation.setAccountInformationId(accountId);
-        return serviceToControllerBody.success(accountInformationRepository.save(accountInformation));
+        accountInformationOptional.get().setUserName(accountInformation.getUserName());
+        return serviceToControllerBody.success(accountInformationRepository.save(accountInformationOptional.get()));
     }
 
     @Override
@@ -120,8 +120,8 @@ public class AdminServiceImpl implements AdminService {
         if (!accountGroupOptional.isPresent()) {
             return serviceToControllerBody.error("accountGroupId", "用户组不存在", accountGroupId);
         }
-        accountGroup.setGroupId(accountGroupId);
-        return serviceToControllerBody.success(accountGroupRepository.save(accountGroup));
+        accountGroupOptional.get().setGroupName(accountGroup.getGroupName());
+        return serviceToControllerBody.success(accountGroupRepository.save(accountGroupOptional.get()));
     }
 
     @Override
