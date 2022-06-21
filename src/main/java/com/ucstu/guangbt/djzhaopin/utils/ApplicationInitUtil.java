@@ -85,7 +85,7 @@ public class ApplicationInitUtil {
             accountGroup3 = accountGroupRepository.save(accountGroup3);
             AccountInformation accountInformation1 = new AccountInformation();
             accountInformation1.setUserName("admin");
-            accountInformation1.setPassword(passwordEncoder.encode("admin"));
+            accountInformation1.setPassword(passwordEncoder.encode("21232f297a57a5a743894a0e4a801fc3"));
             accountInformation1.setAccountType(0);
             Set<AccountGroup> accountGroups1 = new HashSet<>();
             accountGroups1.add(accountGroup1);
