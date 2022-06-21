@@ -33,6 +33,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// 收藏 记录
 public class GarnerRecord {
 
     @Id

@@ -43,7 +43,8 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) // 实体监听器
+// 职位信息
 public class CompanyInformation {
 
     @Id
@@ -62,64 +63,64 @@ public class CompanyInformation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updatedAt;
 
-    private String logoUrl;
+    private String logoUrl; // 公司logo
 
     @NotNull
-    private String companyName;
+    private String companyName; // 公司名称
 
-    private String cityName;
+    private String cityName; // 城市名称
 
     @NotNull
     @Range(min = 1, max = 8)
-    private Integer financingStage;
+    private Integer financingStage; // 融资阶段
 
     @NotNull
     @Range(min = 1, max = 6)
-    private Integer scale;
+    private Integer scale; // 规模
 
-    private String comprehensionName;
+    private String comprehensionName; // 语言名称
 
     @NotBlank
-    private String address;
+    private String address; // 地址
 
     @Type(type = "text")
-    private String about;
+    private String about; // 公司简介
 
-    private String fullName;
+    private String fullName; // 公司全称
 
-    private String legalRepresentative;
+    private String legalRepresentative; // 法定代表人
 
-    private String registeredCapital;
+    private String registeredCapital; // 注册资金
 
-    private String organizationType;
+    private String organizationType; // 组织形式
 
-    private String establishmentTime;
+    private String establishmentTime; // 成立时间
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> benefits;
+    private Set<String> benefits; // 公司福利
 
     @JsonIgnore
     @Range(min = 0, max = 180)
-    private Float longitude;
+    private Float longitude; // 经度
 
     @JsonIgnore
     @Range(min = 0, max = 90)
-    private Float latitude;
+    private Float latitude; // 纬度
 
     @JsonIgnore
     @JoinColumn(name = "company_information_id")
     @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
-    private List<PositionInformation> positionInformations;
+    private List<PositionInformation> positionInformations; // 职位信息
 
     @JsonIgnore
     @JoinColumn(name = "company_information_id")
     @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
-    private List<AttentionRecord> attentionRecords;
+    private List<AttentionRecord> attentionRecords; // 关注记录
 
     @JsonIgnore
     @JoinColumn(name = "company_information_id")
     @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
-    private List<HrInformation> hrInformations;
+    private List<HrInformation> hrInformations; // HR信息
 
     @JsonGetter("location")
     public Map<String, Float> getLocation() {

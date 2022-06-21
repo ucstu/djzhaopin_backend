@@ -4,15 +4,16 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import com.ucstu.guangbt.djzhaopin.model.JsonWebToken;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.ucstu.guangbt.djzhaopin.model.JsonWebToken;
+
 import lombok.Data;
 
 @Data
+// 存储用户信息。
 public class CustomUserDetails implements UserDetails {
 
     private String userName;
@@ -24,6 +25,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
+    // 获取用户权限。
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new HashSet<>();
         List<String> _authorities = jsonWebToken.getAuthorities();
@@ -44,21 +46,25 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
+    // 账户是否过期。
     public boolean isAccountNonExpired() {
         return !jsonWebToken.getExpired();
     }
 
     @Override
+    // 账户是否被锁定。
     public boolean isAccountNonLocked() {
         return !jsonWebToken.getLocked();
     }
 
     @Override
+    // 密码是否过期。
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    // 账户是否可用。
     public boolean isEnabled() {
         return jsonWebToken.getEnabled();
     }

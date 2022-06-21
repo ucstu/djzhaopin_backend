@@ -39,6 +39,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+
 public class UserInformation {
 
     @Id

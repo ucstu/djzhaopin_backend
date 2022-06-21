@@ -32,6 +32,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// HR 审核记录
 public class HrInspectionRecord {
 
     @Id

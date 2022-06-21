@@ -49,6 +49,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// 职位信息
 public class PositionInformation {
 
     @Id
@@ -82,83 +83,83 @@ public class PositionInformation {
     private Integer education;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> directionTags;
+    private Set<String> directionTags; // 方向标签
 
     @NotNull
-    private Integer startingSalary;
+    private Integer startingSalary; // 起始薪资
 
     @NotNull
-    private Integer ceilingSalary;
+    private Integer ceilingSalary; // 最高薪资
 
-    private String workProvinceName;
+    private String workProvinceName; // 工作地点省份名称
 
-    private String workCityName;
+    private String workCityName; // 工作地点城市名称
 
-    private String workAreaName;
+    private String workAreaName; // 工作地点区域名称
 
     @NotNull
     @Range(min = 1, max = 3)
-    private Integer workType;
+    private Integer workType; // 工作类型
 
-    private String departmentName;
+    private String departmentName; // 部门名称
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> highlights;
+    private Set<String> highlights; // 关键词
 
     @NotBlank
     @Type(type = "text")
-    private String description;
+    private String description; // 职位描述
 
     @Range(min = 1, max = 3)
-    private Integer weekendReleaseTime;
+    private Integer weekendReleaseTime; // 周末休息情况
 
     @NotNull
     @JsonFormat(pattern = "HH:mm:ss")
-    private Date workTime;
+    private Date workTime; // 工作时间
 
     @NotNull
     @JsonFormat(pattern = "HH:mm:ss")
-    private Date overTime;
+    private Date overTime; // 加班时间
 
     @JsonIgnore
     @Range(min = 0, max = 180)
-    private Float longitude;
+    private Float longitude; // 经度
 
     @JsonIgnore
     @Range(min = 0, max = 90)
-    private Float latitude;
+    private Float latitude; // 纬度
 
     @Valid
     @NotNull
     @JoinColumn
     @JsonProperty("interviewInfo")
     @OneToOne(cascade = { CascadeType.ALL })
-    private InterviewInfo interviewInfo;
+    private InterviewInfo interviewInfo; // 面试信息
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "company_information_id")
-    private CompanyInformation companyInformation;
+    private CompanyInformation companyInformation; // 公司信息
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "hr_information_id")
-    private HrInformation hrInformation;
+    private HrInformation hrInformation; // HR信息
 
     @JsonIgnore
     @JoinColumn(name = "position_information_id")
     @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
-    private List<DeliveryRecord> deliveryRecords;
+    private List<DeliveryRecord> deliveryRecords; // 投递记录
 
     @JsonIgnore
     @JoinColumn(name = "position_information_id")
     @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
-    private List<GarnerRecord> garnerRecords;
+    private List<GarnerRecord> garnerRecords; // 收藏记录
 
     @JsonIgnore
     @JoinColumn(name = "position_information_id")
     @OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
-    private List<UserInspectionRecord> userInspectionRecords;
+    private List<UserInspectionRecord> userInspectionRecords; // 用户查看记录
 
     @JsonGetter("companyInformationId")
     public UUID getCompanyInformationId() {

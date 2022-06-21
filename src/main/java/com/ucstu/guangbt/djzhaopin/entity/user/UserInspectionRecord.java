@@ -33,6 +33,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// 用户 查看记录
 public class UserInspectionRecord {
 
     @Id

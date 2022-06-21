@@ -31,6 +31,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// 工作经历
 public class WorkExperience {
 
     @Id

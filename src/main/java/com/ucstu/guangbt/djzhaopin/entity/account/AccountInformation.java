@@ -39,6 +39,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// 账号信息
 public class AccountInformation {
 
     @Id

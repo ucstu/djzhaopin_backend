@@ -35,6 +35,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// 求职期望
 public class JobExpectation {
 
     @Id

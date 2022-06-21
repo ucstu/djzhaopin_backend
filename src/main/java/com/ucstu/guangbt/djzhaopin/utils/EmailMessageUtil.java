@@ -12,19 +12,20 @@ import jakarta.annotation.Resource;
 public class EmailMessageUtil {
 
     @Resource
-    private JavaMailSender mailSender;
+    private JavaMailSender mailSender; // 获取邮件发送器
 
-    @Value("${spring.mail.username}")
+    @Value("${spring.mail.username}") // 获取邮件发送者
     private String from;
 
-    @Async("asyncTaskExecutor")
+    @Async("asyncTaskExecutor") // 异步请求发送邮件
+    // 向用户发送电子邮件。
     public void sendEmail(String to, String subject, String content) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(from);
-        simpleMailMessage.setTo(to);
-        simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText(content);
-        mailSender.send(simpleMailMessage);
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage(); // 创建邮件对象
+        simpleMailMessage.setFrom(from); // 设置邮件发送者
+        simpleMailMessage.setTo(to); // 设置邮件接收者
+        simpleMailMessage.setSubject(subject); // 设置邮件主题
+        simpleMailMessage.setText(content); // 设置邮件内容
+        mailSender.send(simpleMailMessage); // 发送邮件
     }
 
 }

@@ -2,6 +2,7 @@ package com.ucstu.guangbt.djzhaopin.utils;
 
 import org.springframework.context.ConfigurableApplicationContext;
 
+// 获取 Spring bean 容器
 public class ApplicationContextUtil {
     private static ConfigurableApplicationContext applicationContext;
 

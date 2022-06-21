@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
+// 数据整合
 public class BigData {
     private Date date;
     private Integer inspectionRecordCount;

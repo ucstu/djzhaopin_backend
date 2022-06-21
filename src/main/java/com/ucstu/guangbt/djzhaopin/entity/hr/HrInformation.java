@@ -37,7 +37,8 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class) // 实体监听器
+// HR信息
 public class HrInformation {
 
     @Id
@@ -49,23 +50,23 @@ public class HrInformation {
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false) // 数据库不允许修改 且不允许为空
     private Date createdAt;
 
     @LastModifiedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(nullable = false)
+    @Column(nullable = false) // 数据库不允许修改 且不允许为空
     private Date updatedAt;
 
-    private String avatarUrl;
+    private String avatarUrl; // 头像url
 
-    private String hrName;
+    private String hrName; // 姓名
 
-    private String postName;
+    private String postName; // 职位名称
 
     @Email
-    private String acceptEmail;
+    private String acceptEmail; // 邮箱
 
     @ManyToOne
     @JsonIgnore

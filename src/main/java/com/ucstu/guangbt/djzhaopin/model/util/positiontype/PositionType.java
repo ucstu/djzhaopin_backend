@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class PositionType {
-    private String fieldName;
-    private List<Direction> directions;
+public class PositionType { // 工作类型
+    private String fieldName; // 领域名
+    private List<Direction> directions; // 方向
 }

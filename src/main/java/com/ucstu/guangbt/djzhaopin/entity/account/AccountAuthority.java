@@ -24,14 +24,15 @@ import lombok.experimental.Accessors;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(chain = true)
-@EntityListeners(AuditingEntityListener.class)
+@Accessors(chain = true) // 链式调用开启
+@EntityListeners(AuditingEntityListener.class) // 实体类加入审计时间
+// 账号权限
 public class AccountAuthority {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue // 自增
     @Type(type = "uuid-char")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // 只读
     private UUID authorityId;
 
     @CreatedDate

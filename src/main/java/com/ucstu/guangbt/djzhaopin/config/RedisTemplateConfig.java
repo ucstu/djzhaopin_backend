@@ -9,15 +9,21 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisTemplateConfig {
 
+    /**
+     * 验证代码模板
+     */
     @Bean
     public RedisTemplate<String, String> verificationCodeTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, String> verificationCodeTemplate = new RedisTemplate<>();
-        verificationCodeTemplate.setKeySerializer(new StringRedisSerializer());
-        verificationCodeTemplate.setValueSerializer(new StringRedisSerializer());
-        verificationCodeTemplate.setConnectionFactory(redisConnectionFactory);
+        verificationCodeTemplate.setKeySerializer(new StringRedisSerializer()); // key序列化
+        verificationCodeTemplate.setValueSerializer(new StringRedisSerializer()); // value序列化
+        verificationCodeTemplate.setConnectionFactory(redisConnectionFactory); // 设置连接工厂
         return verificationCodeTemplate;
     }
 
+    /**
+     * 在线用户模板
+     */
     @Bean
     public RedisTemplate<String, String> onlineUserTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, String> onlineUserTemplate = new RedisTemplate<>();

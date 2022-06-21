@@ -30,20 +30,21 @@ public class ApplicationInitUtil {
     @Resource
     private AccountInformationRepository accountInformationRepository;
 
+    // 初始化数据库。
     public void init() {
         if (accountGroupRepository.count() == 0) {
-            AccountGroup accountGroup1 = new AccountGroup();
-            accountGroup1.setGroupName("ADMIN");
-            accountGroup1.setAuthorities(new HashSet<>());
+            AccountGroup accountGroup1 = new AccountGroup(); // 创建账户组对象
+            accountGroup1.setGroupName("ADMIN"); // 设置账户组名称
+            accountGroup1.setAuthorities(new HashSet<>()); // 设置账户组权限
             AccountGroup accountGroup2 = new AccountGroup();
             accountGroup2.setGroupName("USER");
             accountGroup2.setAuthorities(new HashSet<>());
             AccountGroup accountGroup3 = new AccountGroup();
             accountGroup3.setGroupName("HR");
             accountGroup3.setAuthorities(new HashSet<>());
-            AccountAuthority accountAuthority1 = new AccountAuthority();
-            accountAuthority1.setAuthorityName("ACCOUNT_MANAGE");
-            accountAuthority1 = accountAuthorityRepository.save(accountAuthority1);
+            AccountAuthority accountAuthority1 = new AccountAuthority(); // 创建账户权限对象
+            accountAuthority1.setAuthorityName("ACCOUNT_MANAGE"); // 设置账户权限名称
+            accountAuthority1 = accountAuthorityRepository.save(accountAuthority1); // 保存账户权限
             accountGroup1.getAuthorities().add(accountAuthority1);
             AccountAuthority accountAuthority2 = new AccountAuthority();
             accountAuthority2.setAuthorityName("ACCOUNT_GROUP_MANAGE");

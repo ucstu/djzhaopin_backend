@@ -32,6 +32,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// User 关注记录
 public class AttentionRecord {
 
     @Id

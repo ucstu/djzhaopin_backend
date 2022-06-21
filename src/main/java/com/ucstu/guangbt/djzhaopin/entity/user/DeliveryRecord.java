@@ -34,6 +34,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+// 投递记录
 public class DeliveryRecord {
 
     @Id
