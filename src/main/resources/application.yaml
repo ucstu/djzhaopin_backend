@@ -19,10 +19,10 @@ spring:
     protocol: smtp
     host: smtp.sina.com
     default-encoding: UTF-8
-    username: mrlinzc@sina.com
-    password: c0f6312871978056
+    username: mrlinzc@sina.com # 此邮箱仅用于测试
+    password: c0f6312871978056 # 此密码仅用于测试
     test-connection: true
 jwt:
-  secret: djzhaopin123456
+  secret: djzhaopin123456 # 此secret仅用于测试
   expirationDateInMs: 86400000
   refreshExpirationDateInMs: 9000000
