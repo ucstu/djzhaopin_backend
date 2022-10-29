@@ -3,14 +3,13 @@ package com.ucstu.guangbt.djzhaopin.entity.util;
 import java.util.Date;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +34,6 @@ public class MessageRecord {
 
     @Id
     @GeneratedValue
-    @Type(type = "uuid-char")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID messageRecordId;
 
@@ -52,7 +50,6 @@ public class MessageRecord {
     private Date updatedAt;
 
     @NotNull
-    @Type(type = "uuid-char")
     private UUID initiateId;
 
     @NotNull
@@ -60,7 +57,6 @@ public class MessageRecord {
     private Integer initiateType;
 
     @NotNull
-    @Type(type = "uuid-char")
     private UUID serviceId;
 
     @NotNull

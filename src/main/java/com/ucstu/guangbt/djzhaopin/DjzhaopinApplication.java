@@ -12,7 +12,7 @@ import com.ucstu.guangbt.djzhaopin.utils.ApplicationInitUtil;
 
 @EnableCaching // 启用缓存
 @EnableJpaAuditing // 启用jpa审计功能
-@SpringBootApplication // 启动springboot应用
+@SpringBootApplication // springboot应用
 @EnableGlobalAuthentication // 启用全局认证
 @EnableMongoRepositories(basePackages = "com.ucstu.guangbt.djzhaopin.entity")
 public class DjzhaopinApplication {

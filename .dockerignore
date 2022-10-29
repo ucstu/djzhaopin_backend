@@ -1,0 +1,4 @@
+.devcontainer
+.github
+Dockerfile
+.dockerignore

@@ -1,14 +1,14 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/DjZhaopin?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: 123456
-    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://192.168.3.2:5432/djzhaopin
+    username: dev
+    password: dev1234
+    driverClassName: org.postgresql.Driver
   redis:
-    host: localhost
+    host: 192.168.3.2
     port: 6379
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
   servlet:
