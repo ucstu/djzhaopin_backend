@@ -3,6 +3,8 @@ package com.ucstu.guangbt.djzhaopin.service.impl;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,6 @@ import com.ucstu.guangbt.djzhaopin.repository.account.AccountInformationReposito
 import com.ucstu.guangbt.djzhaopin.repository.company.CompanyInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.company.position.PositionInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AdminService;
-
-import jakarta.annotation.Resource;
 
 @Service
 public class AdminServiceImpl implements AdminService {

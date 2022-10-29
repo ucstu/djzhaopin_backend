@@ -3,9 +3,7 @@ package com.ucstu.guangbt.djzhaopin.config;
 import java.util.List;
 import java.util.UUID;
 
-import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
-import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
-import com.ucstu.guangbt.djzhaopin.repository.MessageRecordRepository;
+import javax.annotation.Resource;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
@@ -18,7 +16,10 @@ import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
-import jakarta.annotation.Resource;
+import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
+import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
+import com.ucstu.guangbt.djzhaopin.repository.MessageRecordRepository;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

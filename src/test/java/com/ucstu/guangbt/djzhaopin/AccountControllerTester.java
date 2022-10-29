@@ -1,5 +1,7 @@
 package com.ucstu.guangbt.djzhaopin;
 
+import javax.annotation.Resource;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,8 +17,6 @@ import com.ucstu.guangbt.djzhaopin.model.account.ChangePasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
-
-import jakarta.annotation.Resource;
 
 @SpringBootTest(classes = { DjzhaopinApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc

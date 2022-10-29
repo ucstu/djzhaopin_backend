@@ -1,5 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.config;
 
+import javax.annotation.Resource;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
@@ -7,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
-
-import jakarta.annotation.Resource;
 
 @Component
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {

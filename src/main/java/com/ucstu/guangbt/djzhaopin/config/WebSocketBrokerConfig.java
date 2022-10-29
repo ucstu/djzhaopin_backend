@@ -1,5 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.config;
 
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -18,8 +20,6 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
-
-import jakarta.annotation.Resource;
 
 @Configuration
 @EnableWebSocketMessageBroker // 启用WebSocket消息代理

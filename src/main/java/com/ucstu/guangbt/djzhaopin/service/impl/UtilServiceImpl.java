@@ -8,6 +8,8 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,7 +29,6 @@ import com.ucstu.guangbt.djzhaopin.repository.MessageRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.UtilService;
 import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
 
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

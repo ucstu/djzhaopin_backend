@@ -7,6 +7,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder.In;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ListJoin;
+import javax.persistence.criteria.Predicate;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import com.ucstu.guangbt.djzhaopin.config.CustomUserDetails;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
@@ -28,21 +43,6 @@ import com.ucstu.guangbt.djzhaopin.repository.user.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.UserInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.service.CompanyInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
-import jakarta.annotation.Resource;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
-import jakarta.persistence.criteria.Expression;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.ListJoin;
-import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class CompanyInformationServiceImpl implements CompanyInformationService {

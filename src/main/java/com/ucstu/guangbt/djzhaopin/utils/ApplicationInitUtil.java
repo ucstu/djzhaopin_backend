@@ -3,6 +3,8 @@ package com.ucstu.guangbt.djzhaopin.utils;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +14,6 @@ import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountAuthorityRepository;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountGroupRepository;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountInformationRepository;
-
-import jakarta.annotation.Resource;
 
 @Component
 public class ApplicationInitUtil {

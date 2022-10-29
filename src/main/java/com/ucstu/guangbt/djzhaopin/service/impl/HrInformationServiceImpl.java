@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInspectionRecord;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
@@ -13,13 +20,6 @@ import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.hr.HrInspectionRecordRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.HrInformationService;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import jakarta.annotation.Resource;
 
 @Service
 public class HrInformationServiceImpl implements HrInformationService {

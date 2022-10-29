@@ -3,14 +3,9 @@ package com.ucstu.guangbt.djzhaopin.controller;
 import java.util.List;
 import java.util.UUID;
 
-import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
-import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
-import com.ucstu.guangbt.djzhaopin.model.util.CityInformation;
-import com.ucstu.guangbt.djzhaopin.model.util.DirectionTag;
-import com.ucstu.guangbt.djzhaopin.model.util.FilterInformation;
-import com.ucstu.guangbt.djzhaopin.model.util.areainformation.AreaInformation;
-import com.ucstu.guangbt.djzhaopin.model.util.positiontype.PositionType;
-import com.ucstu.guangbt.djzhaopin.service.UtilService;
+import javax.annotation.Resource;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -24,9 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.annotation.Resource;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
+import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
+import com.ucstu.guangbt.djzhaopin.model.util.CityInformation;
+import com.ucstu.guangbt.djzhaopin.model.util.DirectionTag;
+import com.ucstu.guangbt.djzhaopin.model.util.FilterInformation;
+import com.ucstu.guangbt.djzhaopin.model.util.areainformation.AreaInformation;
+import com.ucstu.guangbt.djzhaopin.model.util.positiontype.PositionType;
+import com.ucstu.guangbt.djzhaopin.service.UtilService;
 
 @Validated
 @CrossOrigin

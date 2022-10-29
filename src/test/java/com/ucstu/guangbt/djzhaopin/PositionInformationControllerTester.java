@@ -1,5 +1,7 @@
 package com.ucstu.guangbt.djzhaopin;
 
+import javax.annotation.Resource;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -8,8 +10,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
-
-import jakarta.annotation.Resource;
 
 @SpringBootTest(classes = { DjzhaopinApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc

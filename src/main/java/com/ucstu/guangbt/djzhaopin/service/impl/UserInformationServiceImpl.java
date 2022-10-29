@@ -7,6 +7,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+import javax.persistence.criteria.Predicate;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ucstu.guangbt.djzhaopin.config.CustomUserDetails;
 import com.ucstu.guangbt.djzhaopin.entity.company.CompanyInformation;
 import com.ucstu.guangbt.djzhaopin.entity.company.position.PositionInformation;
@@ -38,15 +47,6 @@ import com.ucstu.guangbt.djzhaopin.repository.user.UserInspectionRecordRepositor
 import com.ucstu.guangbt.djzhaopin.repository.user.WorkExperienceRepository;
 import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import jakarta.annotation.Resource;
-import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class UserInformationServiceImpl implements UserInformationService {

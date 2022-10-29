@@ -2,6 +2,10 @@ package com.ucstu.guangbt.djzhaopin.controller;
 
 import java.util.UUID;
 
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +26,6 @@ import com.ucstu.guangbt.djzhaopin.entity.account.AccountInformation;
 import com.ucstu.guangbt.djzhaopin.model.PageResult;
 import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
 import com.ucstu.guangbt.djzhaopin.service.AdminService;
-
-import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin

@@ -2,14 +2,14 @@ package com.ucstu.guangbt.djzhaopin.controller;
 
 import java.security.Principal;
 
-import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
-import com.ucstu.guangbt.djzhaopin.service.MessageRecordService;
+import javax.annotation.Resource;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import jakarta.annotation.Resource;
+import com.ucstu.guangbt.djzhaopin.entity.util.MessageRecord;
+import com.ucstu.guangbt.djzhaopin.service.MessageRecordService;
 
 @Controller
 public class WebSocketController {

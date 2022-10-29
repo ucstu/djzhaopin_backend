@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
-import com.ucstu.guangbt.djzhaopin.model.PageResult;
-import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
-import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.domain.Pageable;
@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import com.ucstu.guangbt.djzhaopin.entity.user.DeliveryRecord;
+import com.ucstu.guangbt.djzhaopin.model.PageResult;
+import com.ucstu.guangbt.djzhaopin.model.ResponseBody;
+import com.ucstu.guangbt.djzhaopin.service.UserInformationService;
 
 @Validated
 @CrossOrigin

@@ -3,6 +3,11 @@ package com.ucstu.guangbt.djzhaopin.controller.account;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,11 +27,6 @@ import com.ucstu.guangbt.djzhaopin.model.account.ForgetPasswordRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.LoginAccountRequest;
 import com.ucstu.guangbt.djzhaopin.model.account.RegisterAccountRequest;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
-
-import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Validated
 @CrossOrigin

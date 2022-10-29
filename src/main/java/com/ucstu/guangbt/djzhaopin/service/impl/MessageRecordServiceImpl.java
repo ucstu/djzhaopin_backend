@@ -9,6 +9,15 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ucstu.guangbt.djzhaopin.entity.hr.HrInformation;
 import com.ucstu.guangbt.djzhaopin.entity.user.UserInformation;
@@ -20,15 +29,6 @@ import com.ucstu.guangbt.djzhaopin.repository.hr.HrInformationRepository;
 import com.ucstu.guangbt.djzhaopin.repository.user.UserInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.MessageRecordService;
 import com.ucstu.guangbt.djzhaopin.utils.EmailMessageUtil;
-
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Service;
-
-import jakarta.annotation.Resource;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
 
 @Service
 public class MessageRecordServiceImpl implements MessageRecordService {

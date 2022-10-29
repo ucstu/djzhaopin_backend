@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,6 @@ import com.ucstu.guangbt.djzhaopin.repository.account.AccountGroupRepository;
 import com.ucstu.guangbt.djzhaopin.repository.account.AccountInformationRepository;
 import com.ucstu.guangbt.djzhaopin.service.AccountInformationService;
 import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
-
-import jakarta.annotation.Resource;
 
 @Service
 public class AccountInformationServiceImpl implements

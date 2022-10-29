@@ -3,6 +3,11 @@ package com.ucstu.guangbt.djzhaopin.config;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,11 +18,6 @@ import org.springframework.util.StringUtils;
 
 import com.ucstu.guangbt.djzhaopin.utils.ApplicationContextUtil;
 import com.ucstu.guangbt.djzhaopin.utils.JsonWebTokenUtil;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 

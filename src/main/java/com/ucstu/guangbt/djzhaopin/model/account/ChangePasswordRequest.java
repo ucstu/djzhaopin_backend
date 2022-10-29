@@ -1,6 +1,7 @@
 package com.ucstu.guangbt.djzhaopin.model.account;
 
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

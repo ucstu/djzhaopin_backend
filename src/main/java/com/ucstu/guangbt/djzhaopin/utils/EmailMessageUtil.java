@@ -1,12 +1,12 @@
 package com.ucstu.guangbt.djzhaopin.utils;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import jakarta.annotation.Resource;
 
 @Component
 public class EmailMessageUtil {
